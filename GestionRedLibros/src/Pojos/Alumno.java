@@ -15,18 +15,33 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package Pojos;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
+//Imports Hibernate
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 /**
+ *
  * @author Carlos Micó
  */
+@Entity
+@Table(name = "alumnos")
+public class Alumno implements Serializable {
 
-public class Alumno implements Serializable{
-    
+    private static final long serialVersionUID = -5514760464301220827L;
+
+    @Id
     private String nia;
     private String nombre;
     private String apellido1;
@@ -37,9 +52,15 @@ public class Alumno implements Serializable{
     private String email1;
     private Curso curso;
     private Grupo grupo;
+
+    @OneToMany(mappedBy = "alumno")
+    private List<Matricula> matriculas;
+
+    @OneToMany(mappedBy = "alumno")
+    private List<Historial> historiales;
     
-    public Alumno(){
-        
+    public Alumno() {
+
     }
 
     public Alumno(String nia, String nombre, String apellido1, String apellido2, String fecha_nac, String municipio_nac, String documento, String email1, Curso curso, Grupo grupo) {
@@ -135,6 +156,23 @@ public class Alumno implements Serializable{
         this.grupo = grupo;
     }
 
+    public void setMatriculas(List<Matricula> matriculas) {
+        this.matriculas = matriculas;
+    }
+
+    public List<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    public List<Historial> getHistoriales() {
+        return historiales;
+    }
+
+    public void setHistoriales(List<Historial> historiales) {
+        this.historiales = historiales;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 7;

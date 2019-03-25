@@ -20,32 +20,53 @@ package Pojos;
 import java.io.Serializable;
 import java.util.Date;
 
+//Imports Hibernate
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 /**
  *
  * @author Carlos Micó
  */
+
+@Entity
+@Table (name = "matricula")
 public class Matricula implements Serializable {
+    private static final long serialVersionUID = -5514760464301120887L;
+
     
+    @Id
     private int id;
     private int curso_escolar;
+    
+    @ManyToOne
+    @JoinColumn (name = "id_alumno")
     private Alumno alumno;
+    
     private String ensenanza;
     private String curso;
-    private Contenido contenido;
+    private String contenido;
     private String idioma;
     private String tipo_basico;
     private String tipo_predom;
     private String acis;
     private Date fec_ini_acis;
     private Date fec_fin_acis;
-    private Curso cur_ref_acis;
-    private Curso curso_pendiente;
+    private String cur_ref_acis;
+    private String curso_pendiente;
     
     public Matricula(){
         
     }
 
-    public Matricula(int id, int curso_escolar, Alumno alumno, String ensenanza, String curso, Contenido contenido, String idioma, String tipo_basico, String tipo_predom, String acis, Date fec_ini_acis, Date fec_fin_acis, Curso cur_ref_acis, Curso curso_pendiente) {
+    public Matricula(int id, int curso_escolar, Alumno alumno, String ensenanza, String curso, String contenido, String idioma, String tipo_basico, String tipo_predom, String acis, Date fec_ini_acis, Date fec_fin_acis, String cur_ref_acis, String curso_pendiente) {
         this.id = id;
         this.curso_escolar = curso_escolar;
         this.alumno = alumno;
@@ -102,11 +123,11 @@ public class Matricula implements Serializable {
         this.curso = curso;
     }
 
-    public Contenido getContenido() {
+    public String getContenido() {
         return contenido;
     }
 
-    public void setContenido(Contenido contenido) {
+    public void setContenido(String contenido) {
         this.contenido = contenido;
     }
 
@@ -158,19 +179,19 @@ public class Matricula implements Serializable {
         this.fec_fin_acis = fec_fin_acis;
     }
 
-    public Curso getCur_ref_acis() {
+    public String getCur_ref_acis() {
         return cur_ref_acis;
     }
 
-    public void setCur_ref_acis(Curso cur_ref_acis) {
+    public void setCur_ref_acis(String cur_ref_acis) {
         this.cur_ref_acis = cur_ref_acis;
     }
 
-    public Curso getCurso_pendiente() {
+    public String getCurso_pendiente() {
         return curso_pendiente;
     }
 
-    public void setCurso_pendiente(Curso curso_pendiente) {
+    public void setCurso_pendiente(String curso_pendiente) {
         this.curso_pendiente = curso_pendiente;
     }
 
