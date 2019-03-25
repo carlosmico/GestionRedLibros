@@ -5,7 +5,6 @@
  */
 package Vistas;
 
-import Comunes.DimensionesFrame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,14 +35,18 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
+    
+    FrameDevoluciones devo = null;
+    FrameEntrega entre = null;
+    
+    int frameWidth, frameHeight;
+    
     public Main() throws IOException {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
         
-        //Set the wallpaper image
-        
+        //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
         String icono = "";
         BufferedImage img = null;
         
@@ -66,17 +69,12 @@ public class Main extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         }
-        Image dimg = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.heigh, Image.SCALE_SMOOTH);
+        Image dimg = img.getScaledInstance(this.getContentPane().getWidth(), this.getContentPane().getHeight(), Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(dimg);
         wallpaper.setIcon(imageIcon);
         //this.setContentPane(wallpaper);
         banner.setVisible(true);
-
-        /*
-         URL url = new URL(icono+"?scale.width=" + DimensionesFrame.width + "&scale.height=" + DimensionesFrame.heigh);
-         Image image = ImageIO.read(url);
-         wallpaper.setIcon(new ImageIcon(image));
-         */
+//</editor-fold>
     }
 
     /**
@@ -88,16 +86,61 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menuPopup = new javax.swing.JPopupMenu();
+        btnGestionLibros = new javax.swing.JMenuItem();
+        btnGestionEjemplar = new javax.swing.JMenuItem();
+        btnConsultaAlumnos = new javax.swing.JMenuItem();
         banner = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        flatButton1 = new com.mommoo.flat.button.FlatButton();
-        flatButton2 = new com.mommoo.flat.button.FlatButton();
-        flatButton3 = new com.mommoo.flat.button.FlatButton();
+        btnDevoluciones = new com.mommoo.flat.button.FlatButton();
+        btnEntrega = new com.mommoo.flat.button.FlatButton();
+        btnGestiones = new com.mommoo.flat.button.FlatButton();
         flatButton4 = new com.mommoo.flat.button.FlatButton();
+        flatButton1 = new com.mommoo.flat.button.FlatButton();
         wallpaper = new javax.swing.JLabel();
 
+        menuPopup.setBackground(new java.awt.Color(66, 47, 44));
+        menuPopup.setForeground(new java.awt.Color(66, 47, 44));
+        menuPopup.setBorderPainted(false);
+        menuPopup.setPreferredSize(new java.awt.Dimension(250, 150));
+
+        btnGestionLibros.setBackground(new java.awt.Color(66, 47, 44));
+        btnGestionLibros.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
+        btnGestionLibros.setForeground(new java.awt.Color(66, 47, 44));
+        btnGestionLibros.setLabel("Libros");
+        btnGestionLibros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestionLibrosActionPerformed(evt);
+            }
+        });
+        menuPopup.add(btnGestionLibros);
+
+        btnGestionEjemplar.setBackground(new java.awt.Color(66, 47, 44));
+        btnGestionEjemplar.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
+        btnGestionEjemplar.setForeground(new java.awt.Color(66, 47, 44));
+        btnGestionEjemplar.setLabel("Ejemplar");
+        btnGestionEjemplar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestionEjemplarActionPerformed(evt);
+            }
+        });
+        menuPopup.add(btnGestionEjemplar);
+
+        btnConsultaAlumnos.setBackground(new java.awt.Color(66, 47, 44));
+        btnConsultaAlumnos.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
+        btnConsultaAlumnos.setForeground(new java.awt.Color(66, 47, 44));
+        btnConsultaAlumnos.setLabel("Alumnos");
+        btnConsultaAlumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultaAlumnosActionPerformed(evt);
+            }
+        });
+        menuPopup.add(btnConsultaAlumnos);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestión Red Libros");
+        setMinimumSize(new java.awt.Dimension(960, 0));
 
         banner.setBackground(new java.awt.Color(58, 39, 35));
         banner.setLayout(new java.awt.GridLayout(2, 1));
@@ -108,33 +151,59 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setText("Gestión Red Libros");
         banner.add(jLabel1);
 
-        jPanel1.setBackground(new java.awt.Color(255, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(58, 39, 35));
+        jPanel1.setPreferredSize(new java.awt.Dimension(500, 37));
         jPanel1.setLayout(new java.awt.GridLayout(1, 4));
 
-        flatButton1.setBackground(new java.awt.Color(58, 39, 35));
-        flatButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        flatButton1.setForeground(new java.awt.Color(204, 204, 204));
-        flatButton1.setText("Devoluciones");
-        jPanel1.add(flatButton1);
+        btnDevoluciones.setBackground(new java.awt.Color(66, 47, 44));
+        btnDevoluciones.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
+        btnDevoluciones.setForeground(new java.awt.Color(204, 204, 204));
+        btnDevoluciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/clipboard-arrow-down-outline.png"))); // NOI18N
+        btnDevoluciones.setText("  Devoluciones");
+        btnDevoluciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDevolucionesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnDevoluciones);
 
-        flatButton2.setBackground(new java.awt.Color(58, 39, 35));
-        flatButton2.setForeground(new java.awt.Color(204, 204, 204));
-        flatButton2.setText("Entregas");
-        jPanel1.add(flatButton2);
+        btnEntrega.setBackground(new java.awt.Color(66, 47, 44));
+        btnEntrega.setForeground(new java.awt.Color(204, 204, 204));
+        btnEntrega.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/clipboard-arrow-up-outline.png"))); // NOI18N
+        btnEntrega.setText("  Entregas");
+        btnEntrega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntregaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEntrega);
 
-        flatButton3.setBackground(new java.awt.Color(58, 39, 35));
-        flatButton3.setForeground(new java.awt.Color(204, 204, 204));
-        flatButton3.setText("Gestiónes");
-        jPanel1.add(flatButton3);
+        btnGestiones.setBackground(new java.awt.Color(66, 47, 44));
+        btnGestiones.setForeground(new java.awt.Color(204, 204, 204));
+        btnGestiones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/book-open-variant.png"))); // NOI18N
+        btnGestiones.setText("  Gestiónes");
+        btnGestiones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnGestionesMouseReleased(evt);
+            }
+        });
+        jPanel1.add(btnGestiones);
 
-        flatButton4.setBackground(new java.awt.Color(58, 39, 35));
+        flatButton4.setBackground(new java.awt.Color(66, 47, 44));
         flatButton4.setForeground(new java.awt.Color(204, 204, 204));
-        flatButton4.setText("Consultas");
+        flatButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ballot-outline.png"))); // NOI18N
+        flatButton4.setText("  Opciones");
         jPanel1.add(flatButton4);
+
+        flatButton1.setBackground(new java.awt.Color(66, 47, 44));
+        flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/help-circle-outline.png"))); // NOI18N
+        flatButton1.setText("  Ayuda");
+        jPanel1.add(flatButton1);
 
         banner.add(jPanel1);
 
         wallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/wallpaper1.jpg"))); // NOI18N
+        wallpaper.setMinimumSize(new java.awt.Dimension(0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -146,13 +215,52 @@ public class Main extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(banner, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(banner, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(wallpaper, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDevolucionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucionesActionPerformed
+        // TODO add your handling code here:
+        if (devo == null) devo = new FrameDevoluciones();
+        devo.setVisible(true);
+    }//GEN-LAST:event_btnDevolucionesActionPerformed
+
+    private void btnEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregaActionPerformed
+        // TODO add your handling code here:
+        if (entre == null) entre = new FrameEntrega();
+        entre.setVisible(true);
+    }//GEN-LAST:event_btnEntregaActionPerformed
+
+    private void btnGestionLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionLibrosActionPerformed
+        // TODO add your handling code here:
+        System.out.println("Gestion Libro");
+    }//GEN-LAST:event_btnGestionLibrosActionPerformed
+
+    private void btnGestionEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionEjemplarActionPerformed
+        // TODO add your handling code here:
+        System.out.println("Gestion Ejemplar");
+    }//GEN-LAST:event_btnGestionEjemplarActionPerformed
+
+    private void btnConsultaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaAlumnosActionPerformed
+        // TODO add your handling code here:
+        System.out.println("Gestion Alumno");
+    }//GEN-LAST:event_btnConsultaAlumnosActionPerformed
+
+    private void btnGestionesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGestionesMouseReleased
+        // TODO add your handling code here:
+        Dimension bannerSize = banner.getSize();
+        frameWidth = bannerSize.width;
+        frameHeight = bannerSize.height;
+        
+        System.out.println(frameWidth);
+        System.out.println(frameWidth/2);
+        //menuPopup.set
+        menuPopup.show(evt.getComponent(), 0, 62);
+    }//GEN-LAST:event_btnGestionesMouseReleased
 
     /**
      * @param args the command line arguments
@@ -209,12 +317,17 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel banner;
+    private javax.swing.JMenuItem btnConsultaAlumnos;
+    private com.mommoo.flat.button.FlatButton btnDevoluciones;
+    private com.mommoo.flat.button.FlatButton btnEntrega;
+    private javax.swing.JMenuItem btnGestionEjemplar;
+    private javax.swing.JMenuItem btnGestionLibros;
+    private com.mommoo.flat.button.FlatButton btnGestiones;
     private com.mommoo.flat.button.FlatButton flatButton1;
-    private com.mommoo.flat.button.FlatButton flatButton2;
-    private com.mommoo.flat.button.FlatButton flatButton3;
     private com.mommoo.flat.button.FlatButton flatButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPopupMenu menuPopup;
     private javax.swing.JLabel wallpaper;
     // End of variables declaration//GEN-END:variables
 }
