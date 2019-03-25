@@ -24,3 +24,5 @@ package Comunes;
 public class Estado {
     public static final int deteriorado = 0, usado = 1, nuevo = 2;
 }
+
+

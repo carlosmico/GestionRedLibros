@@ -5,7 +5,27 @@
  */
 package Vistas;
 
+import Comunes.DimensionesFrame;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -16,10 +36,47 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    public Main() {
+    public Main() throws IOException {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        
+        //Set the wallpaper image
+        
+        String icono = "";
+        BufferedImage img = null;
+        
+        if (netIsAvailable()){
+            System.out.println("Forma online");
+            icono = "https://atencepo.sirv.com/Images/wallpaper.jpg";
+            
+            try {
+                img = ImageIO.read(new URL(icono));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Forma offline");
+            icono = "../Imagenes/wallpaper1.jpg";
+            
+            try {
+                img = ImageIO.read(new File(icono));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Image dimg = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.heigh, Image.SCALE_SMOOTH);
+        ImageIcon imageIcon = new ImageIcon(dimg);
+        wallpaper.setIcon(imageIcon);
+        //this.setContentPane(wallpaper);
+        banner.setVisible(true);
+
+        /*
+         URL url = new URL(icono+"?scale.width=" + DimensionesFrame.width + "&scale.height=" + DimensionesFrame.heigh);
+         Image image = ImageIO.read(url);
+         wallpaper.setIcon(new ImageIcon(image));
+         */
     }
 
     /**
@@ -31,47 +88,67 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        banner = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        flatButton1 = new com.mommoo.flat.button.FlatButton();
+        flatButton2 = new com.mommoo.flat.button.FlatButton();
+        flatButton3 = new com.mommoo.flat.button.FlatButton();
+        flatButton4 = new com.mommoo.flat.button.FlatButton();
+        wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 598, Short.MAX_VALUE)
-        );
+        banner.setBackground(new java.awt.Color(58, 39, 35));
+        banner.setLayout(new java.awt.GridLayout(2, 1));
 
-        jMenu1.setText("Archivo");
-        jMenu1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jMenuBar1.add(jMenu1);
-        jMenuBar1.add(jMenu3);
+        jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Gestión Red Libros");
+        banner.add(jLabel1);
 
-        jMenu2.setText("Ayuda");
-        jMenu2.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jMenuBar1.add(jMenu2);
+        jPanel1.setBackground(new java.awt.Color(255, 0, 0));
+        jPanel1.setLayout(new java.awt.GridLayout(1, 4));
 
-        setJMenuBar(jMenuBar1);
+        flatButton1.setBackground(new java.awt.Color(58, 39, 35));
+        flatButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        flatButton1.setForeground(new java.awt.Color(204, 204, 204));
+        flatButton1.setText("Devoluciones");
+        jPanel1.add(flatButton1);
+
+        flatButton2.setBackground(new java.awt.Color(58, 39, 35));
+        flatButton2.setForeground(new java.awt.Color(204, 204, 204));
+        flatButton2.setText("Entregas");
+        jPanel1.add(flatButton2);
+
+        flatButton3.setBackground(new java.awt.Color(58, 39, 35));
+        flatButton3.setForeground(new java.awt.Color(204, 204, 204));
+        flatButton3.setText("Gestiónes");
+        jPanel1.add(flatButton3);
+
+        flatButton4.setBackground(new java.awt.Color(58, 39, 35));
+        flatButton4.setForeground(new java.awt.Color(204, 204, 204));
+        flatButton4.setText("Consultas");
+        jPanel1.add(flatButton4);
+
+        banner.add(jPanel1);
+
+        wallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/wallpaper1.jpg"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 551, Short.MAX_VALUE))
+            .addComponent(banner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(wallpaper, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(banner, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(wallpaper, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -107,16 +184,37 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                try {
+                    new Main().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
+    
+    private static boolean netIsAvailable() {
+        try {
+            final URL url = new URL("http://www.google.com");
+            final URLConnection conn = url.openConnection();
+            conn.connect();
+            conn.getInputStream().close();
+            return true;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            return false;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel banner;
+    private com.mommoo.flat.button.FlatButton flatButton1;
+    private com.mommoo.flat.button.FlatButton flatButton2;
+    private com.mommoo.flat.button.FlatButton flatButton3;
+    private com.mommoo.flat.button.FlatButton flatButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel wallpaper;
     // End of variables declaration//GEN-END:variables
 }
