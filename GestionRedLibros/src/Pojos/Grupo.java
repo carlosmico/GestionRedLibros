@@ -18,19 +18,35 @@
 package Pojos;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+
+//Imports Hibernate
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Carlos Micó
  */
 
+@Entity
+@Table(name = "grupos")
 public class Grupo implements Serializable{
+    
+    @Id
     private String codigo;
     private String nombre;
     private String ensenanza;
     private String turno;
     private String tutor_ppal;
+    
+    @OneToMany (mappedBy = "grupo")
+    private List<Alumno> alumnos;
     
     public Grupo(){
         
@@ -82,6 +98,14 @@ public class Grupo implements Serializable{
 
     public void setTutor_ppal(String tutor_ppal) {
         this.tutor_ppal = tutor_ppal;
+    }
+
+    public List<Alumno> getAlumnos() {
+        return alumnos;
+    }
+
+    public void setAlumnos(List<Alumno> alumnos) {
+        this.alumnos = alumnos;
     }
 
     @Override

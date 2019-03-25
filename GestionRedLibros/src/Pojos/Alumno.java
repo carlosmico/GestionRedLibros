@@ -23,6 +23,7 @@ import java.util.Objects;
 
 //Imports Hibernate
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -50,7 +51,10 @@ public class Alumno implements Serializable {
     private String municipio_nac;
     private String documento;
     private String email1;
-    private Curso curso;
+    
+    @Column (name = "curso")
+    private Curso curso_alumno;
+    
     private Grupo grupo;
 
     @OneToMany(mappedBy = "alumno")
@@ -63,7 +67,7 @@ public class Alumno implements Serializable {
 
     }
 
-    public Alumno(String nia, String nombre, String apellido1, String apellido2, String fecha_nac, String municipio_nac, String documento, String email1, Curso curso, Grupo grupo) {
+    public Alumno(String nia, String nombre, String apellido1, String apellido2, String fecha_nac, String municipio_nac, String documento, String email1, Curso curso_alumno, Grupo grupo) {
         this.nia = nia;
         this.nombre = nombre;
         this.apellido1 = apellido1;
@@ -72,7 +76,7 @@ public class Alumno implements Serializable {
         this.municipio_nac = municipio_nac;
         this.documento = documento;
         this.email1 = email1;
-        this.curso = curso;
+        this.curso_alumno = curso_alumno;
         this.grupo = grupo;
     }
 
@@ -141,11 +145,11 @@ public class Alumno implements Serializable {
     }
 
     public Curso getCurso() {
-        return curso;
+        return curso_alumno;
     }
 
     public void setCurso(Curso curso) {
-        this.curso = curso;
+        this.curso_alumno = curso;
     }
 
     public Grupo getGrupo() {
@@ -200,6 +204,6 @@ public class Alumno implements Serializable {
 
     @Override
     public String toString() {
-        return "Alumno{" + "nia=" + nia + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", fecha_nac=" + fecha_nac + ", municipio_nac=" + municipio_nac + ", documento=" + documento + ", email1=" + email1 + ", curso=" + curso + ", grupo=" + grupo + '}';
+        return "Alumno{" + "nia=" + nia + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", fecha_nac=" + fecha_nac + ", municipio_nac=" + municipio_nac + ", documento=" + documento + ", email1=" + email1 + ", curso=" + curso_alumno + ", grupo=" + grupo + '}';
     }
 }

@@ -18,17 +18,40 @@
 package Pojos;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+
+//Imports Hibernate
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Carlos Micó
  */
+
+@Entity
+@Table(name = "ejemplar")
 public class Ejemplar implements Serializable {
+    
+    @Id
     private String codigo;
+    
+    @ManyToOne
+    @JoinColumn (name = "codigo")
     private Libro libro;
+    
     private int estado;
     private boolean prestado;
+    
+    @OneToMany(mappedBy = "ejemplar")
+    private List<Historial> historiales;
     
     public Ejemplar(){
         
@@ -71,6 +94,14 @@ public class Ejemplar implements Serializable {
 
     public void setPrestado(boolean prestado) {
         this.prestado = prestado;
+    }
+
+    public List<Historial> getHistoriales() {
+        return historiales;
+    }
+
+    public void setHistoriales(List<Historial> historiales) {
+        this.historiales = historiales;
     }
 
     @Override

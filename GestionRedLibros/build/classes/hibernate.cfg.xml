@@ -29,5 +29,10 @@
     <mapping class="Pojos.Alumno"/>
     <mapping class="Pojos.Matricula"/>
     <mapping class="Pojos.Historial"/>
+    <mapping class="Pojos.Ejemplar"/>
+    <mapping class="Pojos.Libro"/>
+    <mapping class="Pojos.Contenido"/>
+    <mapping class="Pojos.Curso"/>
+    <mapping class="Pojos.Grupo"/>
   </session-factory>
 </hibernate-configuration>

@@ -19,29 +19,50 @@
 package Pojos;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Column;
+
+//Imports Hibernate
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Carlos Micó
  */
 
+@Entity
+@Table(name = "contenido")
 public class Contenido implements Serializable{
     
+    @Id
     private int id;
-    private String curso;
-    private String codigo;
+    
+    @ManyToOne
+    @JoinColumn (name = "codigo")
+    private Curso curso;
+    
+    @Column (name = "codigo")
+    private String codigo_contenido;
     private String ensenanza;
     private String nombre_cas;
     private String nombre_val;
+    
+    @OneToMany (mappedBy = "contenido")
+    private List<Libro> libros;
     
     public Contenido(){
         
     }
 
-    public Contenido(int id, String curso, String codigo, String ensenanza, String nombre_cas, String nombre_val) {
+    public Contenido(int id, Curso curso, String codigo, String ensenanza, String nombre_cas, String nombre_val) {
         this.id = id;
         this.curso = curso;
-        this.codigo = codigo;
+        this.codigo_contenido = codigo;
         this.ensenanza = ensenanza;
         this.nombre_cas = nombre_cas;
         this.nombre_val = nombre_val;
@@ -55,20 +76,20 @@ public class Contenido implements Serializable{
         this.id = id;
     }
 
-    public String getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(String curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 
     public String getCodigo() {
-        return codigo;
+        return codigo_contenido;
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo_contenido = codigo;
     }
 
     public String getEnsenanza() {
@@ -93,6 +114,14 @@ public class Contenido implements Serializable{
 
     public void setNombre_val(String nombre_val) {
         this.nombre_val = nombre_val;
+    }
+
+    public List<Libro> getLibros() {
+        return libros;
+    }
+
+    public void setLibros(List<Libro> libros) {
+        this.libros = libros;
     }
 
     @Override
@@ -122,6 +151,6 @@ public class Contenido implements Serializable{
 
     @Override
     public String toString() {
-        return "Contenido{" + "id=" + id + ", curso=" + curso + ", codigo=" + codigo + ", ensenanza=" + ensenanza + ", nombre_cas=" + nombre_cas + ", nombre_val=" + nombre_val + '}';
+        return "Contenido{" + "id=" + id + ", curso=" + curso + ", codigo=" + codigo_contenido + ", ensenanza=" + ensenanza + ", nombre_cas=" + nombre_cas + ", nombre_val=" + nombre_val + '}';
     }
 }
