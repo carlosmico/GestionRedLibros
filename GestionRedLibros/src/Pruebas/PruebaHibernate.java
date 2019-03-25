@@ -18,15 +18,27 @@ public class PruebaHibernate {
         session.beginTransaction();
 
         try {
-            Alumno objeto = (Alumno) session.get(Alumno.class, "1");
+            Alumno objeto = (Alumno) session.get(Alumno.class, "71230212");
 
-            System.out.println("Objeto recuperado: " + objeto.toString());
+            System.out.println("===================");
+            System.out.println("ALUMNO");
+            System.out.println("===================");
+            
+            System.out.println("Nombre: " + objeto.getNombre() + " " + objeto.getApellido1() + " " + objeto.getApellido2());
 
+            System.out.println("===================");
+            System.out.println("MATRICULAS");
+            System.out.println("===================");
+            
             System.out.println("N º Matriculas: " + objeto.getMatriculas().size());
 
             for (int i = 0; i < objeto.getMatriculas().size(); i++) {
                 objeto.getMatriculas().get(i).toString();
             }
+            
+            System.out.println("===================");
+            System.out.println("HISTORIAL");
+            System.out.println("===================");
             
             System.out.println("N º Historial: " + objeto.getHistoriales().size());
 
@@ -35,7 +47,13 @@ public class PruebaHibernate {
                 
                 System.out.println("Historial " + i + historial.toString());
                 
-                System.out.println("Ejemplar: " + historial.getEjemplar().toString());
+                System.out.println("Ejemplar: " + historial.getEjemplar().getCodigo());
+                
+                System.out.println("Libro del ejemplar: " + historial.getEjemplar().getLibro().getCodigo());
+                
+                System.out.println("Contenido del libro: " + historial.getEjemplar().getLibro().getContenido().getNombre_cas());
+                
+                System.out.println("Curso del contenido: " + historial.getEjemplar().getLibro().getContenido().getCurso().getNombre_cas());
             }
 
         } catch (Exception e) {

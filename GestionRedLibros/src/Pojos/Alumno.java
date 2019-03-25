@@ -52,7 +52,8 @@ public class Alumno implements Serializable {
     private String documento;
     private String email1;
     
-    @Column (name = "curso")
+    @ManyToOne
+    @JoinColumn (name = "curso")
     private Curso curso_alumno;
     
     private Grupo grupo;

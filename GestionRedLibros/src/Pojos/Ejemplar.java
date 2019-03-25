@@ -23,6 +23,7 @@ import java.util.Objects;
 
 //Imports Hibernate
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -37,14 +38,15 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "ejemplar")
+@Table(name = "ejemplares")
 public class Ejemplar implements Serializable {
     
     @Id
-    private String codigo;
+    @Column (name = "codigo")
+    private String codigo_ejemplar;
     
     @ManyToOne
-    @JoinColumn (name = "codigo")
+    @JoinColumn (name = "id_libro")
     private Libro libro;
     
     private int estado;
@@ -58,18 +60,18 @@ public class Ejemplar implements Serializable {
     }
 
     public Ejemplar(String codigo, Libro libro, int estado, boolean prestado) {
-        this.codigo = codigo;
+        this.codigo_ejemplar = codigo;
         this.libro = libro;
         this.estado = estado;
         this.prestado = prestado;
     }
 
     public String getCodigo() {
-        return codigo;
+        return codigo_ejemplar;
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo_ejemplar = codigo;
     }
 
     public Libro getLibro() {
@@ -107,7 +109,7 @@ public class Ejemplar implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 37 * hash + Objects.hashCode(this.codigo);
+        hash = 37 * hash + Objects.hashCode(this.codigo_ejemplar);
         return hash;
     }
 
@@ -123,7 +125,7 @@ public class Ejemplar implements Serializable {
             return false;
         }
         final Ejemplar other = (Ejemplar) obj;
-        if (!Objects.equals(this.codigo, other.codigo)) {
+        if (!Objects.equals(this.codigo_ejemplar, other.codigo_ejemplar)) {
             return false;
         }
         return true;
@@ -131,6 +133,6 @@ public class Ejemplar implements Serializable {
 
     @Override
     public String toString() {
-        return "Ejemplar{" + "codigo=" + codigo + ", libro=" + libro + ", estado=" + estado + ", prestado=" + prestado + '}';
+        return "Ejemplar{" + "codigo=" + codigo_ejemplar + ", libro=" + libro + ", estado=" + estado + ", prestado=" + prestado + '}';
     }
 }

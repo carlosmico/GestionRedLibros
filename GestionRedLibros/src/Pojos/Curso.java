@@ -20,6 +20,7 @@ package Pojos;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
 
 //Imports Hibernate
 import javax.persistence.Entity;
@@ -39,14 +40,16 @@ import javax.persistence.Table;
 public class Curso implements Serializable{
     
     @Id
-    private String codigo;
+    @Column (name = "codigo")
+    private String codigo_curso;
+    
     private String ensenanza;
     private String abreviatura;
     private String nombre_cas;
     private String nombre_val;
     private String idPadre;
     
-    @OneToMany (mappedBy = "curso")
+    @OneToMany (mappedBy = "curso_contenido")
     private List<Contenido> contenidos;
     
     @OneToMany (mappedBy = "curso_alumno")
@@ -57,7 +60,7 @@ public class Curso implements Serializable{
     }
 
     public Curso(String codigo, String ensenanza, String abreviatura, String nombre_cas, String nombre_val, String idPadre) {
-        this.codigo = codigo;
+        this.codigo_curso = codigo;
         this.ensenanza = ensenanza;
         this.abreviatura = abreviatura;
         this.nombre_cas = nombre_cas;
@@ -66,11 +69,11 @@ public class Curso implements Serializable{
     }
 
     public String getCodigo() {
-        return codigo;
+        return codigo_curso;
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo_curso = codigo;
     }
 
     public String getEnsenanza() {
@@ -132,7 +135,7 @@ public class Curso implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.codigo);
+        hash = 89 * hash + Objects.hashCode(this.codigo_curso);
         return hash;
     }
 
@@ -148,7 +151,7 @@ public class Curso implements Serializable{
             return false;
         }
         final Curso other = (Curso) obj;
-        if (!Objects.equals(this.codigo, other.codigo)) {
+        if (!Objects.equals(this.codigo_curso, other.codigo_curso)) {
             return false;
         }
         return true;
@@ -156,7 +159,7 @@ public class Curso implements Serializable{
 
     @Override
     public String toString() {
-        return "Curso{" + "codigo=" + codigo + ", ensenanza=" + ensenanza + ", abreviatura=" + abreviatura + ", nombre_cas=" + nombre_cas + ", nombre_val=" + nombre_val + ", idPadre=" + idPadre + '}';
+        return "Curso{" + "codigo=" + codigo_curso + ", ensenanza=" + ensenanza + ", abreviatura=" + abreviatura + ", nombre_cas=" + nombre_cas + ", nombre_val=" + nombre_val + ", idPadre=" + idPadre + '}';
     }
     
     
