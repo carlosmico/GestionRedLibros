@@ -63,11 +63,11 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jLabel1.setText("Devoluciones");
         jPanel1.add(jLabel1);
 
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         flatButton2.setBackground(new java.awt.Color(66, 47, 44));
         flatButton2.setForeground(new java.awt.Color(204, 204, 204));
-        flatButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/plus-circle-outline.png"))); // NOI18N
+        flatButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus-circle-outline.png"))); // NOI18N
         flatButton2.setText("  Nueva devolución");
         flatButton2.setMaximumSize(new java.awt.Dimension(268, 36));
         flatButton2.setMinimumSize(new java.awt.Dimension(268, 36));
@@ -75,7 +75,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         flatButton1.setBackground(new java.awt.Color(66, 47, 44));
         flatButton1.setForeground(new java.awt.Color(204, 204, 204));
-        flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/magnify.png"))); // NOI18N
+        flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
         flatButton1.setText("  Consultar devolución");
         jPanel2.add(flatButton1);
 

@@ -100,8 +100,8 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="banner" max="32767" attributes="0"/>
           <Component id="wallpaper" alignment="0" max="32767" attributes="0"/>
+          <Component id="banner" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -109,7 +109,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="banner" min="-2" pref="125" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="wallpaper" max="32767" attributes="0"/>
+              <Component id="wallpaper" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -168,7 +168,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/clipboard-arrow-down-outline.png"/>
+                  <Image iconType="3" name="/Imagenes/icons/clipboard-arrow-down-outline.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Devoluciones"/>
               </Properties>
@@ -185,7 +185,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/clipboard-arrow-up-outline.png"/>
+                  <Image iconType="3" name="/Imagenes/icons/clipboard-arrow-up-outline.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Entregas"/>
               </Properties>
@@ -202,7 +202,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/book-open-variant.png"/>
+                  <Image iconType="3" name="/Imagenes/icons/book-open-variant.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Gesti&#xf3;nes"/>
               </Properties>
@@ -219,7 +219,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/ballot-outline.png"/>
+                  <Image iconType="3" name="/Imagenes/icons/ballot-outline.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Opciones"/>
               </Properties>
@@ -230,7 +230,7 @@
                   <Color blue="2c" green="2f" red="42" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/help-circle-outline.png"/>
+                  <Image iconType="3" name="/Imagenes/icons/help-circle-outline.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Ayuda"/>
               </Properties>
@@ -241,11 +241,8 @@
     </Container>
     <Component class="javax.swing.JLabel" name="wallpaper">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Imagenes/wallpaper1.jpg"/>
-        </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[0, 0]"/>
+          <Dimension value="[1, 1]"/>
         </Property>
       </Properties>
     </Component>
