@@ -20,6 +20,7 @@ package Pojos;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
 
 //Imports Hibernate
 import javax.persistence.Entity;
@@ -39,11 +40,12 @@ import javax.persistence.Table;
 public class Libro implements Serializable{
     
     @Id
-    private String codigo;
+    @Column (name = "codigo")
+    private String codigo_libro;
     
     @ManyToOne
-    @JoinColumn (name = "codigo")
-    private Contenido contenido;
+    @JoinColumn (name = "contenido")
+    private Contenido contenido_libro;
     
     private String nombre;
     private String ISBN;
@@ -59,8 +61,8 @@ public class Libro implements Serializable{
     }
 
     public Libro(String codigo, Contenido contenido, String nombre, String ISBN, int unidades, boolean obsoleto, double precio) {
-        this.codigo = codigo;
-        this.contenido = contenido;
+        this.codigo_libro = codigo;
+        this.contenido_libro = contenido;
         this.nombre = nombre;
         this.ISBN = ISBN;
         this.unidades = unidades;
@@ -69,19 +71,19 @@ public class Libro implements Serializable{
     }
 
     public String getCodigo() {
-        return codigo;
+        return codigo_libro;
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo_libro = codigo;
     }
 
     public Contenido getContenido() {
-        return contenido;
+        return contenido_libro;
     }
 
     public void setContenido(Contenido contenido) {
-        this.contenido = contenido;
+        this.contenido_libro = contenido;
     }
 
     public String getNombre() {
@@ -135,7 +137,7 @@ public class Libro implements Serializable{
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 83 * hash + Objects.hashCode(this.codigo);
+        hash = 83 * hash + Objects.hashCode(this.codigo_libro);
         return hash;
     }
 
@@ -151,7 +153,7 @@ public class Libro implements Serializable{
             return false;
         }
         final Libro other = (Libro) obj;
-        if (!Objects.equals(this.codigo, other.codigo)) {
+        if (!Objects.equals(this.codigo_libro, other.codigo_libro)) {
             return false;
         }
         return true;
@@ -159,6 +161,6 @@ public class Libro implements Serializable{
 
     @Override
     public String toString() {
-        return "Libro{" + "codigo=" + codigo + ", contenido=" + contenido + ", nombre=" + nombre + ", ISBN=" + ISBN + ", unidades=" + unidades + ", obsoleto=" + obsoleto + ", precio=" + precio + '}';
+        return "Libro{" + "codigo=" + codigo_libro + ", contenido=" + contenido_libro + ", nombre=" + nombre + ", ISBN=" + ISBN + ", unidades=" + unidades + ", obsoleto=" + obsoleto + ", precio=" + precio + '}';
     }
 }

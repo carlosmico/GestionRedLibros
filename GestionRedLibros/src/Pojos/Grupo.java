@@ -20,6 +20,7 @@ package Pojos;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
 
 //Imports Hibernate
 import javax.persistence.Entity;
@@ -39,7 +40,9 @@ import javax.persistence.Table;
 public class Grupo implements Serializable{
     
     @Id
-    private String codigo;
+    @Column (name = "codigo")
+    private String codigo_grupo;
+    
     private String nombre;
     private String ensenanza;
     private String turno;
@@ -53,7 +56,7 @@ public class Grupo implements Serializable{
     }
 
     public Grupo(String codigo, String nombre, String ensenanza, String turno, String tutor_ppal) {
-        this.codigo = codigo;
+        this.codigo_grupo = codigo;
         this.nombre = nombre;
         this.ensenanza = ensenanza;
         this.turno = turno;
@@ -61,11 +64,11 @@ public class Grupo implements Serializable{
     }
 
     public String getCodigo() {
-        return codigo;
+        return codigo_grupo;
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo_grupo = codigo;
     }
 
     public String getNombre() {
@@ -111,7 +114,7 @@ public class Grupo implements Serializable{
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 41 * hash + Objects.hashCode(this.codigo);
+        hash = 41 * hash + Objects.hashCode(this.codigo_grupo);
         return hash;
     }
 
@@ -127,7 +130,7 @@ public class Grupo implements Serializable{
             return false;
         }
         final Grupo other = (Grupo) obj;
-        if (!Objects.equals(this.codigo, other.codigo)) {
+        if (!Objects.equals(this.codigo_grupo, other.codigo_grupo)) {
             return false;
         }
         return true;
@@ -135,6 +138,6 @@ public class Grupo implements Serializable{
 
     @Override
     public String toString() {
-        return "Grupo{" + "codigo=" + codigo + ", nombre=" + nombre + ", ensenanza=" + ensenanza + ", turno=" + turno + ", tutor_ppal=" + tutor_ppal + '}';
+        return "Grupo{" + "codigo=" + codigo_grupo + ", nombre=" + nombre + ", ensenanza=" + ensenanza + ", turno=" + turno + ", tutor_ppal=" + tutor_ppal + '}';
     }
 }

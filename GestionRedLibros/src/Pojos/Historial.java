@@ -46,7 +46,7 @@ public class Historial implements Serializable{
     private int id;
     
     @ManyToOne
-    @JoinColumn (name = "codigo")
+    @JoinColumn (name = "id_ejemplar")
     private Ejemplar ejemplar;
     
     @ManyToOne
@@ -56,7 +56,7 @@ public class Historial implements Serializable{
     private int curso_escolar;
     private int estado_inicial;
     private int estado_final;
-    private Date fecha_incial;
+    private Date fecha_inicial;
     private Date fecha_final;
     private String observaciones;
     
@@ -64,14 +64,14 @@ public class Historial implements Serializable{
         
     }
 
-    public Historial(int id, Ejemplar ejemplar, Alumno alumno, int curso_escolar, int estado_inicial, int estado_final, Date fecha_incial, Date fecha_final, String observaciones) {
+    public Historial(int id, Ejemplar ejemplar, Alumno alumno, int curso_escolar, int estado_inicial, int estado_final, Date fecha_inicial, Date fecha_final, String observaciones) {
         this.id = id;
         this.ejemplar = ejemplar;
         this.alumno = alumno;
         this.curso_escolar = curso_escolar;
         this.estado_inicial = estado_inicial;
         this.estado_final = estado_final;
-        this.fecha_incial = fecha_incial;
+        this.fecha_inicial = fecha_inicial;
         this.fecha_final = fecha_final;
         this.observaciones = observaciones;
     }
@@ -124,12 +124,12 @@ public class Historial implements Serializable{
         this.estado_final = estado_final;
     }
 
-    public Date getFecha_incial() {
-        return fecha_incial;
+    public Date getFecha_inicial() {
+        return fecha_inicial;
     }
 
-    public void setFecha_incial(Date fecha_incial) {
-        this.fecha_incial = fecha_incial;
+    public void setFecha_inicial(Date fecha_inicial) {
+        this.fecha_inicial = fecha_inicial;
     }
 
     public Date getFecha_final() {
@@ -150,6 +150,6 @@ public class Historial implements Serializable{
 
     @Override
     public String toString() {
-        return "Historial{" + "id=" + id + ", ejemplar=" + ejemplar + ", alumno=" + alumno + ", curso_escolar=" + curso_escolar + ", estado_inicial=" + estado_inicial + ", estado_final=" + estado_final + ", fecha_incial=" + fecha_incial + ", fecha_final=" + fecha_final + ", observaciones=" + observaciones + '}';
+        return "Historial{" + "id=" + id + ", ejemplar=" + ejemplar + ", alumno=" + alumno + ", curso_escolar=" + curso_escolar + ", estado_inicial=" + estado_inicial + ", estado_final=" + estado_final + ", fecha_incial=" + fecha_inicial + ", fecha_final=" + fecha_final + ", observaciones=" + observaciones + '}';
     }
 }

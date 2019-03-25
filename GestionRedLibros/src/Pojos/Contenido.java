@@ -42,17 +42,18 @@ public class Contenido implements Serializable{
     @Id
     private int id;
     
-    @ManyToOne
-    @JoinColumn (name = "codigo")
-    private Curso curso;
-    
     @Column (name = "codigo")
     private String codigo_contenido;
+    
+    @ManyToOne
+    @JoinColumn (name = "curso")
+    private Curso curso_contenido;
+    
     private String ensenanza;
     private String nombre_cas;
     private String nombre_val;
     
-    @OneToMany (mappedBy = "contenido")
+    @OneToMany (mappedBy = "contenido_libro")
     private List<Libro> libros;
     
     public Contenido(){
@@ -61,7 +62,7 @@ public class Contenido implements Serializable{
 
     public Contenido(int id, Curso curso, String codigo, String ensenanza, String nombre_cas, String nombre_val) {
         this.id = id;
-        this.curso = curso;
+        this.curso_contenido = curso;
         this.codigo_contenido = codigo;
         this.ensenanza = ensenanza;
         this.nombre_cas = nombre_cas;
@@ -77,11 +78,11 @@ public class Contenido implements Serializable{
     }
 
     public Curso getCurso() {
-        return curso;
+        return curso_contenido;
     }
 
     public void setCurso(Curso curso) {
-        this.curso = curso;
+        this.curso_contenido = curso;
     }
 
     public String getCodigo() {
@@ -151,6 +152,6 @@ public class Contenido implements Serializable{
 
     @Override
     public String toString() {
-        return "Contenido{" + "id=" + id + ", curso=" + curso + ", codigo=" + codigo_contenido + ", ensenanza=" + ensenanza + ", nombre_cas=" + nombre_cas + ", nombre_val=" + nombre_val + '}';
+        return "Contenido{" + "id=" + id + ", curso=" + curso_contenido + ", codigo=" + codigo_contenido + ", ensenanza=" + ensenanza + ", nombre_cas=" + nombre_cas + ", nombre_val=" + nombre_val + '}';
     }
 }
