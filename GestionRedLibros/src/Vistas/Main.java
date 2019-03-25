@@ -6,6 +6,7 @@
 package Vistas;
 
 import Comunes.DimensionesFrame;
+import Comunes.getInternetStatus;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -37,8 +38,9 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     
-    FrameDevoluciones devo = null;
-    FrameEntrega entre = null;
+    FrameDevoluciones gesDevoluciones = null;
+    FrameEntrega gesEntrega = null;
+    FrameLibro gesLibro = null;
     
     int frameWidth, frameHeight;
     
@@ -50,16 +52,10 @@ public class Main extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
         String icono = "";
         BufferedImage img = null;
-        
-        if (netIsAvailable()){
-            System.out.println("Forma online");
-            icono = "https://atencepo.sirv.com/Images/wallpaper.jpg?scale.width=" + DimensionesFrame.width + "&canvas.height=" + DimensionesFrame.height;
-        } else {
-            System.out.println("Forma offline");
-            icono = "../Imagenes/wallpaper1.jpg";
-        }
-        URL url = new URL(icono);
-        ImageIcon imageIcon = new ImageIcon(url);
+        icono = "../Imagenes/wallpaper.jpg";
+        img = ImageIO.read(new File(icono));
+        Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
+        ImageIcon imageIcon = new ImageIcon(image);
         wallpaper.setIcon(imageIcon);
         //this.setContentPane(wallpaper);
         banner.setVisible(true);
@@ -213,19 +209,20 @@ public class Main extends javax.swing.JFrame {
 
     private void btnDevolucionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucionesActionPerformed
         // TODO add your handling code here:
-        if (devo == null) devo = new FrameDevoluciones();
-        devo.setVisible(true);
+        if (gesDevoluciones == null) gesDevoluciones = new FrameDevoluciones();
+        gesDevoluciones.setVisible(true);
     }//GEN-LAST:event_btnDevolucionesActionPerformed
 
     private void btnEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregaActionPerformed
         // TODO add your handling code here:
-        if (entre == null) entre = new FrameEntrega();
-        entre.setVisible(true);
+        if (gesEntrega == null) gesEntrega = new FrameEntrega();
+        gesEntrega.setVisible(true);
     }//GEN-LAST:event_btnEntregaActionPerformed
 
     private void btnGestionLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionLibrosActionPerformed
         // TODO add your handling code here:
-        System.out.println("Gestion Libro");
+        if (gesLibro == null) gesLibro = new FrameLibro();
+        gesLibro.setVisible(true);
     }//GEN-LAST:event_btnGestionLibrosActionPerformed
 
     private void btnGestionEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionEjemplarActionPerformed
@@ -280,20 +277,6 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         });
-    }
-    
-    private static boolean netIsAvailable() {
-        try {
-            final URL url = new URL("http://www.google.com");
-            final URLConnection conn = url.openConnection();
-            conn.connect();
-            conn.getInputStream().close();
-            return true;
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            return false;
-        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
