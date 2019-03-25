@@ -82,7 +82,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/plus-circle-outline.png"/>
+                  <Image iconType="3" name="/Imagenes/icons/plus-circle-outline.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Nueva devoluci&#xf3;n"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -102,7 +102,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/magnify.png"/>
+                  <Image iconType="3" name="/Imagenes/icons/magnify.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Consultar devoluci&#xf3;n"/>
               </Properties>
