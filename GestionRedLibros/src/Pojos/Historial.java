@@ -21,14 +21,38 @@ import Comunes.Estado;
 import java.io.Serializable;
 import java.util.Date;
 
+//Imports Hibernate
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 /**
  *
  * @author Carlos Micó
  */
+
+@Entity
+@Table(name = "historial")
 public class Historial implements Serializable{
+    
+    private static final long serialVersionUID = -5514760462301220827L;
+    
+    @Id
     private int id;
+    
+    @ManyToOne
+    @JoinColumn (name = "codigo")
     private Ejemplar ejemplar;
+    
+    @ManyToOne
+    @JoinColumn (name = "id_alumno")
     private Alumno alumno;
+    
     private int curso_escolar;
     private int estado_inicial;
     private int estado_final;
