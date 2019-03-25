@@ -18,20 +18,39 @@
 package Pojos;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+
+//Imports Hibernate
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Carlos Micó
  */
 
+@Entity
+@Table(name = "cursos")
 public class Curso implements Serializable{
+    
+    @Id
     private String codigo;
     private String ensenanza;
     private String abreviatura;
     private String nombre_cas;
     private String nombre_val;
     private String idPadre;
+    
+    @OneToMany (mappedBy = "curso")
+    private List<Contenido> contenidos;
+    
+    @OneToMany (mappedBy = "curso_alumno")
+    private List<Alumno> alumnos;
     
     public Curso(){
         
@@ -92,6 +111,22 @@ public class Curso implements Serializable{
 
     public void setIdPadre(String idPadre) {
         this.idPadre = idPadre;
+    }
+
+    public List<Contenido> getContenidos() {
+        return contenidos;
+    }
+
+    public void setContenidos(List<Contenido> contenidos) {
+        this.contenidos = contenidos;
+    }
+
+    public List<Alumno> getAlumnos() {
+        return alumnos;
+    }
+
+    public void setAlumnos(List<Alumno> alumnos) {
+        this.alumnos = alumnos;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package Pruebas;
 
 import Pojos.Alumno;
+import Pojos.Historial;
 import Pojos.Matricula;
 import java.util.Scanner;
 
@@ -21,19 +22,22 @@ public class PruebaHibernate {
 
             System.out.println("Objeto recuperado: " + objeto.toString());
 
-            System.out.println("N º Matriculas: " + objeto.getMatriculas());
+            System.out.println("N º Matriculas: " + objeto.getMatriculas().size());
 
             for (int i = 0; i < objeto.getMatriculas().size(); i++) {
                 objeto.getMatriculas().get(i).toString();
             }
             
-            System.out.println("N º Historial: " + objeto.getHistoriales());
+            System.out.println("N º Historial: " + objeto.getHistoriales().size());
 
             for (int i = 0; i < objeto.getHistoriales().size(); i++) {
-                objeto.getHistoriales().get(i).toString();
+                Historial historial = objeto.getHistoriales().get(i);
+                
+                System.out.println("Historial " + i + historial.toString());
+                
+                System.out.println("Ejemplar: " + historial.getEjemplar().toString());
             }
 
-            //System.out.println("Alumno de la matricula: " + m.getAlumno().toString());
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("No existe ningún objeto con ese id.");

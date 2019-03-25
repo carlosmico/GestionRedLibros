@@ -18,20 +18,41 @@
 package Pojos;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+
+//Imports Hibernate
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Carlos Micó
  */
+
+@Entity
+@Table(name = "libros")
 public class Libro implements Serializable{
+    
+    @Id
     private String codigo;
+    
+    @ManyToOne
+    @JoinColumn (name = "codigo")
     private Contenido contenido;
+    
     private String nombre;
     private String ISBN;
     private int unidades;
     private boolean obsoleto;
     private double precio;
+    
+    @OneToMany (mappedBy = "libro")
+    private List<Ejemplar> ejemplares;
     
     public Libro(){
         
@@ -101,6 +122,14 @@ public class Libro implements Serializable{
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    public List<Ejemplar> getEjemplares() {
+        return ejemplares;
+    }
+
+    public void setEjemplares(List<Ejemplar> ejemplares) {
+        this.ejemplares = ejemplares;
     }
 
     @Override
