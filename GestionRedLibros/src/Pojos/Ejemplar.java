@@ -41,6 +41,8 @@ import javax.persistence.Table;
 @Table(name = "ejemplares")
 public class Ejemplar implements Serializable {
     
+    private String id;
+    
     @Id
     @Column (name = "codigo")
     private String codigo_ejemplar;
@@ -61,6 +63,7 @@ public class Ejemplar implements Serializable {
 
     public Ejemplar(String codigo, Libro libro, int estado, boolean prestado) {
         this.codigo_ejemplar = codigo;
+        this.id = this.codigo_ejemplar;
         this.libro = libro;
         this.estado = estado;
         this.prestado = prestado;
@@ -72,6 +75,7 @@ public class Ejemplar implements Serializable {
 
     public void setCodigo(String codigo) {
         this.codigo_ejemplar = codigo;
+        this.id = this.codigo_ejemplar;
     }
 
     public Libro getLibro() {
