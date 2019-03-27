@@ -80,6 +80,9 @@
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[960, 0]"/>
     </Property>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[970, 512]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -107,8 +110,8 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="banner" min="-2" pref="125" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="banner" min="-2" pref="131" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="wallpaper" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -151,6 +154,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
             <Property name="columns" type="int" value="4"/>
+            <Property name="horizontalGap" type="int" value="5"/>
             <Property name="rows" type="int" value="1"/>
           </Layout>
           <SubComponents>
@@ -171,6 +175,7 @@
                   <Image iconType="3" name="/Imagenes/icons/clipboard-arrow-down-outline.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Devoluciones"/>
+                <Property name="cornerRound" type="int" value="10"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDevolucionesActionPerformed"/>
@@ -188,6 +193,7 @@
                   <Image iconType="3" name="/Imagenes/icons/clipboard-arrow-up-outline.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Entregas"/>
+                <Property name="cornerRound" type="int" value="10"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEntregaActionPerformed"/>
@@ -205,9 +211,11 @@
                   <Image iconType="3" name="/Imagenes/icons/book-open-variant.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Gesti&#xf3;nes"/>
+                <Property name="cornerRound" type="int" value="10"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnGestionesMouseReleased"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGestionesActionPerformed"/>
               </Events>
             </Component>
             <Component class="com.mommoo.flat.button.FlatButton" name="flatButton4">
@@ -222,6 +230,7 @@
                   <Image iconType="3" name="/Imagenes/icons/ballot-outline.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Opciones"/>
+                <Property name="cornerRound" type="int" value="10"/>
               </Properties>
             </Component>
             <Component class="com.mommoo.flat.button.FlatButton" name="flatButton1">
@@ -233,6 +242,7 @@
                   <Image iconType="3" name="/Imagenes/icons/help-circle-outline.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Ayuda"/>
+                <Property name="cornerRound" type="int" value="10"/>
               </Properties>
             </Component>
           </SubComponents>

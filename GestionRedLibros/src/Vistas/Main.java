@@ -40,9 +40,7 @@ public class Main extends javax.swing.JFrame {
     
     FrameDevoluciones gesDevoluciones = null;
     FrameEntrega gesEntrega = null;
-    FrameLibro gesLibro = null;
-    
-    int frameWidth, frameHeight;
+    FrameInputLibro inputLibro = null;
     
     public Main() throws IOException {
         initComponents();
@@ -57,7 +55,6 @@ public class Main extends javax.swing.JFrame {
         Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(image);
         wallpaper.setIcon(imageIcon);
-        //this.setContentPane(wallpaper);
         banner.setVisible(true);
 //</editor-fold>
     }
@@ -126,6 +123,7 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión Red Libros");
         setMinimumSize(new java.awt.Dimension(960, 0));
+        setPreferredSize(new java.awt.Dimension(970, 512));
 
         banner.setBackground(new java.awt.Color(58, 39, 35));
         banner.setLayout(new java.awt.GridLayout(2, 1));
@@ -138,13 +136,14 @@ public class Main extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(58, 39, 35));
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 37));
-        jPanel1.setLayout(new java.awt.GridLayout(1, 4));
+        jPanel1.setLayout(new java.awt.GridLayout(1, 4, 5, 0));
 
         btnDevoluciones.setBackground(new java.awt.Color(66, 47, 44));
         btnDevoluciones.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
         btnDevoluciones.setForeground(new java.awt.Color(204, 204, 204));
         btnDevoluciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-down-outline.png"))); // NOI18N
         btnDevoluciones.setText("  Devoluciones");
+        btnDevoluciones.setCornerRound(10);
         btnDevoluciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDevolucionesActionPerformed(evt);
@@ -156,6 +155,7 @@ public class Main extends javax.swing.JFrame {
         btnEntrega.setForeground(new java.awt.Color(204, 204, 204));
         btnEntrega.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up-outline.png"))); // NOI18N
         btnEntrega.setText("  Entregas");
+        btnEntrega.setCornerRound(10);
         btnEntrega.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEntregaActionPerformed(evt);
@@ -167,9 +167,15 @@ public class Main extends javax.swing.JFrame {
         btnGestiones.setForeground(new java.awt.Color(204, 204, 204));
         btnGestiones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/book-open-variant.png"))); // NOI18N
         btnGestiones.setText("  Gestiónes");
+        btnGestiones.setCornerRound(10);
         btnGestiones.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 btnGestionesMouseReleased(evt);
+            }
+        });
+        btnGestiones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestionesActionPerformed(evt);
             }
         });
         jPanel1.add(btnGestiones);
@@ -178,11 +184,13 @@ public class Main extends javax.swing.JFrame {
         flatButton4.setForeground(new java.awt.Color(204, 204, 204));
         flatButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/ballot-outline.png"))); // NOI18N
         flatButton4.setText("  Opciones");
+        flatButton4.setCornerRound(10);
         jPanel1.add(flatButton4);
 
         flatButton1.setBackground(new java.awt.Color(66, 47, 44));
         flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/help-circle-outline.png"))); // NOI18N
         flatButton1.setText("  Ayuda");
+        flatButton1.setCornerRound(10);
         jPanel1.add(flatButton1);
 
         banner.add(jPanel1);
@@ -199,8 +207,8 @@ public class Main extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(banner, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(banner, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(wallpaper, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -221,8 +229,12 @@ public class Main extends javax.swing.JFrame {
 
     private void btnGestionLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionLibrosActionPerformed
         // TODO add your handling code here:
-        if (gesLibro == null) gesLibro = new FrameLibro();
-        gesLibro.setVisible(true);
+        if (inputLibro == null) inputLibro = new FrameInputLibro();
+        if (!inputLibro.isVisible()) {
+            inputLibro = null;
+            inputLibro = new FrameInputLibro();
+        }
+        inputLibro.setVisible(true);
     }//GEN-LAST:event_btnGestionLibrosActionPerformed
 
     private void btnGestionEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionEjemplarActionPerformed
@@ -237,8 +249,12 @@ public class Main extends javax.swing.JFrame {
 
     private void btnGestionesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGestionesMouseReleased
         // TODO add your handling code here:
-        menuPopup.show(evt.getComponent(), 0, 62);
+        menuPopup.show(evt.getComponent(), 0, 66);
     }//GEN-LAST:event_btnGestionesMouseReleased
+
+    private void btnGestionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGestionesActionPerformed
 
     /**
      * @param args the command line arguments
