@@ -39,6 +39,8 @@ import javax.persistence.Table;
 @Table(name = "cursos")
 public class Curso implements Serializable{
     
+    private String id;
+    
     @Id
     @Column (name = "codigo")
     private String codigo_curso;
@@ -61,6 +63,7 @@ public class Curso implements Serializable{
 
     public Curso(String codigo, String ensenanza, String abreviatura, String nombre_cas, String nombre_val, String idPadre) {
         this.codigo_curso = codigo;
+        this.id=codigo_curso;
         this.ensenanza = ensenanza;
         this.abreviatura = abreviatura;
         this.nombre_cas = nombre_cas;
@@ -74,6 +77,7 @@ public class Curso implements Serializable{
 
     public void setCodigo(String codigo) {
         this.codigo_curso = codigo;
+        this.id=codigo_curso;
     }
 
     public String getEnsenanza() {

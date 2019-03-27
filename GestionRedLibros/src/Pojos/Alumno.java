@@ -42,6 +42,8 @@ public class Alumno implements Serializable {
 
     private static final long serialVersionUID = -5514760464301220827L;
 
+    private String id;
+    
     @Id
     private String nia;
     private String nombre;
@@ -70,6 +72,7 @@ public class Alumno implements Serializable {
 
     public Alumno(String nia, String nombre, String apellido1, String apellido2, String fecha_nac, String municipio_nac, String documento, String email1, Curso curso_alumno, Grupo grupo) {
         this.nia = nia;
+        this.id = this.nia;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
@@ -87,6 +90,7 @@ public class Alumno implements Serializable {
 
     public void setNia(String nia) {
         this.nia = nia;
+        this.id = this.nia;
     }
 
     public String getNombre() {
@@ -205,6 +209,6 @@ public class Alumno implements Serializable {
 
     @Override
     public String toString() {
-        return "Alumno{" + "nia=" + nia + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", fecha_nac=" + fecha_nac + ", municipio_nac=" + municipio_nac + ", documento=" + documento + ", email1=" + email1 + ", curso=" + curso_alumno + ", grupo=" + grupo + '}';
+        return "Alumno{" + "id=" + id + ", nia=" + nia + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", fecha_nac=" + fecha_nac + ", municipio_nac=" + municipio_nac + ", documento=" + documento + ", email1=" + email1 + ", curso=" + curso_alumno + ", grupo=" + grupo + '}';
     }
 }

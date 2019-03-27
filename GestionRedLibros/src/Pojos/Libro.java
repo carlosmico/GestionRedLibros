@@ -39,6 +39,8 @@ import javax.persistence.Table;
 @Table(name = "libros")
 public class Libro implements Serializable{
     
+    private String id;
+    
     @Id
     @Column (name = "codigo")
     private String codigo_libro;
@@ -62,6 +64,7 @@ public class Libro implements Serializable{
 
     public Libro(String codigo, Contenido contenido, String nombre, String ISBN, int unidades, boolean obsoleto, double precio) {
         this.codigo_libro = codigo;
+        this.id = this.codigo_libro;
         this.contenido_libro = contenido;
         this.nombre = nombre;
         this.ISBN = ISBN;
@@ -76,6 +79,7 @@ public class Libro implements Serializable{
 
     public void setCodigo(String codigo) {
         this.codigo_libro = codigo;
+        this.id = this.codigo_libro;
     }
 
     public Contenido getContenido() {
@@ -110,7 +114,7 @@ public class Libro implements Serializable{
         this.unidades = unidades;
     }
 
-    public boolean isObsoleto() {
+    public boolean getObsoleto() {
         return obsoleto;
     }
 
