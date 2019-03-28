@@ -18,7 +18,9 @@
 package Vistas;
 
 import Comunes.colores;
+import Daos.DaoCurso;
 import Daos.DaoLibro;
+import Pojos.Curso;
 import Pojos.Libro;
 import Renders.comboBoxRender;
 import java.awt.Color;
@@ -28,6 +30,7 @@ import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.DefaultListCellRenderer;
@@ -35,6 +38,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.SwingWorker;
 import javax.swing.border.Border;
 
 /**
@@ -57,10 +61,12 @@ public class FrameInputLibro extends javax.swing.JFrame {
     public boolean buscquedaPorCodigo = true;
 
     private FrameLibro gestLibro = null;
+    private FrameCarga frameCarga = null;
 
     DaoLibro daoLibro;
+    DaoCurso daoCurso;
 
-    List<Libro> listaLibros;
+    private List<Libro> listaLibros;
 
     public FrameInputLibro() {
         initComponents();
@@ -68,6 +74,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         daoLibro = new DaoLibro();
+        daoCurso = new DaoCurso();
 
         //<editor-fold defaultstate="collapsed" desc="configuracion Combobox">
         cbCurso.setUI(new comboBoxRender());
@@ -243,7 +250,14 @@ public class FrameInputLibro extends javax.swing.JFrame {
             }
         });
 
-        cbCurso.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCurso.setBackground(new java.awt.Color(51, 51, 51));
+        cbCurso.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        cbCurso.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar curso" }));
+        cbCurso.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbCursoItemStateChanged(evt);
+            }
+        });
 
         jlistResultadoLibros.setBackground(new java.awt.Color(239, 235, 233));
         jlistResultadoLibros.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -262,14 +276,14 @@ public class FrameInputLibro extends javax.swing.JFrame {
             .addGroup(bodyListadoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(bodyListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(bodyListadoLayout.createSequentialGroup()
-                        .addComponent(textNombreLibro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1)
                     .addGroup(bodyListadoLayout.createSequentialGroup()
                         .addComponent(textTitle1)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                    .addGroup(bodyListadoLayout.createSequentialGroup()
+                        .addComponent(textNombreLibro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         bodyListadoLayout.setVerticalGroup(
@@ -382,7 +396,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
             textNombreLibro.setForeground(new Color(102, 102, 102));
         }
 
-        filtroListaLibro(textNombreLibro.getText());
+        filtroListaLibro(textNombreLibro.getText(), cbCurso.getSelectedItem().toString());
     }//GEN-LAST:event_textNombreLibroKeyReleased
 
     private void textNombreLibroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroKeyPressed
@@ -421,6 +435,11 @@ public class FrameInputLibro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_textCodigoLibroKeyPressed
 
+    private void cbCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoItemStateChanged
+        // TODO add your handling code here:
+        filtroListaLibro(textNombreLibro.getText(), cbCurso.getSelectedItem().toString());
+    }//GEN-LAST:event_cbCursoItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -458,23 +477,49 @@ public class FrameInputLibro extends javax.swing.JFrame {
 
     public void setModoDeBusqueda(boolean modoBusqueda) {
         if (modoBusqueda) {
+            //Por codigo
             bodyCode.setVisible(modoBusqueda);
             bodyListado.setVisible(!modoBusqueda);
             btnChangeMethod.setText("Listado de libros");
+            this.pack();
         } else {
-            listaLibros = daoLibro.buscarTodos();
+            //Por nombre
 
-            DefaultListModel listModel = new DefaultListModel();
-            for (int i = 0; i < listaLibros.size(); i++) {
-                listModel.addElement(listaLibros.get(i).getNombre());
-            }
-            jlistResultadoLibros.setModel(listModel);
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
+                protected Void doInBackground() throws InterruptedException {
+                    listaLibros = daoLibro.buscarTodos();
+                    return null;
+                }
 
-            bodyCode.setVisible(modoBusqueda);
-            bodyListado.setVisible(!modoBusqueda);
-            btnChangeMethod.setText("Buscar por código");
+                protected void process(List<Integer> chunks) {
+                    //int selection = chunks.get(chunks.size() - 1);
+                    //btn.setText("long task up to " + selection + "%");
+                }
+
+                protected void done() {
+                    //Rellenamos la lista de los libros
+                    filtroListaLibro(textNombreLibro.getText(), cbCurso.getSelectedItem().toString());
+
+                    //Rellenamos la lista de los cursos
+                    List<Curso> listaCursos = daoCurso.buscarTodos();
+
+                    for (int i = 0; i < listaCursos.size(); i++) {
+                        cbCurso.addItem(listaCursos.get(i).getAbreviatura() + " - " + listaCursos.get(i).getNombre_cas());
+                    }
+
+                    bodyCode.setVisible(modoBusqueda);
+                    bodyListado.setVisible(!modoBusqueda);
+                    btnChangeMethod.setText("Buscar por código");
+                    
+                    pack();
+                    
+                    frameCarga.dispose();
+                }
+            };
+            worker.execute();
+            frameCarga = new FrameCarga();
+            frameCarga.setVisible(true);
         }
-        this.pack();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -508,14 +553,53 @@ public class FrameInputLibro extends javax.swing.JFrame {
         gestLibro.setVisible(true);
     }
 
-    private void filtroListaLibro(String text) {
-        List<Libro> listaFiltroLibros;
-        if (text.equals("Escribe nombre del libro...")) {
-            //Si el valor el por defecto
-            asignarModeloToList(jlistResultadoLibros, listaLibros);
+    private void filtroListaLibro(String textoNombre, String textoCurso) {
+        List<Libro> listaFiltroLibros = new ArrayList<>();
+
+        String n, c, resFiltro = "";
+
+        //<editor-fold defaultstate="collapsed" desc="Clasificacion del filtro">
+        if (textoNombre.equals("Escribe nombre del libro...")) {
+            n = "0";
         } else {
-            //Si hacemos la busqueda personalizada
-            listaFiltroLibros = listaLibros.stream().filter(libro -> libro.getNombre().contains(text)).collect(Collectors.toList());
+            n = "1";
+        }
+
+        if (textoCurso.equals("Seleccionar curso")) {
+            c = "0";
+        } else {
+            c = "1";
+        }
+
+        resFiltro = n + c;
+        //</editor-fold>
+
+        if (listaLibros.size() > 0) {
+            jlistResultadoLibros.setEnabled(true);
+            switch (resFiltro) {
+                case "00":
+                    //Se muestran todos los libros de todos los cursos
+                    listaFiltroLibros = listaLibros;
+                    asignarModeloToList(jlistResultadoLibros, listaFiltroLibros);
+                    break;
+
+                case "01":
+                    //Se muestran los libros del curso seleccionado
+                    listaFiltroLibros = listaLibros.stream().filter(libro -> (libro.getContenido().getCurso().getAbreviatura().toUpperCase() + " - " + libro.getContenido().getCurso().getNombre_cas()).equals(textoCurso.toUpperCase())).collect(Collectors.toList());
+                    break;
+
+                case "10":
+                    //Se seleccionan los libros del nombre escrito
+                    listaFiltroLibros = listaLibros.stream().filter(libro -> libro.getNombre().toUpperCase().contains(textoNombre.toUpperCase())).collect(Collectors.toList());
+                    break;
+
+                case "11":
+                    //se seleccionan los libros del curso seleccionado con el nombre escrito
+                    listaFiltroLibros = listaLibros.stream().filter(libro -> libro.getNombre().toUpperCase().contains(textoNombre.toUpperCase())).collect(Collectors.toList());
+                    listaFiltroLibros = listaFiltroLibros.stream().filter(libro -> (libro.getContenido().getCurso().getAbreviatura().toUpperCase() + " - " + libro.getContenido().getCurso().getNombre_cas()).equals(textoCurso.toUpperCase())).collect(Collectors.toList());
+                    break;
+            }
+
             if (listaFiltroLibros.size() > 0) {
                 asignarModeloToList(jlistResultadoLibros, listaFiltroLibros);
             } else {
@@ -523,6 +607,11 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 listModel.addElement("No existen libros con este nombre");
                 jlistResultadoLibros.setModel(listModel);
             }
+        } else {
+            DefaultListModel listModel = new DefaultListModel();
+            listModel.addElement("No existen libros en la base de datos");
+            jlistResultadoLibros.setModel(listModel);
+            jlistResultadoLibros.setEnabled(false);
         }
     }
 
