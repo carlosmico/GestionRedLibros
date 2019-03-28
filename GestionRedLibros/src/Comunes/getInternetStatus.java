@@ -30,7 +30,7 @@ public class getInternetStatus {
     
     public static boolean isAvailable() {
         try {
-            final URL url = new URL("http://www.google.com");
+            final URL url = new URL("http://10.1.1.41");
             final URLConnection conn = url.openConnection();
             conn.connect();
             conn.getInputStream().close();

@@ -18,6 +18,8 @@
 package Vistas;
 
 import Comunes.colores;
+import Daos.DaoLibro;
+import Pojos.Libro;
 import Renders.comboBoxRender;
 import java.awt.Color;
 import java.awt.Component;
@@ -26,7 +28,10 @@ import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -53,10 +58,16 @@ public class FrameInputLibro extends javax.swing.JFrame {
 
     private FrameLibro gestLibro = null;
 
+    DaoLibro daoLibro;
+
+    List<Libro> listaLibros;
+
     public FrameInputLibro() {
         initComponents();
         setModoDeBusqueda(buscquedaPorCodigo);
         this.setLocationRelativeTo(null);
+
+        daoLibro = new DaoLibro();
 
         //<editor-fold defaultstate="collapsed" desc="configuracion Combobox">
         cbCurso.setUI(new comboBoxRender());
@@ -78,6 +89,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
             }
         });
 //</editor-fold>
+
     }
 
     /**
@@ -101,7 +113,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         textNombreLibro = new javax.swing.JTextField();
         cbCurso = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jlistResultadoLibros = new javax.swing.JList();
         botonera = new javax.swing.JPanel();
         btnCancel = new com.mommoo.flat.button.FlatButton();
         btnChangeMethod = new com.mommoo.flat.button.FlatButton();
@@ -118,7 +130,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Devoluciones");
+        jLabel1.setText("Gestión libro");
 
         btnNew.setBackground(new java.awt.Color(66, 47, 44));
         btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png"))); // NOI18N
@@ -233,15 +245,15 @@ public class FrameInputLibro extends javax.swing.JFrame {
 
         cbCurso.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jList1.setBackground(new java.awt.Color(239, 235, 233));
-        jList1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jList1.setForeground(new java.awt.Color(51, 51, 51));
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        jlistResultadoLibros.setBackground(new java.awt.Color(239, 235, 233));
+        jlistResultadoLibros.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jlistResultadoLibros.setForeground(new java.awt.Color(51, 51, 51));
+        jlistResultadoLibros.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(jlistResultadoLibros);
 
         javax.swing.GroupLayout bodyListadoLayout = new javax.swing.GroupLayout(bodyListado);
         bodyListado.setLayout(bodyListadoLayout);
@@ -369,6 +381,8 @@ public class FrameInputLibro extends javax.swing.JFrame {
             textNombreLibro.setText("Escribe nombre del libro...");
             textNombreLibro.setForeground(new Color(102, 102, 102));
         }
+
+        filtroListaLibro(textNombreLibro.getText());
     }//GEN-LAST:event_textNombreLibroKeyReleased
 
     private void textNombreLibroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroKeyPressed
@@ -448,6 +462,14 @@ public class FrameInputLibro extends javax.swing.JFrame {
             bodyListado.setVisible(!modoBusqueda);
             btnChangeMethod.setText("Listado de libros");
         } else {
+            listaLibros = daoLibro.buscarTodos();
+
+            DefaultListModel listModel = new DefaultListModel();
+            for (int i = 0; i < listaLibros.size(); i++) {
+                listModel.addElement(listaLibros.get(i).getNombre());
+            }
+            jlistResultadoLibros.setModel(listModel);
+
             bodyCode.setVisible(modoBusqueda);
             bodyListado.setVisible(!modoBusqueda);
             btnChangeMethod.setText("Buscar por código");
@@ -466,8 +488,8 @@ public class FrameInputLibro extends javax.swing.JFrame {
     private javax.swing.JComboBox cbCurso;
     private javax.swing.JPanel head;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList jlistResultadoLibros;
     private javax.swing.JTextField textCodigoLibro;
     private javax.swing.JTextField textNombreLibro;
     private javax.swing.JLabel textTitle;
@@ -484,5 +506,31 @@ public class FrameInputLibro extends javax.swing.JFrame {
             gestLibro = new FrameLibro(buscquedaPorCodigo, codigo);
         }
         gestLibro.setVisible(true);
+    }
+
+    private void filtroListaLibro(String text) {
+        List<Libro> listaFiltroLibros;
+        if (text.equals("Escribe nombre del libro...")) {
+            //Si el valor el por defecto
+            asignarModeloToList(jlistResultadoLibros, listaLibros);
+        } else {
+            //Si hacemos la busqueda personalizada
+            listaFiltroLibros = listaLibros.stream().filter(libro -> libro.getNombre().contains(text)).collect(Collectors.toList());
+            if (listaFiltroLibros.size() > 0) {
+                asignarModeloToList(jlistResultadoLibros, listaFiltroLibros);
+            } else {
+                DefaultListModel listModel = new DefaultListModel();
+                listModel.addElement("No existen libros con este nombre");
+                jlistResultadoLibros.setModel(listModel);
+            }
+        }
+    }
+
+    private void asignarModeloToList(JList jlist, List<Libro> lista) {
+        DefaultListModel listModel = new DefaultListModel();
+        for (int i = 0; i < lista.size(); i++) {
+            listModel.addElement(lista.get(i).getNombre());
+        }
+        jlist.setModel(listModel);
     }
 }

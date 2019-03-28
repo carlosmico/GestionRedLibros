@@ -26,6 +26,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -46,6 +47,10 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
+        if (!getInternetStatus.isAvailable()){
+            JOptionPane.showMessageDialog(this, "No hay conexión al servidor");
+        }
         
         //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
         String icono = "";
