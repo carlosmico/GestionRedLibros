@@ -43,7 +43,7 @@ public class comboBoxRender extends BasicComboBoxUI {
     }
 
     protected JButton createArrowButton() {
-        BasicArrowButton bab = new BasicArrowButton(BasicArrowButton.SOUTH,colores.fondo, colores.fondo,colores.buttons, colores.fondo);
+        BasicArrowButton bab = new BasicArrowButton(BasicArrowButton.SOUTH,colores.fondo, colores.buttons, colores.buttons, colores.fondo);
         
         return bab;
     }
