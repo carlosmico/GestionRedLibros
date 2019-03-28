@@ -171,7 +171,7 @@ public class Main extends javax.swing.JFrame {
         btnGestiones.setBackground(new java.awt.Color(66, 47, 44));
         btnGestiones.setForeground(new java.awt.Color(204, 204, 204));
         btnGestiones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/book-open-variant.png"))); // NOI18N
-        btnGestiones.setText("  Gestiónes");
+        btnGestiones.setText("  Gestiones");
         btnGestiones.setCornerRound(10);
         btnGestiones.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {

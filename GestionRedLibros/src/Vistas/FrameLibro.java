@@ -24,6 +24,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -31,6 +32,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -41,13 +43,22 @@ public class FrameLibro extends javax.swing.JFrame {
     /**
      * Creates new form FrameDevoluciones
      */
-    private boolean busquedaPorCodigo;
     private boolean isEditMode;
     private String textoIdentificadorLibro;
 
-    public FrameLibro(boolean codeMode, String text) {
+    private Libro libro;
+    boolean isNewLibro;
+
+    FrameCarga frameCarga;
+
+    List<Curso> listaCursos;
+    List<Contenido> listaContenido;
+
+    DaoCurso daoCurso;
+    //DaoContenido daoContenido;
+
+    public FrameLibro(Libro libro) {
         initComponents();
-        System.out.println(text);
 
         //<editor-fold defaultstate="collapsed" desc="Configuracion inicial de los ComboBox">
         //Combo Box Curso
@@ -90,13 +101,65 @@ public class FrameLibro extends javax.swing.JFrame {
         });
 //</editor-fold>
 
-        this.busquedaPorCodigo = codeMode;
-        this.textoIdentificadorLibro = text;
-        
+        this.libro = libro;
+        this.isNewLibro = this.libro == null;
+
         btnDelete.setVisible(false);
         btnSave.setVisible(false);
 
         this.setLocationRelativeTo(null);
+
+        daoCurso = new DaoCurso();
+
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
+            protected Void doInBackground() throws InterruptedException {
+                listaCursos = daoCurso.buscarTodos();
+                return null;
+            }
+
+            protected void process(List<Integer> chunks) {
+            }
+
+            protected void done() {
+                //Rellenamos la lista de los libros
+                //<editor-fold defaultstate="collapsed" desc="Rellenamos los datos en el caso de que consultemos algun libro o no">
+                if (!isNewLibro) {
+                    //Limitamos la opcion de edicion de los campos
+                    textNombreLibro.setEditable(isNewLibro);
+                    textISBNLibro.setEditable(isNewLibro);
+                    cbCurso.setEditable(isNewLibro);
+                    cbCurso.setEnabled(isNewLibro);
+                    cbAsignatura.setEditable(isNewLibro);
+                    cbAsignatura.setEnabled(isNewLibro);
+                    textUnidadesLibro.setEditable(isNewLibro);
+                    textCodigoDeBarrasLibro.setEditable(isNewLibro);
+                    chkObsoleto.setEnabled(isNewLibro);
+
+                    //Rellenamos los datos
+                    textNombreLibro.setText(libro.getNombre());
+                    textISBNLibro.setText(libro.getISBN());
+
+                    cbCurso.addItem(libro.getContenido().getCurso().getAbreviatura());
+                    cbAsignatura.addItem(libro.getContenido().getNombre_cas());
+                    textUnidadesLibro.setText(libro.getUnidades() + "");
+
+                    textCodigoDeBarrasLibro.setText(libro.getCodigo());
+                    chkObsoleto.setChecked(libro.getObsoleto());
+                } else {
+                    if (listaCursos.size() > 0) {
+                        for (int i = 0; i < listaCursos.size(); i++) {
+                            cbCurso.addItem(listaCursos.get(i).getAbreviatura());
+                        }
+                    }
+                }
+//</editor-fold>
+                frameCarga.dispose();
+            }
+        };
+        worker.execute();
+        frameCarga = new FrameCarga();
+        frameCarga.setVisible(true);
+
         BufferedImage img = null;
         String icono = "";
 
@@ -134,10 +197,10 @@ public class FrameLibro extends javax.swing.JFrame {
         panelSuperior = new javax.swing.JPanel();
         panelNombre = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        textNombreLibro = new javax.swing.JTextField();
         panelISBN = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        textISBNLibro = new javax.swing.JTextField();
         panelMedio = new javax.swing.JPanel();
         panelAsignatura = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -147,11 +210,11 @@ public class FrameLibro extends javax.swing.JFrame {
         cbAsignatura = new javax.swing.JComboBox();
         panelNombre1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        textUnidadesLibro = new javax.swing.JTextField();
         panelInferior = new javax.swing.JPanel();
         panelCodigoDeBarras = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        textCodigoDeBarrasLibro = new javax.swing.JTextField();
         panelCodigoDeBarras1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         chkObsoleto = new com.mommoo.flat.select.FlatCheckBox();
@@ -159,7 +222,7 @@ public class FrameLibro extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableHistorialLibro = new javax.swing.JTable();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -267,12 +330,11 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setText("Nombre:");
 
-        jTextField1.setBackground(new java.awt.Color(239, 235, 233));
-        jTextField1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextField1.setText("Matematicas");
-        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        textNombreLibro.setBackground(new java.awt.Color(239, 235, 233));
+        textNombreLibro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        textNombreLibro.setForeground(new java.awt.Color(51, 51, 51));
+        textNombreLibro.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        textNombreLibro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout panelNombreLayout = new javax.swing.GroupLayout(panelNombre);
         panelNombre.setLayout(panelNombreLayout);
@@ -285,7 +347,7 @@ public class FrameLibro extends javax.swing.JFrame {
                         .addGap(0, 328, Short.MAX_VALUE))
                     .addGroup(panelNombreLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTextField1)))
+                        .addComponent(textNombreLibro)))
                 .addContainerGap())
         );
         panelNombreLayout.setVerticalGroup(
@@ -294,7 +356,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textNombreLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -307,12 +369,11 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         jLabel3.setText("ISBN:");
 
-        jTextField2.setBackground(new java.awt.Color(239, 235, 233));
-        jTextField2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextField2.setText("1234-12134-12345-123");
-        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        textISBNLibro.setBackground(new java.awt.Color(239, 235, 233));
+        textISBNLibro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        textISBNLibro.setForeground(new java.awt.Color(51, 51, 51));
+        textISBNLibro.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        textISBNLibro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout panelISBNLayout = new javax.swing.GroupLayout(panelISBN);
         panelISBN.setLayout(panelISBNLayout);
@@ -323,7 +384,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addGroup(panelISBNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelISBNLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE))
+                        .addComponent(textISBNLibro, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE))
                     .addGroup(panelISBNLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -334,7 +395,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textISBNLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -353,7 +414,6 @@ public class FrameLibro extends javax.swing.JFrame {
         cbCurso.setBackground(new java.awt.Color(239, 235, 233));
         cbCurso.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         cbCurso.setForeground(new java.awt.Color(51, 51, 51));
-        cbCurso.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbCurso.setBorder(null);
 
         javax.swing.GroupLayout panelAsignaturaLayout = new javax.swing.GroupLayout(panelAsignatura);
@@ -392,7 +452,6 @@ public class FrameLibro extends javax.swing.JFrame {
         cbAsignatura.setBackground(new java.awt.Color(239, 235, 233));
         cbAsignatura.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         cbAsignatura.setForeground(new java.awt.Color(51, 51, 51));
-        cbAsignatura.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbAsignatura.setBorder(null);
 
         javax.swing.GroupLayout panelISBN1Layout = new javax.swing.GroupLayout(panelISBN1);
@@ -426,12 +485,11 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setText("Unidades");
 
-        jTextField3.setBackground(new java.awt.Color(239, 235, 233));
-        jTextField3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextField3.setText("123");
-        jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        textUnidadesLibro.setBackground(new java.awt.Color(239, 235, 233));
+        textUnidadesLibro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        textUnidadesLibro.setForeground(new java.awt.Color(51, 51, 51));
+        textUnidadesLibro.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        textUnidadesLibro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout panelNombre1Layout = new javax.swing.GroupLayout(panelNombre1);
         panelNombre1.setLayout(panelNombre1Layout);
@@ -442,7 +500,7 @@ public class FrameLibro extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addGroup(panelNombre1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(textUnidadesLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelNombre1Layout.setVerticalGroup(
@@ -451,14 +509,14 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textUnidadesLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelMedio.add(panelNombre1);
 
         panelInferior.setBackground(new java.awt.Color(239, 235, 233));
-        panelInferior.setLayout(new java.awt.GridLayout());
+        panelInferior.setLayout(new java.awt.GridLayout(1, 0));
 
         panelCodigoDeBarras.setBackground(new java.awt.Color(239, 235, 233));
         panelCodigoDeBarras.setPreferredSize(new java.awt.Dimension(350, 77));
@@ -468,12 +526,11 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(51, 51, 51));
         jLabel6.setText("Codigo de barras:");
 
-        jTextField5.setBackground(new java.awt.Color(239, 235, 233));
-        jTextField5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextField5.setText("23342-123123-4212-3");
-        jTextField5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        textCodigoDeBarrasLibro.setBackground(new java.awt.Color(239, 235, 233));
+        textCodigoDeBarrasLibro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        textCodigoDeBarrasLibro.setForeground(new java.awt.Color(51, 51, 51));
+        textCodigoDeBarrasLibro.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        textCodigoDeBarrasLibro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout panelCodigoDeBarrasLayout = new javax.swing.GroupLayout(panelCodigoDeBarras);
         panelCodigoDeBarras.setLayout(panelCodigoDeBarrasLayout);
@@ -484,7 +541,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(panelCodigoDeBarrasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textCodigoDeBarrasLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelCodigoDeBarrasLayout.setVerticalGroup(
@@ -493,7 +550,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textCodigoDeBarrasLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -511,7 +568,6 @@ public class FrameLibro extends javax.swing.JFrame {
         chkObsoleto.setForeground(new java.awt.Color(51, 51, 51));
         chkObsoleto.setToolTipText("");
         chkObsoleto.setCheckColor(new java.awt.Color(51, 51, 51));
-        chkObsoleto.setChecked(true);
         chkObsoleto.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         chkObsoleto.setOpaque(true);
         chkObsoleto.setPreferredSize(new java.awt.Dimension(338, 28));
@@ -558,9 +614,9 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
         jLabel9.setText("Ejemplares:");
 
-        jTable1.setBackground(new java.awt.Color(239, 235, 233));
-        jTable1.setForeground(new java.awt.Color(51, 51, 51));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableHistorialLibro.setBackground(new java.awt.Color(239, 235, 233));
+        tableHistorialLibro.setForeground(new java.awt.Color(51, 51, 51));
+        tableHistorialLibro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -571,7 +627,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableHistorialLibro);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -693,7 +749,7 @@ public class FrameLibro extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameLibro(true, null).setVisible(true);
+                new FrameLibro(null).setVisible(true);
             }
         });
     }
@@ -721,11 +777,6 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JPanel panelAsignatura;
     private javax.swing.JPanel panelCodigoDeBarras;
     private javax.swing.JPanel panelCodigoDeBarras1;
@@ -737,5 +788,10 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JPanel panelNombre;
     private javax.swing.JPanel panelNombre1;
     private javax.swing.JPanel panelSuperior;
+    private javax.swing.JTable tableHistorialLibro;
+    private javax.swing.JTextField textCodigoDeBarrasLibro;
+    private javax.swing.JTextField textISBNLibro;
+    private javax.swing.JTextField textNombreLibro;
+    private javax.swing.JTextField textUnidadesLibro;
     // End of variables declaration//GEN-END:variables
 }
