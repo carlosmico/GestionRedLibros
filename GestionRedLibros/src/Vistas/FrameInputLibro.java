@@ -23,6 +23,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Insets;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -38,24 +41,23 @@ public class FrameInputLibro extends javax.swing.JFrame {
     /**
      * Creates new form FrameDevoluciones
      */
-    
-    
     /**
-     * Modos de busqueada:
-     *  - busquedaPorCodigo = true: por codigo del libro (codigo de barras)
-     *  - busquedaPorCodigo = false: por nombre del libro (debe ser exacto)
-     * 
-     * "Por defecto el modo de busqueda es el true, es decir, por el codigo del libro"
+     * Modos de busqueada: - busquedaPorCodigo = true: por codigo del libro
+     * (codigo de barras) - busquedaPorCodigo = false: por nombre del libro
+     * (debe ser exacto)
+     *
+     * "Por defecto el modo de busqueda es el true, es decir, por el codigo del
+     * libro"
      */
     public boolean buscquedaPorCodigo = true;
-    
+
     private FrameLibro gestLibro = null;
-    
+
     public FrameInputLibro() {
         initComponents();
         setModoDeBusqueda(buscquedaPorCodigo);
         this.setLocationRelativeTo(null);
-        
+
         //<editor-fold defaultstate="collapsed" desc="configuracion Combobox">
         cbCurso.setUI(new comboBoxRender());
         cbCurso.setRenderer(new DefaultListCellRenderer() {
@@ -92,7 +94,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         btnNew = new com.mommoo.flat.button.FlatButton();
         bodyCode = new javax.swing.JPanel();
         textTitle = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        textCodigoLibro = new javax.swing.JTextField();
         btnBuscar = new com.mommoo.flat.button.FlatButton();
         bodyListado = new javax.swing.JPanel();
         textTitle1 = new javax.swing.JLabel();
@@ -120,6 +122,11 @@ public class FrameInputLibro extends javax.swing.JFrame {
 
         btnNew.setBackground(new java.awt.Color(66, 47, 44));
         btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png"))); // NOI18N
+        btnNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout headLayout = new javax.swing.GroupLayout(head);
         head.setLayout(headLayout);
@@ -151,11 +158,16 @@ public class FrameInputLibro extends javax.swing.JFrame {
         textTitle.setText("Codigo de barras:");
         textTitle.setToolTipText("");
 
-        jTextField1.setBackground(new java.awt.Color(239, 235, 233));
-        jTextField1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(51, 51, 51)));
+        textCodigoLibro.setBackground(new java.awt.Color(239, 235, 233));
+        textCodigoLibro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        textCodigoLibro.setForeground(new java.awt.Color(51, 51, 51));
+        textCodigoLibro.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        textCodigoLibro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(51, 51, 51)));
+        textCodigoLibro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textCodigoLibroKeyPressed(evt);
+            }
+        });
 
         btnBuscar.setBackground(new java.awt.Color(66, 47, 44));
         btnBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -179,7 +191,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(bodyCodeLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jTextField1)))
+                        .addComponent(textCodigoLibro)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -192,7 +204,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bodyCodeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
+                    .addComponent(textCodigoLibro))
                 .addContainerGap(106, Short.MAX_VALUE))
         );
 
@@ -345,37 +357,55 @@ public class FrameInputLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChangeMethodActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        if (gestLibro == null) gestLibro = new FrameLibro(buscquedaPorCodigo, null);
-        if (!gestLibro.isVisible()){
-            gestLibro = null;
-            gestLibro = new FrameLibro(buscquedaPorCodigo, null);
-        }
-        gestLibro.setVisible(true);
+        //Pulsación de botón de busqueda
+        buscarLibroPorCodigo(textCodigoLibro.getText());
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void textNombreLibroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroKeyReleased
-        // TODO add your handling code here:
+        //Metodo del placeholder en la busqueda del listado
         String nombreLibro = textNombreLibro.getText();
-        
-        if (nombreLibro.length() == 0){
+
+        if (nombreLibro.length() == 0) {
             textNombreLibro.setText("Escribe nombre del libro...");
             textNombreLibro.setForeground(new Color(102, 102, 102));
-        } else {
-           //Buscar por nombre
         }
     }//GEN-LAST:event_textNombreLibroKeyReleased
 
     private void textNombreLibroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroKeyPressed
-        // TODO add your handling code here:
+        //Metodo del placeholder en la busqueda del listado
         String nombreLibro = textNombreLibro.getText();
-        
-        if (nombreLibro.length() > 0 && nombreLibro.equals("Escribe nombre del libro...")){
+
+        if (nombreLibro.length() > 0 && nombreLibro.equals("Escribe nombre del libro...")) {
             textNombreLibro.setText("");
-            textNombreLibro.setForeground(new Color(51 ,51 ,51));
+            textNombreLibro.setForeground(new Color(51, 51, 51));
         }
     }//GEN-LAST:event_textNombreLibroKeyPressed
+
+    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
+        //Pulsación en el boton de nuevo libro
+        this.setVisible(false);
+        if (gestLibro == null) {
+            gestLibro = new FrameLibro(buscquedaPorCodigo, null);
+        }
+        if (!gestLibro.isVisible()) {
+            gestLibro = null;
+            gestLibro = new FrameLibro(buscquedaPorCodigo, null);
+        }
+        gestLibro.setVisible(true);
+    }//GEN-LAST:event_btnNewActionPerformed
+
+    private void textCodigoLibroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCodigoLibroKeyPressed
+        //Pulsacion de la tecla enter cuando el campo del codigo tiene el foco
+        if (textCodigoLibro.hasFocus()) {
+            textCodigoLibro.addKeyListener(new KeyAdapter() {
+                public void keyPressed(KeyEvent e) {
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        buscarLibroPorCodigo(textCodigoLibro.getText());
+                    }
+                }
+            });
+        }
+    }//GEN-LAST:event_textCodigoLibroKeyPressed
 
     /**
      * @param args the command line arguments
@@ -411,13 +441,16 @@ public class FrameInputLibro extends javax.swing.JFrame {
             }
         });
     }
-    public void setModoDeBusqueda(boolean modoBusqueda){
-        if (modoBusqueda){
+
+    public void setModoDeBusqueda(boolean modoBusqueda) {
+        if (modoBusqueda) {
             bodyCode.setVisible(modoBusqueda);
             bodyListado.setVisible(!modoBusqueda);
-        } else{ 
+            btnChangeMethod.setText("Listado de libros");
+        } else {
             bodyCode.setVisible(modoBusqueda);
             bodyListado.setVisible(!modoBusqueda);
+            btnChangeMethod.setText("Buscar por código");
         }
         this.pack();
     }
@@ -435,9 +468,21 @@ public class FrameInputLibro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField textCodigoLibro;
     private javax.swing.JTextField textNombreLibro;
     private javax.swing.JLabel textTitle;
     private javax.swing.JLabel textTitle1;
     // End of variables declaration//GEN-END:variables
+
+    private void buscarLibroPorCodigo(String codigo) {
+        this.setVisible(false);
+        if (gestLibro == null) {
+            gestLibro = new FrameLibro(buscquedaPorCodigo, codigo);
+        }
+        if (!gestLibro.isVisible()) {
+            gestLibro = null;
+            gestLibro = new FrameLibro(buscquedaPorCodigo, codigo);
+        }
+        gestLibro.setVisible(true);
+    }
 }

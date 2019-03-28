@@ -67,9 +67,15 @@
           </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanel2">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="23" green="27" red="3a" type="rgb"/>
+            </Property>
+          </Properties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
             <Property name="columns" type="int" value="0"/>
+            <Property name="horizontalGap" type="int" value="5"/>
             <Property name="rows" type="int" value="1"/>
           </Layout>
           <SubComponents>
@@ -85,6 +91,7 @@
                   <Image iconType="3" name="/Imagenes/icons/plus-circle-outline.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Nueva devoluci&#xf3;n"/>
+                <Property name="cornerRound" type="int" value="10"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[268, 36]"/>
                 </Property>
@@ -105,6 +112,7 @@
                   <Image iconType="3" name="/Imagenes/icons/magnify.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Consultar devoluci&#xf3;n"/>
+                <Property name="cornerRound" type="int" value="10"/>
               </Properties>
             </Component>
           </SubComponents>

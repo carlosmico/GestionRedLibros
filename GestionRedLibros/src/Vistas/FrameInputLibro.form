@@ -110,6 +110,9 @@
               <Image iconType="3" name="/Imagenes/icons/plus.png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNewActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -132,7 +135,7 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                          <Component id="jTextField1" max="32767" attributes="0"/>
+                          <Component id="textCodigoLibro" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -149,7 +152,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="btnBuscar" pref="40" max="32767" attributes="0"/>
-                      <Component id="jTextField1" max="32767" attributes="0"/>
+                      <Component id="textCodigoLibro" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="106" max="32767" attributes="0"/>
               </Group>
@@ -172,7 +175,7 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="textCodigoLibro">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="e9" green="eb" red="ef" type="rgb"/>
@@ -192,6 +195,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textCodigoLibroKeyPressed"/>
+          </Events>
         </Component>
         <Component class="com.mommoo.flat.button.FlatButton" name="btnBuscar">
           <Properties>

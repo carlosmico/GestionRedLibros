@@ -47,6 +47,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
     public FrameLibro(boolean codeMode, String text) {
         initComponents();
+        System.out.println(text);
 
         //<editor-fold defaultstate="collapsed" desc="Configuracion inicial de los ComboBox">
         //Combo Box Curso
