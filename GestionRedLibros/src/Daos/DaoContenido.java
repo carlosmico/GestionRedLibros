@@ -17,7 +17,7 @@
  */
 package Daos;
 
-import Pojos.Curso;
+import Pojos.Contenido;
 import dao.DaoGenerico;
 import dao.InterfaceDaoGenerico;
 import java.util.ArrayList;
@@ -29,15 +29,15 @@ import org.hibernate.query.Query;
  *
  * @author Carlos
  */
-public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDaoGenerico<Curso, String> {
+public class DaoContenido extends DaoGenerico<Contenido, Integer> implements InterfaceDaoGenerico<Contenido, Integer> {
     
-    public Curso buscar(String codigo) throws PersistenceException {
+    public Contenido buscar(Integer id) throws PersistenceException {
         super.conectar();
         
-        Curso curso;
+        Contenido contenido;
 
         try {
-            curso = (Curso) super.session.get(Curso.class, codigo);
+            contenido = (Contenido) super.session.get(Contenido.class, id);
         } catch (PersistenceException e) {
             e.printStackTrace();
             throw new PersistenceException();
@@ -46,24 +46,24 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
         try {
             super.desconectar();  
         } catch (Exception ex) {
-            System.out.println("Error DaoCurso-buscarCodigo(): " + ex.getMessage());
+            System.out.println("Error DaoContenido-buscarId(): " + ex.getMessage());
         }
         
-        return curso;
+        return contenido;
     }
     
-    public List<Curso> buscarTodos(){
+    public List<Contenido> buscarTodos(){
         super.conectar();
         
-        List<Curso> lista = new ArrayList<Curso>();
+        List<Contenido> lista = new ArrayList<Contenido>();
         
-        Query query = super.session.createQuery("from Curso where ensenanza = 3 or ensenanza = 5");
+        Query query = super.session.createQuery("from Contenido where ensenanza = 3 or ensenanza = 5");
         lista = query.list();
         
         try {
             super.desconectar();  
         } catch (Exception ex) {
-            System.out.println("Error DaoCurso-buscarTodos(): " + ex.getMessage());
+            System.out.println("Error DaoContenido-buscarTodos(): " + ex.getMessage());
         }
         
         return lista;

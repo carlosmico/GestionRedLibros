@@ -1,12 +1,17 @@
 package Pruebas;
 
 import Daos.DaoAlumno;
+import Daos.DaoContenido;
+import Daos.DaoCurso;
 import Daos.DaoEjemplar;
+import Daos.DaoHistorial;
 import Daos.DaoLibro;
+import Daos.DaoMatricula;
 import Pojos.Alumno;
 import Pojos.Contenido;
 import Pojos.Curso;
 import Pojos.Ejemplar;
+import Pojos.Grupo;
 import Pojos.Historial;
 import Pojos.Libro;
 import Pojos.Matricula;
@@ -16,19 +21,45 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import hibernate.UtilesHibernate;
+import java.sql.Date;
 import java.util.List;
 import net.bytebuddy.asm.Advice;
 
 public class PruebaHibernate {
 
     public static void main(String[] args) {
-
-        Curso curso = new Curso("a", "a", "a", "a", "a", "a");
-        Contenido contenido = new Contenido(5, curso, "a", "a", "a", "a");
+        Curso curso = new Curso("1", "DAM", "a", "a", "a", "a");
+        Contenido contenido = new Contenido(6, curso, "a", "a", "a", "a");
         Libro l = new Libro("96799999", contenido, "Libro nuevo", "nombre", 40, true, 0);
+        Ejemplar ejemplar = new Ejemplar("96799999002", l, 1, true);
         
+        Alumno a = new Alumno("71230212", "", "", "", "", "", "", "", null, null);
         try {
-            DaoAlumno dao = new DaoAlumno();
+            DaoMatricula dao = new DaoMatricula();
+            
+            Matricula m = new Matricula(4, 2020, a, "", "", "", "ssssss", 
+                    "A", "B", "C", new Date(1), new Date(1) , "", "");
+            
+            dao.actualizar(m);
+            
+            System.out.println("Total: " + dao.buscarTodos().size());
+            
+            //dao.grabar(new Historial(4, ejemplar, a, 0, 0, 0, new Date(3), new Date(22), "zi"));
+            
+            //System.out.println(dao.buscarTodos().size());
+            //System.out.println(dao.buscarPorEjemplar(ejemplar).size());
+            
+            /*
+            SessionFactory factory = UtilesHibernate.getSessionFactory();
+            Session session = factory.getCurrentSession();
+            session.beginTransaction();
+             
+            session.save(contenido);
+            
+            session.getTransaction().commit();
+            
+            
+            DaoContenido dao = new DaoContenido();
             
             System.out.println("Individual: " + dao.buscar("71230212"));
             

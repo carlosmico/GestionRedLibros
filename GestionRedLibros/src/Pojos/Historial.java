@@ -17,7 +17,7 @@
  */
 package Pojos;
 
-import Comunes.Estado;
+import Utilidades.Estado;
 import java.io.Serializable;
 import java.util.Date;
 

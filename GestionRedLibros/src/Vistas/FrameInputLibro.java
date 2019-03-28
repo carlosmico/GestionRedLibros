@@ -17,7 +17,7 @@
  */
 package Vistas;
 
-import Comunes.colores;
+import Utilidades.Colores;
 import Daos.DaoLibro;
 import Pojos.Libro;
 import Renders.comboBoxRender;
@@ -79,11 +79,11 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 JLabel l = (JLabel) super.getListCellRendererComponent(
                         list, value, index, isSelected, hasFocus);
                 if (isSelected) {
-                    l.setForeground(colores.fondo);
-                    l.setBackground(colores.buttons);
+                    l.setForeground(Colores.fondo);
+                    l.setBackground(Colores.buttons);
                 } else {
-                    l.setForeground(colores.buttons);
-                    l.setBackground(colores.fondo);
+                    l.setForeground(Colores.buttons);
+                    l.setBackground(Colores.fondo);
                 }
                 return l;
             }

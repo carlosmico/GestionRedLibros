@@ -21,7 +21,7 @@ package Renders;
  *
  * @author Jose Sanchis
  */
-import Comunes.colores;
+import Utilidades.Colores;
 import com.mommoo.flat.button.FlatButton;
 import java.awt.Color;
 import java.awt.Component;
@@ -43,7 +43,7 @@ public class comboBoxRender extends BasicComboBoxUI {
     }
 
     protected JButton createArrowButton() {
-        BasicArrowButton bab = new BasicArrowButton(BasicArrowButton.SOUTH,colores.fondo, colores.fondo,colores.buttons, colores.fondo);
+        BasicArrowButton bab = new BasicArrowButton(BasicArrowButton.SOUTH,Colores.fondo, Colores.fondo,Colores.buttons, Colores.fondo);
         
         return bab;
     }

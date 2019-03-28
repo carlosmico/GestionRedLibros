@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <centro codigo="46021290" denominacion="IES CONSUELO ARANDA" curso="2018" fechaExportacion="31/01/2019 18:40:25" version="1.0">
     <contenidos_alumno>
-        <contenido_alumno alumno="" ensenanza="" curso="" contenido="" idioma=" " tipo_basico="N" tipo_predom=" " acis="N" fec_ini_acis=" " fec_fin_acis=" " cur_ref_acis=" " curso_pendiente=" "/>
+        <contenido_alumno alumno="carlos" ensenanza="3" curso="1" contenido="5" idioma="ES" tipo_basico="N" tipo_predom=" " acis="N" fec_ini_acis=" " fec_fin_acis=" " cur_ref_acis=" " curso_pendiente=" "/>
     </contenidos_alumno>
 </centro>

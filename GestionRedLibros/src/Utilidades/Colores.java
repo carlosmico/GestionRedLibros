@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Carlos
+ * Copyright (C) 2019 Jose Sanchis
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,14 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package Comunes;
+package Utilidades;
+
+import java.awt.Color;
 
 /**
  *
- * @author Carlos
+ * @author Jose Sanchis
  */
-public class Estado {
-    public static final int deteriorado = 0, usado = 1, nuevo = 2;
+public class Colores {
+    public static Color fondo = new Color(239, 235, 233);
+    public static Color accent = new Color(58,39,35);
+    public static Color buttons = new Color(66,47,44);
 }
-
-

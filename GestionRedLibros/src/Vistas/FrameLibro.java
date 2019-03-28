@@ -17,7 +17,7 @@
  */
 package Vistas;
 
-import Comunes.colores;
+import Utilidades.Colores;
 import Renders.comboBoxRender;
 import java.awt.Component;
 import java.awt.Image;
@@ -60,11 +60,11 @@ public class FrameLibro extends javax.swing.JFrame {
                 JLabel l = (JLabel) super.getListCellRendererComponent(
                         list, value, index, isSelected, hasFocus);
                 if (isSelected) {
-                    l.setForeground(colores.fondo);
-                    l.setBackground(colores.buttons);
+                    l.setForeground(Colores.fondo);
+                    l.setBackground(Colores.buttons);
                 } else {
-                    l.setForeground(colores.buttons);
-                    l.setBackground(colores.fondo);
+                    l.setForeground(Colores.buttons);
+                    l.setBackground(Colores.fondo);
                 }
                 return l;
             }
@@ -79,11 +79,11 @@ public class FrameLibro extends javax.swing.JFrame {
                 JLabel l = (JLabel) super.getListCellRendererComponent(
                         list, value, index, isSelected, hasFocus);
                 if (isSelected) {
-                    l.setForeground(colores.fondo);
-                    l.setBackground(colores.buttons);
+                    l.setForeground(Colores.fondo);
+                    l.setBackground(Colores.buttons);
                 } else {
-                    l.setForeground(colores.buttons);
-                    l.setBackground(colores.fondo);
+                    l.setForeground(Colores.buttons);
+                    l.setBackground(Colores.fondo);
                 }
                 return l;
             }

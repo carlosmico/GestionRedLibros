@@ -17,7 +17,7 @@
  */
 package Daos;
 
-import Comunes.Estado;
+import Utilidades.Estado;
 import Pojos.Ejemplar;
 import Pojos.Libro;
 import dao.DaoGenerico;

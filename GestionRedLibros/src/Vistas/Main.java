@@ -5,8 +5,8 @@
  */
 package Vistas;
 
-import Comunes.DimensionesFrame;
-import Comunes.getInternetStatus;
+import Utilidades.DimensionesFrame;
+import Utilidades.GetInternetStatus;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -48,7 +48,7 @@ public class Main extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         
-        if (!getInternetStatus.isAvailable()){
+        if (!GetInternetStatus.isAvailable()){
             JOptionPane.showMessageDialog(this, "No hay conexión al servidor");
         }
         
