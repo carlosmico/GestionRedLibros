@@ -1,9 +1,11 @@
 package Pruebas;
 
+import Daos.DaoEjemplar;
 import Daos.DaoLibro;
 import Pojos.Alumno;
 import Pojos.Contenido;
 import Pojos.Curso;
+import Pojos.Ejemplar;
 import Pojos.Historial;
 import Pojos.Libro;
 import Pojos.Matricula;
@@ -13,6 +15,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import hibernate.UtilesHibernate;
+import java.util.List;
 import net.bytebuddy.asm.Advice;
 
 public class PruebaHibernate {
@@ -21,9 +24,26 @@ public class PruebaHibernate {
 
         Curso curso = new Curso("a", "a", "a", "a", "a", "a");
         Contenido contenido = new Contenido(5, curso, "a", "a", "a", "a");
-        Libro l = new Libro("99999999", contenido, "C", "nombre", 40, true, 0);
+        Libro l = new Libro("96999999", contenido, "C", "nombre", 40, true, 0);
         
         try {
+            DaoLibro daol = new DaoLibro();
+            
+            //daol.grabar(l);
+            
+            Ejemplar e = new Ejemplar("99999999001", l, 10, true);
+                    
+            DaoEjemplar dao = new DaoEjemplar();
+            
+            dao.actualizar(e);
+            
+            System.out.println("Ejemplar modificado: " + dao.buscar(e.getCodigo()).toString());
+            
+            System.out.println("Todos ejemplares: ");
+            
+            List<Ejemplar> ej = dao.buscarTodos();
+            
+            ej.toString();
             
             //SessionFactory factory = UtilesHibernate.getSessionFactory();
             //Session session = factory.getCurrentSession();
@@ -37,7 +57,7 @@ public class PruebaHibernate {
             
             //session.close();
             
-            DaoLibro dao = new DaoLibro();
+            /*DaoLibro dao = new DaoLibro();
             
             for (int i = 0; i < dao.buscarTodos().size(); i++) {
                 System.out.println(dao.buscarTodos().get(i).toString());

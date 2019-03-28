@@ -37,43 +37,23 @@ import org.hibernate.SessionFactory;
  *
  * @author Carlos
  */
-public class DaoLibro extends DaoGenerico<Libro, Integer> implements InterfaceDaoGenerico<Libro, Integer> {
-
-    SessionFactory factory;
-    Session session;
-
-    private void conectar() {
-        factory = UtilesHibernate.getSessionFactory();
-        session = factory.getCurrentSession();
-        session.beginTransaction();
-    }
-
-    private void desconectar() throws Exception {
-        try {
-            if (session != null) {
-                session.close();
-                session = null;
-            }
-        } catch (Exception e) {
-            throw new Exception();
-        }
-    }
+public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDaoGenerico<Libro, String> {
 
     @Override
     public void grabar(Libro libro) throws PersistenceException {
-        conectar();
+        super.conectar();
 
         try {
-            session.save(libro);
+            super.session.save(libro);
 
-            session.getTransaction().commit();
+            super.session.getTransaction().commit();
         } catch (PersistenceException e) {
             e.printStackTrace();
             throw new PersistenceException();
         }
 
         try {
-            desconectar();  
+            super.desconectar();  
         } catch (Exception ex) {
             System.out.println("Error DaoLibro-grabar(): " + ex.getMessage());
         }
@@ -83,7 +63,7 @@ public class DaoLibro extends DaoGenerico<Libro, Integer> implements InterfaceDa
 
     @Override
     public void actualizar(Libro l) throws PersistenceException {
-        conectar();
+        super.conectar();
 
         try {
             Libro libro = (Libro) session.get(Libro.class, l.getCodigo());
@@ -95,15 +75,15 @@ public class DaoLibro extends DaoGenerico<Libro, Integer> implements InterfaceDa
             libro.setPrecio(l.getPrecio());
             libro.setUnidades(l.getUnidades());
 
-            session.saveOrUpdate(libro);
+            super.session.saveOrUpdate(libro);
 
-            session.getTransaction().commit();
+            super.session.getTransaction().commit();
         } catch (PersistenceException e) {
             throw new PersistenceException();
         }
 
         try {
-            desconectar();
+            super.desconectar();
         } catch (Exception ex) {
             System.out.println("Error DaoLibro-actualizar(): " + ex.getMessage());
         }
@@ -111,40 +91,38 @@ public class DaoLibro extends DaoGenerico<Libro, Integer> implements InterfaceDa
     
     @Override
     public void borrar(Libro libro) throws PersistenceException {
-        conectar();
+        super.conectar();
 
         try {
-            session.delete(libro);
+            super.session.delete(libro);
 
-            session.getTransaction().commit();
+            super.session.getTransaction().commit();
         } catch (PersistenceException e) {
             e.printStackTrace();
             throw new PersistenceException();
         }
 
         try {
-            desconectar();  
+            super.desconectar();  
         } catch (Exception ex) {
             System.out.println("Error DaoLibro-grabar(): " + ex.getMessage());
         }
     }
     
     public Libro buscar(String codigo) throws PersistenceException {
-        conectar();
+        super.conectar();
         
         Libro libro;
 
         try {
-            libro = (Libro) session.get(Libro.class, codigo);
-
-            session.getTransaction().commit();
+            libro = (Libro) super.session.get(Libro.class, codigo);
         } catch (PersistenceException e) {
             e.printStackTrace();
             throw new PersistenceException();
         }
 
         try {
-            desconectar();  
+            super.desconectar();  
         } catch (Exception ex) {
             System.out.println("Error DaoLibro-buscarCodigo(): " + ex.getMessage());
         }
@@ -153,15 +131,15 @@ public class DaoLibro extends DaoGenerico<Libro, Integer> implements InterfaceDa
     }
     
     public List<Libro> buscarTodos(){
-        conectar();
+        super.conectar();
         
         List<Libro> lista = new ArrayList<Libro>();
         
-        Query query = session.createQuery("from Libro");
+        Query query = super.session.createQuery("from Libro");
         lista = query.list();
         
         try {
-            desconectar();  
+            super.desconectar();  
         } catch (Exception ex) {
             System.out.println("Error DaoLibro-buscarTodos(): " + ex.getMessage());
         }
@@ -174,7 +152,7 @@ public class DaoLibro extends DaoGenerico<Libro, Integer> implements InterfaceDa
         Ejemplar ejemplar;
         String codigo_ejemplar = "";
 
-        conectar();
+        super.conectar();
 
         for (int i = 1; i < libro.getUnidades() + 1; i++) {
             if (i < 10) {
@@ -187,13 +165,13 @@ public class DaoLibro extends DaoGenerico<Libro, Integer> implements InterfaceDa
 
             ejemplar = new Ejemplar(codigo_ejemplar, libro, Estado.nuevo, false);
 
-            session.save(ejemplar);
+            super.session.save(ejemplar);
         }
 
         try {
-            session.getTransaction().commit();
+            super.session.getTransaction().commit();
 
-            desconectar();
+            super.desconectar();
         } catch (Exception ex) {
             System.out.println("Error DaoLibro-generarcodigos(): " + ex.getMessage());
         }
