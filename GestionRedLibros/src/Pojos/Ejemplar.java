@@ -63,7 +63,7 @@ public class Ejemplar implements Serializable {
 
     public Ejemplar(String codigo, Libro libro, int estado, boolean prestado) {
         this.codigo_ejemplar = codigo;
-        this.id = this.codigo_ejemplar;
+        this.id = codigo;
         this.libro = libro;
         this.estado = estado;
         this.prestado = prestado;
@@ -75,7 +75,7 @@ public class Ejemplar implements Serializable {
 
     public void setCodigo(String codigo) {
         this.codigo_ejemplar = codigo;
-        this.id = this.codigo_ejemplar;
+        this.id = codigo;
     }
 
     public Libro getLibro() {

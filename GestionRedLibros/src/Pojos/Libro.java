@@ -64,7 +64,7 @@ public class Libro implements Serializable{
 
     public Libro(String codigo, Contenido contenido, String nombre, String ISBN, int unidades, boolean obsoleto, double precio) {
         this.codigo_libro = codigo;
-        this.id = this.codigo_libro;
+        this.id = codigo;
         this.contenido_libro = contenido;
         this.nombre = nombre;
         this.ISBN = ISBN;
@@ -79,7 +79,7 @@ public class Libro implements Serializable{
 
     public void setCodigo(String codigo) {
         this.codigo_libro = codigo;
-        this.id = this.codigo_libro;
+        this.id = codigo;
     }
 
     public Contenido getContenido() {
