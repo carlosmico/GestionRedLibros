@@ -1,5 +1,6 @@
 package Pruebas;
 
+import Daos.DaoAlumno;
 import Daos.DaoEjemplar;
 import Daos.DaoLibro;
 import Pojos.Alumno;
@@ -24,12 +25,18 @@ public class PruebaHibernate {
 
         Curso curso = new Curso("a", "a", "a", "a", "a", "a");
         Contenido contenido = new Contenido(5, curso, "a", "a", "a", "a");
-        Libro l = new Libro("96999999", contenido, "C", "nombre", 40, true, 0);
+        Libro l = new Libro("96799999", contenido, "Libro nuevo", "nombre", 40, true, 0);
         
         try {
+            DaoAlumno dao = new DaoAlumno();
+            
+            System.out.println("Individual: " + dao.buscar("71230212"));
+            
+            System.out.println("Total: " + dao.buscarTodos().size());
+            /*
             DaoLibro daol = new DaoLibro();
             
-            //daol.grabar(l);
+            daol.grabar(l);
             
             Ejemplar e = new Ejemplar("99999999001", l, 10, true);
                     
