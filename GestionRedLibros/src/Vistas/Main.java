@@ -266,7 +266,9 @@ public class Main extends javax.swing.JFrame {
     private void btnMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatriculasActionPerformed
         // TODO add your handling code here:
         if (gesMatri == null) gesMatri = new FrameMatriculas();
+        gesMatri.RefrescarTabla();
         gesMatri.setVisible(true);
+        
     }//GEN-LAST:event_btnMatriculasActionPerformed
 
     /**
