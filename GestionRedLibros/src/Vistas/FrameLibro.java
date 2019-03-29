@@ -115,14 +115,10 @@ public class FrameLibro extends javax.swing.JFrame {
         this.isNewLibro = this.libro == null;
 
         btnDelete.setVisible(false);
-<<<<<<< Updated upstream
-        btnSave.setVisible(false);
         
         //Deshabilitamos la tabla de ejemplares puesto que es de lectura
         tableEjemplares.setEnabled(false);
-=======
         btnSave.setVisible(isNewLibro);
->>>>>>> Stashed changes
 
         this.setLocationRelativeTo(null);
 
@@ -830,11 +826,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
         if (frameDelete == null) {
-<<<<<<< Updated upstream
-            frameDelete = new FrameConfirmacionEliminar();
-=======
             frameDelete = new FrameConfirmacionEliminar(libro);
->>>>>>> Stashed changes
         }
         frameDelete.setVisible(true);
     }//GEN-LAST:event_btnDeleteActionPerformed
