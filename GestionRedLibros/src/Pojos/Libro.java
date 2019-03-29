@@ -24,6 +24,7 @@ import javax.persistence.Column;
 
 //Imports Hibernate
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -55,7 +56,7 @@ public class Libro implements Serializable{
     private boolean obsoleto;
     private double precio;
     
-    @OneToMany (mappedBy = "libro")
+    @OneToMany (mappedBy = "libro", fetch=FetchType.EAGER)
     private List<Ejemplar> ejemplares;
     
     public Libro(){

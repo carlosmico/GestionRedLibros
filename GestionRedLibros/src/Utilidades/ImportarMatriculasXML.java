@@ -55,7 +55,7 @@ public class ImportarMatriculasXML {
      * @param ruta
      * @throws java.text.ParseException
      */
-    public ImportarMatriculasXML(String ruta) throws ParseException {
+    public ImportarMatriculasXML(String ruta) throws Exception {
         factory = DocumentBuilderFactory.newInstance();
 
         try {

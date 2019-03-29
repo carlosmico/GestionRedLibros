@@ -34,7 +34,9 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -109,6 +111,9 @@ public class FrameLibro extends javax.swing.JFrame {
 
         btnDelete.setVisible(false);
         btnSave.setVisible(false);
+        
+        //Deshabilitamos la tabla de ejemplares puesto que es de lectura
+        tableEjemplares.setEnabled(false);
 
         this.setLocationRelativeTo(null);
 
@@ -120,6 +125,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 setEnabled(false);
                 listaCursos = daoCurso.buscarTodos();
                 listaContenido = daoContenido.buscarTodos();
+                
                 return null;
             }
 
@@ -175,6 +181,9 @@ public class FrameLibro extends javax.swing.JFrame {
 
                     textCodigoDeBarrasLibro.setText(libro.getCodigo());
                     chkObsoleto.setChecked(libro.getObsoleto());
+                    
+                    //Refrescamos la tabla de ejemplares
+                    RefrescarTabla();
                 }
                 //</editor-fold>
                 setEnabled(true);
@@ -200,6 +209,50 @@ public class FrameLibro extends javax.swing.JFrame {
         } catch (IOException ex) {
             imgLibro.setText("\nNo se ha podido cargar la imagen del libro");
             Logger.getLogger(FrameLibro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //Refrescamos los datos de la tabla recuperados de la BD
+    private void RefrescarTabla() {
+        List<Ejemplar> ejemplares = libro.getEjemplares();
+
+        if (ejemplares.size() > 0) {
+            DefaultTableModel tableModel = (DefaultTableModel) this.tableEjemplares.getModel();
+
+            tableModel.setRowCount(0);
+
+            for (int i = 0; i < ejemplares.size(); i++) {
+                Ejemplar ejemplar = ejemplares.get(i);
+                String[] fila = new String[13];
+
+                fila[0] = ejemplar.getCodigo();
+
+                switch (ejemplar.getEstado()) {
+                    case Estado.deteriorado:
+                        fila[1] = "Deteriorado";
+                        break;
+
+                    case Estado.usado:
+                        fila[1] = "Usado";
+                        break;
+
+                    case Estado.nuevo:
+                        fila[1] = "Nuevo";
+                        break;
+                }
+                
+                if (ejemplar.isPrestado()) {
+                    fila[2] = "Si";
+                }else{
+                    fila[2] = "No";
+                }
+
+                tableModel.addRow(fila);
+            }
+
+            tableEjemplares.setModel(tableModel);
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay datos de ejemplares en la Base de Datos.");
         }
     }
 
@@ -249,7 +302,7 @@ public class FrameLibro extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableHistorialLibro = new javax.swing.JTable();
+        tableEjemplares = new javax.swing.JTable();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -647,20 +700,25 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
         jLabel9.setText("Ejemplares:");
 
-        tableHistorialLibro.setBackground(new java.awt.Color(239, 235, 233));
-        tableHistorialLibro.setForeground(new java.awt.Color(51, 51, 51));
-        tableHistorialLibro.setModel(new javax.swing.table.DefaultTableModel(
+        tableEjemplares.setBackground(new java.awt.Color(239, 235, 233));
+        tableEjemplares.setForeground(new java.awt.Color(51, 51, 51));
+        tableEjemplares.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Estado", "Prestado"
             }
-        ));
-        jScrollPane1.setViewportView(tableHistorialLibro);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tableEjemplares);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -753,7 +811,9 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-        if (frameDelete == null) frameDelete = new FrameConfirmacionEliminar();
+        if (frameDelete == null) {
+            frameDelete = new FrameConfirmacionEliminar();
+        }
         frameDelete.setVisible(true);
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -829,7 +889,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JPanel panelNombre;
     private javax.swing.JPanel panelNombre1;
     private javax.swing.JPanel panelSuperior;
-    private javax.swing.JTable tableHistorialLibro;
+    private javax.swing.JTable tableEjemplares;
     private javax.swing.JTextField textCodigoDeBarrasLibro;
     private javax.swing.JTextField textISBNLibro;
     private javax.swing.JTextField textNombreLibro;

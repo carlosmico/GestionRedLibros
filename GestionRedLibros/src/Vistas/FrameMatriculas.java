@@ -17,8 +17,19 @@
  */
 package Vistas;
 
+import Daos.DaoMatricula;
+import Pojos.Matricula;
 import javax.swing.JFrame;
 import Utilidades.*;
+import java.text.ParseException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,7 +43,49 @@ public class FrameMatriculas extends javax.swing.JFrame {
     public FrameMatriculas() {
         initComponents();
         
+        //Deshabilitamos la edición de la tabla para no crear confusión, 
+        //puesto que solo es de lectura.
+        this.tableMatriculas.setEnabled(false);
+
         this.setLocationRelativeTo(null);
+        
+        RefrescarTabla();
+    }
+
+    //Refrescamos los datos de la tabla recuperados de la BD
+    private void RefrescarTabla() {
+        DaoMatricula dao = new DaoMatricula();
+
+        List<Matricula> matriculas = dao.buscarTodos();
+
+        if (matriculas.size() > 0) {
+            DefaultTableModel tableModel = (DefaultTableModel) this.tableMatriculas.getModel();
+            
+            tableModel.setRowCount(0);
+            
+            for (int i = 0; i < matriculas.size(); i++) {
+                Matricula matricula = matriculas.get(i);
+                String[] fila = new String[13];
+                
+                fila[0] = matricula.getAlumno().getNombre();
+                fila[1] = matricula.getCurso_escolar() + "";
+                fila[2] = matricula.getCurso();
+                fila[3] = matricula.getContenido() + "";
+                fila[4] = matricula.getIdioma();
+                fila[5] = matricula.getTipo_basico();
+                fila[6] = matricula.getTipo_predom();
+                fila[7] = matricula.getFec_ini_acis().toString();
+                fila[8] = matricula.getFec_fin_acis().toString();
+                fila[9] = matricula.getCur_ref_acis();
+                fila[10] = matricula.getCurso_pendiente();
+                
+                tableModel.addRow(fila);
+            }
+            
+            tableMatriculas.setModel(tableModel);
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay datos de matrículas en la Base de Datos.");
+        }
     }
 
     /**
@@ -47,13 +100,13 @@ public class FrameMatriculas extends javax.swing.JFrame {
         flatCheckBox1 = new com.mommoo.flat.select.FlatCheckBox();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        flatButton3 = new com.mommoo.flat.button.FlatButton();
+        btnImportar = new com.mommoo.flat.button.FlatButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableMatriculas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Devoluciones");
+        setTitle("Matrículas");
         setMinimumSize(new java.awt.Dimension(600, 36));
 
         jPanel1.setBackground(new java.awt.Color(58, 39, 35));
@@ -61,10 +114,15 @@ public class FrameMatriculas extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Matriculas");
+        jLabel1.setText("Matrículas");
 
-        flatButton3.setBackground(Colores.buttons);
-        flatButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png"))); // NOI18N
+        btnImportar.setBackground(Colores.buttons);
+        btnImportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png"))); // NOI18N
+        btnImportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -72,7 +130,7 @@ public class FrameMatriculas extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(flatButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnImportar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(94, 94, 94)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(150, 150, 150))
@@ -84,40 +142,43 @@ public class FrameMatriculas extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(flatButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnImportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jPanel3.setBackground(new java.awt.Color(239, 235, 233));
 
-        jTable1.setBackground(Colores.fondo);
-        jTable1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jTable1.setForeground(Colores.accent);
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableMatriculas.setBackground(Colores.fondo);
+        tableMatriculas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tableMatriculas.setForeground(Colores.accent);
+        tableMatriculas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Alumno", "Curso Escolar", "Curso", "Contenido", "Idioma", "Tipo Basico", "Tipo Predom", "Acis", "Fecha Inicio Acis", "Fecha Fin Acis", "Curso Ref Acis", "Curso Pendiente"
             }
         ));
-        jTable1.setGridColor(Colores.buttons);
-        jTable1.setSelectionBackground(new java.awt.Color(77, 49, 49));
-        jTable1.setSelectionForeground(Colores.fondo);
-        jScrollPane1.setViewportView(jTable1);
+        tableMatriculas.setGridColor(Colores.buttons);
+        tableMatriculas.setSelectionBackground(new java.awt.Color(77, 49, 49));
+        tableMatriculas.setSelectionForeground(Colores.fondo);
+        jScrollPane1.setViewportView(tableMatriculas);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1274, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1262, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,6 +198,29 @@ public class FrameMatriculas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarActionPerformed
+        JFileChooser chooser = new JFileChooser();
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "XML", "xml");
+
+        chooser.setFileFilter(filter);
+
+        int returnVal = chooser.showOpenDialog(null);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                ImportarMatriculasXML importar = new ImportarMatriculasXML(chooser.getSelectedFile().getPath());
+                
+                RefrescarTabla();
+
+                JOptionPane.showMessageDialog(this, "Matrículas importadas correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "No se han podido importar las matrículas.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnImportarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,12 +259,12 @@ public class FrameMatriculas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.mommoo.flat.button.FlatButton flatButton3;
+    private com.mommoo.flat.button.FlatButton btnImportar;
     private com.mommoo.flat.select.FlatCheckBox flatCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tableMatriculas;
     // End of variables declaration//GEN-END:variables
 }
