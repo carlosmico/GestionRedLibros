@@ -18,7 +18,7 @@
 package Utilidades;
 
 /**
- *
+ * Clase especificadora de los Estados de los Libros
  * @author Carlos
  */
 public class Estado {

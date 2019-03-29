@@ -18,7 +18,7 @@
 package Pojos;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 //Imports Hibernate
 import javax.persistence.CascadeType;
@@ -43,7 +43,7 @@ public class Matricula implements Serializable {
 
     
     @Id
-    private int id;
+    private Integer id;
     private int curso_escolar;
     
     @ManyToOne
@@ -52,7 +52,7 @@ public class Matricula implements Serializable {
     
     private String ensenanza;
     private String curso;
-    private String contenido;
+    private int contenido;
     private String idioma;
     private String tipo_basico;
     private String tipo_predom;
@@ -65,8 +65,24 @@ public class Matricula implements Serializable {
     public Matricula(){
         
     }
+    
+    public Matricula(int curso_escolar, Alumno alumno, String ensenanza, String curso, int contenido, String idioma, String tipo_basico, String tipo_predom, String acis, Date fec_ini_acis, Date fec_fin_acis, String cur_ref_acis, String curso_pendiente) {
+        this.curso_escolar = curso_escolar;
+        this.alumno = alumno;
+        this.ensenanza = ensenanza;
+        this.curso = curso;
+        this.contenido = contenido;
+        this.idioma = idioma;
+        this.tipo_basico = tipo_basico;
+        this.tipo_predom = tipo_predom;
+        this.acis = acis;
+        this.fec_ini_acis = fec_ini_acis;
+        this.fec_fin_acis = fec_fin_acis;
+        this.cur_ref_acis = cur_ref_acis;
+        this.curso_pendiente = curso_pendiente;
+    }
 
-    public Matricula(int id, int curso_escolar, Alumno alumno, String ensenanza, String curso, String contenido, String idioma, String tipo_basico, String tipo_predom, String acis, Date fec_ini_acis, Date fec_fin_acis, String cur_ref_acis, String curso_pendiente) {
+    public Matricula(Integer id, int curso_escolar, Alumno alumno, String ensenanza, String curso, int contenido, String idioma, String tipo_basico, String tipo_predom, String acis, Date fec_ini_acis, Date fec_fin_acis, String cur_ref_acis, String curso_pendiente) {
         this.id = id;
         this.curso_escolar = curso_escolar;
         this.alumno = alumno;
@@ -87,7 +103,7 @@ public class Matricula implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -123,11 +139,11 @@ public class Matricula implements Serializable {
         this.curso = curso;
     }
 
-    public String getContenido() {
+    public int getContenido() {
         return contenido;
     }
 
-    public void setContenido(String contenido) {
+    public void setContenido(int contenido) {
         this.contenido = contenido;
     }
 
