@@ -17,31 +17,21 @@
  */
 package Vistas;
 
-import Utilidades.Colores;
-import Daos.DaoLibro;
-import Pojos.Curso;
-import Pojos.Libro;
+import Daos.*;
+import Pojos.*;
+import Utilidades.*;
 import Renders.comboBoxRender;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JSlider;
 import javax.swing.SwingWorker;
-import javax.swing.border.Border;
 
 /**
  *
@@ -84,6 +74,8 @@ public class FrameInputLibro extends javax.swing.JFrame {
         setModoDeBusqueda(buscquedaPorCodigo);
         
         this.setLocationRelativeTo(null);
+        
+        textCodigoLibro.requestFocusInWindow();
 
         daoLibro = new DaoLibro();
         daoCurso = new DaoCurso();
@@ -290,8 +282,8 @@ public class FrameInputLibro extends javax.swing.JFrame {
             public Object getElementAt(int i) { return strings[i]; }
         });
         jlistResultadoLibros.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jlistResultadoLibros.setSelectionBackground(colores.buttons);
-        jlistResultadoLibros.setSelectionForeground(colores.fondo);
+        jlistResultadoLibros.setSelectionBackground(Colores.buttons);
+        jlistResultadoLibros.setSelectionForeground(Colores.fondo);
         jlistResultadoLibros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlistResultadoLibrosMouseClicked(evt);
@@ -549,7 +541,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 }
             };
             worker.execute();
-            frameCarga = new FrameCarga();
+            if (frameCarga == null)frameCarga = new FrameCarga();
             frameCarga.setVisible(true);
         }
     }

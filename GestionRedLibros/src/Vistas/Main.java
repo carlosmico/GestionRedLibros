@@ -7,27 +7,16 @@ package Vistas;
 
 import Utilidades.DimensionesFrame;
 import Utilidades.GetInternetStatus;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /**
  *
@@ -42,6 +31,7 @@ public class Main extends javax.swing.JFrame {
     FrameDevoluciones gesDevoluciones = null;
     FrameEntrega gesEntrega = null;
     FrameInputLibro inputLibro = null;
+    FrameMatriculas gesMatri = null;
     
     public Main() throws IOException {
         initComponents();
@@ -77,6 +67,7 @@ public class Main extends javax.swing.JFrame {
         btnGestionLibros = new javax.swing.JMenuItem();
         btnGestionEjemplar = new javax.swing.JMenuItem();
         btnConsultaAlumnos = new javax.swing.JMenuItem();
+        btnMatriculas = new javax.swing.JMenuItem();
         banner = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -124,6 +115,17 @@ public class Main extends javax.swing.JFrame {
             }
         });
         menuPopup.add(btnConsultaAlumnos);
+
+        btnMatriculas.setBackground(new java.awt.Color(66, 47, 44));
+        btnMatriculas.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
+        btnMatriculas.setForeground(new java.awt.Color(66, 47, 44));
+        btnMatriculas.setText("Matriculas");
+        btnMatriculas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMatriculasActionPerformed(evt);
+            }
+        });
+        menuPopup.add(btnMatriculas);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión Red Libros");
@@ -261,6 +263,12 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGestionesActionPerformed
 
+    private void btnMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatriculasActionPerformed
+        // TODO add your handling code here:
+        if (gesMatri == null) gesMatri = new FrameMatriculas();
+        gesMatri.setVisible(true);
+    }//GEN-LAST:event_btnMatriculasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -308,6 +316,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnGestionEjemplar;
     private javax.swing.JMenuItem btnGestionLibros;
     private com.mommoo.flat.button.FlatButton btnGestiones;
+    private javax.swing.JMenuItem btnMatriculas;
     private com.mommoo.flat.button.FlatButton flatButton1;
     private com.mommoo.flat.button.FlatButton flatButton4;
     private javax.swing.JLabel jLabel1;

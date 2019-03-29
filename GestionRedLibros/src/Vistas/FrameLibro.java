@@ -17,7 +17,9 @@
  */
 package Vistas;
 
-import Utilidades.Colores;
+import Daos.*;
+import Pojos.*;
+import Utilidades.*;
 import Renders.comboBoxRender;
 import java.awt.Component;
 import java.awt.Image;
@@ -50,12 +52,13 @@ public class FrameLibro extends javax.swing.JFrame {
     boolean isNewLibro;
 
     FrameCarga frameCarga;
+    FrameConfirmacionEliminar frameDelete;
 
     List<Curso> listaCursos;
     List<Contenido> listaContenido;
 
     DaoCurso daoCurso;
-    //DaoContenido daoContenido;
+    DaoContenido daoContenido;
 
     public FrameLibro(Libro libro) {
         initComponents();
@@ -110,10 +113,13 @@ public class FrameLibro extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         daoCurso = new DaoCurso();
+        daoContenido = new DaoContenido();
 
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
+                setEnabled(false);
                 listaCursos = daoCurso.buscarTodos();
+                listaContenido = daoContenido.buscarTodos();
                 return null;
             }
 
@@ -123,17 +129,41 @@ public class FrameLibro extends javax.swing.JFrame {
             protected void done() {
                 //Rellenamos la lista de los libros
                 //<editor-fold defaultstate="collapsed" desc="Rellenamos los datos en el caso de que consultemos algun libro o no">
-                if (!isNewLibro) {
+
+                textNombreLibro.setEditable(isNewLibro);
+                textISBNLibro.setEditable(isNewLibro);
+                cbCurso.setEditable(isNewLibro);
+                cbCurso.setEnabled(isNewLibro);
+                cbAsignatura.setEditable(isNewLibro);
+                cbAsignatura.setEnabled(isNewLibro);
+                textUnidadesLibro.setEditable(isNewLibro);
+                textCodigoDeBarrasLibro.setEditable(isNewLibro);
+                chkObsoleto.setEnabled(isNewLibro);
+
+                btnEdit.setEnabled(!isNewLibro);
+
+                if (isNewLibro) {
+                    if (listaCursos.size() > 0) {
+                        for (int i = 0; i < listaCursos.size(); i++) {
+                            cbCurso.addItem(listaCursos.get(i).getAbreviatura());
+                        }
+                    }
+
+                    if (listaContenido.size() > 0) {
+                        for (int i = 0; i < listaContenido.size(); i++) {
+                            cbAsignatura.addItem(listaContenido.get(i).getNombre_cas());
+                        }
+                    }
+
+                    textNombreLibro.setText("");
+                    textISBNLibro.setText("");
+
+                    textUnidadesLibro.setText("");
+
+                    textCodigoDeBarrasLibro.setText("");
+                    chkObsoleto.setChecked(!isNewLibro);
+                } else {
                     //Limitamos la opcion de edicion de los campos
-                    textNombreLibro.setEditable(isNewLibro);
-                    textISBNLibro.setEditable(isNewLibro);
-                    cbCurso.setEditable(isNewLibro);
-                    cbCurso.setEnabled(isNewLibro);
-                    cbAsignatura.setEditable(isNewLibro);
-                    cbAsignatura.setEnabled(isNewLibro);
-                    textUnidadesLibro.setEditable(isNewLibro);
-                    textCodigoDeBarrasLibro.setEditable(isNewLibro);
-                    chkObsoleto.setEnabled(isNewLibro);
 
                     //Rellenamos los datos
                     textNombreLibro.setText(libro.getNombre());
@@ -145,19 +175,16 @@ public class FrameLibro extends javax.swing.JFrame {
 
                     textCodigoDeBarrasLibro.setText(libro.getCodigo());
                     chkObsoleto.setChecked(libro.getObsoleto());
-                } else {
-                    if (listaCursos.size() > 0) {
-                        for (int i = 0; i < listaCursos.size(); i++) {
-                            cbCurso.addItem(listaCursos.get(i).getAbreviatura());
-                        }
-                    }
                 }
-//</editor-fold>
+                //</editor-fold>
+                setEnabled(true);
                 frameCarga.dispose();
             }
         };
         worker.execute();
-        frameCarga = new FrameCarga();
+        if (frameCarga == null) {
+            frameCarga = new FrameCarga();
+        }
         frameCarga.setVisible(true);
 
         BufferedImage img = null;
@@ -245,6 +272,7 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Libros");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnEdit.setBackground(new java.awt.Color(66, 47, 44));
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/pencil.png"))); // NOI18N
@@ -262,6 +290,11 @@ public class FrameLibro extends javax.swing.JFrame {
         btnDelete.setBackground(new java.awt.Color(255, 66, 62));
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/delete-empty.png"))); // NOI18N
         btnDelete.setCornerRound(10);
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -286,7 +319,7 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -711,10 +744,18 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private void btnEditMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseReleased
         // TODO add your handling code here:
-        isEditMode = !isEditMode;
-        btnDelete.setVisible(isEditMode);
-        btnSave.setVisible(isEditMode);
+        if (btnEdit.isEnabled()) {
+            isEditMode = !isEditMode;
+            btnDelete.setVisible(isEditMode);
+            btnSave.setVisible(isEditMode);
+        }
     }//GEN-LAST:event_btnEditMouseReleased
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        if (frameDelete == null) frameDelete = new FrameConfirmacionEliminar();
+        frameDelete.setVisible(true);
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments

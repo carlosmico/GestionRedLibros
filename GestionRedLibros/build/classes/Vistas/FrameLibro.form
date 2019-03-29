@@ -94,7 +94,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnEdit" max="32767" attributes="0"/>
+                      <Component id="btnEdit" min="-2" pref="63" max="-2" attributes="0"/>
                       <Component id="btnSave" alignment="1" max="32767" attributes="0"/>
                       <Component id="btnDelete" alignment="1" max="32767" attributes="0"/>
                   </Group>
@@ -114,6 +114,7 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Libros"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
         </Component>
         <Component class="com.mommoo.flat.button.FlatButton" name="btnEdit">
@@ -151,6 +152,9 @@
             </Property>
             <Property name="cornerRound" type="int" value="10"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
