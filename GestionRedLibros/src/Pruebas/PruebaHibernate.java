@@ -35,7 +35,11 @@ public class PruebaHibernate {
         
         Alumno a = new Alumno("71230212", "", "", "", "", "", "", "", null, null);
         try {
-            DaoMatricula dao = new DaoMatricula();
+            DaoContenido dao = new DaoContenido();
+            
+            System.out.println(dao.buscarTodos());
+            
+            /*DaoMatricula dao = new DaoMatricula();
             
             Matricula m = new Matricula(4, 2020, a, "", "", "", "ssssss", 
                     "A", "B", "C", new Date(1), new Date(1) , "", "");

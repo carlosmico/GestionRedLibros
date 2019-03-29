@@ -17,7 +17,8 @@
  */
 package Pruebas;
 
-import Utilidades.LeerMatriculaXML;
+import Utilidades.ImportarMatriculasXML;
+import java.text.ParseException;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -30,7 +31,7 @@ public class PruebasMatricula {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         // TODO code application logic here
         JFileChooser chooser = new JFileChooser();
         
@@ -42,7 +43,7 @@ public class PruebasMatricula {
         int returnVal = chooser.showOpenDialog(null);
         
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            LeerMatriculaXML leer = new LeerMatriculaXML(chooser.getSelectedFile().getPath());
+            ImportarMatriculasXML leer = new ImportarMatriculasXML(chooser.getSelectedFile().getPath());
             System.out.println("You chose to open this file: "
                     + chooser.getSelectedFile().getPath());
         }
