@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/Vistas/FrameLibro.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>770</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameLibro.java</file>
+<<<<<<< Updated upstream
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Pojos/Libro.java</file>
+=======
+            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Daos/DaoContenido.java</file>
+            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameInputLibro.java</file>
+            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameMatriculas.java</file>
+            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameError.java</file>
+            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Renders/comboBoxRender.java</file>
+            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameDevoluciones.java</file>
+            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameConfirmacionEliminar.java</file>
+            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Daos/DaoLibro.java</file>
+            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameCarga.java</file>
+            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/Main.java</file>
+>>>>>>> Stashed changes
         </group>
     </open-files>
 </project-private>

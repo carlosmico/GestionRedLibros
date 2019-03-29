@@ -31,6 +31,7 @@ import javax.swing.JComponent;
  
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.plaf.ComboBoxUI;
 import javax.swing.plaf.basic.BasicArrowButton;
@@ -50,6 +51,11 @@ public class comboBoxRender extends BasicComboBoxUI {
 
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         return null;
+    }
+    
+    public JTextField isEnabled(JTextField text){
+        text.setEditable(false);
+        return text;
     }
  
 }

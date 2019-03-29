@@ -29,7 +29,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
+import javax.persistence.PersistenceException;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -48,18 +50,19 @@ public class FrameLibro extends javax.swing.JFrame {
      * Creates new form FrameDevoluciones
      */
     private boolean isEditMode;
-    private String textoIdentificadorLibro;
 
     private Libro libro;
     boolean isNewLibro;
 
     FrameCarga frameCarga;
+    FrameError frameError;
     FrameConfirmacionEliminar frameDelete;
 
     List<Curso> listaCursos;
     List<Contenido> listaContenido;
 
     DaoCurso daoCurso;
+    DaoLibro daoLibro;
     DaoContenido daoContenido;
 
     public FrameLibro(Libro libro) {
@@ -67,6 +70,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         //<editor-fold defaultstate="collapsed" desc="Configuracion inicial de los ComboBox">
         //Combo Box Curso
+        cbCurso.setEditable(false);
         cbCurso.setUI(new comboBoxRender());
         cbCurso.setRenderer(new DefaultListCellRenderer() {
             @Override
@@ -86,6 +90,7 @@ public class FrameLibro extends javax.swing.JFrame {
             }
         });
 
+        cbAsignatura.setEditable(false);
         cbAsignatura.setUI(new comboBoxRender());
         cbAsignatura.setRenderer(new DefaultListCellRenderer() {
             @Override
@@ -110,14 +115,19 @@ public class FrameLibro extends javax.swing.JFrame {
         this.isNewLibro = this.libro == null;
 
         btnDelete.setVisible(false);
+<<<<<<< Updated upstream
         btnSave.setVisible(false);
         
         //Deshabilitamos la tabla de ejemplares puesto que es de lectura
         tableEjemplares.setEnabled(false);
+=======
+        btnSave.setVisible(isNewLibro);
+>>>>>>> Stashed changes
 
         this.setLocationRelativeTo(null);
 
         daoCurso = new DaoCurso();
+        daoLibro = new DaoLibro();
         daoContenido = new DaoContenido();
 
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
@@ -152,12 +162,6 @@ public class FrameLibro extends javax.swing.JFrame {
                     if (listaCursos.size() > 0) {
                         for (int i = 0; i < listaCursos.size(); i++) {
                             cbCurso.addItem(listaCursos.get(i).getAbreviatura());
-                        }
-                    }
-
-                    if (listaContenido.size() > 0) {
-                        for (int i = 0; i < listaContenido.size(); i++) {
-                            cbAsignatura.addItem(listaContenido.get(i).getNombre_cas());
                         }
                     }
 
@@ -339,6 +343,11 @@ public class FrameLibro extends javax.swing.JFrame {
         btnSave.setBackground(new java.awt.Color(102, 225, 115));
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/check.png"))); // NOI18N
         btnSave.setCornerRound(10);
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnDelete.setBackground(new java.awt.Color(255, 66, 62));
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/delete-empty.png"))); // NOI18N
@@ -498,9 +507,15 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel7.setText("Curso");
 
         cbCurso.setBackground(new java.awt.Color(239, 235, 233));
+        cbCurso.setEditable(true);
         cbCurso.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         cbCurso.setForeground(new java.awt.Color(51, 51, 51));
         cbCurso.setBorder(null);
+        cbCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCursoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelAsignaturaLayout = new javax.swing.GroupLayout(panelAsignatura);
         panelAsignatura.setLayout(panelAsignaturaLayout);
@@ -536,8 +551,11 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel5.setText("Asignatura");
 
         cbAsignatura.setBackground(new java.awt.Color(239, 235, 233));
+        cbAsignatura.setEditable(true);
         cbAsignatura.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         cbAsignatura.setForeground(new java.awt.Color(51, 51, 51));
+        cbAsignatura.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione curso" }));
+        cbAsignatura.setToolTipText("");
         cbAsignatura.setBorder(null);
 
         javax.swing.GroupLayout panelISBN1Layout = new javax.swing.GroupLayout(panelISBN1);
@@ -812,10 +830,111 @@ public class FrameLibro extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
         if (frameDelete == null) {
+<<<<<<< Updated upstream
             frameDelete = new FrameConfirmacionEliminar();
+=======
+            frameDelete = new FrameConfirmacionEliminar(libro);
+>>>>>>> Stashed changes
         }
         frameDelete.setVisible(true);
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+
+        String errores = "";
+
+        if (isNewLibro) {
+            //Creacion de un nuevo libro
+            if (textNombreLibro.equals("")) {
+                errores += "- El nombre no puede estar vacío<br>";
+            }
+            if (textISBNLibro.equals("")) {
+                errores += "- El ISBN no puede estar vacío<br>";
+            }
+            if (textUnidadesLibro.equals("")) {
+                errores += "- El campo de las unidades no puede estar vacío<br>";
+            }
+            try {
+                int un = Integer.parseInt(textUnidadesLibro.getText());
+                if (un <= 0) {
+                    errores += "- El valor de las unidades debe ser un valor positivo<br>";
+                }
+            } catch (Exception e) {
+                errores += "- El valor de las unidades debe ser un valor númerico<br>";
+            }
+
+            if (textCodigoDeBarrasLibro.equals("")) {
+                errores += "- El nombre no puede estar vacío<br>";
+            }
+
+            if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
+                errores += "- Debe seleccionar una asignatura válida<br>";
+            }
+
+            if (errores.equals("")) {
+                //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
+                Libro newLibro = new Libro();
+
+                newLibro.setCodigo(textCodigoDeBarrasLibro.getText());
+                newLibro.setISBN(textISBNLibro.getText());
+                newLibro.setNombre(textNombreLibro.getText());
+                newLibro.setObsoleto(chkObsoleto.isChecked());
+                newLibro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
+
+                for (int i = 0; i < listaContenido.size(); i++) {
+                    if (listaContenido.get(i).getNombre_cas().equals(cbAsignatura.getSelectedItem().toString())) {
+                        newLibro.setContenido(listaContenido.get(i));
+                        break;
+                    }
+                }
+
+                try{
+                    daoLibro.grabar(newLibro);
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+            } else {
+                if (frameError == null) {
+                    frameError = new FrameError("<html>No se puede crear el libro. Considere los siguientes errores:<br>" + errores + "<html>");
+                }
+                frameError.setVisible(true);
+            }
+        } else {
+            //Modificacion de un libro existente
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void cbCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCursoActionPerformed
+        // TODO add your handling code here:
+        if (isNewLibro || isEditMode) {
+            List<Contenido> listaContenidoTemp = listaContenido;
+
+            listaContenidoTemp = listaContenido.stream().filter(a -> a.getCurso().getAbreviatura().equals(cbCurso.getSelectedItem().toString())).collect(Collectors.toList());
+            System.out.println("Size: " + listaContenidoTemp.size());
+
+            System.out.println("Curso seleccionado: " + cbCurso.getSelectedItem().toString());
+            System.out.println("----------------------");
+            for (int i = 0; i < listaContenidoTemp.size(); i++) {
+                if (listaContenidoTemp.get(i).getCurso().getAbreviatura().equals(listaContenidoTemp.get(i).getNombre_cas())) {
+                    System.out.println("\tContenido: " + listaContenidoTemp.get(i).getNombre_cas());
+                    System.out.println("\tCurso: " + listaContenidoTemp.get(i).getCurso().getAbreviatura());
+                    System.out.println("----------------------");
+                }
+            }
+
+            cbAsignatura.removeAllItems();
+            if (listaContenidoTemp.size() > 0) {
+                if (listaContenidoTemp.size() > 0) {
+                    for (int i = 0; i < listaContenidoTemp.size(); i++) {
+                        cbAsignatura.addItem(listaContenidoTemp.get(i).getNombre_cas());
+                    }
+                }
+            } else {
+                cbAsignatura.addItem("Seleccione curso");
+            }
+        }
+    }//GEN-LAST:event_cbCursoActionPerformed
 
     /**
      * @param args the command line arguments
