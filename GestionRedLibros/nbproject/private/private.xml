@@ -4,11 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameLibro.java</file>
-<<<<<<< HEAD
-            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameInputLibro.java</file>
-=======
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Daos/DaoLibro.java</file>
->>>>>>> master
+            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameConfirmacionEliminar.java</file>
         </group>
     </open-files>
 </project-private>

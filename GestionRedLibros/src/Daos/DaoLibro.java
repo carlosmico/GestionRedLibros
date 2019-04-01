@@ -67,20 +67,15 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
         try {
             Libro libro = (Libro) session.get(Libro.class, l.getCodigo());
 
-            if (libro != null) {
-                libro.setContenido(l.getContenido());
-                libro.setISBN(l.getISBN());
-                libro.setNombre(l.getNombre());
-                libro.setObsoleto(l.getObsoleto());
-                libro.setPrecio(l.getPrecio());
-                libro.setUnidades(l.getUnidades());
+            libro.setContenido(l.getContenido());
+            libro.setISBN(l.getISBN());
+            libro.setNombre(l.getNombre());
+            libro.setObsoleto(l.getObsoleto());
+            libro.setPrecio(l.getPrecio());
+            libro.setUnidades(l.getUnidades());
 
-                //comprobarEjemplares(libro);
-
-                super.session.saveOrUpdate(libro);
-            } else {
-                super.session.saveOrUpdate(l);
-            }
+            //comprobarEjemplares(libro);
+            super.session.saveOrUpdate(libro);
 
             super.session.getTransaction().commit();
         } catch (PersistenceException e) {
@@ -200,11 +195,11 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
                 Query query = super.session.createQuery("from Ejemplares where id_libro = '" + libroActual + "'");
                 ejemplares = query.list();
-                
-                String codigo = ejemplares.get(ejemplares.size()-1).getCodigo();
-                
+
+                String codigo = ejemplares.get(ejemplares.size() - 1).getCodigo();
+
                 codEjemplar = Integer.parseInt(codigo.substring(codigo.length() - 3));
-                
+
                 System.out.println(codEjemplar);
             } catch (Exception e) {
                 System.out.println("DaoLibro - comprobarEjemplares() - Error al convertir el codigo ejemplar.");

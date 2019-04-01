@@ -30,11 +30,13 @@ import java.util.stream.Collectors;
 import javax.persistence.PersistenceException;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
+import net.bytebuddy.asm.Advice;
 
 /**
  *
@@ -47,17 +49,24 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private boolean isEditMode;
 
-    private Libro libro;
+    private static Libro libro = null;
     boolean isNewLibro;
+    
+    private FrameCarga c = new FrameCarga();
+    
 
     FrameCarga frameCarga;
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
     FrameConfirmacionEliminar frameDelete;
 
     List<Curso> listaCursos;
     List<Contenido> listaContenido;
 
     DaoCurso daoCurso;
-    DaoLibro daoLibro;
+    static DaoLibro daoLibro;
     DaoContenido daoContenido;
 
     public FrameLibro(Libro libro) {
@@ -250,6 +259,21 @@ public class FrameLibro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay datos de ejemplares en la Base de Datos.");
         }
     }
+
+    public static void eliminarLibro() {
+        try {
+            daoLibro.borrar(libro);
+            
+            Dialogo.mostrarInformacion("<br>Libro eliminado correctamente.");
+            
+            //FrameLibro.this.dispose();
+            
+            //setEnabled(true);
+        } catch (Exception e) {
+            Dialogo.mostrarError("<br>- Error al eliminar el libro.");
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -902,10 +926,22 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
+        setEnabled(false);
         if (frameDelete == null) {
-            frameDelete = new FrameConfirmacionEliminar(libro);
+            frameDelete = new FrameConfirmacionEliminar(FrameConfirmacionEliminar.eliminar_libro);
         }
         frameDelete.setVisible(true);
+
+        /*
+        try {
+            daoLibro.borrar(libro);
+        } catch (PersistenceException e) {
+            this.dispose();
+            if (frameError == null) {
+                frameError = new FramePopup("<html>El libro no se ha podido eliminar.<br> Error: " + "</html>");
+            }
+            frameError.setVisible(true);
+        }*/
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -963,7 +999,15 @@ public class FrameLibro extends javax.swing.JFrame {
 
                 try {
                     daoLibro.grabar(newLibro);
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
                     Dialogo.mostrarInformacion("Libro añadido correctamente.");
+
+                    setEditMode(false);
+
+                    isNewLibro = false;
                 } catch (PersistenceException e) {
                     Dialogo.mostrarError("<br>- El libro ya existe en la Base de Datos.");
                 } catch (Exception e) {
@@ -1007,17 +1051,16 @@ public class FrameLibro extends javax.swing.JFrame {
 
             if (errores.equals("")) {
                 //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
-                Libro newLibro = new Libro();
 
-                newLibro.setCodigo(textCodigoDeBarrasLibro.getText());
-                newLibro.setISBN(textISBNLibro.getText());
-                newLibro.setNombre(textNombreLibro.getText());
-                newLibro.setObsoleto(chkObsoleto.isChecked());
-                newLibro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
+                libro.setCodigo(textCodigoDeBarrasLibro.getText());
+                libro.setISBN(textISBNLibro.getText());
+                libro.setNombre(textNombreLibro.getText());
+                libro.setObsoleto(chkObsoleto.isChecked());
+                libro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
 
                 for (int i = 0; i < listaContenido.size(); i++) {
                     if (listaContenido.get(i).getNombre_cas().equals(cbAsignatura.getSelectedItem().toString())) {
-                        newLibro.setContenido(listaContenido.get(i));
+                        libro.setContenido(listaContenido.get(i));
                         break;
                     }
                 }
@@ -1026,6 +1069,8 @@ public class FrameLibro extends javax.swing.JFrame {
                     daoLibro.actualizar(libro);
 
                     Dialogo.mostrarInformacion("Libro actualizado correctamente.");
+
+                    setEditMode(false);
                 } catch (PersistenceException e) {
                     Dialogo.mostrarError("<br>- El libro ya existe en la Base de Datos.");
                 } catch (Exception e) {
@@ -1160,6 +1205,18 @@ public class FrameLibro extends javax.swing.JFrame {
         cbAsignatura.setEnabled(editable);
         textUnidadesLibro.setEditable(editable);
         chkObsoleto.setEnabled(editable);
+<<<<<<< HEAD
         textCodigoDeBarrasLibro.setEditable(editable);
+=======
+        btnSave.setVisible(editable);
+
+        if (isNewLibro) {
+            btnDelete.setVisible(false);
+            textCodigoDeBarrasLibro.setEditable(editable);
+        } else {
+            btnDelete.setVisible(editable);
+            textCodigoDeBarrasLibro.setEditable(false);
+        }
+>>>>>>> master
     }
 }
