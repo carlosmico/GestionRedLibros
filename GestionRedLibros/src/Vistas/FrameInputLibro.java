@@ -128,7 +128,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         btnChangeMethod = new com.mommoo.flat.button.FlatButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Devoluciones");
+        setTitle("Gestión Libros");
         setBackground(new java.awt.Color(239, 235, 233));
         setMinimumSize(new java.awt.Dimension(600, 36));
         setResizable(false);
@@ -136,10 +136,10 @@ public class FrameInputLibro extends javax.swing.JFrame {
         head.setBackground(new java.awt.Color(58, 39, 35));
         head.setPreferredSize(new java.awt.Dimension(135, 75));
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Gestión libro");
+        jLabel1.setText("Gestión libros");
 
         btnNew.setBackground(new java.awt.Color(66, 47, 44));
         btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png"))); // NOI18N
@@ -158,7 +158,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         headLayout.setVerticalGroup(
             headLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,7 +180,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         textTitle.setToolTipText("");
 
         textCodigoLibro.setBackground(new java.awt.Color(239, 235, 233));
-        textCodigoLibro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        textCodigoLibro.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
         textCodigoLibro.setForeground(new java.awt.Color(51, 51, 51));
         textCodigoLibro.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         textCodigoLibro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(51, 51, 51)));
@@ -213,7 +213,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 .addGroup(bodyCodeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bodyCodeLayout.createSequentialGroup()
                         .addComponent(textTitle)
-                        .addGap(0, 321, Short.MAX_VALUE))
+                        .addGap(0, 342, Short.MAX_VALUE))
                     .addGroup(bodyCodeLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(bodyCodeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,7 +248,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         textTitle1.setToolTipText("");
 
         textNombreLibro.setBackground(new java.awt.Color(239, 235, 233));
-        textNombreLibro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        textNombreLibro.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         textNombreLibro.setForeground(new java.awt.Color(102, 102, 102));
         textNombreLibro.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         textNombreLibro.setText("Escribe nombre del libro...");
@@ -263,7 +263,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         });
 
         cbCurso.setBackground(new java.awt.Color(51, 51, 51));
-        cbCurso.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        cbCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         cbCurso.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar curso" }));
         cbCurso.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -272,7 +272,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         });
 
         jlistResultadoLibros.setBackground(new java.awt.Color(239, 235, 233));
-        jlistResultadoLibros.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jlistResultadoLibros.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jlistResultadoLibros.setForeground(new java.awt.Color(51, 51, 51));
         jlistResultadoLibros.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "mates", "castellano", "valencia" };
@@ -301,9 +301,9 @@ public class FrameInputLibro extends javax.swing.JFrame {
                         .addComponent(textTitle1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(bodyListadoLayout.createSequentialGroup()
-                        .addComponent(textNombreLibro)
+                        .addComponent(textNombreLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         bodyListadoLayout.setVerticalGroup(
@@ -371,7 +371,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(head, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
+            .addComponent(head, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
             .addComponent(bodyCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(botonera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(bodyListado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

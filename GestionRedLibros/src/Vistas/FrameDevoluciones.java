@@ -59,7 +59,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(58, 39, 35));
         jPanel1.setLayout(new java.awt.GridLayout(2, 1));
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Devoluciones");
