@@ -20,11 +20,7 @@ package Vistas;
 import Daos.DaoLibro;
 import Pojos.Libro;
 import Utilidades.*;
-import excepciones.BusinessException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.PersistenceException;
-import javax.swing.JFrame;
 
 /**
  *
@@ -192,7 +188,7 @@ public class FrameConfirmacionEliminar extends javax.swing.JFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
         try {
-            //daoLibro.borrar(libro);
+            daoLibro.borrar(libro);
         } catch (PersistenceException e) {
             this.dispose();
             if (frameError == null) {

@@ -26,7 +26,7 @@ import javax.persistence.PersistenceException;
  *
  * @author Jose Sanchis
  */
-public class FrameError extends javax.swing.JFrame {
+public class FramePopup extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameCarga
@@ -34,7 +34,7 @@ public class FrameError extends javax.swing.JFrame {
 
     private DaoLibro daoLibro;
 
-    public FrameError(String text) {
+    public FramePopup(String text) {
         initComponents();
 
         textError.setText(text);
@@ -186,7 +186,7 @@ public class FrameError extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameError(null).setVisible(true);
+                new FramePopup(null).setVisible(true);
             }
         });
     }

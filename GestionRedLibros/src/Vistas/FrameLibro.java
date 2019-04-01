@@ -201,12 +201,10 @@ public class FrameLibro extends javax.swing.JFrame {
 
         //Set imagen del libro
         try {
-            icono = "./../Imagenes/libro.jpg";
-            img = ImageIO.read(new File(icono));
-            Image image = img.getScaledInstance(imgLibro.getWidth(), imgLibro.getHeight(), Image.SCALE_SMOOTH);
-            ImageIcon imageIcon = new ImageIcon(image);
-            imgLibro.setIcon(imageIcon);
-        } catch (IOException ex) {
+            int ran = (int)(Math.floor(Math.random()*4));
+            System.out.println("Resultado: " + ran);
+            imgLibro.setIcon(new ImageIcon("Imagenes/image" + ran + ".png"));
+        } catch (Exception ex) {
             imgLibro.setText("\nNo se ha podido cargar la imagen del libro");
             Logger.getLogger(FrameLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -385,11 +383,11 @@ public class FrameLibro extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(239, 235, 233));
 
-        panelLibro.setBackground(new java.awt.Color(239, 235, 233));
+        panelLibro.setBackground(new java.awt.Color(255, 255, 255));
         panelLibro.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         imgLibro.setForeground(new java.awt.Color(51, 51, 51));
-        imgLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/alert-decagram-outline.png"))); // NOI18N
+        imgLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/image1.png"))); // NOI18N
         imgLibro.setMaximumSize(new java.awt.Dimension(240, 320));
         imgLibro.setMinimumSize(new java.awt.Dimension(240, 320));
         imgLibro.setPreferredSize(new java.awt.Dimension(240, 320));
