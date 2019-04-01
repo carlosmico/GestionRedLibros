@@ -31,18 +31,17 @@ public class FrameConfirmacionEliminar extends javax.swing.JFrame {
     /**
      * Creates new form FrameCarga
      */
-    private Libro libro;
+    
+    // Situaciones de la clase
+    
+    public static final int eliminar_libro = 0;
+    
+    private int accion;
 
-    private FramePopup frameError;
-
-    private DaoLibro daoLibro;
-
-    public FrameConfirmacionEliminar(Libro libro) {
+    public FrameConfirmacionEliminar(int accion) {
         initComponents();
-
-        this.libro = libro;
-
-        daoLibro = new DaoLibro();
+        
+        accion = accion;
 
         this.setLocationRelativeTo(null);
     }
@@ -187,14 +186,12 @@ public class FrameConfirmacionEliminar extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-        try {
-            daoLibro.borrar(libro);
-        } catch (PersistenceException e) {
-            this.dispose();
-            if (frameError == null) {
-                frameError = new FramePopup("<html>El libro no se ha podido eliminar.<br> Error: " + "</html>");
-            }
-            frameError.setVisible(true);
+        this.dispose();
+        
+        switch(accion){
+            case eliminar_libro:
+                FrameLibro.eliminarLibro();
+                break;
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -229,7 +226,7 @@ public class FrameConfirmacionEliminar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameConfirmacionEliminar(null).setVisible(true);
+                new FrameConfirmacionEliminar(-1).setVisible(true);
             }
         });
     }
