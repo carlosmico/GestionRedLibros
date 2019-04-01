@@ -82,7 +82,8 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Imagenes/load.gif"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Buscando datos en la base de datos"/>
+            <Property name="text" type="java.lang.String" value="Recuperando datos en la base de datos"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
         </Component>

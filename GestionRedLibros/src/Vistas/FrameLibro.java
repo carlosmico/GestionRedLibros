@@ -50,10 +50,6 @@ public class FrameLibro extends javax.swing.JFrame {
     boolean isNewLibro;
 
     FrameCarga frameCarga;
-<<<<<<< HEAD
-=======
-
->>>>>>> master
     FrameConfirmacionEliminar frameDelete;
 
     List<Curso> listaCursos;
@@ -129,10 +125,6 @@ public class FrameLibro extends javax.swing.JFrame {
                 setEnabled(false);
                 listaCursos = daoCurso.buscarTodos();
                 listaContenido = daoContenido.buscarTodos();
-<<<<<<< HEAD
-=======
-
->>>>>>> master
                 return null;
             }
 
@@ -147,37 +139,8 @@ public class FrameLibro extends javax.swing.JFrame {
 
                 btnEdit.setEnabled(!isNewLibro);
 
-                if (isNewLibro) {
-
-                    if (listaCursos.size() > 0) {
-                        for (int i = 0; i < listaCursos.size(); i++) {
-                            cbCurso.addItem(listaCursos.get(i).getAbreviatura());
-                        }
-                    }
-
-                    textNombreLibro.setText("");
-                    textISBNLibro.setText("");
-
-                    textUnidadesLibro.setText("");
-
-                    textCodigoDeBarrasLibro.setText("");
-                    chkObsoleto.setChecked(!isNewLibro);
-                } else {
-                    //Rellenamos los datos
-                    textNombreLibro.setText(libro.getNombre());
-                    textISBNLibro.setText(libro.getISBN());
-
-                    cbCurso.addItem(libro.getContenido().getCurso().getAbreviatura());
-                    cbAsignatura.addItem(libro.getContenido().getNombre_cas());
-                    textUnidadesLibro.setText(libro.getUnidades() + "");
-
-                    textCodigoDeBarrasLibro.setText(libro.getCodigo());
-                    chkObsoleto.setChecked(libro.getObsoleto());
-
-                    //Refrescamos la tabla de ejemplares
-                    RefrescarTabla();
-                }
                 //</editor-fold>
+                rellenarCampos();
                 setEnabled(true);
                 frameCarga.dispose();
             }
@@ -193,10 +156,50 @@ public class FrameLibro extends javax.swing.JFrame {
         try {
             int ran = (int) (Math.floor(Math.random() * 4));
             System.out.println("Resultado: " + ran);
-            imgLibro.setIcon(new ImageIcon("Imagenes/image" + ran + ".png"));
+            imgLibro.setIcon(new ImageIcon("./Imagenes/image" + ran + ".png"));
         } catch (Exception ex) {
             imgLibro.setText("\nNo se ha podido cargar la imagen del libro");
             Logger.getLogger(FrameLibro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void rellenarCampos() {
+
+        if (listaCursos.size() > 0) {
+            for (int i = 0; i < listaCursos.size(); i++) {
+                cbCurso.addItem(listaCursos.get(i).getAbreviatura());
+            }
+        }
+
+        if (isNewLibro) {
+
+            textNombreLibro.setText("");
+            textISBNLibro.setText("");
+
+            textUnidadesLibro.setText("");
+
+            textCodigoDeBarrasLibro.setText("");
+            chkObsoleto.setChecked(!isNewLibro);
+        } else {
+            //Rellenamos los datos
+            textNombreLibro.setText(libro.getNombre());
+            textISBNLibro.setText(libro.getISBN());
+
+            for (int i = 0; i < cbCurso.getItemCount(); i++) {
+                if (libro.getContenido().getCurso().getAbreviatura().equals(cbCurso.getItemAt(i).toString())) {
+                    cbCurso.setSelectedIndex(i);
+                    break;
+                }
+            }
+
+            cbAsignatura.addItem(libro.getContenido().getNombre_cas());
+            textUnidadesLibro.setText(libro.getUnidades() + "");
+
+            textCodigoDeBarrasLibro.setText(libro.getCodigo());
+            chkObsoleto.setChecked(libro.getObsoleto());
+
+            //Refrescamos la tabla de ejemplares
+            RefrescarTabla();
         }
     }
 
@@ -885,20 +888,11 @@ public class FrameLibro extends javax.swing.JFrame {
 
                 try {
                     daoLibro.grabar(newLibro);
-<<<<<<< HEAD
-
-=======
-                    
->>>>>>> master
                     Dialogo.mostrarInformacion("Libro añadido correctamente.");
                 } catch (PersistenceException e) {
                     Dialogo.mostrarError("<br>- El libro ya existe en la Base de Datos.");
                 } catch (Exception e) {
                     Dialogo.mostrarError("<br>- Error al crear el libro.");
-<<<<<<< HEAD
-=======
-
->>>>>>> master
                 }
             } else {
                 Dialogo.mostrarError(errores);

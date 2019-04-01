@@ -57,7 +57,8 @@ public class FrameCarga extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/load.gif"))); // NOI18N
-        jLabel2.setText("Buscando datos en la base de datos");
+        jLabel2.setText("Recuperando datos en la base de datos");
+        jLabel2.setToolTipText("");
         jLabel2.setOpaque(true);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

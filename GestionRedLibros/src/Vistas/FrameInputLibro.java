@@ -402,11 +402,6 @@ public class FrameInputLibro extends javax.swing.JFrame {
         setModoDeBusqueda(buscquedaPorCodigo);
     }//GEN-LAST:event_btnChangeMethodActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        //Pulsación de botón de busqueda
-        buscarLibro(textCodigoLibro.getText());
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
     private void textNombreLibroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroKeyReleased
         //Metodo del placeholder en la busqueda del listado
         String nombreLibro = textNombreLibro.getText();
@@ -438,8 +433,20 @@ public class FrameInputLibro extends javax.swing.JFrame {
         gestLibro.setVisible(true);
     }//GEN-LAST:event_btnNewActionPerformed
 
+    private void cbCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoItemStateChanged
+        // TODO add your handling code here:
+        filtroListaLibro(textNombreLibro.getText(), cbCurso.getSelectedItem().toString());
+    }//GEN-LAST:event_cbCursoItemStateChanged
+
+    private void jlistResultadoLibrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlistResultadoLibrosMouseClicked
+        // TODO add your handling code here:
+        String nombreLibro = jlistResultadoLibros.getSelectedValue().toString();
+        Libro libroSelect = listaLibros.stream().filter(libro -> libro.getNombre().equals(nombreLibro)).collect(Collectors.toList()).get(0);
+        buscarLibro(libroSelect.getCodigo());
+    }//GEN-LAST:event_jlistResultadoLibrosMouseClicked
+
     private void textCodigoLibroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCodigoLibroKeyPressed
-        //Pulsacion de la tecla enter cuando el campo del codigo tiene el foco
+        // TODO add your handling code here:
         if (textCodigoLibro.hasFocus()) {
             textCodigoLibro.addKeyListener(new KeyAdapter() {
                 public void keyPressed(KeyEvent e) {
@@ -454,17 +461,13 @@ public class FrameInputLibro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_textCodigoLibroKeyPressed
 
-    private void cbCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoItemStateChanged
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        filtroListaLibro(textNombreLibro.getText(), cbCurso.getSelectedItem().toString());
-    }//GEN-LAST:event_cbCursoItemStateChanged
-
-    private void jlistResultadoLibrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlistResultadoLibrosMouseClicked
-        // TODO add your handling code here:
-        String nombreLibro = jlistResultadoLibros.getSelectedValue().toString();
-        Libro libroSelect = listaLibros.stream().filter(libro -> libro.getNombre().equals(nombreLibro)).collect(Collectors.toList()).get(0);
-        buscarLibro(libroSelect.getCodigo());
-    }//GEN-LAST:event_jlistResultadoLibrosMouseClicked
+        if (!isLoading) {
+            buscarLibro(textCodigoLibro.getText());
+            isLoading = true;
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -502,6 +505,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
     }
 
     public void setModoDeBusqueda(boolean modoBusqueda) {
+
         if (modoBusqueda) {
             //Por codigo
             bodyCode.setVisible(modoBusqueda);
@@ -529,10 +533,8 @@ public class FrameInputLibro extends javax.swing.JFrame {
                     btnChangeMethod.setText("Buscar por código");
                     bodyCode.setVisible(modoBusqueda);
                     bodyListado.setVisible(!modoBusqueda);
-
-                    pack();
-
                     frameCarga.dispose();
+                    pack();
                 }
             };
             worker.execute();
@@ -580,10 +582,6 @@ public class FrameInputLibro extends javax.swing.JFrame {
                     if (l != null) {
                         dispose();
                         if (gestLibro == null) {
-                            gestLibro = new FrameLibro(l);
-                        }
-                        if (!gestLibro.isVisible()) {
-                            gestLibro = null;
                             gestLibro = new FrameLibro(l);
                         }
                         gestLibro.setVisible(true);
