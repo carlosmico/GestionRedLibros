@@ -22,7 +22,6 @@ import Pojos.*;
 import Utilidades.*;
 import Renders.comboBoxRender;
 import java.awt.Component;
-import java.awt.Font;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,13 +29,11 @@ import java.util.stream.Collectors;
 import javax.persistence.PersistenceException;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
-import net.bytebuddy.asm.Advice;
 
 /**
  *
@@ -51,15 +48,10 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private static Libro libro = null;
     boolean isNewLibro;
-    
+
     private FrameCarga c = new FrameCarga();
-    
 
     FrameCarga frameCarga;
-<<<<<<< HEAD
-=======
-
->>>>>>> master
     FrameConfirmacionEliminar frameDelete;
 
     List<Curso> listaCursos;
@@ -117,6 +109,7 @@ public class FrameLibro extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc="Configuración inicial de la tabla">
         tableEjemplares.setFont(textNombreLibro.getFont());
 //</editor-fold>
+        
 
         this.libro = libro;
         this.isNewLibro = this.libro == null;
@@ -263,17 +256,15 @@ public class FrameLibro extends javax.swing.JFrame {
     public static void eliminarLibro() {
         try {
             daoLibro.borrar(libro);
-            
+
             Dialogo.mostrarInformacion("<br>Libro eliminado correctamente.");
-            
+
             //FrameLibro.this.dispose();
-            
             //setEnabled(true);
         } catch (Exception e) {
             Dialogo.mostrarError("<br>- Error al eliminar el libro.");
         }
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -298,6 +289,7 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableEjemplares = new javax.swing.JTable();
+        flatButton1 = new com.mommoo.flat.button.FlatButton();
         panelGeneralSuperior = new javax.swing.JPanel();
         panelCodigoDeBarras1 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -322,7 +314,7 @@ public class FrameLibro extends javax.swing.JFrame {
         textUnidadesLibro = new javax.swing.JTextField();
         panelPrecio = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        textUnidadesLibro1 = new javax.swing.JTextField();
+        textPrecio = new javax.swing.JTextField();
         panelEstadoDelLibro = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         chkObsoleto = new com.mommoo.flat.select.FlatCheckBox();
@@ -340,7 +332,7 @@ public class FrameLibro extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Entregas");
+        setTitle("Libros");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(58, 39, 35));
@@ -414,9 +406,6 @@ public class FrameLibro extends javax.swing.JFrame {
 
         imgLibro.setForeground(new java.awt.Color(51, 51, 51));
         imgLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/image1.png"))); // NOI18N
-        imgLibro.setMaximumSize(new java.awt.Dimension(240, 320));
-        imgLibro.setMinimumSize(new java.awt.Dimension(240, 320));
-        imgLibro.setPreferredSize(new java.awt.Dimension(240, 320));
 
         javax.swing.GroupLayout panelLibroLayout = new javax.swing.GroupLayout(panelLibro);
         panelLibro.setLayout(panelLibroLayout);
@@ -424,7 +413,7 @@ public class FrameLibro extends javax.swing.JFrame {
             panelLibroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLibroLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(imgLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(imgLibro)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelLibroLayout.setVerticalGroup(
@@ -440,7 +429,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(239, 235, 233));
 
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
         jLabel9.setText("Ejemplares:");
 
@@ -466,6 +455,11 @@ public class FrameLibro extends javax.swing.JFrame {
         tableEjemplares.setFillsViewportHeight(true);
         jScrollPane1.setViewportView(tableEjemplares);
 
+        flatButton1.setBackground(Colores.buttons);
+        flatButton1.setText("Imprimir etiquetas");
+        flatButton1.setCornerRound(10);
+        flatButton1.setPreferredSize(new java.awt.Dimension(111, 32));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -473,19 +467,22 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(flatButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel9)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(flatButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -743,11 +740,11 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(51, 51, 51));
         jLabel8.setText("Precio:");
 
-        textUnidadesLibro1.setBackground(new java.awt.Color(239, 235, 233));
-        textUnidadesLibro1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textUnidadesLibro1.setForeground(new java.awt.Color(51, 51, 51));
-        textUnidadesLibro1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        textUnidadesLibro1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        textPrecio.setBackground(new java.awt.Color(239, 235, 233));
+        textPrecio.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textPrecio.setForeground(new java.awt.Color(51, 51, 51));
+        textPrecio.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        textPrecio.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout panelPrecioLayout = new javax.swing.GroupLayout(panelPrecio);
         panelPrecio.setLayout(panelPrecioLayout);
@@ -758,7 +755,7 @@ public class FrameLibro extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addGroup(panelPrecioLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(textUnidadesLibro1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(textPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
         panelPrecioLayout.setVerticalGroup(
@@ -767,7 +764,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textUnidadesLibro1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -878,8 +875,8 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelGeneralSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
@@ -911,7 +908,7 @@ public class FrameLibro extends javax.swing.JFrame {
         if (btnEdit.isEnabled()) {
             isEditMode = !isEditMode;
             setEditMode(isEditMode);
-            if (isEditMode){
+            if (isEditMode) {
                 btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/close.png")));
                 textCodigoDeBarrasLibro.setEditable(false);
             } else {
@@ -933,15 +930,15 @@ public class FrameLibro extends javax.swing.JFrame {
         frameDelete.setVisible(true);
 
         /*
-        try {
-            daoLibro.borrar(libro);
-        } catch (PersistenceException e) {
-            this.dispose();
-            if (frameError == null) {
-                frameError = new FramePopup("<html>El libro no se ha podido eliminar.<br> Error: " + "</html>");
-            }
-            frameError.setVisible(true);
-        }*/
+         try {
+         daoLibro.borrar(libro);
+         } catch (PersistenceException e) {
+         this.dispose();
+         if (frameError == null) {
+         frameError = new FramePopup("<html>El libro no se ha podido eliminar.<br> Error: " + "</html>");
+         }
+         frameError.setVisible(true);
+         }*/
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -969,7 +966,16 @@ public class FrameLibro extends javax.swing.JFrame {
                     errores += "<br>- El valor de las unidades debe ser un valor positivo.";
                 }
             } catch (Exception e) {
-                errores += "<br>- El valor de las unidades debe ser un valor númerico.";
+                errores += "<br>- El valor de las unidades debe ser un valor numérico.";
+            }
+
+            try {
+                double pre = Double.parseDouble(textPrecio.getText());
+                if (pre <= 0) {
+                    errores += "<br>- El precio debe ser un valor positivo.";
+                }
+            } catch (Exception e) {
+                errores += "<br>- El precio debe ser un valor numérico.";
             }
 
             if (textCodigoDeBarrasLibro.getText().equals("")) {
@@ -988,6 +994,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 newLibro.setISBN(textISBNLibro.getText());
                 newLibro.setNombre(textNombreLibro.getText());
                 newLibro.setObsoleto(chkObsoleto.isChecked());
+                newLibro.setPrecio(Double.parseDouble(textPrecio.getText()));
                 newLibro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
 
                 for (int i = 0; i < listaContenido.size(); i++) {
@@ -999,10 +1006,6 @@ public class FrameLibro extends javax.swing.JFrame {
 
                 try {
                     daoLibro.grabar(newLibro);
-<<<<<<< HEAD
-=======
-
->>>>>>> master
                     Dialogo.mostrarInformacion("Libro añadido correctamente.");
 
                     setEditMode(false);
@@ -1157,6 +1160,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JComboBox cbAsignatura;
     private javax.swing.JComboBox cbCurso;
     private com.mommoo.flat.select.FlatCheckBox chkObsoleto;
+    private com.mommoo.flat.button.FlatButton flatButton1;
     private javax.swing.JLabel imgLibro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1192,8 +1196,8 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JTextField textCodigoDeBarrasLibro;
     private javax.swing.JTextField textISBNLibro;
     private javax.swing.JTextField textNombreLibro;
+    private javax.swing.JTextField textPrecio;
     private javax.swing.JTextField textUnidadesLibro;
-    private javax.swing.JTextField textUnidadesLibro1;
     // End of variables declaration//GEN-END:variables
 
     public void setEditMode(boolean editable) {
@@ -1205,9 +1209,8 @@ public class FrameLibro extends javax.swing.JFrame {
         cbAsignatura.setEnabled(editable);
         textUnidadesLibro.setEditable(editable);
         chkObsoleto.setEnabled(editable);
-<<<<<<< HEAD
         textCodigoDeBarrasLibro.setEditable(editable);
-=======
+        textPrecio.setEnabled(editable);
         btnSave.setVisible(editable);
 
         if (isNewLibro) {
@@ -1217,6 +1220,6 @@ public class FrameLibro extends javax.swing.JFrame {
             btnDelete.setVisible(editable);
             textCodigoDeBarrasLibro.setEditable(false);
         }
->>>>>>> master
+
     }
 }

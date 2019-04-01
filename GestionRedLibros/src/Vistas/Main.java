@@ -8,15 +8,23 @@ package Vistas;
 import Utilidades.DimensionesFrame;
 import Utilidades.GetInternetStatus;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -27,21 +35,20 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    
     FrameDevoluciones gesDevoluciones = null;
     FrameEntrega gesEntrega = null;
     FrameInputLibro inputLibro = null;
     FrameMatriculas gesMatri = null;
-    
+
     public Main() throws IOException {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
-        if (!GetInternetStatus.isAvailable()){
+
+        if (!GetInternetStatus.isAvailable()) {
             JOptionPane.showMessageDialog(this, "No hay conexión al servidor");
         }
-        
+
         //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
         String icono = "";
         BufferedImage img = null;
@@ -52,6 +59,7 @@ public class Main extends javax.swing.JFrame {
         wallpaper.setIcon(imageIcon);
         banner.setVisible(true);
 //</editor-fold>
+
     }
 
     /**
@@ -224,29 +232,46 @@ public class Main extends javax.swing.JFrame {
 
     private void btnDevolucionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucionesActionPerformed
         // TODO add your handling code here:
-        if (gesDevoluciones == null) gesDevoluciones = new FrameDevoluciones();
+        if (gesDevoluciones == null) {
+            gesDevoluciones = new FrameDevoluciones();
+        }
         gesDevoluciones.setVisible(true);
     }//GEN-LAST:event_btnDevolucionesActionPerformed
 
     private void btnEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregaActionPerformed
         // TODO add your handling code here:
-        if (gesEntrega == null) gesEntrega = new FrameEntrega();
+        if (gesEntrega == null) {
+            gesEntrega = new FrameEntrega();
+        }
         gesEntrega.setVisible(true);
     }//GEN-LAST:event_btnEntregaActionPerformed
 
     private void btnGestionLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionLibrosActionPerformed
         // TODO add your handling code here:
-        if (inputLibro == null) inputLibro = new FrameInputLibro();
-        if (!inputLibro.isVisible()) {
-            inputLibro = null;
-            inputLibro = new FrameInputLibro();
+        if (inputLibro == null) {
+            inputLibro = new FrameInputLibro(true);
+        } else {
+            if (!inputLibro.isVisible()) {
+                inputLibro = null;
+                inputLibro = new FrameInputLibro(true);
+            }
         }
+        inputLibro.textTitleFrame.setText("Gestión Libros");
         inputLibro.setVisible(true);
     }//GEN-LAST:event_btnGestionLibrosActionPerformed
 
     private void btnGestionEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionEjemplarActionPerformed
         // TODO add your handling code here:
-        System.out.println("Gestion Ejemplar");
+        if (inputLibro == null) {
+            inputLibro = new FrameInputLibro(false);
+        } else {
+            if (!inputLibro.isVisible()) {
+                inputLibro = null;
+                inputLibro = new FrameInputLibro(false);
+            }
+        }
+        inputLibro.textTitleFrame.setText("Gestión Ejemplares");
+        inputLibro.setVisible(true);
     }//GEN-LAST:event_btnGestionEjemplarActionPerformed
 
     private void btnConsultaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaAlumnosActionPerformed
@@ -265,10 +290,12 @@ public class Main extends javax.swing.JFrame {
 
     private void btnMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatriculasActionPerformed
         // TODO add your handling code here:
-        if (gesMatri == null) gesMatri = new FrameMatriculas();
+        if (gesMatri == null) {
+            gesMatri = new FrameMatriculas();
+        }
         gesMatri.RefrescarTabla();
         gesMatri.setVisible(true);
-        
+
     }//GEN-LAST:event_btnMatriculasActionPerformed
 
     /**

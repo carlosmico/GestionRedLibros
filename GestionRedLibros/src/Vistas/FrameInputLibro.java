@@ -55,17 +55,22 @@ public class FrameInputLibro extends javax.swing.JFrame {
 
     private FrameLibro gestLibro = null;
     private FrameCarga frameCarga = null;
+    private FrameEjemplares gestEjemplar = null;
 
     DaoLibro daoLibro;
     DaoCurso daoCurso;
 
     private Libro l;
 
+    private boolean isLibroMode;
+
     private List<Libro> listaLibros;
     private List<Curso> listaCursos;
 
-    public FrameInputLibro() {
+    public FrameInputLibro(boolean isLibro) {
         initComponents();
+
+        this.isLibroMode = isLibro;
 
         textErrorBusqueda.setText("");
 
@@ -110,7 +115,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
     private void initComponents() {
 
         head = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        textTitleFrame = new javax.swing.JLabel();
         btnNew = new com.mommoo.flat.button.FlatButton();
         bodyCode = new javax.swing.JPanel();
         textTitle = new javax.swing.JLabel();
@@ -130,16 +135,17 @@ public class FrameInputLibro extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión Libros");
         setBackground(new java.awt.Color(239, 235, 233));
-        setMinimumSize(new java.awt.Dimension(600, 36));
+        setMaximumSize(new java.awt.Dimension(566, 645));
+        setMinimumSize(new java.awt.Dimension(569, 0));
         setResizable(false);
 
         head.setBackground(new java.awt.Color(58, 39, 35));
         head.setPreferredSize(new java.awt.Dimension(135, 75));
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Gestión libros");
+        textTitleFrame.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        textTitleFrame.setForeground(new java.awt.Color(204, 204, 204));
+        textTitleFrame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textTitleFrame.setText("Gestión libros");
 
         btnNew.setBackground(new java.awt.Color(66, 47, 44));
         btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png"))); // NOI18N
@@ -157,14 +163,14 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addComponent(textTitleFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         headLayout.setVerticalGroup(
             headLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(textTitleFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(headLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -213,7 +219,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 .addGroup(bodyCodeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bodyCodeLayout.createSequentialGroup()
                         .addComponent(textTitle)
-                        .addGap(0, 342, Short.MAX_VALUE))
+                        .addGap(0, 376, Short.MAX_VALUE))
                     .addGroup(bodyCodeLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(bodyCodeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,6 +246,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         );
 
         bodyListado.setBackground(new java.awt.Color(239, 235, 233));
+        bodyListado.setMaximumSize(new java.awt.Dimension(511, 402));
 
         textTitle1.setBackground(new java.awt.Color(51, 51, 51));
         textTitle1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -265,6 +272,8 @@ public class FrameInputLibro extends javax.swing.JFrame {
         cbCurso.setBackground(new java.awt.Color(51, 51, 51));
         cbCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         cbCurso.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar curso" }));
+        cbCurso.setMaximumSize(new java.awt.Dimension(187, 34));
+        cbCurso.setPreferredSize(new java.awt.Dimension(250, 34));
         cbCurso.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbCursoItemStateChanged(evt);
@@ -301,9 +310,10 @@ public class FrameInputLibro extends javax.swing.JFrame {
                         .addComponent(textTitle1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(bodyListadoLayout.createSequentialGroup()
-                        .addComponent(textNombreLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(6, 6, 6)
+                        .addComponent(textNombreLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         bodyListadoLayout.setVerticalGroup(
@@ -314,7 +324,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bodyListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textNombreLibro, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(cbCurso))
+                    .addComponent(cbCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -371,7 +381,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(head, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
+            .addComponent(head, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
             .addComponent(bodyCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(botonera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(bodyListado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -556,14 +566,14 @@ public class FrameInputLibro extends javax.swing.JFrame {
     private com.mommoo.flat.button.FlatButton btnNew;
     private javax.swing.JComboBox cbCurso;
     private javax.swing.JPanel head;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList jlistResultadoLibros;
-    private javax.swing.JTextField textCodigoLibro;
-    private javax.swing.JLabel textErrorBusqueda;
+    public javax.swing.JTextField textCodigoLibro;
+    public javax.swing.JLabel textErrorBusqueda;
     private javax.swing.JTextField textNombreLibro;
     private javax.swing.JLabel textTitle;
     private javax.swing.JLabel textTitle1;
+    public javax.swing.JLabel textTitleFrame;
     // End of variables declaration//GEN-END:variables
 
     private void buscarLibro(String codigo) {
@@ -581,15 +591,23 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 protected void done() {
                     if (l != null) {
                         dispose();
-                        if (gestLibro == null) {
-                            gestLibro = new FrameLibro(l);
+                        if (isLibroMode) {
+                            if (gestLibro == null) {
+                                gestLibro = new FrameLibro(l);
+                            }
+                            gestLibro.setVisible(true);
+                        } else {
+                            if (gestEjemplar == null) {
+                                gestEjemplar = new FrameEjemplares(l);
+                            }
+                            gestEjemplar.setVisible(true);
                         }
-                        gestLibro.setVisible(true);
                     } else {
                         textErrorBusqueda.setVisible(true);
                         textErrorBusqueda.setText("No existen libros con este código.");
                         isLoading = false;
                     }
+
                     frameCarga.dispose();
                 }
             };
