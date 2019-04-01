@@ -17,7 +17,7 @@
  */
 package Utilidades;
 
-import Vistas.FrameError;
+import Vistas.FramePopup;
 import java.awt.Frame;
 
 /**
@@ -26,11 +26,11 @@ import java.awt.Frame;
  */
 public class MostrarError {
 
-    private static FrameError frameError = null;
+    private static FramePopup frameError = null;
 
     public static void mostrarError(String errores) {
         if (frameError == null) {
-            frameError = new FrameError("Revise los siguientes errores:" + errores + "");
+            frameError = new FramePopup("Revise los siguientes errores:" + errores + "");
         }
         frameError.setVisible(true);
     }

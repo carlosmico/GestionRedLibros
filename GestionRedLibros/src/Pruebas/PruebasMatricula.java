@@ -31,7 +31,7 @@ public class PruebasMatricula {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws ParseException, Exception {
         // TODO code application logic here
         JFileChooser chooser = new JFileChooser();
         

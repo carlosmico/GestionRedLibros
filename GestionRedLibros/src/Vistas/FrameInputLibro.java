@@ -68,13 +68,11 @@ public class FrameInputLibro extends javax.swing.JFrame {
         initComponents();
 
         textErrorBusqueda.setText("");
-        
-        
-        
+
         setModoDeBusqueda(buscquedaPorCodigo);
-        
+
         this.setLocationRelativeTo(null);
-        
+
         textCodigoLibro.requestFocusInWindow();
 
         daoLibro = new DaoLibro();
@@ -509,10 +507,8 @@ public class FrameInputLibro extends javax.swing.JFrame {
             bodyCode.setVisible(modoBusqueda);
             bodyListado.setVisible(!modoBusqueda);
             btnChangeMethod.setText("Listado de libros");
-            this.pack();
         } else {
             //Por nombre
-
             SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
                 protected Void doInBackground() throws InterruptedException {
                     listaLibros = daoLibro.buscarTodos();
@@ -524,16 +520,15 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 }
 
                 protected void done() {
-                    //Rellenamos la lista de los libros
                     filtroListaLibro(textNombreLibro.getText(), cbCurso.getSelectedItem().toString());
 
                     for (int i = 0; i < listaCursos.size(); i++) {
                         cbCurso.addItem(listaCursos.get(i).getAbreviatura() + " - " + listaCursos.get(i).getNombre_cas());
                     }
 
+                    btnChangeMethod.setText("Buscar por código");
                     bodyCode.setVisible(modoBusqueda);
                     bodyListado.setVisible(!modoBusqueda);
-                    btnChangeMethod.setText("Buscar por código");
 
                     pack();
 
@@ -541,9 +536,12 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 }
             };
             worker.execute();
-            if (frameCarga == null)frameCarga = new FrameCarga();
+            if (frameCarga == null) {
+                frameCarga = new FrameCarga();
+            }
             frameCarga.setVisible(true);
         }
+        this.pack();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -580,7 +578,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
 
                 protected void done() {
                     if (l != null) {
-                        setVisible(false);
+                        dispose();
                         if (gestLibro == null) {
                             gestLibro = new FrameLibro(l);
                         }
@@ -598,7 +596,9 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 }
             };
             worker.execute();
-            frameCarga = new FrameCarga();
+            if (frameCarga == null) {
+                frameCarga = new FrameCarga();
+            }
             frameCarga.setVisible(true);
         } else {
             //No se ha insertado ningun valor en el campo de texto

@@ -33,7 +33,7 @@ public class FrameConfirmacionEliminar extends javax.swing.JFrame {
      */
     private Libro libro;
 
-    private FrameError frameError;
+    private FramePopup frameError;
 
     private DaoLibro daoLibro;
 
@@ -192,7 +192,7 @@ public class FrameConfirmacionEliminar extends javax.swing.JFrame {
         } catch (PersistenceException e) {
             this.dispose();
             if (frameError == null) {
-                frameError = new FrameError("<html>El libro no se ha podido eliminar.<br> Error: " + "</html>");
+                frameError = new FramePopup("<html>El libro no se ha podido eliminar.<br> Error: " + "</html>");
             }
             frameError.setVisible(true);
         }

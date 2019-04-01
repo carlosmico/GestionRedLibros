@@ -22,16 +22,10 @@ import Pojos.*;
 import Utilidades.*;
 import Renders.comboBoxRender;
 import java.awt.Component;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.imageio.ImageIO;
-import javax.persistence.PersistenceException;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -55,7 +49,7 @@ public class FrameLibro extends javax.swing.JFrame {
     boolean isNewLibro;
 
     FrameCarga frameCarga;
-    FrameError frameError;
+    FramePopup frameError;
     FrameConfirmacionEliminar frameDelete;
 
     List<Curso> listaCursos;
@@ -115,7 +109,7 @@ public class FrameLibro extends javax.swing.JFrame {
         this.isNewLibro = this.libro == null;
 
         btnDelete.setVisible(false);
-        
+
         //Deshabilitamos la tabla de ejemplares puesto que es de lectura
         tableEjemplares.setEnabled(false);
         btnSave.setVisible(isNewLibro);
@@ -126,12 +120,14 @@ public class FrameLibro extends javax.swing.JFrame {
         daoLibro = new DaoLibro();
         daoContenido = new DaoContenido();
 
+        listaCursos = daoCurso.buscarTodos();
+        listaContenido = daoContenido.buscarTodos();
+
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
                 setEnabled(false);
                 listaCursos = daoCurso.buscarTodos();
                 listaContenido = daoContenido.buscarTodos();
-                
                 return null;
             }
 
@@ -139,27 +135,20 @@ public class FrameLibro extends javax.swing.JFrame {
             }
 
             protected void done() {
-                //Rellenamos la lista de los libros
+         //Rellenamos la lista de los libros
                 //<editor-fold defaultstate="collapsed" desc="Rellenamos los datos en el caso de que consultemos algun libro o no">
 
-                textNombreLibro.setEditable(isNewLibro);
-                textISBNLibro.setEditable(isNewLibro);
-                cbCurso.setEditable(isNewLibro);
-                cbCurso.setEnabled(isNewLibro);
-                cbAsignatura.setEditable(isNewLibro);
-                cbAsignatura.setEnabled(isNewLibro);
-                textUnidadesLibro.setEditable(isNewLibro);
-                textCodigoDeBarrasLibro.setEditable(isNewLibro);
-                chkObsoleto.setEnabled(isNewLibro);
+                setEditMode(isNewLibro);
 
                 btnEdit.setEnabled(!isNewLibro);
 
-                if (isNewLibro) {
-                    if (listaCursos.size() > 0) {
-                        for (int i = 0; i < listaCursos.size(); i++) {
-                            cbCurso.addItem(listaCursos.get(i).getAbreviatura());
-                        }
+                if (listaCursos.size() > 0) {
+                    for (int i = 0; i < listaCursos.size(); i++) {
+                        cbCurso.addItem(listaCursos.get(i).getAbreviatura());
                     }
+                }
+
+                if (isNewLibro) {
 
                     textNombreLibro.setText("");
                     textISBNLibro.setText("");
@@ -169,19 +158,24 @@ public class FrameLibro extends javax.swing.JFrame {
                     textCodigoDeBarrasLibro.setText("");
                     chkObsoleto.setChecked(!isNewLibro);
                 } else {
-                    //Limitamos la opcion de edicion de los campos
-
                     //Rellenamos los datos
                     textNombreLibro.setText(libro.getNombre());
                     textISBNLibro.setText(libro.getISBN());
 
-                    cbCurso.addItem(libro.getContenido().getCurso().getAbreviatura());
+                    for (int i = 0; i < cbCurso.getItemCount(); i++) {
+                        if (cbCurso.getItemAt(i).toString().equals(libro.getContenido().getCurso().getAbreviatura())) {
+                            cbCurso.setSelectedIndex(i);
+                            break;
+                        }
+                    }
+
+                    //cbCurso.addItem(libro.getContenido().getCurso().getAbreviatura());
                     cbAsignatura.addItem(libro.getContenido().getNombre_cas());
                     textUnidadesLibro.setText(libro.getUnidades() + "");
 
                     textCodigoDeBarrasLibro.setText(libro.getCodigo());
                     chkObsoleto.setChecked(libro.getObsoleto());
-                    
+
                     //Refrescamos la tabla de ejemplares
                     RefrescarTabla();
                 }
@@ -191,17 +185,15 @@ public class FrameLibro extends javax.swing.JFrame {
             }
         };
         worker.execute();
+
         if (frameCarga == null) {
             frameCarga = new FrameCarga();
         }
         frameCarga.setVisible(true);
 
-        BufferedImage img = null;
-        String icono = "";
-
         //Set imagen del libro
         try {
-            int ran = (int)(Math.floor(Math.random()*4));
+            int ran = (int) (Math.floor(Math.random() * 4));
             System.out.println("Resultado: " + ran);
             imgLibro.setIcon(new ImageIcon("Imagenes/image" + ran + ".png"));
         } catch (Exception ex) {
@@ -238,10 +230,10 @@ public class FrameLibro extends javax.swing.JFrame {
                         fila[1] = "Nuevo";
                         break;
                 }
-                
+
                 if (ejemplar.isPrestado()) {
                     fila[2] = "Si";
-                }else{
+                } else {
                     fila[2] = "No";
                 }
 
@@ -548,7 +540,6 @@ public class FrameLibro extends javax.swing.JFrame {
         cbAsignatura.setEditable(true);
         cbAsignatura.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         cbAsignatura.setForeground(new java.awt.Color(51, 51, 51));
-        cbAsignatura.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione curso" }));
         cbAsignatura.setToolTipText("");
         cbAsignatura.setBorder(null);
 
@@ -816,6 +807,18 @@ public class FrameLibro extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (btnEdit.isEnabled()) {
             isEditMode = !isEditMode;
+            setEditMode(isEditMode);
+
+            //Rellenamos la lista de cursos
+            //cbCurso.removeAllItems();
+            System.out.println("Lista Cursos: " + listaCursos.size());
+            /*
+             if (listaCursos.size() > 0) {
+             for (int i = 0; i < listaCursos.size(); i++) {
+             cbCurso.addItem(listaCursos.get(i).getAbreviatura());
+             }
+             }*/
+
             btnDelete.setVisible(isEditMode);
             btnSave.setVisible(isEditMode);
         }
@@ -839,15 +842,15 @@ public class FrameLibro extends javax.swing.JFrame {
             if (textNombreLibro.getText().equals("")) {
                 errores += "\n- El nombre no puede estar vacío.";
             }
-            
+
             if (textISBNLibro.getText().equals("")) {
                 errores += "\n- El ISBN no puede estar vacío.";
             }
-            
+
             if (textUnidadesLibro.getText().equals("")) {
                 errores += "\n- El campo de las unidades no puede estar vacío.";
             }
-            
+
             try {
                 int un = Integer.parseInt(textUnidadesLibro.getText());
                 if (un <= 0) {
@@ -882,18 +885,17 @@ public class FrameLibro extends javax.swing.JFrame {
                     }
                 }
 
-                try{
+                try {
                     daoLibro.grabar(newLibro);
-                } catch (Exception e){
+                } catch (Exception e) {
                     System.out.println("Excepcion capturada!");
                 }
             } else {
                 MostrarError.mostrarError(errores);
             }
         } else {
-            //Modificacion de un libro existente
-            
-            
+            //Guardado de un libro existente
+
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -917,10 +919,8 @@ public class FrameLibro extends javax.swing.JFrame {
 
             cbAsignatura.removeAllItems();
             if (listaContenidoTemp.size() > 0) {
-                if (listaContenidoTemp.size() > 0) {
-                    for (int i = 0; i < listaContenidoTemp.size(); i++) {
-                        cbAsignatura.addItem(listaContenidoTemp.get(i).getNombre_cas());
-                    }
+                for (int i = 0; i < listaContenidoTemp.size(); i++) {
+                    cbAsignatura.addItem(listaContenidoTemp.get(i).getNombre_cas());
                 }
             } else {
                 cbAsignatura.addItem("Seleccione curso");
@@ -1006,4 +1006,16 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JTextField textNombreLibro;
     private javax.swing.JTextField textUnidadesLibro;
     // End of variables declaration//GEN-END:variables
+
+    public void setEditMode(boolean editable) {
+        textNombreLibro.setEditable(editable);
+        textISBNLibro.setEditable(editable);
+        cbCurso.setEditable(editable);
+        cbCurso.setEnabled(editable);
+        cbAsignatura.setEditable(editable);
+        cbAsignatura.setEnabled(editable);
+        textUnidadesLibro.setEditable(editable);
+        textCodigoDeBarrasLibro.setEditable(editable);
+        chkObsoleto.setEnabled(editable);
+    }
 }
