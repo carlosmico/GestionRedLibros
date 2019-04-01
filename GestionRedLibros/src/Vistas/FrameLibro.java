@@ -50,10 +50,7 @@ public class FrameLibro extends javax.swing.JFrame {
     boolean isNewLibro;
 
     FrameCarga frameCarga;
-<<<<<<< HEAD
-=======
 
->>>>>>> master
     FrameConfirmacionEliminar frameDelete;
 
     List<Curso> listaCursos;
@@ -129,10 +126,6 @@ public class FrameLibro extends javax.swing.JFrame {
                 setEnabled(false);
                 listaCursos = daoCurso.buscarTodos();
                 listaContenido = daoContenido.buscarTodos();
-<<<<<<< HEAD
-=======
-
->>>>>>> master
                 return null;
             }
 
@@ -885,20 +878,12 @@ public class FrameLibro extends javax.swing.JFrame {
 
                 try {
                     daoLibro.grabar(newLibro);
-<<<<<<< HEAD
 
-=======
-                    
->>>>>>> master
                     Dialogo.mostrarInformacion("Libro añadido correctamente.");
                 } catch (PersistenceException e) {
                     Dialogo.mostrarError("<br>- El libro ya existe en la Base de Datos.");
                 } catch (Exception e) {
                     Dialogo.mostrarError("<br>- Error al crear el libro.");
-<<<<<<< HEAD
-=======
-
->>>>>>> master
                 }
             } else {
                 Dialogo.mostrarError(errores);

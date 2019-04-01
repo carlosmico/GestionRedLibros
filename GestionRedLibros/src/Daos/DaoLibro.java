@@ -201,7 +201,11 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
                 Query query = super.session.createQuery("from Ejemplares where id_libro = '" + libroActual + "'");
                 ejemplares = query.list();
                 
-                System.out.println(ejemplares.get(ejemplares.size() - 1).toString());
+                String codigo = ejemplares.get(ejemplares.size()-1).getCodigo();
+                
+                codEjemplar = Integer.parseInt(codigo.substring(codigo.length() - 3));
+                
+                System.out.println(codEjemplar);
             } catch (Exception e) {
                 System.out.println("DaoLibro - comprobarEjemplares() - Error al convertir el codigo ejemplar.");
             }
