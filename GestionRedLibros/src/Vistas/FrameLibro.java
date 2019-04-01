@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.persistence.PersistenceException;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -49,10 +50,6 @@ public class FrameLibro extends javax.swing.JFrame {
     boolean isNewLibro;
 
     FrameCarga frameCarga;
-<<<<<<< HEAD
-    FramePopup frameError;
-=======
->>>>>>> master
     FrameConfirmacionEliminar frameDelete;
 
     List<Curso> listaCursos;
@@ -123,18 +120,11 @@ public class FrameLibro extends javax.swing.JFrame {
         daoLibro = new DaoLibro();
         daoContenido = new DaoContenido();
 
-        listaCursos = daoCurso.buscarTodos();
-        listaContenido = daoContenido.buscarTodos();
-
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
                 setEnabled(false);
                 listaCursos = daoCurso.buscarTodos();
                 listaContenido = daoContenido.buscarTodos();
-<<<<<<< HEAD
-=======
-
->>>>>>> master
                 return null;
             }
 
@@ -142,20 +132,20 @@ public class FrameLibro extends javax.swing.JFrame {
             }
 
             protected void done() {
-         //Rellenamos la lista de los libros
+                //Rellenamos la lista de los libros
                 //<editor-fold defaultstate="collapsed" desc="Rellenamos los datos en el caso de que consultemos algun libro o no">
 
                 setEditMode(isNewLibro);
 
                 btnEdit.setEnabled(!isNewLibro);
 
-                if (listaCursos.size() > 0) {
-                    for (int i = 0; i < listaCursos.size(); i++) {
-                        cbCurso.addItem(listaCursos.get(i).getAbreviatura());
-                    }
-                }
-
                 if (isNewLibro) {
+
+                    if (listaCursos.size() > 0) {
+                        for (int i = 0; i < listaCursos.size(); i++) {
+                            cbCurso.addItem(listaCursos.get(i).getAbreviatura());
+                        }
+                    }
 
                     textNombreLibro.setText("");
                     textISBNLibro.setText("");
@@ -169,14 +159,7 @@ public class FrameLibro extends javax.swing.JFrame {
                     textNombreLibro.setText(libro.getNombre());
                     textISBNLibro.setText(libro.getISBN());
 
-                    for (int i = 0; i < cbCurso.getItemCount(); i++) {
-                        if (cbCurso.getItemAt(i).toString().equals(libro.getContenido().getCurso().getAbreviatura())) {
-                            cbCurso.setSelectedIndex(i);
-                            break;
-                        }
-                    }
-
-                    //cbCurso.addItem(libro.getContenido().getCurso().getAbreviatura());
+                    cbCurso.addItem(libro.getContenido().getCurso().getAbreviatura());
                     cbAsignatura.addItem(libro.getContenido().getNombre_cas());
                     textUnidadesLibro.setText(libro.getUnidades() + "");
 
@@ -894,26 +877,18 @@ public class FrameLibro extends javax.swing.JFrame {
 
                 try {
                     daoLibro.grabar(newLibro);
-<<<<<<< HEAD
-                } catch (Exception e) {
-                    System.out.println("Excepcion capturada!");
-=======
 
                     Dialogo.mostrarInformacion("Libro añadido correctamente.");
                 } catch (PersistenceException e) {
                     Dialogo.mostrarError("<br>- El libro ya existe en la Base de Datos.");
                 } catch (Exception e) {
                     Dialogo.mostrarError("<br>- Error al crear el libro.");
->>>>>>> master
                 }
             } else {
                 Dialogo.mostrarError(errores);
             }
 
         } else {
-<<<<<<< HEAD
-            //Guardado de un libro existente
-=======
             //Modificacion de un libro existente
 
             if (textNombreLibro.getText().equals("")) {
@@ -974,7 +949,6 @@ public class FrameLibro extends javax.swing.JFrame {
             } else {
                 Dialogo.mostrarError(errores);
             }
->>>>>>> master
 
         }
     }//GEN-LAST:event_btnSaveActionPerformed
