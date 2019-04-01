@@ -836,30 +836,33 @@ public class FrameLibro extends javax.swing.JFrame {
 
         if (isNewLibro) {
             //Creacion de un nuevo libro
-            if (textNombreLibro.equals("")) {
-                errores += "- El nombre no puede estar vacío<br>";
+            if (textNombreLibro.getText().equals("")) {
+                errores += "\n- El nombre no puede estar vacío.";
             }
-            if (textISBNLibro.equals("")) {
-                errores += "- El ISBN no puede estar vacío<br>";
+            
+            if (textISBNLibro.getText().equals("")) {
+                errores += "\n- El ISBN no puede estar vacío.";
             }
-            if (textUnidadesLibro.equals("")) {
-                errores += "- El campo de las unidades no puede estar vacío<br>";
+            
+            if (textUnidadesLibro.getText().equals("")) {
+                errores += "\n- El campo de las unidades no puede estar vacío.";
             }
+            
             try {
                 int un = Integer.parseInt(textUnidadesLibro.getText());
                 if (un <= 0) {
-                    errores += "- El valor de las unidades debe ser un valor positivo<br>";
+                    errores += "\n- El valor de las unidades debe ser un valor positivo.";
                 }
             } catch (Exception e) {
-                errores += "- El valor de las unidades debe ser un valor númerico<br>";
+                errores += "\n- El valor de las unidades debe ser un valor númerico.";
             }
 
-            if (textCodigoDeBarrasLibro.equals("")) {
-                errores += "- El nombre no puede estar vacío<br>";
+            if (textCodigoDeBarrasLibro.getText().equals("")) {
+                errores += "\n- El código del libro no puede estar vacío.";
             }
 
             if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
-                errores += "- Debe seleccionar una asignatura válida<br>";
+                errores += "\n- Debe seleccionar una asignatura válida.";
             }
 
             if (errores.equals("")) {
@@ -882,16 +885,15 @@ public class FrameLibro extends javax.swing.JFrame {
                 try{
                     daoLibro.grabar(newLibro);
                 } catch (Exception e){
-                    System.out.println(e.getMessage());
+                    System.out.println("Excepcion capturada!");
                 }
             } else {
-                if (frameError == null) {
-                    frameError = new FrameError("<html>No se puede crear el libro. Considere los siguientes errores:<br>" + errores + "<html>");
-                }
-                frameError.setVisible(true);
+                MostrarError.mostrarError(errores);
             }
         } else {
             //Modificacion de un libro existente
+            
+            
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
