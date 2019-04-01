@@ -75,7 +75,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
                 libro.setPrecio(l.getPrecio());
                 libro.setUnidades(l.getUnidades());
 
-                comprobarEjemplares(libro);
+                //comprobarEjemplares(libro);
 
                 super.session.saveOrUpdate(libro);
             } else {
