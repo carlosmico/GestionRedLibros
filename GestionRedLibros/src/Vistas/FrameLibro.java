@@ -21,6 +21,7 @@ import Daos.*;
 import Pojos.*;
 import Utilidades.*;
 import Renders.comboBoxRender;
+import excepciones.BusinessException;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.List;
@@ -51,16 +52,10 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private static Libro libro = null;
     boolean isNewLibro;
-    
+
     private FrameCarga c = new FrameCarga();
-    
 
     FrameCarga frameCarga;
-<<<<<<< HEAD
-=======
-
->>>>>>> master
-    FrameConfirmacionEliminar frameDelete;
 
     List<Curso> listaCursos;
     List<Contenido> listaContenido;
@@ -185,7 +180,6 @@ public class FrameLibro extends javax.swing.JFrame {
         }
 
         if (isNewLibro) {
-
             textNombreLibro.setText("");
             textISBNLibro.setText("");
 
@@ -219,6 +213,8 @@ public class FrameLibro extends javax.swing.JFrame {
     //Refrescamos los datos de la tabla recuperados de la BD
     private void RefrescarTabla() {
         List<Ejemplar> ejemplares = libro.getEjemplares();
+        
+        System.out.println("Ejemplares: " + libro.getEjemplares().size());
 
         if (ejemplares.size() > 0) {
             DefaultTableModel tableModel = (DefaultTableModel) this.tableEjemplares.getModel();
@@ -255,25 +251,13 @@ public class FrameLibro extends javax.swing.JFrame {
             }
 
             tableEjemplares.setModel(tableModel);
+            
+            tableEjemplares.repaint();
+        
         } else {
             JOptionPane.showMessageDialog(this, "No hay datos de ejemplares en la Base de Datos.");
         }
     }
-
-    public static void eliminarLibro() {
-        try {
-            daoLibro.borrar(libro);
-            
-            Dialogo.mostrarInformacion("<br>Libro eliminado correctamente.");
-            
-            //FrameLibro.this.dispose();
-            
-            //setEnabled(true);
-        } catch (Exception e) {
-            Dialogo.mostrarError("<br>- Error al eliminar el libro.");
-        }
-    }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -911,7 +895,7 @@ public class FrameLibro extends javax.swing.JFrame {
         if (btnEdit.isEnabled()) {
             isEditMode = !isEditMode;
             setEditMode(isEditMode);
-            if (isEditMode){
+            if (isEditMode) {
                 btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/close.png")));
                 textCodigoDeBarrasLibro.setEditable(false);
             } else {
@@ -927,21 +911,25 @@ public class FrameLibro extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
         setEnabled(false);
-        if (frameDelete == null) {
-            frameDelete = new FrameConfirmacionEliminar(FrameConfirmacionEliminar.eliminar_libro);
-        }
-        frameDelete.setVisible(true);
 
-        /*
-        try {
-            daoLibro.borrar(libro);
-        } catch (PersistenceException e) {
-            this.dispose();
-            if (frameError == null) {
-                frameError = new FramePopup("<html>El libro no se ha podido eliminar.<br> Error: " + "</html>");
+        int resp = JOptionPane.showConfirmDialog(this, "Realmente deseas eliminar este libro?"
+                + "\nEsta operación es irreversible.", "Información", 0, JOptionPane.INFORMATION_MESSAGE,
+                null);
+
+        if (resp == JOptionPane.YES_OPTION) {
+            try {
+                daoLibro.borrar(libro);
+
+                JOptionPane.showMessageDialog(this, "Libro eliminado correctamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al eliminar el libro.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            frameError.setVisible(true);
-        }*/
+
+            this.dispose();
+        }
+
+        setEnabled(true);
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -952,32 +940,32 @@ public class FrameLibro extends javax.swing.JFrame {
         if (isNewLibro) {
             //Creacion de un nuevo libro
             if (textNombreLibro.getText().equals("")) {
-                errores += "<br>- El nombre no puede estar vacío.";
+                errores += "\n- El nombre no puede estar vacío.";
             }
 
             if (textISBNLibro.getText().equals("")) {
-                errores += "<br>- El ISBN no puede estar vacío.";
+                errores += "\n- El ISBN no puede estar vacío.";
             }
 
             if (textUnidadesLibro.getText().equals("")) {
-                errores += "<br>- El campo de las unidades no puede estar vacío.";
+                errores += "\n- El campo de las unidades no puede estar vacío.";
             }
 
             try {
                 int un = Integer.parseInt(textUnidadesLibro.getText());
                 if (un <= 0) {
-                    errores += "<br>- El valor de las unidades debe ser un valor positivo.";
+                    errores += "\n- El valor de las unidades debe ser un valor positivo.";
                 }
             } catch (Exception e) {
-                errores += "<br>- El valor de las unidades debe ser un valor númerico.";
+                errores += "\n- El valor de las unidades debe ser un valor númerico.";
             }
 
             if (textCodigoDeBarrasLibro.getText().equals("")) {
-                errores += "<br>- El código del libro no puede estar vacío.";
+                errores += "\n- El código del libro no puede estar vacío.";
             }
 
             if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
-                errores += "<br>- Debe seleccionar una asignatura válida.";
+                errores += "\n- Debe seleccionar una asignatura válida.";
             }
 
             if (errores.equals("")) {
@@ -999,54 +987,64 @@ public class FrameLibro extends javax.swing.JFrame {
 
                 try {
                     daoLibro.grabar(newLibro);
-<<<<<<< HEAD
-=======
 
->>>>>>> master
-                    Dialogo.mostrarInformacion("Libro añadido correctamente.");
+                    JOptionPane.showMessageDialog(this, "Libro añadido correctamente.",
+                            "Información", JOptionPane.INFORMATION_MESSAGE);
 
                     setEditMode(false);
+                    
+                    libro = newLibro;
 
                     isNewLibro = false;
+                    
                 } catch (PersistenceException e) {
-                    Dialogo.mostrarError("<br>- El libro ya existe en la Base de Datos.");
+
+                    JOptionPane.showMessageDialog(this,
+                            "El libro ya existe en la Base de Datos.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+
                 } catch (Exception e) {
-                    Dialogo.mostrarError("<br>- Error al crear el libro.");
+
+                    JOptionPane.showMessageDialog(this,
+                            "Error al actualizar el libro.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                Dialogo.mostrarError(errores);
+                JOptionPane.showMessageDialog(this,
+                        "Revise los siguientes errores: \n" + errores, "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
 
         } else {
             //Modificacion de un libro existente
 
             if (textNombreLibro.getText().equals("")) {
-                errores += "<br>- El nombre no puede estar vacío.";
+                errores += "\n- El nombre no puede estar vacío.";
             }
 
             if (textISBNLibro.getText().equals("")) {
-                errores += "<br>- El ISBN no puede estar vacío.";
+                errores += "\n- El ISBN no puede estar vacío.";
             }
 
             try {
                 if (textUnidadesLibro.getText().equals("")) {
-                    errores += "<br>- El campo de las unidades no puede estar vacío.";
+                    errores += "\n- El campo de las unidades no puede estar vacío.";
                 } else {
                     int un = Integer.parseInt(textUnidadesLibro.getText());
                     if (un <= 0) {
-                        errores += "<br>- El valor de las unidades debe ser un valor positivo.";
+                        errores += "\n- El valor de las unidades debe ser un valor positivo.";
                     }
                 }
             } catch (Exception e) {
-                errores += "<br>- El valor de las unidades debe ser un valor númerico.";
+                errores += "\n- El valor de las unidades debe ser un valor númerico.";
             }
 
             if (textCodigoDeBarrasLibro.getText().equals("")) {
-                errores += "<br>- El código del libro no puede estar vacío.";
+                errores += "\n- El código del libro no puede estar vacío.";
             }
 
             if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
-                errores += "<br>- Debe seleccionar una asignatura válida.";
+                errores += "\n- Debe seleccionar una asignatura válida.";
             }
 
             if (errores.equals("")) {
@@ -1068,19 +1066,28 @@ public class FrameLibro extends javax.swing.JFrame {
                 try {
                     daoLibro.actualizar(libro);
 
-                    Dialogo.mostrarInformacion("Libro actualizado correctamente.");
+                    JOptionPane.showMessageDialog(this,
+                            "Libro actualizado correctamente.", "Información",
+                            JOptionPane.INFORMATION_MESSAGE);
 
                     setEditMode(false);
                 } catch (PersistenceException e) {
-                    Dialogo.mostrarError("<br>- El libro ya existe en la Base de Datos.");
+                    JOptionPane.showMessageDialog(this,
+                            "El libro ya existe en la Base de Datos.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (Exception e) {
-                    Dialogo.mostrarError("<br>- Error al crear el libro.");
+                    JOptionPane.showMessageDialog(this,
+                            "Error al crear el libro.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                Dialogo.mostrarError(errores);
+                JOptionPane.showMessageDialog(this,
+                        "Revise los siguientes errores: \n" + errores, "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
-
         }
+        
+        RefrescarTabla();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void cbCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCursoActionPerformed
@@ -1205,9 +1212,7 @@ public class FrameLibro extends javax.swing.JFrame {
         cbAsignatura.setEnabled(editable);
         textUnidadesLibro.setEditable(editable);
         chkObsoleto.setEnabled(editable);
-<<<<<<< HEAD
-        textCodigoDeBarrasLibro.setEditable(editable);
-=======
+
         btnSave.setVisible(editable);
 
         if (isNewLibro) {
@@ -1217,6 +1222,5 @@ public class FrameLibro extends javax.swing.JFrame {
             btnDelete.setVisible(editable);
             textCodigoDeBarrasLibro.setEditable(false);
         }
->>>>>>> master
     }
 }
