@@ -62,20 +62,31 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
     @Override
     public void actualizar(Libro l) throws PersistenceException {
+        Libro libroOld, libroNew;
+
+        libroNew = l;
+
         super.conectar();
+        libroOld = (Libro) session.get(Libro.class, l.getCodigo());
+        try {
+            super.desconectar();
+        } catch (Exception ex) {
+            System.out.println("Error DaoLibro-actualizar(): " + ex.getMessage());
+        }
+
+        comprobarEjemplares(libroNew);
 
         try {
-            Libro libro = (Libro) session.get(Libro.class, l.getCodigo());
+            super.conectar();
 
-            libro.setContenido(l.getContenido());
-            libro.setISBN(l.getISBN());
-            libro.setNombre(l.getNombre());
-            libro.setObsoleto(l.getObsoleto());
-            libro.setPrecio(l.getPrecio());
-            libro.setUnidades(l.getUnidades());
+            libroOld.setContenido(libroNew.getContenido());
+            libroOld.setISBN(libroNew.getISBN());
+            libroOld.setNombre(libroNew.getNombre());
+            libroOld.setObsoleto(libroNew.getObsoleto());
+            libroOld.setPrecio(libroNew.getPrecio());
+            libroOld.setUnidades(libroNew.getUnidades());
 
-            //comprobarEjemplares(libro);
-            super.session.saveOrUpdate(libro);
+            super.session.saveOrUpdate(libroOld);
 
             super.session.getTransaction().commit();
         } catch (PersistenceException e) {
@@ -187,29 +198,52 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
         if (libroNuevo.getUnidades() > libroActual.getUnidades()) {
             cantidad = libroNuevo.getUnidades() - libroActual.getUnidades();
-
-            int codEjemplar;
+            
+            int codBase;
 
             try {
-                List<Libro> ejemplares = new ArrayList<Libro>();
+                List<Ejemplar> ejemplares = new ArrayList<Ejemplar>();
 
-                Query query = super.session.createQuery("from Ejemplares where id_libro = '" + libroActual + "'");
+                Query query = super.session.createQuery("from Ejemplar where libro = '" + libroActual.getCodigo() + "'");
                 ejemplares = query.list();
 
                 String codigo = ejemplares.get(ejemplares.size() - 1).getCodigo();
 
-                codEjemplar = Integer.parseInt(codigo.substring(codigo.length() - 3));
+                codBase = Integer.parseInt(codigo.substring(codigo.length() - 3));
 
-                System.out.println(codEjemplar);
+                for (int i = 0; i < cantidad; i++) {
+                    String codigo_ejemplar;
+
+                    codBase++;
+
+                    if (codBase < 10) {
+                        codigo_ejemplar = libroActual.getCodigo() + "00" + codBase;
+                    } else if (codBase < 100) {
+                        codigo_ejemplar = libroActual.getCodigo() + "0" + codBase;
+                    } else {
+                        codigo_ejemplar = libroActual.getCodigo() + "" + codBase;
+                    }
+
+                    Ejemplar ejemplar = new Ejemplar(codigo_ejemplar, libroNuevo, Estado.nuevo, false);
+
+                    super.session.save(ejemplar);
+                }
+
             } catch (Exception e) {
+                e.printStackTrace();
                 System.out.println("DaoLibro - comprobarEjemplares() - Error al convertir el codigo ejemplar.");
             }
-
-            for (int i = 0; i < cantidad; i++) {
-
-            }
         } else if (libroNuevo.getUnidades() < libroActual.getUnidades()) {
+            cantidad = libroActual.getUnidades() - libroNuevo.getUnidades();
+            
+            List<Ejemplar> ejemplares = new ArrayList<Ejemplar>();
 
+            Query query = super.session.createQuery("from Ejemplar where libro = '" + libroActual.getCodigo() + "'");
+            ejemplares = query.list();
+            
+            for (int i = ejemplares.size() - 1 ; i > (ejemplares.size() - 1) - cantidad; i--) {
+                session.remove(ejemplares.get(i));
+            }
         }
 
         try {
