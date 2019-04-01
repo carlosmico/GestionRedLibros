@@ -53,11 +53,11 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
         }
 
         try {
-            super.desconectar();  
+            super.desconectar();
         } catch (Exception ex) {
             System.out.println("Error DaoLibro-grabar(): " + ex.getMessage());
         }
-        
+
         generarEjemplares(libro);
     }
 
@@ -68,14 +68,18 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
         try {
             Libro libro = (Libro) session.get(Libro.class, l.getCodigo());
 
-            libro.setContenido(l.getContenido());
-            libro.setISBN(l.getISBN());
-            libro.setNombre(l.getNombre());
-            libro.setObsoleto(l.getObsoleto());
-            libro.setPrecio(l.getPrecio());
-            libro.setUnidades(l.getUnidades());
+            if (libro != null) {
+                libro.setContenido(l.getContenido());
+                libro.setISBN(l.getISBN());
+                libro.setNombre(l.getNombre());
+                libro.setObsoleto(l.getObsoleto());
+                libro.setPrecio(l.getPrecio());
+                libro.setUnidades(l.getUnidades());
 
-            super.session.saveOrUpdate(libro);
+                super.session.saveOrUpdate(libro);
+            }else{
+                super.session.saveOrUpdate(l);
+            }
 
             super.session.getTransaction().commit();
         } catch (PersistenceException e) {
@@ -88,7 +92,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
             System.out.println("Error DaoLibro-actualizar(): " + ex.getMessage());
         }
     }
-    
+
     @Override
     public void borrar(Libro libro) throws PersistenceException {
         super.conectar();
@@ -103,15 +107,15 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
         }
 
         try {
-            super.desconectar();  
+            super.desconectar();
         } catch (Exception ex) {
             System.out.println("Error DaoLibro-grabar(): " + ex.getMessage());
         }
     }
-    
+
     public Libro buscar(String codigo) throws PersistenceException {
         super.conectar();
-        
+
         Libro libro;
 
         try {
@@ -122,32 +126,31 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
         }
 
         try {
-            super.desconectar();  
+            super.desconectar();
         } catch (Exception ex) {
             System.out.println("Error DaoLibro-buscarCodigo(): " + ex.getMessage());
         }
-        
+
         return libro;
     }
-    
-    public List<Libro> buscarTodos(){
+
+    public List<Libro> buscarTodos() {
         super.conectar();
-        
+
         List<Libro> lista = new ArrayList<Libro>();
-        
+
         Query query = super.session.createQuery("from Libro");
         lista = query.list();
-        
+
         try {
-            super.desconectar();  
+            super.desconectar();
         } catch (Exception ex) {
             System.out.println("Error DaoLibro-buscarTodos(): " + ex.getMessage());
         }
-        
+
         return lista;
     }
 
-    
     private void generarEjemplares(Libro libro) {
         Ejemplar ejemplar;
         String codigo_ejemplar = "";

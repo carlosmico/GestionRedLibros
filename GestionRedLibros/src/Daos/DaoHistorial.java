@@ -31,8 +31,8 @@ import org.hibernate.Query;
  *
  * @author Carlos
  */
-public class DaoHistorial extends DaoGenerico<Historial, Integer> implements InterfaceDaoGenerico<Historial, Integer>{
-    
+public class DaoHistorial extends DaoGenerico<Historial, Integer> implements InterfaceDaoGenerico<Historial, Integer> {
+
     @Override
     public void grabar(Historial h) throws PersistenceException {
         super.conectar();
@@ -52,7 +52,7 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
             System.out.println("Error DaoHistorial-grabar(): " + ex.getMessage());
         }
     }
-    
+
     @Override
     public void actualizar(Historial h) throws PersistenceException {
         super.conectar();
@@ -60,16 +60,20 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         try {
             Historial historial = (Historial) session.get(Historial.class, h.getId());
 
-            historial.setEjemplar(h.getEjemplar());
-            historial.setAlumno(h.getAlumno());
-            historial.setCurso_escolar(h.getCurso_escolar());
-            historial.setEstado_inicial(h.getEstado_inicial());
-            historial.setEstado_final(h.getEstado_final());
-            historial.setFecha_inicial(h.getFecha_inicial());
-            historial.setFecha_final(h.getFecha_final());
-            historial.setObservaciones(h.getObservaciones());
-            
-            super.session.saveOrUpdate(historial);
+            if (historial != null) {
+                historial.setEjemplar(h.getEjemplar());
+                historial.setAlumno(h.getAlumno());
+                historial.setCurso_escolar(h.getCurso_escolar());
+                historial.setEstado_inicial(h.getEstado_inicial());
+                historial.setEstado_final(h.getEstado_final());
+                historial.setFecha_inicial(h.getFecha_inicial());
+                historial.setFecha_final(h.getFecha_final());
+                historial.setObservaciones(h.getObservaciones());
+                
+                super.session.saveOrUpdate(historial);
+            } else {
+                super.session.saveOrUpdate(h);
+            }
 
             super.session.getTransaction().commit();
         } catch (PersistenceException ex) {
@@ -83,10 +87,10 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
             System.out.println("Error DaoHistorial-actualizar(): " + ex.getMessage());
         }
     }
-    
+
     public Historial buscar(Integer id) throws PersistenceException {
         super.conectar();
-        
+
         Historial historial;
 
         try {
@@ -98,63 +102,63 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         }
 
         try {
-            super.desconectar();  
+            super.desconectar();
         } catch (Exception ex) {
             System.out.println("Error DaoHistorial-buscarId(): " + ex.getMessage());
         }
-        
+
         return historial;
     }
-    
-    public List<Historial> buscarPorAlumno(Alumno alum){
+
+    public List<Historial> buscarPorAlumno(Alumno alum) {
         super.conectar();
-        
+
         List<Historial> lista = new ArrayList<Historial>();
-        
+
         Query query = super.session.createQuery("from Historial where alumno = " + alum.getNia());
         lista = query.list();
-        
+
         try {
-            super.desconectar();  
+            super.desconectar();
         } catch (Exception ex) {
             System.out.println("Error DaoHistorial-buscarPorAlumno(): " + ex.getMessage());
         }
-        
+
         return lista;
     }
-    
-    public List<Historial> buscarPorEjemplar(Ejemplar ejemplar){
+
+    public List<Historial> buscarPorEjemplar(Ejemplar ejemplar) {
         super.conectar();
-        
+
         List<Historial> lista = new ArrayList<Historial>();
-        
+
         Query query = super.session.createQuery("from Historial where ejemplar = " + ejemplar.getCodigo());
         lista = query.list();
-        
+
         try {
-            super.desconectar();  
+            super.desconectar();
         } catch (Exception ex) {
             System.out.println("Error DaoHistorial-buscarPorEjemplar(): " + ex.getMessage());
         }
-        
+
         return lista;
     }
-    
-    public List<Historial> buscarTodos(){
+
+    public List<Historial> buscarTodos() {
         super.conectar();
-        
+
         List<Historial> lista = new ArrayList<Historial>();
-        
+
         Query query = super.session.createQuery("from Historial");
         lista = query.list();
-        
+
         try {
-            super.desconectar();  
+            super.desconectar();
         } catch (Exception ex) {
             System.out.println("Error DaoHistorial-buscarTodos(): " + ex.getMessage());
         }
-        
+
         return lista;
     }
-    
+
 }
