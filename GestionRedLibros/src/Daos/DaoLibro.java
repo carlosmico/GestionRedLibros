@@ -48,7 +48,6 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
             super.session.getTransaction().commit();
         } catch (PersistenceException e) {
-            e.printStackTrace();
             throw new PersistenceException();
         }
 
@@ -76,8 +75,10 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
                 libro.setPrecio(l.getPrecio());
                 libro.setUnidades(l.getUnidades());
 
+                comprobarEjemplares(libro);
+
                 super.session.saveOrUpdate(libro);
-            }else{
+            } else {
                 super.session.saveOrUpdate(l);
             }
 
@@ -102,7 +103,6 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
             super.session.getTransaction().commit();
         } catch (PersistenceException e) {
-            e.printStackTrace();
             throw new PersistenceException();
         }
 
@@ -169,6 +169,48 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
             ejemplar = new Ejemplar(codigo_ejemplar, libro, Estado.nuevo, false);
 
             super.session.save(ejemplar);
+        }
+
+        try {
+            super.session.getTransaction().commit();
+
+            super.desconectar();
+        } catch (Exception ex) {
+            System.out.println("Error DaoLibro-generarcodigos(): " + ex.getMessage());
+        }
+    }
+
+    /* Comprobamos los ejemplares del libro actual para saber si hemos de borrar 
+    *  o añadir nuevos ejemplares
+     */
+    private void comprobarEjemplares(Libro libroNuevo) {
+        super.conectar();
+
+        Libro libroActual = (Libro) super.session.get(Libro.class, libroNuevo.getCodigo());
+
+        int cantidad;
+
+        if (libroNuevo.getUnidades() > libroActual.getUnidades()) {
+            cantidad = libroNuevo.getUnidades() - libroActual.getUnidades();
+
+            int codEjemplar;
+
+            try {
+                List<Libro> ejemplares = new ArrayList<Libro>();
+
+                Query query = super.session.createQuery("from Ejemplares where id_libro = '" + libroActual + "'");
+                ejemplares = query.list();
+                
+                System.out.println(ejemplares.get(ejemplares.size() - 1).toString());
+            } catch (Exception e) {
+                System.out.println("DaoLibro - comprobarEjemplares() - Error al convertir el codigo ejemplar.");
+            }
+
+            for (int i = 0; i < cantidad; i++) {
+
+            }
+        } else if (libroNuevo.getUnidades() < libroActual.getUnidades()) {
+
         }
 
         try {

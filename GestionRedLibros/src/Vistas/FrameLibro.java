@@ -55,7 +55,6 @@ public class FrameLibro extends javax.swing.JFrame {
     boolean isNewLibro;
 
     FrameCarga frameCarga;
-    FrameError frameError;
     FrameConfirmacionEliminar frameDelete;
 
     List<Curso> listaCursos;
@@ -115,7 +114,7 @@ public class FrameLibro extends javax.swing.JFrame {
         this.isNewLibro = this.libro == null;
 
         btnDelete.setVisible(false);
-        
+
         //Deshabilitamos la tabla de ejemplares puesto que es de lectura
         tableEjemplares.setEnabled(false);
         btnSave.setVisible(isNewLibro);
@@ -131,7 +130,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 setEnabled(false);
                 listaCursos = daoCurso.buscarTodos();
                 listaContenido = daoContenido.buscarTodos();
-                
+
                 return null;
             }
 
@@ -181,7 +180,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
                     textCodigoDeBarrasLibro.setText(libro.getCodigo());
                     chkObsoleto.setChecked(libro.getObsoleto());
-                    
+
                     //Refrescamos la tabla de ejemplares
                     RefrescarTabla();
                 }
@@ -201,7 +200,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         //Set imagen del libro
         try {
-            int ran = (int)(Math.floor(Math.random()*4));
+            int ran = (int) (Math.floor(Math.random() * 4));
             System.out.println("Resultado: " + ran);
             imgLibro.setIcon(new ImageIcon("Imagenes/image" + ran + ".png"));
         } catch (Exception ex) {
@@ -238,10 +237,10 @@ public class FrameLibro extends javax.swing.JFrame {
                         fila[1] = "Nuevo";
                         break;
                 }
-                
+
                 if (ejemplar.isPrestado()) {
                     fila[2] = "Si";
-                }else{
+                } else {
                     fila[2] = "No";
                 }
 
@@ -837,32 +836,32 @@ public class FrameLibro extends javax.swing.JFrame {
         if (isNewLibro) {
             //Creacion de un nuevo libro
             if (textNombreLibro.getText().equals("")) {
-                errores += "\n- El nombre no puede estar vacío.";
+                errores += "<br>- El nombre no puede estar vacío.";
             }
-            
+
             if (textISBNLibro.getText().equals("")) {
-                errores += "\n- El ISBN no puede estar vacío.";
+                errores += "<br>- El ISBN no puede estar vacío.";
             }
-            
+
             if (textUnidadesLibro.getText().equals("")) {
-                errores += "\n- El campo de las unidades no puede estar vacío.";
+                errores += "<br>- El campo de las unidades no puede estar vacío.";
             }
-            
+
             try {
                 int un = Integer.parseInt(textUnidadesLibro.getText());
                 if (un <= 0) {
-                    errores += "\n- El valor de las unidades debe ser un valor positivo.";
+                    errores += "<br>- El valor de las unidades debe ser un valor positivo.";
                 }
             } catch (Exception e) {
-                errores += "\n- El valor de las unidades debe ser un valor númerico.";
+                errores += "<br>- El valor de las unidades debe ser un valor númerico.";
             }
 
             if (textCodigoDeBarrasLibro.getText().equals("")) {
-                errores += "\n- El código del libro no puede estar vacío.";
+                errores += "<br>- El código del libro no puede estar vacío.";
             }
 
             if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
-                errores += "\n- Debe seleccionar una asignatura válida.";
+                errores += "<br>- Debe seleccionar una asignatura válida.";
             }
 
             if (errores.equals("")) {
@@ -882,18 +881,81 @@ public class FrameLibro extends javax.swing.JFrame {
                     }
                 }
 
-                try{
+                try {
                     daoLibro.grabar(newLibro);
-                } catch (Exception e){
-                    System.out.println("Excepcion capturada!");
+
+                    Dialogo.mostrarInformacion("Libro añadido correctamente.");
+                } catch (PersistenceException e) {
+                    Dialogo.mostrarError("<br>- El libro ya existe en la Base de Datos.");
+                } catch (Exception e) {
+                    Dialogo.mostrarError("<br>- Error al crear el libro.");
                 }
             } else {
-                MostrarError.mostrarError(errores);
+                Dialogo.mostrarError(errores);
             }
+
         } else {
             //Modificacion de un libro existente
-            
-            
+
+            if (textNombreLibro.getText().equals("")) {
+                errores += "<br>- El nombre no puede estar vacío.";
+            }
+
+            if (textISBNLibro.getText().equals("")) {
+                errores += "<br>- El ISBN no puede estar vacío.";
+            }
+
+            try {
+                if (textUnidadesLibro.getText().equals("")) {
+                    errores += "<br>- El campo de las unidades no puede estar vacío.";
+                } else {
+                    int un = Integer.parseInt(textUnidadesLibro.getText());
+                    if (un <= 0) {
+                        errores += "<br>- El valor de las unidades debe ser un valor positivo.";
+                    }
+                }
+            } catch (Exception e) {
+                errores += "<br>- El valor de las unidades debe ser un valor númerico.";
+            }
+
+            if (textCodigoDeBarrasLibro.getText().equals("")) {
+                errores += "<br>- El código del libro no puede estar vacío.";
+            }
+
+            if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
+                errores += "<br>- Debe seleccionar una asignatura válida.";
+            }
+
+            if (errores.equals("")) {
+                //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
+                Libro newLibro = new Libro();
+
+                newLibro.setCodigo(textCodigoDeBarrasLibro.getText());
+                newLibro.setISBN(textISBNLibro.getText());
+                newLibro.setNombre(textNombreLibro.getText());
+                newLibro.setObsoleto(chkObsoleto.isChecked());
+                newLibro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
+
+                for (int i = 0; i < listaContenido.size(); i++) {
+                    if (listaContenido.get(i).getNombre_cas().equals(cbAsignatura.getSelectedItem().toString())) {
+                        newLibro.setContenido(listaContenido.get(i));
+                        break;
+                    }
+                }
+
+                try {
+                    daoLibro.actualizar(libro);
+
+                    Dialogo.mostrarInformacion("Libro actualizado correctamente.");
+                } catch (PersistenceException e) {
+                    Dialogo.mostrarError("<br>- El libro ya existe en la Base de Datos.");
+                } catch (Exception e) {
+                    Dialogo.mostrarError("<br>- Error al crear el libro.");
+                }
+            } else {
+                Dialogo.mostrarError(errores);
+            }
+
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 

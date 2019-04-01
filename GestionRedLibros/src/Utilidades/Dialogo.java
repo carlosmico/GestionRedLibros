@@ -17,21 +17,28 @@
  */
 package Utilidades;
 
-import Vistas.FrameError;
+import Vistas.FramePopup;
 import java.awt.Frame;
 
 /**
  *
  * @author Carlos
  */
-public class MostrarError {
+public class Dialogo {
 
-    private static FrameError frameError = null;
+    private static FramePopup popup = null;
 
     public static void mostrarError(String errores) {
-        if (frameError == null) {
-            frameError = new FrameError("Revise los siguientes errores:" + errores + "");
-        }
-        frameError.setVisible(true);
+        popup = new FramePopup("<html>Revise los siguientes errores:" + errores + "</html>");
+        
+        popup.setTitle("Error");
+        popup.setVisible(true);
+    }
+    
+    public static void mostrarInformacion(String informacion) {
+        popup = new FramePopup(informacion);
+        
+        popup.setTitle("Información");
+        popup.setVisible(true);
     }
 }
