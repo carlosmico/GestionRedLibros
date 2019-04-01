@@ -26,29 +26,19 @@ import java.awt.Frame;
  */
 public class Dialogo {
 
-<<<<<<< HEAD:GestionRedLibros/src/Utilidades/MostrarError.java
-    private static FramePopup frameError = null;
-
-    public static void mostrarError(String errores) {
-        if (frameError == null) {
-            frameError = new FramePopup("Revise los siguientes errores:" + errores + "");
-        }
-        frameError.setVisible(true);
-=======
     private static FramePopup popup = null;
 
     public static void mostrarError(String errores) {
         popup = new FramePopup("<html>Revise los siguientes errores:" + errores + "</html>");
-        
+
         popup.setTitle("Error");
         popup.setVisible(true);
     }
-    
+
     public static void mostrarInformacion(String informacion) {
         popup = new FramePopup(informacion);
-        
+
         popup.setTitle("Información");
         popup.setVisible(true);
->>>>>>> master:GestionRedLibros/src/Utilidades/Dialogo.java
     }
 }

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.persistence.PersistenceException;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -49,10 +50,7 @@ public class FrameLibro extends javax.swing.JFrame {
     boolean isNewLibro;
 
     FrameCarga frameCarga;
-<<<<<<< HEAD
-    FramePopup frameError;
-=======
->>>>>>> master
+
     FrameConfirmacionEliminar frameDelete;
 
     List<Curso> listaCursos;
@@ -131,10 +129,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 setEnabled(false);
                 listaCursos = daoCurso.buscarTodos();
                 listaContenido = daoContenido.buscarTodos();
-<<<<<<< HEAD
-=======
 
->>>>>>> master
                 return null;
             }
 
@@ -894,26 +889,19 @@ public class FrameLibro extends javax.swing.JFrame {
 
                 try {
                     daoLibro.grabar(newLibro);
-<<<<<<< HEAD
-                } catch (Exception e) {
-                    System.out.println("Excepcion capturada!");
-=======
-
+                    
                     Dialogo.mostrarInformacion("Libro añadido correctamente.");
                 } catch (PersistenceException e) {
                     Dialogo.mostrarError("<br>- El libro ya existe en la Base de Datos.");
                 } catch (Exception e) {
                     Dialogo.mostrarError("<br>- Error al crear el libro.");
->>>>>>> master
+
                 }
             } else {
                 Dialogo.mostrarError(errores);
             }
 
         } else {
-<<<<<<< HEAD
-            //Guardado de un libro existente
-=======
             //Modificacion de un libro existente
 
             if (textNombreLibro.getText().equals("")) {
@@ -974,7 +962,6 @@ public class FrameLibro extends javax.swing.JFrame {
             } else {
                 Dialogo.mostrarError(errores);
             }
->>>>>>> master
 
         }
     }//GEN-LAST:event_btnSaveActionPerformed

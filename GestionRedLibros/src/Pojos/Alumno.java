@@ -58,6 +58,8 @@ public class Alumno implements Serializable {
     @JoinColumn (name = "curso")
     private Curso curso_alumno;
     
+    @ManyToOne
+    @JoinColumn (name = "grupo")
     private Grupo grupo;
 
     @OneToMany(mappedBy = "alumno")
