@@ -17,8 +17,13 @@
  */
 package Vistas;
 
+import Pojos.Ejemplar;
 import Pojos.Libro;
 import Utilidades.Colores;
+import Utilidades.Estado;
+import java.awt.Image;
+import java.util.List;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -29,11 +34,17 @@ public class FrameEjemplares extends javax.swing.JFrame {
     /**
      * Creates new form FrameDevoluciones
      */
+    public int ejemplarActual = 0;
+    public List<Ejemplar> listaEjemplares;
+
     public FrameEjemplares(Libro l) {
         initComponents();
-        
-        System.out.println("Se estan mostrando ejemplares del libro " + l.getNombre());
-        
+
+        textTitulo.setText(l.getNombre());
+        listaEjemplares = l.getEjemplares();
+
+        rellenarDatosEjemplar();
+
         this.setLocationRelativeTo(null);
     }
 
@@ -47,16 +58,18 @@ public class FrameEjemplares extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        flatButton1 = new com.mommoo.flat.button.FlatButton();
-        flatButton2 = new com.mommoo.flat.button.FlatButton();
+        btnEjemplarSiguiente = new com.mommoo.flat.button.FlatButton();
+        btnEjemplarAnterior = new com.mommoo.flat.button.FlatButton();
+        panelTitulo = new javax.swing.JPanel();
+        textTitulo = new javax.swing.JLabel();
+        textEjemplarIndice = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         panelEstadoParent = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         panelEstado = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        btnBadStatus = new javax.swing.JLabel();
+        btnRegularStatus = new javax.swing.JLabel();
+        btnGoodStatus = new javax.swing.JLabel();
         panelCodigo = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         textCodigoEjemplar = new javax.swing.JLabel();
@@ -68,49 +81,61 @@ public class FrameEjemplares extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(58, 39, 35));
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("El Gran Libro de Jose");
+        btnEjemplarSiguiente.setBackground(Colores.buttons);
+        btnEjemplarSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/arrow-right-drop-circle-outline.png"))); // NOI18N
+        btnEjemplarSiguiente.setCornerRound(10);
+        btnEjemplarSiguiente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEjemplarSiguienteMouseClicked(evt);
+            }
+        });
 
-        flatButton1.setBackground(Colores.buttons);
-        flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/arrow-right-drop-circle-outline.png"))); // NOI18N
-        flatButton1.setCornerRound(10);
+        btnEjemplarAnterior.setBackground(Colores.buttons);
+        btnEjemplarAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/arrow-left-drop-circle-outline.png"))); // NOI18N
+        btnEjemplarAnterior.setCornerRound(10);
+        btnEjemplarAnterior.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEjemplarAnteriorMouseClicked(evt);
+            }
+        });
 
-        flatButton2.setBackground(Colores.buttons);
-        flatButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/arrow-left-drop-circle-outline.png"))); // NOI18N
-        flatButton2.setCornerRound(10);
+        panelTitulo.setBackground(new java.awt.Color(58, 39, 35));
+        panelTitulo.setLayout(new java.awt.GridLayout(2, 1));
+
+        textTitulo.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        textTitulo.setForeground(new java.awt.Color(204, 204, 204));
+        textTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textTitulo.setText("El Gran Libro de Jose");
+        panelTitulo.add(textTitulo);
+
+        textEjemplarIndice.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        textEjemplarIndice.setForeground(new java.awt.Color(204, 204, 204));
+        textEjemplarIndice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textEjemplarIndice.setText("Ejemplar 1 de 25");
+        panelTitulo.add(textEjemplarIndice);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(flatButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(btnEjemplarAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEjemplarSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(16, 16, 16)
-                    .addComponent(flatButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(580, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(flatButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                    .addComponent(btnEjemplarAnterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEjemplarSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(flatButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
 
         jPanel3.setBackground(new java.awt.Color(239, 235, 233));
@@ -124,17 +149,17 @@ public class FrameEjemplares extends javax.swing.JFrame {
         panelEstado.setBackground(new java.awt.Color(239, 235, 233));
         panelEstado.setLayout(new java.awt.GridLayout(1, 0, 5, 5));
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
-        panelEstado.add(jLabel2);
+        btnBadStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnBadStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
+        panelEstado.add(btnBadStatus);
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
-        panelEstado.add(jLabel3);
+        btnRegularStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnRegularStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
+        panelEstado.add(btnRegularStatus);
 
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
-        panelEstado.add(jLabel5);
+        btnGoodStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnGoodStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
+        panelEstado.add(btnGoodStatus);
 
         javax.swing.GroupLayout panelEstadoParentLayout = new javax.swing.GroupLayout(panelEstadoParent);
         panelEstadoParent.setLayout(panelEstadoParentLayout);
@@ -145,7 +170,7 @@ public class FrameEjemplares extends javax.swing.JFrame {
                 .addGroup(panelEstadoParentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelEstadoParentLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(panelEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(panelEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE))
                     .addGroup(panelEstadoParentLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -170,7 +195,6 @@ public class FrameEjemplares extends javax.swing.JFrame {
         textCodigoEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         textCodigoEjemplar.setForeground(new java.awt.Color(51, 51, 51));
         textCodigoEjemplar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        textCodigoEjemplar.setText("1928-19-1928");
 
         javax.swing.GroupLayout panelCodigoLayout = new javax.swing.GroupLayout(panelCodigo);
         panelCodigo.setLayout(panelCodigoLayout);
@@ -178,13 +202,12 @@ public class FrameEjemplares extends javax.swing.JFrame {
             panelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCodigoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelCodigoLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelCodigoLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addContainerGap(318, Short.MAX_VALUE))))
+                .addComponent(jLabel4)
+                .addContainerGap(529, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCodigoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 662, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         panelCodigoLayout.setVerticalGroup(
             panelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,11 +215,12 @@ public class FrameEjemplares extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        flatButton3.setText("Imprimir etiquetas");
+        flatButton3.setBackground(Colores.buttons);
+        flatButton3.setText("Imprimir etiqueta");
         flatButton3.setCornerRound(10);
         flatButton3.setPreferredSize(new java.awt.Dimension(111, 32));
 
@@ -205,12 +229,9 @@ public class FrameEjemplares extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(panelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelEstadoParent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -222,10 +243,10 @@ public class FrameEjemplares extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelEstadoParent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(140, 140, 140)
-                .addComponent(flatButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
+                .addComponent(flatButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -243,13 +264,32 @@ public class FrameEjemplares extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEjemplarAnteriorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEjemplarAnteriorMouseClicked
+        // TODO add your handling code here:
+        if ((ejemplarActual - 1) < 0) {
+            ejemplarActual = listaEjemplares.size() - 1;
+        } else {
+            ejemplarActual--;
+        }
+        rellenarDatosEjemplar();
+    }//GEN-LAST:event_btnEjemplarAnteriorMouseClicked
+
+    private void btnEjemplarSiguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEjemplarSiguienteMouseClicked
+        // TODO add your handling code here:
+        if ((ejemplarActual + 1) > listaEjemplares.size() - 1) {
+            ejemplarActual = 0;
+        } else {
+            ejemplarActual++;
+        }
+        rellenarDatosEjemplar();
+    }//GEN-LAST:event_btnEjemplarSiguienteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -288,20 +328,80 @@ public class FrameEjemplares extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.mommoo.flat.button.FlatButton flatButton1;
-    private com.mommoo.flat.button.FlatButton flatButton2;
+    private javax.swing.JLabel btnBadStatus;
+    private com.mommoo.flat.button.FlatButton btnEjemplarAnterior;
+    private com.mommoo.flat.button.FlatButton btnEjemplarSiguiente;
+    private javax.swing.JLabel btnGoodStatus;
+    private javax.swing.JLabel btnRegularStatus;
     private com.mommoo.flat.button.FlatButton flatButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel panelCodigo;
     private javax.swing.JPanel panelEstado;
     private javax.swing.JPanel panelEstadoParent;
+    private javax.swing.JPanel panelTitulo;
     private javax.swing.JLabel textCodigoEjemplar;
+    private javax.swing.JLabel textEjemplarIndice;
+    private javax.swing.JLabel textTitulo;
     // End of variables declaration//GEN-END:variables
+
+    public void setEstado(int estado) {
+
+        switch (estado) {
+            case Estado.deteriorado:
+                //El libro se encuentra en mal estado
+
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad.png")));               //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular_disabled.png")));  //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good_disabled.png")));     //Good face
+                break;
+
+            case Estado.usado:
+                //El libro se encuentra en mal estado
+
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular.png")));          //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good_disabled.png")));    //Good face
+                break;
+
+            case Estado.nuevo:
+                //El libro se encuentra en mal estado
+
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular_disabled.png"))); //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good.png")));             //Good face
+                break;
+        }
+    }
+
+    public void rellenarDatosEjemplar() {
+
+        Ejemplar ejemplarTemp = listaEjemplares.get(ejemplarActual);
+
+        //Estado
+        setEstado(ejemplarTemp.getEstado());
+
+        //Codigo de barras
+        Image img = new ImageIcon(getClass().getResource("/Imagenes/barcode.png")).getImage();
+        System.out.println("Image null: " + (img == null));
+        ImageIcon img2 = new ImageIcon(img.getScaledInstance(480, 320, Image.SCALE_REPLICATE));
+        System.out.println("ImageIcon null: " + (img2 == null));
+        textCodigoEjemplar.setIcon(img2);
+        
+        textCodigoEjemplar.setText(ejemplarTemp.getCodigo());
+
+        //Indice
+        textEjemplarIndice.setText("Ejemplar " + (ejemplarActual + 1) + " de " + listaEjemplares.size());
+    }
 }

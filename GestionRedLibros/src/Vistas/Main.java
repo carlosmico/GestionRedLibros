@@ -8,23 +8,16 @@ package Vistas;
 import Utilidades.DimensionesFrame;
 import Utilidades.GetInternetStatus;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
-import javax.swing.InputMap;
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -39,6 +32,7 @@ public class Main extends javax.swing.JFrame {
     FrameEntrega gesEntrega = null;
     FrameInputLibro inputLibro = null;
     FrameMatriculas gesMatri = null;
+    FrameOpciones opciones = null;
 
     public Main() throws IOException {
         initComponents();
@@ -82,7 +76,7 @@ public class Main extends javax.swing.JFrame {
         btnDevoluciones = new com.mommoo.flat.button.FlatButton();
         btnEntrega = new com.mommoo.flat.button.FlatButton();
         btnGestiones = new com.mommoo.flat.button.FlatButton();
-        flatButton4 = new com.mommoo.flat.button.FlatButton();
+        btnOpciones = new com.mommoo.flat.button.FlatButton();
         flatButton1 = new com.mommoo.flat.button.FlatButton();
         wallpaper = new javax.swing.JLabel();
 
@@ -195,12 +189,17 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel1.add(btnGestiones);
 
-        flatButton4.setBackground(new java.awt.Color(66, 47, 44));
-        flatButton4.setForeground(new java.awt.Color(204, 204, 204));
-        flatButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/ballot-outline.png"))); // NOI18N
-        flatButton4.setText("  Opciones");
-        flatButton4.setCornerRound(10);
-        jPanel1.add(flatButton4);
+        btnOpciones.setBackground(new java.awt.Color(66, 47, 44));
+        btnOpciones.setForeground(new java.awt.Color(204, 204, 204));
+        btnOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/ballot-outline.png"))); // NOI18N
+        btnOpciones.setText("  Opciones");
+        btnOpciones.setCornerRound(10);
+        btnOpciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpcionesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnOpciones);
 
         flatButton1.setBackground(new java.awt.Color(66, 47, 44));
         flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/help-circle-outline.png"))); // NOI18N
@@ -298,6 +297,24 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnMatriculasActionPerformed
 
+    private void btnOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionesActionPerformed
+        // TODO add your handling code here:
+        if (opciones == null) {
+            try {
+                opciones = new FrameOpciones();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        opciones.setVisible(true);
+    }//GEN-LAST:event_btnOpcionesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -346,8 +363,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnGestionLibros;
     private com.mommoo.flat.button.FlatButton btnGestiones;
     private javax.swing.JMenuItem btnMatriculas;
+    private com.mommoo.flat.button.FlatButton btnOpciones;
     private com.mommoo.flat.button.FlatButton flatButton1;
-    private com.mommoo.flat.button.FlatButton flatButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu menuPopup;
