@@ -66,7 +66,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         flatButton2.setBackground(new java.awt.Color(66, 47, 44));
         flatButton2.setForeground(new java.awt.Color(204, 204, 204));
-        flatButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus-circle-outline.png"))); // NOI18N
+        flatButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png"))); // NOI18N
         flatButton2.setText("Nueva entrega");
         jPanel2.add(flatButton2);
 

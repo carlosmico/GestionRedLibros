@@ -189,7 +189,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/icons/clipboard-arrow-down-outline.png"/>
+                  <Image iconType="3" name="/Imagenes/icons/clipboard-arrow-down.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Devoluciones"/>
                 <Property name="cornerRound" type="int" value="10"/>
@@ -207,7 +207,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/icons/clipboard-arrow-up-outline.png"/>
+                  <Image iconType="3" name="/Imagenes/icons/clipboard-arrow-up.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Entregas"/>
                 <Property name="cornerRound" type="int" value="10"/>
@@ -225,7 +225,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/icons/book-open-variant.png"/>
+                  <Image iconType="3" name="/Imagenes/icons/book.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Gestiones"/>
                 <Property name="cornerRound" type="int" value="10"/>
@@ -244,7 +244,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/icons/ballot-outline.png"/>
+                  <Image iconType="3" name="/Imagenes/icons/ballot.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Opciones"/>
                 <Property name="cornerRound" type="int" value="10"/>
@@ -259,7 +259,7 @@
                   <Color blue="2c" green="2f" red="42" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/icons/help-circle-outline.png"/>
+                  <Image iconType="3" name="/Imagenes/icons/help.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Ayuda"/>
                 <Property name="cornerRound" type="int" value="10"/>

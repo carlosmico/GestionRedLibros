@@ -150,7 +150,7 @@ public class Main extends javax.swing.JFrame {
         btnDevoluciones.setBackground(new java.awt.Color(66, 47, 44));
         btnDevoluciones.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
         btnDevoluciones.setForeground(new java.awt.Color(204, 204, 204));
-        btnDevoluciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-down-outline.png"))); // NOI18N
+        btnDevoluciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-down.png"))); // NOI18N
         btnDevoluciones.setText("  Devoluciones");
         btnDevoluciones.setCornerRound(10);
         btnDevoluciones.addActionListener(new java.awt.event.ActionListener() {
@@ -162,7 +162,7 @@ public class Main extends javax.swing.JFrame {
 
         btnEntrega.setBackground(new java.awt.Color(66, 47, 44));
         btnEntrega.setForeground(new java.awt.Color(204, 204, 204));
-        btnEntrega.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up-outline.png"))); // NOI18N
+        btnEntrega.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up.png"))); // NOI18N
         btnEntrega.setText("  Entregas");
         btnEntrega.setCornerRound(10);
         btnEntrega.addActionListener(new java.awt.event.ActionListener() {
@@ -174,7 +174,7 @@ public class Main extends javax.swing.JFrame {
 
         btnGestiones.setBackground(new java.awt.Color(66, 47, 44));
         btnGestiones.setForeground(new java.awt.Color(204, 204, 204));
-        btnGestiones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/book-open-variant.png"))); // NOI18N
+        btnGestiones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/book.png"))); // NOI18N
         btnGestiones.setText("  Gestiones");
         btnGestiones.setCornerRound(10);
         btnGestiones.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -191,7 +191,7 @@ public class Main extends javax.swing.JFrame {
 
         btnOpciones.setBackground(new java.awt.Color(66, 47, 44));
         btnOpciones.setForeground(new java.awt.Color(204, 204, 204));
-        btnOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/ballot-outline.png"))); // NOI18N
+        btnOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/ballot.png"))); // NOI18N
         btnOpciones.setText("  Opciones");
         btnOpciones.setCornerRound(10);
         btnOpciones.addActionListener(new java.awt.event.ActionListener() {
@@ -202,7 +202,7 @@ public class Main extends javax.swing.JFrame {
         jPanel1.add(btnOpciones);
 
         flatButton1.setBackground(new java.awt.Color(66, 47, 44));
-        flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/help-circle-outline.png"))); // NOI18N
+        flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/help.png"))); // NOI18N
         flatButton1.setText("  Ayuda");
         flatButton1.setCornerRound(10);
         jPanel1.add(flatButton1);

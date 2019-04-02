@@ -18,8 +18,6 @@
 package Daos;
 
 import Pojos.Alumno;
-import Pojos.Ejemplar;
-import Pojos.Libro;
 import dao.DaoGenerico;
 import dao.InterfaceDaoGenerico;
 import java.util.ArrayList;

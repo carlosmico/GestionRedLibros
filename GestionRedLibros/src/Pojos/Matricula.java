@@ -35,21 +35,20 @@ import javax.persistence.Table;
  *
  * @author Carlos Micó
  */
-
 @Entity
-@Table (name = "matricula")
+@Table(name = "matricula")
 public class Matricula implements Serializable {
+
     private static final long serialVersionUID = -5514760464301120887L;
 
-    
     @Id
     private Integer id;
     private int curso_escolar;
-    
+
     @ManyToOne
-    @JoinColumn (name = "id_alumno")
+    @JoinColumn(name = "id_alumno")
     private Alumno alumno;
-    
+
     private String ensenanza;
     private String curso;
     private int contenido;
@@ -61,11 +60,11 @@ public class Matricula implements Serializable {
     private Date fec_fin_acis;
     private String cur_ref_acis;
     private String curso_pendiente;
-    
-    public Matricula(){
-        
+
+    public Matricula() {
+
     }
-    
+
     public Matricula(int curso_escolar, Alumno alumno, String ensenanza, String curso, int contenido, String idioma, String tipo_basico, String tipo_predom, String acis, Date fec_ini_acis, Date fec_fin_acis, String cur_ref_acis, String curso_pendiente) {
         this.curso_escolar = curso_escolar;
         this.alumno = alumno;
@@ -238,8 +237,9 @@ public class Matricula implements Serializable {
 
     @Override
     public String toString() {
-        return "Matricula{" + "id=" + id + ", curso_escolar=" + curso_escolar + ", alumno=" + alumno + ", ensenanza=" + ensenanza + ", curso=" + curso + ", contenido=" + contenido + ", idioma=" + idioma + ", tipo_basico=" + tipo_basico + ", tipo_predom=" + tipo_predom + ", acis=" + acis + ", fec_ini_acis=" + fec_ini_acis + ", fec_fin_acis=" + fec_fin_acis + ", cur_ref_acis=" + cur_ref_acis + ", curso_pendiente=" + curso_pendiente + '}';
+        return "Matricula{" + "id=" + id + ", curso_escolar=" + curso_escolar + ", ensenanza=" + ensenanza + ", curso=" + curso + ", contenido=" + contenido + ", idioma=" + idioma + ", tipo_basico=" + tipo_basico + ", tipo_predom=" + tipo_predom + ", acis=" + acis + ", fec_ini_acis=" + fec_ini_acis + ", fec_fin_acis=" + fec_fin_acis + ", cur_ref_acis=" + cur_ref_acis + ", curso_pendiente=" + curso_pendiente + '}';
     }
+
     
-    
+
 }

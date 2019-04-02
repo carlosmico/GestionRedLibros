@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Objects;
 
 //Imports Hibernate
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -31,6 +29,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.criteria.Fetch;
 
 /**
  *
@@ -52,6 +51,8 @@ public class Alumno implements Serializable {
     private String fecha_nac;
     private String municipio_nac;
     private String documento;
+    private String telefono1;
+    private String sexo;
     private String email1;
     
     @ManyToOne
@@ -72,7 +73,7 @@ public class Alumno implements Serializable {
 
     }
 
-    public Alumno(String nia, String nombre, String apellido1, String apellido2, String fecha_nac, String municipio_nac, String documento, String email1, Curso curso_alumno, Grupo grupo) {
+    public Alumno(String nia, String nombre, String apellido1, String apellido2, String fecha_nac, String sexo, String telefono1, String municipio_nac, String documento, String email1, Curso curso_alumno, Grupo grupo) {
         this.nia = nia;
         this.id = this.nia;
         this.nombre = nombre;
@@ -84,6 +85,24 @@ public class Alumno implements Serializable {
         this.email1 = email1;
         this.curso_alumno = curso_alumno;
         this.grupo = grupo;
+        this.sexo = sexo;
+        this.telefono1 = telefono1;
+    }
+
+    public String getTelefono1() {
+        return telefono1;
+    }
+
+    public void setTelefono1(String telefono1) {
+        this.telefono1 = telefono1;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 
     public String getNia() {
@@ -193,9 +212,6 @@ public class Alumno implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
         if (obj == null) {
             return false;
         }
@@ -203,7 +219,49 @@ public class Alumno implements Serializable {
             return false;
         }
         final Alumno other = (Alumno) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
         if (!Objects.equals(this.nia, other.nia)) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.apellido1, other.apellido1)) {
+            return false;
+        }
+        if (!Objects.equals(this.apellido2, other.apellido2)) {
+            return false;
+        }
+        if (!Objects.equals(this.fecha_nac, other.fecha_nac)) {
+            return false;
+        }
+        if (!Objects.equals(this.municipio_nac, other.municipio_nac)) {
+            return false;
+        }
+        if (!Objects.equals(this.documento, other.documento)) {
+            return false;
+        }
+        if (!Objects.equals(this.telefono1, other.telefono1)) {
+            return false;
+        }
+        if (!Objects.equals(this.sexo, other.sexo)) {
+            return false;
+        }
+        if (!Objects.equals(this.email1, other.email1)) {
+            return false;
+        }
+        if (!Objects.equals(this.curso_alumno, other.curso_alumno)) {
+            return false;
+        }
+        if (!Objects.equals(this.grupo, other.grupo)) {
+            return false;
+        }
+        if (!Objects.equals(this.matriculas, other.matriculas)) {
+            return false;
+        }
+        if (!Objects.equals(this.historiales, other.historiales)) {
             return false;
         }
         return true;
@@ -211,6 +269,8 @@ public class Alumno implements Serializable {
 
     @Override
     public String toString() {
-        return "Alumno{" + "id=" + id + ", nia=" + nia + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", fecha_nac=" + fecha_nac + ", municipio_nac=" + municipio_nac + ", documento=" + documento + ", email1=" + email1 + ", curso=" + curso_alumno + ", grupo=" + grupo + '}';
+        return "Alumno{" + "id=" + id + ", nia=" + nia + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", fecha_nac=" + fecha_nac + ", municipio_nac=" + municipio_nac + ", documento=" + documento + ", telefono1=" + telefono1 + ", sexo=" + sexo + ", email1=" + email1 + ", curso_alumno=" + curso_alumno + ", grupo=" + grupo + "}";
     }
+
+    
 }

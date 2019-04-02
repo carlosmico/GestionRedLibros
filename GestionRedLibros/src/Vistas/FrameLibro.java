@@ -353,7 +353,7 @@ public class FrameLibro extends javax.swing.JFrame {
         });
 
         btnDelete.setBackground(new java.awt.Color(255, 66, 62));
-        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/delete-empty.png"))); // NOI18N
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/delete.png"))); // NOI18N
         btnDelete.setCornerRound(10);
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
