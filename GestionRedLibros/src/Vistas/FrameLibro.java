@@ -53,6 +53,10 @@ public class FrameLibro extends javax.swing.JFrame {
     private FrameCarga c = new FrameCarga();
 
     FrameCarga frameCarga;
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
     List<Curso> listaCursos;
     List<Contenido> listaContenido;
 
@@ -913,6 +917,10 @@ public class FrameLibro extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
         setEnabled(false);
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
         int resp = JOptionPane.showConfirmDialog(this, "Realmente deseas eliminar este libro?"
                 + "\nEsta operación es irreversible.", "Información", 0, JOptionPane.INFORMATION_MESSAGE,
                 null);
@@ -930,7 +938,11 @@ public class FrameLibro extends javax.swing.JFrame {
             this.dispose();
         }
 
+<<<<<<< HEAD
         setEnabled(true);
+=======
+        setEnabled(true);   
+>>>>>>> master
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -1224,7 +1236,10 @@ public class FrameLibro extends javax.swing.JFrame {
         cbAsignatura.setEnabled(editable);
         textUnidadesLibro.setEditable(editable);
         chkObsoleto.setEnabled(editable);
+<<<<<<< HEAD
         btnImprimirEtiquetas.setEnabled(editable);
+=======
+>>>>>>> master
         textPrecio.setEnabled(editable);
         btnSave.setVisible(editable);
 
