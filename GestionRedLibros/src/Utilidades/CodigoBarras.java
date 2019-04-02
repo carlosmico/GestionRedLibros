@@ -17,16 +17,42 @@
  */
 package Utilidades;
 
+import Pojos.Libro;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.Barcode39;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.print.Pageable;
+import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.sourceforge.barbecue.Barcode;
-import net.sourceforge.barbecue.BarcodeException;
-import net.sourceforge.barbecue.BarcodeFactory;
-import net.sourceforge.barbecue.BarcodeImageHandler;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Sides;
 
 /**
  *
@@ -38,6 +64,69 @@ public class CodigoBarras {
 
     }
 
+    public List<Barcode39> generarCodigoList(List<String> codigos) throws Exception {
+        try {
+            List<Barcode39> barcodes = new ArrayList<Barcode39>();
+
+            for (int i = 0; i < codigos.size(); i++) {
+                Barcode39 barcode = new Barcode39();
+                barcode.setCode(codigos.get(i));
+
+                barcode.setBarHeight(30);
+
+                barcodes.add(barcode);
+            }
+
+            return barcodes;
+        } catch (Exception e) {
+            throw new Exception();
+        }
+    }
+
+    /*  Generamos el PDF correspondiente con los Barcode de cada ejemplar
+    *   y cada 8 Barcodes insertados en el pdf pasamos a la siguiente pagina por temas visuales
+     */
+    public void imprimirList(Libro libro, List<Barcode39> barcodes) throws PrinterException, FileNotFoundException, DocumentException, IOException, PrintException {
+        String rutapdf = "C://gestion_libros//impresiones//" + libro.getNombre() + "-CodigosEjemplares.pdf";
+
+        OutputStream os = new FileOutputStream(new File(rutapdf));
+
+        Document doc = new Document();
+
+        PdfWriter pdf = PdfWriter.getInstance(doc, os);
+
+        doc.open();
+
+        doc.addTitle("CÓDIGOS EJEMPLARES - " + libro.getNombre());
+
+        int contador = 8;
+
+        for (int i = 0; i < barcodes.size(); i++) {
+            if (contador == 0) {
+                contador = 8;
+                doc.newPage();
+            }
+
+            doc.add(new Paragraph(libro.getContenido().getNombre_cas()));
+
+            Image codeImg = barcodes.get(i).createImageWithBarcode(pdf.getDirectContent(), BaseColor.BLACK, BaseColor.BLACK);
+
+            doc.add(codeImg);
+
+            doc.add(new Paragraph(""));
+
+            contador--;
+        }
+
+        doc.close();
+
+        os.close();
+
+        Desktop.getDesktop().open(new File(rutapdf));
+    }
+
+
+    /*
     public Barcode generarCodigo(String codigo) throws Exception {
         try {
             Barcode barcode = BarcodeFactory.createCode39(codigo, true);
@@ -101,5 +190,5 @@ public class CodigoBarras {
                 throw new PrinterException();
             }
         }
-    }
+    }*/
 }

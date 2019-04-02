@@ -41,6 +41,7 @@ public class PruebaHibernate {
         Libro l = new Libro("96799999", contenido, "Libro nuevo", "nombre", 40, true, 0);
         Ejemplar ejemplar = new Ejemplar("96799999002", l, 1, true);
 
+<<<<<<< HEAD
         DaoAlumno dao;
 
         dao = new DaoAlumno();
@@ -50,6 +51,19 @@ public class PruebaHibernate {
         //Alumno a = new Alumno("71230212", "", "", "", "", "", "", "", "", "", null, null);
         try {
             //DaoContenido dao = new DaoContenido();
+=======
+        Alumno a = new Alumno("71230212", "", "", "", "", "", "", "", null, null);
+        try {
+            DaoAlumno dao = new DaoAlumno();
+            
+
+            
+            
+
+            for (int i = 0; i < dao.buscarTodos().size(); i++) {
+                System.out.println(dao.buscarTodos().get(0).getH().size());
+            }
+>>>>>>> master
 
             /*DaoMatricula dao = new DaoMatricula();
             
