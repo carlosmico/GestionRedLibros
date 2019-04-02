@@ -32,13 +32,19 @@ public class PruebaHibernate {
         Contenido contenido = new Contenido(6, curso, "a", "a", "a", "a");
         Libro l = new Libro("96799999", contenido, "Libro nuevo", "nombre", 40, true, 0);
         Ejemplar ejemplar = new Ejemplar("96799999002", l, 1, true);
-        
+
         Alumno a = new Alumno("71230212", "", "", "", "", "", "", "", null, null);
         try {
-            DaoContenido dao = new DaoContenido();
+            DaoAlumno dao = new DaoAlumno();
             
-            System.out.println(dao.buscarTodos());
+
             
+            
+
+            for (int i = 0; i < dao.buscarTodos().size(); i++) {
+                System.out.println(dao.buscarTodos().get(0).getH().size());
+            }
+
             /*DaoMatricula dao = new DaoMatricula();
             
             Matricula m = new Matricula(4, 2020, a, "", "", "", "ssssss", 

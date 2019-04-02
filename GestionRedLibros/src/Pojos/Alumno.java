@@ -32,6 +32,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
 /**
  *
  * @author Carlos Micó
@@ -62,7 +63,7 @@ public class Alumno implements Serializable {
     @JoinColumn (name = "grupo")
     private Grupo grupo;
 
-    @OneToMany(mappedBy = "alumno")
+    @OneToMany(mappedBy = "alumno", fetch=FetchType.LAZY)
     private List<Matricula> matriculas;
 
     @OneToMany(mappedBy = "alumno")
@@ -84,6 +85,7 @@ public class Alumno implements Serializable {
         this.email1 = email1;
         this.curso_alumno = curso_alumno;
         this.grupo = grupo;
+ 
     }
 
     public String getNia() {

@@ -1182,10 +1182,14 @@ public class FrameLibro extends javax.swing.JFrame {
                 codigos.add(libro.getEjemplares().get(i).getCodigo());
             }
 
-            generadorCodigos.imprimirList(generadorCodigos.generarCodigoList(codigos));
+            generadorCodigos.imprimirList(libro, generadorCodigos.generarCodigoList(codigos));
+            
+            JOptionPane.showMessageDialog(this,
+                    "Códigos de los ejemplares generados correctamente.", "Información",
+                    JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Error al imprimir los códigos de barras: \n-" + ex.getMessage(), "Error",
+                    "Error al generar los códigos de barras: \n-" + ex.getMessage(), "Error",
                     JOptionPane.ERROR_MESSAGE);
 
             ex.printStackTrace();
