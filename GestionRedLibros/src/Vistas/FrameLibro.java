@@ -53,11 +53,6 @@ public class FrameLibro extends javax.swing.JFrame {
     private FrameCarga c = new FrameCarga();
 
     FrameCarga frameCarga;
-<<<<<<< HEAD
-    FrameConfirmacionEliminar frameDelete;
-=======
->>>>>>> master
-
     List<Curso> listaCursos;
     List<Contenido> listaContenido;
 
@@ -113,7 +108,6 @@ public class FrameLibro extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc="Configuración inicial de la tabla">
         tableEjemplares.setFont(textNombreLibro.getFont());
 //</editor-fold>
-        
 
         this.libro = libro;
         this.isNewLibro = this.libro == null;
@@ -215,7 +209,7 @@ public class FrameLibro extends javax.swing.JFrame {
     //Refrescamos los datos de la tabla recuperados de la BD
     private void RefrescarTabla() {
         List<Ejemplar> ejemplares = libro.getEjemplares();
-        
+
         System.out.println("Ejemplares: " + libro.getEjemplares().size());
 
         if (ejemplares.size() > 0) {
@@ -253,30 +247,14 @@ public class FrameLibro extends javax.swing.JFrame {
             }
 
             tableEjemplares.setModel(tableModel);
-            
+
             tableEjemplares.repaint();
-        
+
         } else {
             JOptionPane.showMessageDialog(this, "No hay datos de ejemplares en la Base de Datos.");
         }
     }
 
-<<<<<<< HEAD
-    public static void eliminarLibro() {
-        try {
-            daoLibro.borrar(libro);
-
-            Dialogo.mostrarInformacion("<br>Libro eliminado correctamente.");
-
-            //FrameLibro.this.dispose();
-            //setEnabled(true);
-        } catch (Exception e) {
-            Dialogo.mostrarError("<br>- Error al eliminar el libro.");
-        }
-    }
-
-=======
->>>>>>> master
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -300,7 +278,7 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableEjemplares = new javax.swing.JTable();
-        flatButton1 = new com.mommoo.flat.button.FlatButton();
+        btnImprimirEtiquetas = new com.mommoo.flat.button.FlatButton();
         panelGeneralSuperior = new javax.swing.JPanel();
         panelCodigoDeBarras1 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -466,10 +444,10 @@ public class FrameLibro extends javax.swing.JFrame {
         tableEjemplares.setFillsViewportHeight(true);
         jScrollPane1.setViewportView(tableEjemplares);
 
-        flatButton1.setBackground(Colores.buttons);
-        flatButton1.setText("Imprimir etiquetas");
-        flatButton1.setCornerRound(10);
-        flatButton1.setPreferredSize(new java.awt.Dimension(111, 32));
+        btnImprimirEtiquetas.setBackground(Colores.buttons);
+        btnImprimirEtiquetas.setText("Imprimir etiquetas");
+        btnImprimirEtiquetas.setCornerRound(10);
+        btnImprimirEtiquetas.setPreferredSize(new java.awt.Dimension(111, 32));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -482,7 +460,7 @@ public class FrameLibro extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(flatButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnImprimirEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -491,7 +469,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(flatButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnImprimirEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -935,19 +913,6 @@ public class FrameLibro extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
         setEnabled(false);
-
-<<<<<<< HEAD
-        /*
-         try {
-         daoLibro.borrar(libro);
-         } catch (PersistenceException e) {
-         this.dispose();
-         if (frameError == null) {
-         frameError = new FramePopup("<html>El libro no se ha podido eliminar.<br> Error: " + "</html>");
-         }
-         frameError.setVisible(true);
-         }*/
-=======
         int resp = JOptionPane.showConfirmDialog(this, "Realmente deseas eliminar este libro?"
                 + "\nEsta operación es irreversible.", "Información", 0, JOptionPane.INFORMATION_MESSAGE,
                 null);
@@ -966,7 +931,6 @@ public class FrameLibro extends javax.swing.JFrame {
         }
 
         setEnabled(true);
->>>>>>> master
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -994,20 +958,16 @@ public class FrameLibro extends javax.swing.JFrame {
                     errores += "\n- El valor de las unidades debe ser un valor positivo.";
                 }
             } catch (Exception e) {
-<<<<<<< HEAD
-                errores += "<br>- El valor de las unidades debe ser un valor numérico.";
+                errores += "\n- El valor de las unidades debe ser un valor numérico.";
             }
 
             try {
                 double pre = Double.parseDouble(textPrecio.getText());
                 if (pre <= 0) {
-                    errores += "<br>- El precio debe ser un valor positivo.";
+                    errores += "\n- El precio debe ser un valor positivo.";
                 }
             } catch (Exception e) {
-                errores += "<br>- El precio debe ser un valor numérico.";
-=======
-                errores += "\n- El valor de las unidades debe ser un valor númerico.";
->>>>>>> master
+                errores += "\n- El precio debe ser un valor numérico.";
             }
 
             if (textCodigoDeBarrasLibro.getText().equals("")) {
@@ -1038,20 +998,16 @@ public class FrameLibro extends javax.swing.JFrame {
 
                 try {
                     daoLibro.grabar(newLibro);
-<<<<<<< HEAD
-                    Dialogo.mostrarInformacion("Libro añadido correctamente.");
-=======
 
                     JOptionPane.showMessageDialog(this, "Libro añadido correctamente.",
                             "Información", JOptionPane.INFORMATION_MESSAGE);
->>>>>>> master
 
                     setEditMode(false);
-                    
+
                     libro = newLibro;
 
                     isNewLibro = false;
-                    
+
                 } catch (PersistenceException e) {
 
                     JOptionPane.showMessageDialog(this,
@@ -1141,7 +1097,7 @@ public class FrameLibro extends javax.swing.JFrame {
                         JOptionPane.ERROR_MESSAGE);
             }
         }
-        
+
         RefrescarTabla();
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -1215,11 +1171,11 @@ public class FrameLibro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.mommoo.flat.button.FlatButton btnDelete;
     private com.mommoo.flat.button.FlatButton btnEdit;
+    private com.mommoo.flat.button.FlatButton btnImprimirEtiquetas;
     private com.mommoo.flat.button.FlatButton btnSave;
     private javax.swing.JComboBox cbAsignatura;
     private javax.swing.JComboBox cbCurso;
     private com.mommoo.flat.select.FlatCheckBox chkObsoleto;
-    private com.mommoo.flat.button.FlatButton flatButton1;
     private javax.swing.JLabel imgLibro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1268,12 +1224,8 @@ public class FrameLibro extends javax.swing.JFrame {
         cbAsignatura.setEnabled(editable);
         textUnidadesLibro.setEditable(editable);
         chkObsoleto.setEnabled(editable);
-<<<<<<< HEAD
-        textCodigoDeBarrasLibro.setEditable(editable);
+        btnImprimirEtiquetas.setEnabled(editable);
         textPrecio.setEnabled(editable);
-=======
-
->>>>>>> master
         btnSave.setVisible(editable);
 
         if (isNewLibro) {
@@ -1283,9 +1235,5 @@ public class FrameLibro extends javax.swing.JFrame {
             btnDelete.setVisible(editable);
             textCodigoDeBarrasLibro.setEditable(false);
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     }
 }
