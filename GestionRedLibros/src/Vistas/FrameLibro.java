@@ -53,10 +53,6 @@ public class FrameLibro extends javax.swing.JFrame {
     private FrameCarga c = new FrameCarga();
 
     FrameCarga frameCarga;
-<<<<<<< HEAD
-    FrameConfirmacionEliminar frameDelete;
-=======
->>>>>>> master
 
     List<Curso> listaCursos;
     List<Contenido> listaContenido;
@@ -261,22 +257,6 @@ public class FrameLibro extends javax.swing.JFrame {
         }
     }
 
-<<<<<<< HEAD
-    public static void eliminarLibro() {
-        try {
-            daoLibro.borrar(libro);
-
-            Dialogo.mostrarInformacion("<br>Libro eliminado correctamente.");
-
-            //FrameLibro.this.dispose();
-            //setEnabled(true);
-        } catch (Exception e) {
-            Dialogo.mostrarError("<br>- Error al eliminar el libro.");
-        }
-    }
-
-=======
->>>>>>> master
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -936,18 +916,6 @@ public class FrameLibro extends javax.swing.JFrame {
         // TODO add your handling code here:
         setEnabled(false);
 
-<<<<<<< HEAD
-        /*
-         try {
-         daoLibro.borrar(libro);
-         } catch (PersistenceException e) {
-         this.dispose();
-         if (frameError == null) {
-         frameError = new FramePopup("<html>El libro no se ha podido eliminar.<br> Error: " + "</html>");
-         }
-         frameError.setVisible(true);
-         }*/
-=======
         int resp = JOptionPane.showConfirmDialog(this, "Realmente deseas eliminar este libro?"
                 + "\nEsta operación es irreversible.", "Información", 0, JOptionPane.INFORMATION_MESSAGE,
                 null);
@@ -965,8 +933,7 @@ public class FrameLibro extends javax.swing.JFrame {
             this.dispose();
         }
 
-        setEnabled(true);
->>>>>>> master
+        setEnabled(true);   
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -994,20 +961,16 @@ public class FrameLibro extends javax.swing.JFrame {
                     errores += "\n- El valor de las unidades debe ser un valor positivo.";
                 }
             } catch (Exception e) {
-<<<<<<< HEAD
-                errores += "<br>- El valor de las unidades debe ser un valor numérico.";
+                errores += "\n- El valor de las unidades debe ser un valor numérico.";
             }
 
             try {
                 double pre = Double.parseDouble(textPrecio.getText());
                 if (pre <= 0) {
-                    errores += "<br>- El precio debe ser un valor positivo.";
+                    errores += "\n- El precio debe ser un valor positivo.";
                 }
             } catch (Exception e) {
-                errores += "<br>- El precio debe ser un valor numérico.";
-=======
-                errores += "\n- El valor de las unidades debe ser un valor númerico.";
->>>>>>> master
+                errores += "\n- El precio debe ser un valor numérico.";
             }
 
             if (textCodigoDeBarrasLibro.getText().equals("")) {
@@ -1038,13 +1001,9 @@ public class FrameLibro extends javax.swing.JFrame {
 
                 try {
                     daoLibro.grabar(newLibro);
-<<<<<<< HEAD
-                    Dialogo.mostrarInformacion("Libro añadido correctamente.");
-=======
 
                     JOptionPane.showMessageDialog(this, "Libro añadido correctamente.",
                             "Información", JOptionPane.INFORMATION_MESSAGE);
->>>>>>> master
 
                     setEditMode(false);
                     
@@ -1268,12 +1227,7 @@ public class FrameLibro extends javax.swing.JFrame {
         cbAsignatura.setEnabled(editable);
         textUnidadesLibro.setEditable(editable);
         chkObsoleto.setEnabled(editable);
-<<<<<<< HEAD
-        textCodigoDeBarrasLibro.setEditable(editable);
         textPrecio.setEnabled(editable);
-=======
-
->>>>>>> master
         btnSave.setVisible(editable);
 
         if (isNewLibro) {
@@ -1283,9 +1237,5 @@ public class FrameLibro extends javax.swing.JFrame {
             btnDelete.setVisible(editable);
             textCodigoDeBarrasLibro.setEditable(false);
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     }
 }
