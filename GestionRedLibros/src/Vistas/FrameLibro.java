@@ -23,6 +23,7 @@ import Utilidades.*;
 import Renders.comboBoxRender;
 import excepciones.BusinessException;
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,10 +54,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private FrameCarga c = new FrameCarga();
 
     FrameCarga frameCarga;
-<<<<<<< HEAD
-=======
 
->>>>>>> master
     List<Curso> listaCursos;
     List<Contenido> listaContenido;
 
@@ -452,6 +450,16 @@ public class FrameLibro extends javax.swing.JFrame {
         btnImprimirEtiquetas.setText("Imprimir etiquetas");
         btnImprimirEtiquetas.setCornerRound(10);
         btnImprimirEtiquetas.setPreferredSize(new java.awt.Dimension(111, 32));
+        btnImprimirEtiquetas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnImprimirEtiquetasMouseClicked(evt);
+            }
+        });
+        btnImprimirEtiquetas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirEtiquetasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -898,6 +906,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private void btnEditMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseReleased
         // TODO add your handling code here:
+
         if (btnEdit.isEnabled()) {
             isEditMode = !isEditMode;
             setEditMode(isEditMode);
@@ -917,10 +926,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
         setEnabled(false);
-<<<<<<< HEAD
-=======
 
->>>>>>> master
         int resp = JOptionPane.showConfirmDialog(this, "Realmente deseas eliminar este libro?"
                 + "\nEsta operación es irreversible.", "Información", 0, JOptionPane.INFORMATION_MESSAGE,
                 null);
@@ -938,11 +944,8 @@ public class FrameLibro extends javax.swing.JFrame {
             this.dispose();
         }
 
-<<<<<<< HEAD
         setEnabled(true);
-=======
-        setEnabled(true);   
->>>>>>> master
+
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -1142,6 +1145,53 @@ public class FrameLibro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbCursoActionPerformed
 
+    // Imprimir etiquetas de los ejemplares del libro
+
+    private void btnImprimirEtiquetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetasActionPerformed
+        // TODO add your handling code here:
+
+        System.out.println("Holaaa");
+
+        /*CodigoBarras generadorCodigos = new CodigoBarras();
+        
+        try {
+            List<String> codigos = new ArrayList<String>();
+            
+            for (int i = 0; i < libro.getEjemplares().size(); i++) {
+                codigos.add(libro.getEjemplares().get(i).getCodigo());
+            }
+            
+            generadorCodigos.imprimirList(generadorCodigos.generarCodigoList(codigos));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                        "Error al imprimir los códigos de barras: \n-" + ex.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            
+            ex.printStackTrace();
+        }*/
+    }//GEN-LAST:event_btnImprimirEtiquetasActionPerformed
+
+    private void btnImprimirEtiquetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetasMouseClicked
+        // TODO add your handling code here:
+        CodigoBarras generadorCodigos = new CodigoBarras();
+
+        try {
+            List<String> codigos = new ArrayList<String>();
+
+            for (int i = 0; i < libro.getEjemplares().size(); i++) {
+                codigos.add(libro.getEjemplares().get(i).getCodigo());
+            }
+
+            generadorCodigos.imprimirList(generadorCodigos.generarCodigoList(codigos));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al imprimir los códigos de barras: \n-" + ex.getMessage(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
+
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnImprimirEtiquetasMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1236,10 +1286,7 @@ public class FrameLibro extends javax.swing.JFrame {
         cbAsignatura.setEnabled(editable);
         textUnidadesLibro.setEditable(editable);
         chkObsoleto.setEnabled(editable);
-<<<<<<< HEAD
         btnImprimirEtiquetas.setEnabled(editable);
-=======
->>>>>>> master
         textPrecio.setEnabled(editable);
         btnSave.setVisible(editable);
 
