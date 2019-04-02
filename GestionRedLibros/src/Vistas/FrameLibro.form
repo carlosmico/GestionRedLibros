@@ -377,6 +377,10 @@
                   <Dimension value="[111, 32]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnImprimirEtiquetasMouseClicked"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImprimirEtiquetasActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
