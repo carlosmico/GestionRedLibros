@@ -40,12 +40,19 @@ public class PruebaHibernate {
         Contenido contenido = new Contenido(6, curso, "a", "a", "a", "a");
         Libro l = new Libro("96799999", contenido, "Libro nuevo", "nombre", 40, true, 0);
         Ejemplar ejemplar = new Ejemplar("96799999002", l, 1, true);
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> master
         try {
             SessionFactory factory = UtilesHibernate.getSessionFactory();
             Session session = factory.getCurrentSession();
             session.beginTransaction();
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 
             //DaoContenido daoc = new DaoContenido();
 

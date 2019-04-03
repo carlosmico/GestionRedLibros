@@ -299,6 +299,10 @@ public class Main extends javax.swing.JFrame {
         if (gesMatri == null) {
             gesMatri = new FrameMatriculas();
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
                 gesMatri.RefrescarTabla();

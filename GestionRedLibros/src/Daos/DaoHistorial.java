@@ -120,4 +120,14 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         return lista;
     }
 
+    @Override
+    public void desconectar(){
+        if(this.session != null){
+            try{
+                this.session.close();
+            }catch(Exception e){
+                System.out.println("Error DaoEjemplar-desconectar()");
+            }
+        }
+    }
 }
