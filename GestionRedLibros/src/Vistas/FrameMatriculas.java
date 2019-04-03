@@ -64,8 +64,6 @@ public class FrameMatriculas extends javax.swing.JFrame {
 
     //Refrescamos los datos de la tabla recuperados de la BD
     public void RefrescarTabla() {
-        System.out.println("");
-        
         daoMatricula = new DaoMatricula(gestorSesiones.getSession());
         
         daoMatricula.session.beginTransaction();
@@ -101,9 +99,6 @@ public class FrameMatriculas extends javax.swing.JFrame {
             System.out.println("Error");
             //JOptionPane.showMessageDialog(this, "No hay datos de matrículas en la Base de Datos.");
         }
-
-        pack();
-        
         
         /*SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
