@@ -25,6 +25,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -43,6 +45,7 @@ public class Historial implements Serializable{
     private static final long serialVersionUID = -5514760462301220827L;
     
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     
     @ManyToOne

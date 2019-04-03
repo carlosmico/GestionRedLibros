@@ -100,60 +100,7 @@ public class FrameMatriculas extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(this, "No hay datos de matrículas en la Base de Datos.");
         }
         
-        /*SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
-            protected Void doInBackground() throws InterruptedException {
-                daoMatricula = new DaoMatricula(gestorSesiones.getSession());
-                matriculas = daoMatricula.buscarTodos();
-                daoMatricula.session.getTransaction().commit();
-                return null;
-            }
-
-            protected void process(List<Integer> chunks) {
-            }
-
-            protected void done() {
-                //Rellenamos la lista de los libros
-                if (matriculas.size() > 0) {
-                    DefaultTableModel tableModel = (DefaultTableModel) tableMatriculas.getModel();
-
-                    tableModel.setRowCount(0);
-
-                    for (int i = 0; i < matriculas.size(); i++) {
-                        Matricula matricula = matriculas.get(i);
-                        String[] fila = new String[13];
-
-                        fila[0] = matricula.getAlumno().getNombre();
-                        fila[1] = matricula.getCurso_escolar() + "";
-                        fila[2] = matricula.getCurso();
-                        fila[3] = matricula.getContenido() + "";
-                        fila[4] = matricula.getIdioma();
-                        fila[5] = matricula.getTipo_basico();
-                        fila[6] = matricula.getTipo_predom();
-                        fila[7] = matricula.getFec_ini_acis().toString();
-                        fila[8] = matricula.getFec_fin_acis().toString();
-                        fila[9] = matricula.getCur_ref_acis();
-                        fila[10] = matricula.getCurso_pendiente();
-
-                        tableModel.addRow(fila);
-                    }
-
-                    tableMatriculas.setModel(tableModel);
-                } else {
-                    System.out.println("Error");
-                    //JOptionPane.showMessageDialog(this, "No hay datos de matrículas en la Base de Datos.");
-                }
-
-                pack();
-
-                frameCarga.dispose();
-            }
-        };
-        worker.execute();
-        if (frameCarga == null) {
-            frameCarga = new FrameCarga();
-        }
-        frameCarga.setVisible(true);
-         */
+        
     }
 
     /**
@@ -290,13 +237,14 @@ public class FrameMatriculas extends javax.swing.JFrame {
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
-                ImportarMatriculasXML importar = new ImportarMatriculasXML(chooser.getSelectedFile().getPath());
+                new ImportarMatriculasXML(chooser.getSelectedFile().getPath());
 
                 RefrescarTabla();
 
                 JOptionPane.showMessageDialog(this, "Matrículas importadas correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "No se han podido importar las matrículas.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
             }
         }
     }//GEN-LAST:event_btnImportarActionPerformed

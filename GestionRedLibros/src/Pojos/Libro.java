@@ -56,7 +56,7 @@ public class Libro implements Serializable{
     private boolean obsoleto;
     private double precio;
     
-    @OneToMany (mappedBy = "libro", fetch=FetchType.EAGER)
+    @OneToMany (mappedBy = "libro")
     private List<Ejemplar> ejemplares;
     
     public Libro(){
