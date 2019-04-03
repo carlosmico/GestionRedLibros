@@ -39,7 +39,7 @@ import org.hibernate.SessionFactory;
  */
 public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDaoGenerico<Libro, String> {
 
-    Session session;
+    public Session session;
 
     public DaoLibro(Session s) {
         this.session = s;

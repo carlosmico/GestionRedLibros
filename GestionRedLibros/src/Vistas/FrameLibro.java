@@ -122,6 +122,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         this.setLocationRelativeTo(null);
 
+        //Inicializamos los DAO obteniendo la sesion del Gestor del Main
         daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
         daoLibro = new DaoLibro(Main.gestorSesiones.getSession());
         daoContenido = new DaoContenido(Main.gestorSesiones.getSession());
@@ -129,6 +130,8 @@ public class FrameLibro extends javax.swing.JFrame {
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
                 setEnabled(false);
+                
+                
                 listaCursos = daoCurso.buscarTodos();
                 listaContenido = daoContenido.buscarTodos();
                 return null;
