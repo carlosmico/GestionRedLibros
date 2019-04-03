@@ -39,22 +39,20 @@ import org.hibernate.SessionFactory;
  */
 public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDaoGenerico<Libro, String> {
 
+    Session session;
+
+    public DaoLibro(Session s) {
+        this.session = s;
+    }
+
     @Override
     public void grabar(Libro libro) throws PersistenceException {
-        super.conectar();
-
         try {
-            super.session.save(libro);
+            this.session.save(libro);
 
-            super.session.getTransaction().commit();
+            this.session.getTransaction().commit();
         } catch (PersistenceException e) {
             throw new PersistenceException();
-        }
-
-        try {
-            super.desconectar();
-        } catch (Exception ex) {
-            System.out.println("Error DaoLibro-grabar(): " + ex.getMessage());
         }
 
         generarEjemplares(libro);
@@ -66,18 +64,12 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
         libroNew = l;
 
-        super.conectar();
         libroOld = (Libro) session.get(Libro.class, l.getCodigo());
-        try {
-            super.desconectar();
-        } catch (Exception ex) {
-            System.out.println("Error DaoLibro-actualizar(): " + ex.getMessage());
-        }
 
         comprobarEjemplares(libroNew);
 
         try {
-            super.conectar();
+            //super.conectar();
 
             libroOld.setContenido(libroNew.getContenido());
             libroOld.setISBN(libroNew.getISBN());
@@ -86,73 +78,43 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
             libroOld.setPrecio(libroNew.getPrecio());
             libroOld.setUnidades(libroNew.getUnidades());
 
-            super.session.saveOrUpdate(libroOld);
+            this.session.saveOrUpdate(libroOld);
 
-            super.session.getTransaction().commit();
+            this.session.getTransaction().commit();
         } catch (PersistenceException e) {
             throw new PersistenceException();
-        }
-
-        try {
-            super.desconectar();
-        } catch (Exception ex) {
-            System.out.println("Error DaoLibro-actualizar(): " + ex.getMessage());
         }
     }
 
     @Override
     public void borrar(Libro libro) throws PersistenceException {
-        super.conectar();
-
         try {
-            super.session.delete(libro);
+            this.session.delete(libro);
 
-            super.session.getTransaction().commit();
+            this.session.getTransaction().commit();
         } catch (PersistenceException e) {
             throw new PersistenceException();
-        }
-
-        try {
-            super.desconectar();
-        } catch (Exception ex) {
-            System.out.println("Error DaoLibro-grabar(): " + ex.getMessage());
         }
     }
 
     public Libro buscar(String codigo) throws PersistenceException {
-        super.conectar();
-
         Libro libro;
 
         try {
-            libro = (Libro) super.session.get(Libro.class, codigo);
+            libro = (Libro) this.session.get(Libro.class, codigo);
         } catch (PersistenceException e) {
             e.printStackTrace();
             throw new PersistenceException();
-        }
-
-        try {
-            super.desconectar();
-        } catch (Exception ex) {
-            System.out.println("Error DaoLibro-buscarCodigo(): " + ex.getMessage());
         }
 
         return libro;
     }
 
     public List<Libro> buscarTodos() {
-        super.conectar();
-
         List<Libro> lista = new ArrayList<Libro>();
 
-        Query query = super.session.createQuery("from Libro");
+        Query query = this.session.createQuery("from Libro");
         lista = query.list();
-
-        try {
-            super.desconectar();
-        } catch (Exception ex) {
-            System.out.println("Error DaoLibro-buscarTodos(): " + ex.getMessage());
-        }
 
         return lista;
     }
@@ -160,8 +122,6 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
     private void generarEjemplares(Libro libro) {
         Ejemplar ejemplar;
         String codigo_ejemplar = "";
-
-        super.conectar();
 
         for (int i = 1; i < libro.getUnidades() + 1; i++) {
             if (i < 10) {
@@ -174,37 +134,30 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
             ejemplar = new Ejemplar(codigo_ejemplar, libro, Estado.nuevo, false);
 
-            super.session.save(ejemplar);
+            this.session.save(ejemplar);
         }
-
-        try {
-            super.session.getTransaction().commit();
-
-            super.desconectar();
-        } catch (Exception ex) {
-            System.out.println("Error DaoLibro-generarcodigos(): " + ex.getMessage());
-        }
+        
+        this.session.getTransaction().commit();
     }
 
     /* Comprobamos los ejemplares del libro actual para saber si hemos de borrar 
     *  o añadir nuevos ejemplares
      */
+    
     private void comprobarEjemplares(Libro libroNuevo) {
-        super.conectar();
-
-        Libro libroActual = (Libro) super.session.get(Libro.class, libroNuevo.getCodigo());
+        Libro libroActual = (Libro) this.session.get(Libro.class, libroNuevo.getCodigo());
 
         int cantidad;
 
         if (libroNuevo.getUnidades() > libroActual.getUnidades()) {
             cantidad = libroNuevo.getUnidades() - libroActual.getUnidades();
-            
+
             int codBase;
 
             try {
                 List<Ejemplar> ejemplares = new ArrayList<Ejemplar>();
 
-                Query query = super.session.createQuery("from Ejemplar where libro = '" + libroActual.getCodigo() + "'");
+                Query query = this.session.createQuery("from Ejemplar where libro = '" + libroActual.getCodigo() + "'");
                 ejemplares = query.list();
 
                 String codigo = ejemplares.get(ejemplares.size() - 1).getCodigo();
@@ -226,7 +179,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
                     Ejemplar ejemplar = new Ejemplar(codigo_ejemplar, libroNuevo, Estado.nuevo, false);
 
-                    super.session.save(ejemplar);
+                    this.session.save(ejemplar);
                 }
 
             } catch (Exception e) {
@@ -235,21 +188,19 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
             }
         } else if (libroNuevo.getUnidades() < libroActual.getUnidades()) {
             cantidad = libroActual.getUnidades() - libroNuevo.getUnidades();
-            
+
             List<Ejemplar> ejemplares = new ArrayList<Ejemplar>();
 
-            Query query = super.session.createQuery("from Ejemplar where libro = '" + libroActual.getCodigo() + "'");
+            Query query = this.session.createQuery("from Ejemplar where libro = '" + libroActual.getCodigo() + "'");
             ejemplares = query.list();
-            
-            for (int i = ejemplares.size() - 1 ; i > (ejemplares.size() - 1) - cantidad; i--) {
+
+            for (int i = ejemplares.size() - 1; i > (ejemplares.size() - 1) - cantidad; i--) {
                 session.remove(ejemplares.get(i));
             }
         }
 
         try {
-            super.session.getTransaction().commit();
-
-            super.desconectar();
+            this.session.getTransaction().commit();
         } catch (Exception ex) {
             System.out.println("Error DaoLibro-generarcodigos(): " + ex.getMessage());
         }

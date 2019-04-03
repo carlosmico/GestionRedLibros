@@ -23,6 +23,7 @@ import dao.InterfaceDaoGenerico;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.PersistenceException;
+import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 /**
@@ -31,40 +32,30 @@ import org.hibernate.query.Query;
  */
 public class DaoContenido extends DaoGenerico<Contenido, Integer> implements InterfaceDaoGenerico<Contenido, Integer> {
     
+    Session session;
+    
+    public DaoContenido(Session s){
+        this.session = s;
+    }
+    
     public Contenido buscar(Integer id) throws PersistenceException {
-        super.conectar();
-        
         Contenido contenido;
 
         try {
-            contenido = (Contenido) super.session.get(Contenido.class, id);
+            contenido = (Contenido) this.session.get(Contenido.class, id);
         } catch (PersistenceException e) {
             e.printStackTrace();
             throw new PersistenceException();
-        }
-
-        try {
-            super.desconectar();  
-        } catch (Exception ex) {
-            System.out.println("Error DaoContenido-buscarId(): " + ex.getMessage());
         }
         
         return contenido;
     }
     
-    public List<Contenido> buscarTodos(){
-        super.conectar();
-        
+    public List<Contenido> buscarTodos(){    
         List<Contenido> lista = new ArrayList<Contenido>();
         
-        Query query = super.session.createQuery("from Contenido where ensenanza = 3 or ensenanza = 5");
+        Query query = this.session.createQuery("from Contenido where ensenanza = 3 or ensenanza = 5");
         lista = query.list();
-        
-        try {
-            super.desconectar();  
-        } catch (Exception ex) {
-            System.out.println("Error DaoContenido-buscarTodos(): " + ex.getMessage());
-        }
         
         return lista;
     }

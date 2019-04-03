@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.PersistenceException;
 import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
@@ -31,41 +32,47 @@ import org.hibernate.Query;
  */
 public class DaoAlumno extends DaoGenerico<Alumno, String> implements InterfaceDaoGenerico<Alumno, String> {
     
+    Session session;
+    
+    public DaoAlumno(Session s){
+        this.session = s;
+    }
+
     public Alumno buscar(String nia) throws PersistenceException {
-        super.conectar();
-        
-        Alumno alumno;
+        Alumno alumno = null;
 
         try {
-            alumno = (Alumno) super.session.get(Alumno.class, nia);
+            alumno = (Alumno) this.session.get(Alumno.class, nia);
+
         } catch (PersistenceException e) {
             e.printStackTrace();
             throw new PersistenceException();
         }
-
-        try {
-            super.desconectar();  
-        } catch (Exception ex) {
-            System.out.println("Error DaoAlumno-buscarNIA(): " + ex.getMessage());
-        }
         
         return alumno;
     }
-    
-    public List<Alumno> buscarTodos(){
-        super.conectar();
-        
+
+    public List<Alumno> buscarTodos() {
         List<Alumno> lista = new ArrayList<Alumno>();
-        
-        Query query = super.session.createQuery("from Alumno");
-        lista = query.list();
-        
+
         try {
-            super.desconectar();  
+            Query query = this.session.createQuery("from Alumno");
+            lista = query.list();
+
         } catch (Exception ex) {
             System.out.println("Error DaoAlumno-buscarTodos(): " + ex.getMessage());
         }
-        
+
         return lista;
+    }
+    
+    public void desconectar(){
+        if(this.session != null){
+            try{
+                this.session.close();
+            }catch(Exception e){
+                System.out.println("Error DaoAlumno-desconectar()");
+            }
+        }
     }
 }

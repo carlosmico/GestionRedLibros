@@ -64,7 +64,7 @@ public class Alumno implements Serializable {
     @JoinColumn (name = "grupo")
     private Grupo grupo;
 
-    @OneToMany(mappedBy = "alumno", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "alumno")
     private List<Matricula> matriculas;
 
     @OneToMany(mappedBy = "alumno")

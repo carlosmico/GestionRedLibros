@@ -8,18 +8,6 @@ import org.hibernate.Session;
 
 public interface InterfaceDaoGenerico <T, ID extends Serializable> {
     
-        /**
-         * Realiza la conexión con la BD.
-         * @return Devuelve un objeto de tipo Session.
-         */
-        public Session conectar();
-        
-        /**
-         * Realiza la desconexión con la BD.
-         * @throws Puede lanzar una excepción si la desconexión falla.
-         */
-        public void desconectar() throws Exception;
-	
 	/**
 	 * Persiste el objeto dado.
 	 * Tras la inseci�n el objeto tendr� actualizado su identificador. 

@@ -41,6 +41,8 @@ import org.xml.sax.SAXException;
  * @author Carlos
  */
 public class ImportarMatriculasXML {
+    
+    private GestorSesiones gestorSesiones;
 
     SimpleDateFormat sdf;
 
@@ -56,6 +58,9 @@ public class ImportarMatriculasXML {
      * @throws java.text.ParseException
      */
     public ImportarMatriculasXML(String ruta) throws Exception {
+        
+        gestorSesiones = new GestorSesiones();
+        
         factory = DocumentBuilderFactory.newInstance();
 
         try {
@@ -182,8 +187,11 @@ public class ImportarMatriculasXML {
                 }
 
                 //Buscamos el alumno recuperado del XML
-                DaoAlumno dao = new DaoAlumno();
+                DaoAlumno dao = new DaoAlumno(gestorSesiones.getSession());
+                
                 Alumno alumnoObj = dao.buscar(alumno);
+                
+                dao.desconectar();
 
                 matriculasCargadas.add(new Matricula(0, Integer.parseInt(
                         curso_escolar), alumnoObj, ensenanza, curso, Integer.parseInt(contenido),
@@ -196,7 +204,8 @@ public class ImportarMatriculasXML {
     }
 
     private void insertarMatriculasBD() {
-        DaoMatricula dao = new DaoMatricula();
+        
+        DaoMatricula dao = new DaoMatricula(gestorSesiones.getSession());
         
         //Insertamos la lista de Matriculas
         try{
@@ -207,5 +216,7 @@ public class ImportarMatriculasXML {
             System.out.println("Error al importar las matriculas");
             e.printStackTrace();
         }
+        
+        dao.desconectar();
     }
 }

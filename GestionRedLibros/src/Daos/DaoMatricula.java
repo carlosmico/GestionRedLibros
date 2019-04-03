@@ -24,6 +24,7 @@ import dao.InterfaceDaoGenerico;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.PersistenceException;
+import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 /**
@@ -32,10 +33,14 @@ import org.hibernate.query.Query;
  */
 public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements InterfaceDaoGenerico<Matricula, Integer> {
 
+    public Session session;
+
+    public DaoMatricula(Session s) {
+        this.session = s;
+    }
+
     @Override
     public void actualizar(Matricula m) throws PersistenceException {
-        super.conectar();
-
         try {
             Matricula matricula = (Matricula) session.get(Matricula.class, m.getId());
 
@@ -61,26 +66,18 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                 matricula.setCurso_pendiente(m.getCurso_pendiente());
             }
 
-            super.session.saveOrUpdate(matricula);
+            this.session.saveOrUpdate(matricula);
 
-            super.session.getTransaction().commit();
+            this.session.getTransaction().commit();
         } catch (PersistenceException ex) {
             System.out.println("Error DaoMatricula-actualizar(): " + ex.getMessage());
             throw new PersistenceException();
-        }
-
-        try {
-            super.desconectar();
-        } catch (Exception ex) {
-            System.out.println("Error DaoMatricula-actualizar(): " + ex.getMessage());
         }
     }
 
     public void actualizarMatriculas(List<Matricula> matriculasCargadas) throws Exception {
         for (int i = 0; i < matriculasCargadas.size(); i++) {
             Matricula m = matriculasCargadas.get(i);
-            
-            super.conectar();
 
             try {
                 Matricula matricula = (Matricula) session.get(Matricula.class, m.getId());
@@ -107,70 +104,50 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                     matricula.setCurso_pendiente(m.getCurso_pendiente());
                 }
 
-                super.session.saveOrUpdate(matricula);
+                this.session.saveOrUpdate(matricula);
 
-                super.session.getTransaction().commit();
+                this.session.getTransaction().commit();
             } catch (PersistenceException ex) {
                 System.out.println("Error DaoMatricula-actualizar(): " + ex.getMessage());
                 throw new Exception();
-            }
-
-            try {
-                super.desconectar();
-            } catch (Exception ex) {
-                System.out.println("Error DaoMatricula-actualizar(): " + ex.getMessage());
             }
         }
     }
 
     public List<Matricula> buscarPorAlumno(Alumno alumno) {
-        super.conectar();
-
         List<Matricula> lista = new ArrayList<Matricula>();
 
-        Query query = super.session.createQuery("from Matricula where alumno=" + alumno.getNia());
+        Query query = this.session.createQuery("from Matricula where alumno=" + alumno.getNia());
         lista = query.list();
-
-        try {
-            super.desconectar();
-        } catch (Exception ex) {
-            System.out.println("Error DaoMatricula-buscarPorAlumno(): " + ex.getMessage());
-        }
 
         return lista;
     }
 
     public List<Matricula> buscarPorCursoEscolar(Integer curso_escolar) {
-        super.conectar();
-
         List<Matricula> lista = new ArrayList<Matricula>();
 
-        Query query = super.session.createQuery("from Matricula where curso_escolar=" + curso_escolar);
+        Query query = this.session.createQuery("from Matricula where curso_escolar=" + curso_escolar);
         lista = query.list();
-
-        try {
-            super.desconectar();
-        } catch (Exception ex) {
-            System.out.println("Error DaoMatricula-buscarPorCursoEscolar(): " + ex.getMessage());
-        }
 
         return lista;
     }
 
     public List<Matricula> buscarTodos() {
-        super.conectar();
-
         List<Matricula> lista = new ArrayList<Matricula>();
 
-        Query query = super.session.createQuery("from Matricula");
+        Query query = this.session.createQuery("from Matricula");
         lista = query.list();
 
-        try {
-            super.desconectar();
-        } catch (Exception ex) {
-            System.out.println("Error DaoMatricula-buscarTodos(): " + ex.getMessage());
-        }
-
         return lista;
+    }
+    
+    public void desconectar(){
+        if(this.session != null){
+            try{
+                this.session.close();
+            }catch(Exception e){
+                System.out.println("Error DaoAlumno-desconectar()");
+            }
+        }
     }
 }

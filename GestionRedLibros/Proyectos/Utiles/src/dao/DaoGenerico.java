@@ -9,19 +9,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 public class DaoGenerico<T, ID extends Serializable> implements InterfaceDaoGenerico<T, ID> {
-
-    SessionFactory factory;
-    public Session session;
-
-    @Override
-    public Session conectar() {
-        factory = UtilesHibernate.getSessionFactory();
-        session = factory.getCurrentSession();
-        session.beginTransaction();
-        return session;
-    }
     
     @Override
+<<<<<<< HEAD
     public void desconectar() throws Exception {
         try {
             if (session != null) {
@@ -34,6 +24,8 @@ public class DaoGenerico<T, ID extends Serializable> implements InterfaceDaoGene
     
 
     @Override
+=======
+>>>>>>> master
     public void grabar(T objeto) throws BusinessException {
         throw new RuntimeException();
     }
