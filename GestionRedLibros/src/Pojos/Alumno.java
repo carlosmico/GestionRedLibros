@@ -86,7 +86,6 @@ public class Alumno implements Serializable {
         this.email1 = email1;
         this.curso_alumno = curso_alumno;
         this.grupo = grupo;
-<<<<<<< HEAD
         this.sexo = sexo;
         this.telefono1 = telefono1;
     }
@@ -105,9 +104,6 @@ public class Alumno implements Serializable {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
-=======
- 
->>>>>>> master
     }
 
     public String getNia() {
@@ -276,6 +272,4 @@ public class Alumno implements Serializable {
     public String toString() {
         return "Alumno{" + "id=" + id + ", nia=" + nia + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", fecha_nac=" + fecha_nac + ", municipio_nac=" + municipio_nac + ", documento=" + documento + ", telefono1=" + telefono1 + ", sexo=" + sexo + ", email1=" + email1 + ", curso_alumno=" + curso_alumno + ", grupo=" + grupo + "}";
     }
-
-    
 }

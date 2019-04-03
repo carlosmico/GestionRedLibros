@@ -26,7 +26,6 @@ public class DaoGenerico<T, ID extends Serializable> implements InterfaceDaoGene
         try {
             if (session != null) {
                 session.close();
-                session = null;
             }
         } catch (Exception e) {
             throw new Exception();

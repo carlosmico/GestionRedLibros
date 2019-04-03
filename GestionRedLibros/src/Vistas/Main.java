@@ -292,7 +292,6 @@ public class Main extends javax.swing.JFrame {
         if (gesMatri == null) {
             gesMatri = new FrameMatriculas();
         }
-        gesMatri.RefrescarTabla();
         gesMatri.setVisible(true);
 
     }//GEN-LAST:event_btnMatriculasActionPerformed

@@ -52,6 +52,7 @@ public class FrameMatriculas extends javax.swing.JFrame {
 
         //Deshabilitamos la edición de la tabla para no crear confusión, 
         //puesto que solo es de lectura.
+        tableMatriculas.setAutoCreateRowSorter(true);
         this.tableMatriculas.setEnabled(false);
 
         this.setLocationRelativeTo(null);

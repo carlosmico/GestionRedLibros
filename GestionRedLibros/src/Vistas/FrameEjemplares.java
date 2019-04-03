@@ -25,6 +25,7 @@ import Utilidades.Estado;
 import java.awt.Desktop;
 import java.awt.Image;
 import java.net.URI;
+import java.net.URL;
 import java.util.List;
 import javax.swing.ImageIcon;
 
@@ -39,7 +40,7 @@ public class FrameEjemplares extends javax.swing.JFrame {
      */
     public int ejemplarActual = 0;
     public List<Ejemplar> listaEjemplares;
-    
+
     private Alumno alumno;
 
     public FrameEjemplares(Libro l) {
@@ -83,6 +84,7 @@ public class FrameEjemplares extends javax.swing.JFrame {
         panelPrestado = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -107,6 +109,11 @@ public class FrameEjemplares extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ejemplares");
         setMinimumSize(new java.awt.Dimension(600, 36));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(58, 39, 35));
 
@@ -258,17 +265,29 @@ public class FrameEjemplares extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel5.setText("Prestamo:");
+        jLabel5.setText("Prestado a:");
+
+        jPanel2.setBackground(new java.awt.Color(239, 235, 233));
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/person-flat.png"))); // NOI18N
+        jLabel11.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 129, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel4.setBackground(new java.awt.Color(239, 235, 233));
@@ -483,7 +502,7 @@ public class FrameEjemplares extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel7.setText("Prestamo:");
+        jLabel7.setText("Prestado a:");
 
         jPanel10.setBackground(new java.awt.Color(239, 235, 233));
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -579,6 +598,7 @@ public class FrameEjemplares extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -607,13 +627,23 @@ public class FrameEjemplares extends javax.swing.JFrame {
 
     private void btnEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmailActionPerformed
         // TODO add your handling code here:
-        try{
-            if (alumno != null)
-            Desktop.getDesktop().browse(new URI("mailto:" + alumno.getEmail1()));
-        } catch (Exception e){
+        try {
+            if (alumno != null) {
+                if (!textEmailAlumno.getText().equals("")) {
+                    URI uri = new URI("mailto:" + textEmailAlumno.getText());
+                    Desktop dt = Desktop.getDesktop();
+                    dt.browse(uri);
+                }
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btnEmailActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -661,6 +691,7 @@ public class FrameEjemplares extends javax.swing.JFrame {
     private com.mommoo.flat.button.FlatButton flatButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -746,32 +777,34 @@ public class FrameEjemplares extends javax.swing.JFrame {
         textCodigoEjemplar.setIcon(img2);
 
         //textCodigoEjemplar.setText(ejemplarTemp.getCodigo());
-
         //Indice
         textEjemplarIndice.setText("Ejemplar " + (ejemplarActual + 1) + " de " + listaEjemplares.size());
 
         //Nombre alumno
-        if (ejemplarTemp.isPrestado()) {
-            
-            alumno = ejemplarTemp.getHistoriales().get(ejemplarTemp.getHistoriales().size() - 1).getAlumno();
-            textNombreAlumno.setText(alumno.getNombre());
-            textNIAAlumno.setText(alumno.getNia());
+        //if (ejemplarTemp.isPrestado()) {
+        /*
+         panelNoPrestado.setVisible(true);
+         alumno = ejemplarTemp.getHistoriales().get(ejemplarTemp.getHistoriales().size() - 1).getAlumno();
+         textNombreAlumno.setText(alumno.getNombre());
+         textNIAAlumno.setText(alumno.getNia());
 
-            if (alumno.getTelefono1().equals("")) {
-                textTelefonoAlumno.setText("Sin teléfono");
-            } else {
-                textTelefonoAlumno.setText(alumno.getTelefono1());
-            }
+         if (alumno.getTelefono1().equals("")) {
+         textTelefonoAlumno.setText("Sin teléfono");
+         } else {
+         textTelefonoAlumno.setText(alumno.getTelefono1());
+         }
 
-            if (alumno.getEmail1().equals("")) {
-                textEmailAlumno.setText("Sin Correo Electrónico");
-            } else {
-                textEmailAlumno.setText(alumno.getEmail1());
-            }
-        } else {
-            panelPrestado.setVisible(false);
-            panelNoPrestado.setVisible(true);
-        }
+         if (alumno.getEmail1().equals("")) {
+         textEmailAlumno.setText("Sin Correo Electrónico");
+         } else {
+         textEmailAlumno.setText(alumno.getEmail1());
+         }
+         //} else {
+         //panelPrestado.setVisible(false);
+         //panelNoPrestado.setVisible(true);
+         //}
+         */
+        panelNoPrestado.setVisible(true);
         this.pack();
     }
 }
