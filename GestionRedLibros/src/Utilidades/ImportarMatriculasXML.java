@@ -209,12 +209,10 @@ public class ImportarMatriculasXML {
             dao.session.beginTransaction();
             dao.actualizarMatriculas(matriculasCargadas);
             dao.session.getTransaction().commit();
-            
-            dao.desconectar();
         }catch(Exception e){
             throw new Exception();
         }
         
-        
+        dao.desconectar();
     }
 }

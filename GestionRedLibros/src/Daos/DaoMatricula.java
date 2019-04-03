@@ -39,17 +39,34 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         this.session = s;
     }
 
+    public Matricula buscarMatricula(Matricula m) {
+        List<Matricula> lista = new ArrayList<Matricula>();
+
+        String query = "from Matricula m where m.alumno = '" + m.getAlumno().getNia() + "' and m.curso_escolar = " + m.getCurso_escolar()
+                + " and m.contenido = " + m.getContenido();
+        
+        lista = this.session.createQuery(query).list();
+        
+        if (lista == null) {
+            return null;
+        }else{
+           return lista.get(0); 
+        }
+    }
+
     @Override
     public void actualizar(Matricula m) throws PersistenceException {
         try {
-            Matricula matricula = (Matricula) session.get(Matricula.class, m.getId());
+            Matricula matricula = buscarMatricula(m);
 
             if (matricula == null) {
-                matricula = new Matricula(m.getId(), m.getCurso_escolar(),
+                matricula = new Matricula(m.getCurso_escolar(),
                         m.getAlumno(), m.getEnsenanza(), m.getCurso(), m.getContenido(),
                         m.getIdioma(), m.getTipo_basico(), m.getTipo_predom(), m.getAcis(),
                         m.getFec_ini_acis(), m.getFec_fin_acis(), m.getCur_ref_acis(),
                         m.getCurso_pendiente());
+                
+                this.session.save(matricula);
             } else {
                 matricula.setCurso_escolar(m.getCurso_escolar());
                 matricula.setAlumno(m.getAlumno());
@@ -64,11 +81,10 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                 matricula.setFec_fin_acis(m.getFec_fin_acis());
                 matricula.setCur_ref_acis(m.getCur_ref_acis());
                 matricula.setCurso_pendiente(m.getCurso_pendiente());
+                
+                this.session.saveOrUpdate(matricula);
             }
 
-            this.session.saveOrUpdate(matricula);
-
-            this.session.getTransaction().commit();
         } catch (PersistenceException ex) {
             System.out.println("Error DaoMatricula-actualizar(): " + ex.getMessage());
             throw new PersistenceException();
@@ -80,10 +96,11 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
             Matricula m = matriculasCargadas.get(i);
 
             try {
-                Matricula matricula = (Matricula) session.get(Matricula.class, m.getId());
+
+                Matricula matricula = buscarMatricula(m);
 
                 if (matricula == null) {
-                    matricula = new Matricula(m.getId(), m.getCurso_escolar(),
+                    matricula = new Matricula(m.getCurso_escolar(),
                             m.getAlumno(), m.getEnsenanza(), m.getCurso(), m.getContenido(),
                             m.getIdioma(), m.getTipo_basico(), m.getTipo_predom(), m.getAcis(),
                             m.getFec_ini_acis(), m.getFec_fin_acis(), m.getCur_ref_acis(),
@@ -105,8 +122,6 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                 }
 
                 this.session.saveOrUpdate(matricula);
-
-                this.session.getTransaction().commit();
             } catch (PersistenceException ex) {
                 System.out.println("Error DaoMatricula-actualizar(): " + ex.getMessage());
                 throw new Exception();
@@ -141,13 +156,12 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         return lista;
     }
 
-    
     @Override
-    public void desconectar(){
-        if(this.session != null){
-            try{
+    public void desconectar() {
+        if (this.session != null) {
+            try {
                 this.session.close();
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Error DaoMatriucla-desconectar()");
             }
         }

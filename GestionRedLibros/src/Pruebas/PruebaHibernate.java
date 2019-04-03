@@ -45,11 +45,16 @@ public class PruebaHibernate {
             SessionFactory factory = UtilesHibernate.getSessionFactory();
             Session session = factory.getCurrentSession();
             session.beginTransaction();
+            
+            
+            
+            session.getTransaction().commit();
+            session.close();
             //DaoContenido daoc = new DaoContenido();
 
             //System.out.println(daoc.buscarTodos().get(0).getLibros().size());
 
-            session.close();
+            //session.close();
             /*DaoMatricula dao = new DaoMatricula();
             
              Matricula m = new Matricula(4, 2020, a, "", "", "", "ssssss", 
