@@ -32,7 +32,7 @@ import org.hibernate.Session;
  */
 public class DaoAlumno extends DaoGenerico<Alumno, String> implements InterfaceDaoGenerico<Alumno, String> {
     
-    Session session;
+    public Session session;
     
     public DaoAlumno(Session s){
         this.session = s;

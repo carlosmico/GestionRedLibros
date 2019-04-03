@@ -21,6 +21,7 @@ import Daos.DaoAlumno;
 import Daos.DaoMatricula;
 import Pojos.Alumno;
 import Pojos.Matricula;
+import Vistas.Main;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,9 +42,6 @@ import org.xml.sax.SAXException;
  * @author Carlos
  */
 public class ImportarMatriculasXML {
-    
-    private GestorSesiones gestorSesiones;
-
     SimpleDateFormat sdf;
 
     DocumentBuilderFactory factory = null;
@@ -58,9 +56,6 @@ public class ImportarMatriculasXML {
      * @throws java.text.ParseException
      */
     public ImportarMatriculasXML(String ruta) throws Exception {
-        
-        gestorSesiones = new GestorSesiones();
-        
         factory = DocumentBuilderFactory.newInstance();
 
         try {
@@ -83,7 +78,7 @@ public class ImportarMatriculasXML {
      * Una vez preparado el documento XML leemos el documento y obtenemos una
      * lista de las matrículas.
      */
-    private void cargarMatriculas(Document doc) throws ParseException {
+    private void cargarMatriculas(Document doc) throws ParseException, Exception {
         sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         matriculasCargadas = new ArrayList<Matricula>();
@@ -187,9 +182,11 @@ public class ImportarMatriculasXML {
                 }
 
                 //Buscamos el alumno recuperado del XML
-                DaoAlumno dao = new DaoAlumno(gestorSesiones.getSession());
+                DaoAlumno dao = new DaoAlumno(Main.gestorSesiones.getSession());
                 
+                dao.session.beginTransaction();
                 Alumno alumnoObj = dao.buscar(alumno);
+                dao.session.getTransaction().commit();
                 
                 dao.desconectar();
 
@@ -203,20 +200,21 @@ public class ImportarMatriculasXML {
         }
     }
 
-    private void insertarMatriculasBD() {
+    private void insertarMatriculasBD() throws Exception {
         
-        DaoMatricula dao = new DaoMatricula(gestorSesiones.getSession());
+        DaoMatricula dao = new DaoMatricula(Main.gestorSesiones.getSession());
         
         //Insertamos la lista de Matriculas
         try{
+            dao.session.beginTransaction();
             dao.actualizarMatriculas(matriculasCargadas);
+            dao.session.getTransaction().commit();
             
-            System.out.println("Matriculas importadas!");
+            dao.desconectar();
         }catch(Exception e){
-            System.out.println("Error al importar las matriculas");
-            e.printStackTrace();
+            throw new Exception();
         }
         
-        dao.desconectar();
+        
     }
 }
