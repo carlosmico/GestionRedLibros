@@ -781,29 +781,27 @@ public class FrameEjemplares extends javax.swing.JFrame {
         textEjemplarIndice.setText("Ejemplar " + (ejemplarActual + 1) + " de " + listaEjemplares.size());
 
         //Nombre alumno
-        //if (ejemplarTemp.isPrestado()) {
-        /*
-         panelNoPrestado.setVisible(true);
-         alumno = ejemplarTemp.getHistoriales().get(ejemplarTemp.getHistoriales().size() - 1).getAlumno();
-         textNombreAlumno.setText(alumno.getNombre());
-         textNIAAlumno.setText(alumno.getNia());
+        if (ejemplarTemp.isPrestado()) {
+            panelNoPrestado.setVisible(true);
+            alumno = ejemplarTemp.getHistoriales().get(ejemplarTemp.getHistoriales().size() - 1).getAlumno();
+            textNombreAlumno.setText(alumno.getNombre());
+            textNIAAlumno.setText(alumno.getNia());
 
-         if (alumno.getTelefono1().equals("")) {
-         textTelefonoAlumno.setText("Sin teléfono");
-         } else {
-         textTelefonoAlumno.setText(alumno.getTelefono1());
-         }
+            if (alumno.getTelefono1().equals("")) {
+                textTelefonoAlumno.setText("Sin teléfono");
+            } else {
+                textTelefonoAlumno.setText(alumno.getTelefono1());
+            }
 
-         if (alumno.getEmail1().equals("")) {
-         textEmailAlumno.setText("Sin Correo Electrónico");
-         } else {
-         textEmailAlumno.setText(alumno.getEmail1());
-         }
-         //} else {
-         //panelPrestado.setVisible(false);
-         //panelNoPrestado.setVisible(true);
-         //}
-         */
+            if (alumno.getEmail1().equals("")) {
+                textEmailAlumno.setText("Sin Correo Electrónico");
+            } else {
+                textEmailAlumno.setText(alumno.getEmail1());
+            }
+        } else {
+            panelPrestado.setVisible(false);
+            panelNoPrestado.setVisible(true);
+        }
         panelNoPrestado.setVisible(true);
         this.pack();
     }

@@ -542,7 +542,11 @@ public class FrameInputLibro extends javax.swing.JFrame {
                 protected Void doInBackground() throws InterruptedException {
                     daoLibro.session.beginTransaction();
                     listaLibros = daoLibro.buscarTodos();
+                    daoLibro.session.getTransaction().commit();
+                    
+                    daoCurso.session.beginTransaction();
                     listaCursos = daoCurso.buscarTodos();
+                    daoCurso.session.getTransaction().commit();
                     
                     return null;
                 }
@@ -598,7 +602,9 @@ public class FrameInputLibro extends javax.swing.JFrame {
             //Se ha insertado un codigo
             SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
                 protected Void doInBackground() throws InterruptedException {
+                    daoLibro.session.beginTransaction();
                     l = daoLibro.buscar(codigo);
+                    daoLibro.session.getTransaction().commit();
                     return null;
                 }
 
