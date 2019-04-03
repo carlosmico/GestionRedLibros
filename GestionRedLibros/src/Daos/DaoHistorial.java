@@ -34,7 +34,7 @@ import org.hibernate.Session;
  */
 public class DaoHistorial extends DaoGenerico<Historial, Integer> implements InterfaceDaoGenerico<Historial, Integer> {
 
-    Session session;
+    public Session session;
 
     public DaoHistorial(Session s) {
         this.session = s;
@@ -121,11 +121,11 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
     }
 
     @Override
-    public void desconectar(){
-        if(this.session != null){
-            try{
+    public void desconectar() {
+        if (this.session != null) {
+            try {
                 this.session.close();
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Error DaoEjemplar-desconectar()");
             }
         }

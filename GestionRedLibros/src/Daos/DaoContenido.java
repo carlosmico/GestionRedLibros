@@ -32,7 +32,7 @@ import org.hibernate.query.Query;
  */
 public class DaoContenido extends DaoGenerico<Contenido, Integer> implements InterfaceDaoGenerico<Contenido, Integer> {
     
-    Session session;
+    public Session session;
     
     public DaoContenido(Session s){
         this.session = s;
