@@ -131,9 +131,13 @@ public class FrameLibro extends javax.swing.JFrame {
             protected Void doInBackground() throws InterruptedException {
                 setEnabled(false);
                 
-                
+                daoCurso.session.beginTransaction();
                 listaCursos = daoCurso.buscarTodos();
+                daoCurso.session.getTransaction().commit();
+                
+                daoContenido.session.beginTransaction();
                 listaContenido = daoContenido.buscarTodos();
+                daoContenido.session.getTransaction().commit();
                 return null;
             }
 
@@ -941,8 +945,10 @@ public class FrameLibro extends javax.swing.JFrame {
 
         if (resp == JOptionPane.YES_OPTION) {
             try {
+                daoLibro.session.beginTransaction();
                 daoLibro.borrar(libro);
-
+                daoLibro.session.getTransaction().commit();
+                
                 JOptionPane.showMessageDialog(this, "Libro eliminado correctamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (Exception e) {
@@ -1020,7 +1026,9 @@ public class FrameLibro extends javax.swing.JFrame {
                 }
 
                 try {
+                    daoLibro.session.beginTransaction();
                     daoLibro.grabar(newLibro);
+                    daoLibro.session.getTransaction().commit();
 
                     JOptionPane.showMessageDialog(this, "Libro añadido correctamente.",
                             "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -1098,8 +1106,10 @@ public class FrameLibro extends javax.swing.JFrame {
                 }
 
                 try {
+                    daoLibro.session.beginTransaction();
                     daoLibro.actualizar(libro);
-
+                    daoLibro.session.getTransaction().commit();
+                    
                     JOptionPane.showMessageDialog(this,
                             "Libro actualizado correctamente.", "Información",
                             JOptionPane.INFORMATION_MESSAGE);
