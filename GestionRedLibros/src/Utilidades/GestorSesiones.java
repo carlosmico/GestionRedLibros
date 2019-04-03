@@ -34,7 +34,7 @@ public class GestorSesiones {
     }
     
     public Session getSession(){
-        Session session = factory.getCurrentSession();
+        Session session = factory.openSession();
         return session;
     }
 }

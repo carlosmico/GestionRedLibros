@@ -80,8 +80,8 @@ public class FrameInputLibro extends javax.swing.JFrame {
 
         textCodigoLibro.requestFocusInWindow();
 
-        daoLibro = new DaoLibro(Main.gestorSesiones.getSession());
         daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
+        daoLibro = new DaoLibro(Main.gestorSesiones.getSession());
 
         //<editor-fold defaultstate="collapsed" desc="configuracion Combobox">
         cbCurso.setUI(new comboBoxRender());
