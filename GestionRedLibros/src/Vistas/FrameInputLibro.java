@@ -540,8 +540,10 @@ public class FrameInputLibro extends javax.swing.JFrame {
             //Por nombre
             SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
                 protected Void doInBackground() throws InterruptedException {
+                    daoLibro.session.beginTransaction();
                     listaLibros = daoLibro.buscarTodos();
                     listaCursos = daoCurso.buscarTodos();
+                    
                     return null;
                 }
 
