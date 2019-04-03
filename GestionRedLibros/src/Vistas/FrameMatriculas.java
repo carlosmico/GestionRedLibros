@@ -41,8 +41,10 @@ public class FrameMatriculas extends javax.swing.JFrame {
     /**
      * Creates new form FrameDevoluciones
      */
+    GestorSesiones gestorSesiones;
+
     FrameCarga frameCarga = null;
-    
+
     public DaoMatricula daoMatricula;
 
     List<Matricula> matriculas;
@@ -50,22 +52,63 @@ public class FrameMatriculas extends javax.swing.JFrame {
     public FrameMatriculas() {
         initComponents();
 
+        gestorSesiones = Main.gestorSesiones;
+
         //Deshabilitamos la edición de la tabla para no crear confusión, 
         //puesto que solo es de lectura.
         this.tableMatriculas.setEnabled(false);
 
         this.setLocationRelativeTo(null);
-
-        RefrescarTabla();
     }
 
     //Refrescamos los datos de la tabla recuperados de la BD
     public void RefrescarTabla() {
-        daoMatricula = new DaoMatricula();
+        System.out.println("");
+        
+        daoMatricula = new DaoMatricula(gestorSesiones.getSession());
+        
+        daoMatricula.session.beginTransaction();
+        matriculas = daoMatricula.buscarTodos();
+        daoMatricula.session.getTransaction().commit();
 
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
+        if (matriculas.size() > 0) {
+            DefaultTableModel tableModel = (DefaultTableModel) tableMatriculas.getModel();
+
+            tableModel.setRowCount(0);
+
+            for (int i = 0; i < matriculas.size(); i++) {
+                Matricula matricula = matriculas.get(i);
+                String[] fila = new String[13];
+
+                fila[0] = matricula.getAlumno().getNombre();
+                fila[1] = matricula.getCurso_escolar() + "";
+                fila[2] = matricula.getCurso();
+                fila[3] = matricula.getContenido() + "";
+                fila[4] = matricula.getIdioma();
+                fila[5] = matricula.getTipo_basico();
+                fila[6] = matricula.getTipo_predom();
+                fila[7] = matricula.getFec_ini_acis().toString();
+                fila[8] = matricula.getFec_fin_acis().toString();
+                fila[9] = matricula.getCur_ref_acis();
+                fila[10] = matricula.getCurso_pendiente();
+
+                tableModel.addRow(fila);
+            }
+
+            tableMatriculas.setModel(tableModel);
+        } else {
+            System.out.println("Error");
+            //JOptionPane.showMessageDialog(this, "No hay datos de matrículas en la Base de Datos.");
+        }
+
+        pack();
+        
+        
+        /*SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
+                daoMatricula = new DaoMatricula(gestorSesiones.getSession());
                 matriculas = daoMatricula.buscarTodos();
+                daoMatricula.session.getTransaction().commit();
                 return null;
             }
 
@@ -114,6 +157,7 @@ public class FrameMatriculas extends javax.swing.JFrame {
             frameCarga = new FrameCarga();
         }
         frameCarga.setVisible(true);
+         */
     }
 
     /**
@@ -136,6 +180,17 @@ public class FrameMatriculas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Matrículas");
         setMinimumSize(new java.awt.Dimension(600, 36));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(58, 39, 35));
 
@@ -249,6 +304,19 @@ public class FrameMatriculas extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnImportarActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        daoMatricula.desconectar();
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments

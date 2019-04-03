@@ -64,7 +64,7 @@ public class Alumno implements Serializable {
     @JoinColumn (name = "grupo")
     private Grupo grupo;
 
-    @OneToMany(mappedBy = "alumno", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "alumno")
     private List<Matricula> matriculas;
 
     @OneToMany(mappedBy = "alumno")
@@ -86,7 +86,6 @@ public class Alumno implements Serializable {
         this.email1 = email1;
         this.curso_alumno = curso_alumno;
         this.grupo = grupo;
-<<<<<<< HEAD
         this.sexo = sexo;
         this.telefono1 = telefono1;
     }
@@ -105,9 +104,6 @@ public class Alumno implements Serializable {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
-=======
- 
->>>>>>> master
     }
 
     public String getNia() {

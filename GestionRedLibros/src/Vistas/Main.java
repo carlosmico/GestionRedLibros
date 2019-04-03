@@ -6,17 +6,20 @@
 package Vistas;
 
 import Utilidades.DimensionesFrame;
+import Utilidades.GestorSesiones;
 import Utilidades.GetInternetStatus;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
@@ -33,6 +36,9 @@ public class Main extends javax.swing.JFrame {
     FrameInputLibro inputLibro = null;
     FrameMatriculas gesMatri = null;
     FrameOpciones opciones = null;
+    FrameCarga frameCarga;
+    
+    public static GestorSesiones gestorSesiones;
 
     public Main() throws IOException {
         initComponents();
@@ -43,6 +49,7 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay conexión al servidor");
         }
 
+        gestorSesiones = new GestorSesiones();
         //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
         String icono = "";
         BufferedImage img = null;
@@ -292,8 +299,27 @@ public class Main extends javax.swing.JFrame {
         if (gesMatri == null) {
             gesMatri = new FrameMatriculas();
         }
-        gesMatri.RefrescarTabla();
-        gesMatri.setVisible(true);
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
+            protected Void doInBackground() throws InterruptedException {
+                gesMatri.RefrescarTabla();
+                return null;
+            }
+
+            protected void process(List<Integer> chunks) {
+            }
+
+            protected void done() {
+                //Rellenamos la lista de los libros
+                gesMatri.setVisible(true);
+
+                frameCarga.dispose();
+            }
+        };
+        worker.execute();
+        if (frameCarga == null) {
+            frameCarga = new FrameCarga();
+        }
+        frameCarga.setVisible(true);
 
     }//GEN-LAST:event_btnMatriculasActionPerformed
 

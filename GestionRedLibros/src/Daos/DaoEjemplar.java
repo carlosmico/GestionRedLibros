@@ -25,15 +25,21 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.PersistenceException;
 import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
  * @author Carlos
  */
 public class DaoEjemplar extends DaoGenerico<Ejemplar, Integer> implements InterfaceDaoGenerico<Ejemplar, Integer>{
+    Session session;
+    
+    public DaoEjemplar(Session s){
+        this.session = s;
+    }
+    
     @Override
     public void actualizar(Ejemplar e) throws PersistenceException {
-        super.conectar();
 
         try {
             Ejemplar ejemplar = (Ejemplar) session.get(Ejemplar.class, e.getCodigo());
@@ -41,54 +47,32 @@ public class DaoEjemplar extends DaoGenerico<Ejemplar, Integer> implements Inter
             ejemplar.setEstado(e.getEstado());
             ejemplar.setPrestado(e.isPrestado());
 
-            super.session.saveOrUpdate(ejemplar);
+            this.session.saveOrUpdate(ejemplar);
 
-            super.session.getTransaction().commit();
+            this.session.getTransaction().commit();
         } catch (PersistenceException ex) {
             throw new PersistenceException();
-        }
-
-        try {
-            super.desconectar();
-        } catch (Exception ex) {
-            System.out.println("Error DaoEjemplar-actualizar(): " + ex.getMessage());
         }
     }
     
     public Ejemplar buscar(String codigo) throws PersistenceException {
-        super.conectar();
-        
         Ejemplar ejemplar;
 
         try {
-            ejemplar = (Ejemplar) super.session.get(Ejemplar.class, codigo);
+            ejemplar = (Ejemplar) this.session.get(Ejemplar.class, codigo);
         } catch (PersistenceException e) {
             e.printStackTrace();
             throw new PersistenceException();
-        }
-
-        try {
-            super.desconectar();  
-        } catch (Exception ex) {
-            System.out.println("Error DaoEjemplar-buscarCodigo(): " + ex.getMessage());
         }
         
         return ejemplar;
     }
     
     public List<Ejemplar> buscarTodos(){
-        super.conectar();
-        
         List<Ejemplar> lista = new ArrayList<Ejemplar>();
         
-        Query query = super.session.createQuery("from Ejemplar");
+        Query query = this.session.createQuery("from Ejemplar");
         lista = query.list();
-        
-        try {
-            super.desconectar();  
-        } catch (Exception ex) {
-            System.out.println("Error DaoEjemplar-buscarTodos(): " + ex.getMessage());
-        }
         
         return lista;
     }

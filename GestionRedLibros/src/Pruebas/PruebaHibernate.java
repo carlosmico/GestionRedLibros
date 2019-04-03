@@ -41,30 +41,23 @@ public class PruebaHibernate {
         Libro l = new Libro("96799999", contenido, "Libro nuevo", "nombre", 40, true, 0);
         Ejemplar ejemplar = new Ejemplar("96799999002", l, 1, true);
 
-<<<<<<< HEAD
-        DaoAlumno dao;
-
-        dao = new DaoAlumno();
-
-        getAllAlumnos();
-
-        //Alumno a = new Alumno("71230212", "", "", "", "", "", "", "", "", "", null, null);
         try {
-            //DaoContenido dao = new DaoContenido();
-=======
-        Alumno a = new Alumno("71230212", "", "", "", "", "", "", "", null, null);
-        try {
-            DaoAlumno dao = new DaoAlumno();
-            
+            SessionFactory factory = UtilesHibernate.getSessionFactory();
+            Session session = factory.getCurrentSession();
+            session.beginTransaction();
 
-            
-            
+            DaoAlumno dao = new DaoAlumno(session);
 
             for (int i = 0; i < dao.buscarTodos().size(); i++) {
-                System.out.println(dao.buscarTodos().get(0).getH().size());
+                System.out.println("Matriculas de " + i + ":" + dao.buscarTodos().get(i).getMatriculas().size());
+                System.out.println("Matriculas de " + i + ":" + dao.buscarTodos().get(i).getHistoriales().size());
             }
->>>>>>> master
 
+            //DaoContenido daoc = new DaoContenido();
+
+            //System.out.println(daoc.buscarTodos().get(0).getLibros().size());
+
+            session.close();
             /*DaoMatricula dao = new DaoMatricula();
             
              Matricula m = new Matricula(4, 2020, a, "", "", "", "ssssss", 
@@ -178,30 +171,5 @@ public class PruebaHibernate {
             System.out.println("No existe ningún objeto con ese id.");
         }
 
-    }
-
-    public static void getAllAlumnos() {
-        SwingWorker<?, ?> worker;
-        worker = new SwingWorker<Void, Integer>() {
-            protected Void doInBackground() throws InterruptedException {
-                listaAlumnos = new DaoAlumno().buscarTodos();
-                return null;
-            }
-
-            protected void process(List<Integer> chunks) {
-            }
-
-            protected void done() {
-                for (int i = 0; i < listaAlumnos.size(); i++) {
-                    System.out.println(listaAlumnos.get(i).getMatriculas().size());
-                }
-                frameCarga.dispose();
-            }
-        };
-        worker.execute();
-        if (frameCarga == null) {
-            frameCarga = new FrameCarga();
-        }
-        frameCarga.setVisible(true);
     }
 }
