@@ -299,9 +299,6 @@ public class Main extends javax.swing.JFrame {
         if (gesMatri == null) {
             gesMatri = new FrameMatriculas();
         }
-<<<<<<< HEAD
-        gesMatri.setVisible(true);
-=======
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
                 gesMatri.RefrescarTabla();
@@ -323,7 +320,6 @@ public class Main extends javax.swing.JFrame {
             frameCarga = new FrameCarga();
         }
         frameCarga.setVisible(true);
->>>>>>> master
 
     }//GEN-LAST:event_btnMatriculasActionPerformed
 

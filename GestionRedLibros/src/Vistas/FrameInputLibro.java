@@ -80,8 +80,8 @@ public class FrameInputLibro extends javax.swing.JFrame {
 
         textCodigoLibro.requestFocusInWindow();
 
-        daoLibro = new DaoLibro();
-        daoCurso = new DaoCurso();
+        daoLibro = new DaoLibro(Main.gestorSesiones.getSession());
+        daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
 
         //<editor-fold defaultstate="collapsed" desc="configuracion Combobox">
         cbCurso.setUI(new comboBoxRender());
@@ -138,6 +138,11 @@ public class FrameInputLibro extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(566, 645));
         setMinimumSize(new java.awt.Dimension(569, 0));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         head.setBackground(new java.awt.Color(58, 39, 35));
         head.setPreferredSize(new java.awt.Dimension(135, 75));
@@ -478,6 +483,16 @@ public class FrameInputLibro extends javax.swing.JFrame {
             isLoading = true;
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        try {
+            daoCurso.desconectar();
+            daoLibro.desconectar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

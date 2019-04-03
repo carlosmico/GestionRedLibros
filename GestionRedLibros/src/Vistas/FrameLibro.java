@@ -122,9 +122,9 @@ public class FrameLibro extends javax.swing.JFrame {
 
         this.setLocationRelativeTo(null);
 
-        daoCurso = new DaoCurso();
-        daoLibro = new DaoLibro();
-        daoContenido = new DaoContenido();
+        daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
+        daoLibro = new DaoLibro(Main.gestorSesiones.getSession());
+        daoContenido = new DaoContenido(Main.gestorSesiones.getSession());
 
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
@@ -325,6 +325,11 @@ public class FrameLibro extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Libros");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(58, 39, 35));
 
@@ -1195,6 +1200,17 @@ public class FrameLibro extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_btnImprimirEtiquetasMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        try{
+            daoContenido.desconectar();
+            daoCurso.desconectar();
+            daoLibro.desconectar();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

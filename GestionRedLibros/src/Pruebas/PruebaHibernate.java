@@ -40,35 +40,12 @@ public class PruebaHibernate {
         Contenido contenido = new Contenido(6, curso, "a", "a", "a", "a");
         Libro l = new Libro("96799999", contenido, "Libro nuevo", "nombre", 40, true, 0);
         Ejemplar ejemplar = new Ejemplar("96799999002", l, 1, true);
-
-<<<<<<< HEAD
-        DaoAlumno dao;
-
-        dao = new DaoAlumno();
-
-        //Alumno a = new Alumno("71230212", "", "", "", "", "", "", "", "", "", null, null);
-        //try {
-        //DaoContenido dao = new DaoContenido();
-        //Alumno a = new Alumno("71230212", "", "", "", "", "", "", "", null, null);
-=======
->>>>>>> master
+        
         try {
             SessionFactory factory = UtilesHibernate.getSessionFactory();
             Session session = factory.getCurrentSession();
             session.beginTransaction();
-<<<<<<< HEAD
-            dao = new DaoAlumno();
 
-            System.out.println(dao.buscar("71230212").getMatriculas().size());
-=======
-
-            DaoAlumno dao = new DaoAlumno(session);
-
-            for (int i = 0; i < dao.buscarTodos().size(); i++) {
-                System.out.println("Matriculas de " + i + ":" + dao.buscarTodos().get(i).getMatriculas().size());
-                System.out.println("Matriculas de " + i + ":" + dao.buscarTodos().get(i).getHistoriales().size());
-            }
->>>>>>> master
 
             //DaoContenido daoc = new DaoContenido();
 
