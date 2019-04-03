@@ -76,4 +76,15 @@ public class DaoEjemplar extends DaoGenerico<Ejemplar, Integer> implements Inter
         
         return lista;
     }
+    
+    @Override
+    public void desconectar(){
+        if(this.session != null){
+            try{
+                this.session.close();
+            }catch(Exception e){
+                System.out.println("Error DaoEjemplar-desconectar()");
+            }
+        }
+    }
 }

@@ -140,13 +140,15 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
 
         return lista;
     }
+
     
+    @Override
     public void desconectar(){
         if(this.session != null){
             try{
                 this.session.close();
             }catch(Exception e){
-                System.out.println("Error DaoAlumno-desconectar()");
+                System.out.println("Error DaoMatriucla-desconectar()");
             }
         }
     }

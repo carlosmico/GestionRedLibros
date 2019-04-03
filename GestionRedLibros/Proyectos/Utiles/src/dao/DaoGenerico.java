@@ -11,21 +11,12 @@ import org.hibernate.SessionFactory;
 public class DaoGenerico<T, ID extends Serializable> implements InterfaceDaoGenerico<T, ID> {
     
     @Override
-<<<<<<< HEAD
-    public void desconectar() throws Exception {
-        try {
-            if (session != null) {
-                session.close();
-            }
-        } catch (Exception e) {
-            throw new Exception();
-        }
+    public void desconectar() throws BusinessException {
+        throw new BusinessException();
     }
     
 
     @Override
-=======
->>>>>>> master
     public void grabar(T objeto) throws BusinessException {
         throw new RuntimeException();
     }

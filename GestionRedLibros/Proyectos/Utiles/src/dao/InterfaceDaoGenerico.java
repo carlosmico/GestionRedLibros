@@ -8,6 +8,8 @@ import org.hibernate.Session;
 
 public interface InterfaceDaoGenerico <T, ID extends Serializable> {
     
+        public void desconectar() throws BusinessException;
+    
 	/**
 	 * Persiste el objeto dado.
 	 * Tras la inseci�n el objeto tendr� actualizado su identificador. 

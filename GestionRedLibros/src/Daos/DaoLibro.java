@@ -205,4 +205,15 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
             System.out.println("Error DaoLibro-generarcodigos(): " + ex.getMessage());
         }
     }
+    
+    @Override
+    public void desconectar(){
+        if(this.session != null){
+            try{
+                this.session.close();
+            }catch(Exception e){
+                System.out.println("Error DaoLibro-desconectar()");
+            }
+        }
+    }
 }
