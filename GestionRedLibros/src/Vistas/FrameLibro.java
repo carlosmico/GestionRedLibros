@@ -59,7 +59,7 @@ public class FrameLibro extends javax.swing.JFrame {
     List<Contenido> listaContenido;
 
     DaoCurso daoCurso;
-    static DaoLibro daoLibro;
+    DaoLibro daoLibro;
     DaoContenido daoContenido;
 
     public FrameLibro(Libro libro) {
@@ -130,11 +130,11 @@ public class FrameLibro extends javax.swing.JFrame {
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
                 setEnabled(false);
-                
+
                 daoCurso.session.beginTransaction();
                 listaCursos = daoCurso.buscarTodos();
                 daoCurso.session.getTransaction().commit();
-                
+
                 daoContenido.session.beginTransaction();
                 listaContenido = daoContenido.buscarTodos();
                 daoContenido.session.getTransaction().commit();
@@ -146,13 +146,10 @@ public class FrameLibro extends javax.swing.JFrame {
 
             protected void done() {
                 //Rellenamos la lista de los libros
-                //<editor-fold defaultstate="collapsed" desc="Rellenamos los datos en el caso de que consultemos algun libro o no">
 
                 setEditMode(isNewLibro);
-
                 btnEdit.setEnabled(!isNewLibro);
 
-                //</editor-fold>
                 rellenarCampos();
                 setEnabled(true);
                 frameCarga.dispose();
@@ -167,7 +164,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         //Set imagen del libro
         try {
-            int ran = (int) (Math.floor(Math.random() * 4));
+            int ran = (int) (Math.floor(Math.random() * 3) + 1);
             System.out.println("Resultado: " + ran);
             imgLibro.setIcon(new ImageIcon(getClass().getResource("/Imagenes/image" + ran + ".png")));
         } catch (Exception ex) {
@@ -177,7 +174,6 @@ public class FrameLibro extends javax.swing.JFrame {
     }
 
     private void rellenarCampos() {
-
         if (listaCursos.size() > 0) {
             for (int i = 0; i < listaCursos.size(); i++) {
                 cbCurso.addItem(listaCursos.get(i).getAbreviatura());
@@ -260,7 +256,9 @@ public class FrameLibro extends javax.swing.JFrame {
             tableEjemplares.repaint();
 
         } else {
-            JOptionPane.showMessageDialog(this, "No hay datos de ejemplares en la Base de Datos.");
+            frameCarga.dispose();
+            btnImprimirEtiquetas.setVisible(false);
+            JOptionPane.showMessageDialog(null, "No hay datos de ejemplares en la Base de Datos.");
         }
     }
 
@@ -948,7 +946,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 daoLibro.session.beginTransaction();
                 daoLibro.borrar(libro);
                 daoLibro.session.getTransaction().commit();
-                
+
                 JOptionPane.showMessageDialog(this, "Libro eliminado correctamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (Exception e) {
@@ -1048,7 +1046,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 } catch (Exception e) {
 
                     JOptionPane.showMessageDialog(this,
-                            "Error al actualizar el libro.", "Error",
+                            "Error al crear el libro.", "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
             } else {
@@ -1109,7 +1107,7 @@ public class FrameLibro extends javax.swing.JFrame {
                     daoLibro.session.beginTransaction();
                     daoLibro.actualizar(libro);
                     daoLibro.session.getTransaction().commit();
-                    
+
                     JOptionPane.showMessageDialog(this,
                             "Libro actualizado correctamente.", "Información",
                             JOptionPane.INFORMATION_MESSAGE);
@@ -1121,7 +1119,7 @@ public class FrameLibro extends javax.swing.JFrame {
                             JOptionPane.ERROR_MESSAGE);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this,
-                            "Error al crear el libro.", "Error",
+                            "Error al actualizar el libro.", "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
             } else {
@@ -1172,21 +1170,21 @@ public class FrameLibro extends javax.swing.JFrame {
 
         /*CodigoBarras generadorCodigos = new CodigoBarras();
         
-        try {
-            List<String> codigos = new ArrayList<String>();
+         try {
+         List<String> codigos = new ArrayList<String>();
             
-            for (int i = 0; i < libro.getEjemplares().size(); i++) {
-                codigos.add(libro.getEjemplares().get(i).getCodigo());
-            }
+         for (int i = 0; i < libro.getEjemplares().size(); i++) {
+         codigos.add(libro.getEjemplares().get(i).getCodigo());
+         }
             
-            generadorCodigos.imprimirList(generadorCodigos.generarCodigoList(codigos));
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,
-                        "Error al imprimir los códigos de barras: \n-" + ex.getMessage(), "Error",
-                        JOptionPane.ERROR_MESSAGE);
+         generadorCodigos.imprimirList(generadorCodigos.generarCodigoList(codigos));
+         } catch (Exception ex) {
+         JOptionPane.showMessageDialog(this,
+         "Error al imprimir los códigos de barras: \n-" + ex.getMessage(), "Error",
+         JOptionPane.ERROR_MESSAGE);
             
-            ex.printStackTrace();
-        }*/
+         ex.printStackTrace();
+         }*/
     }//GEN-LAST:event_btnImprimirEtiquetasActionPerformed
 
     private void btnImprimirEtiquetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetasMouseClicked
@@ -1201,7 +1199,7 @@ public class FrameLibro extends javax.swing.JFrame {
             }
 
             generadorCodigos.imprimirList(libro, generadorCodigos.generarCodigoList(codigos));
-            
+
             JOptionPane.showMessageDialog(this,
                     "Códigos de los ejemplares generados correctamente.", "Información",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -1216,11 +1214,11 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        try{
+        try {
             daoContenido.desconectar();
             daoCurso.desconectar();
             daoLibro.desconectar();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_formWindowClosed
