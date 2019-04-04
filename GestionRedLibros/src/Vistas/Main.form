@@ -232,7 +232,6 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnGestionesMouseReleased"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGestionesActionPerformed"/>
               </Events>
             </Component>
             <Component class="com.mommoo.flat.button.FlatButton" name="btnOpciones">

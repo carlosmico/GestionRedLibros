@@ -50,12 +50,12 @@ public class FrameAlumno extends javax.swing.JFrame {
     public FrameAlumno(Alumno alumno) {
         initComponents();
 
+        this.alumno = alumno;
         //<editor-fold defaultstate="collapsed" desc="Configuración inicial de la tabla">
         tablaHistorial.setFont(textNombreAlumno.getFont());
 //</editor-fold>
 
         //this.alumno = alumno;
-
         //Deshabilitamos la tabla de ejemplares puesto que es de lectura
         tablaHistorial.setEnabled(false);
 
@@ -64,15 +64,12 @@ public class FrameAlumno extends javax.swing.JFrame {
         daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
 
         daoAlumno.session.beginTransaction();
-        Alumno alumno1 = daoAlumno.buscar("71230212");
         daoAlumno.session.getTransaction().commit();
-        
-        alumno = alumno1;
 
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
                 setEnabled(false);
-                listaHistorial = alumno1.getHistoriales();
+                listaHistorial = alumno.getHistoriales();
                 return null;
             }
 
@@ -87,7 +84,6 @@ public class FrameAlumno extends javax.swing.JFrame {
             }
         };
         worker.execute();
-
         if (frameCarga == null) {
             frameCarga = new FrameCarga();
         }
@@ -107,7 +103,7 @@ public class FrameAlumno extends javax.swing.JFrame {
     private void rellenarCampos() {
         //Rellenamos los datos
         textNIAAlumno.setText(alumno.getNia());
-        textNombreAlumno.setText(alumno.getNombre());
+        textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1() + " " + alumno.getApellido2());
         textTelefonoAlumno.setText(alumno.getTelefono1());
         textEmailAlumno.setText(alumno.getEmail1());
 
