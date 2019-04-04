@@ -62,8 +62,13 @@ public class FrameLibro extends javax.swing.JFrame {
     DaoLibro daoLibro;
     DaoContenido daoContenido;
 
-    public FrameLibro(Libro libro) {
+    public FrameLibro(String codigo) {
         initComponents();
+        
+        //Inicializamos los DAO obteniendo la sesion del Gestor del Main
+        daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
+        daoLibro = new DaoLibro(Main.gestorSesiones.getSession());
+        daoContenido = new DaoContenido(Main.gestorSesiones.getSession());
 
         //<editor-fold defaultstate="collapsed" desc="Configuracion inicial de los ComboBox">
         //Combo Box Curso
@@ -111,8 +116,11 @@ public class FrameLibro extends javax.swing.JFrame {
         tableEjemplares.setFont(textNombreLibro.getFont());
 //</editor-fold>
 
-        this.libro = libro;
-        this.isNewLibro = this.libro == null;
+        this.isNewLibro = codigo == null;
+        
+        if(!isNewLibro){
+            this.libro = daoLibro.buscar(codigo);
+        }
 
         btnDelete.setVisible(false);
 
@@ -122,22 +130,13 @@ public class FrameLibro extends javax.swing.JFrame {
 
         this.setLocationRelativeTo(null);
 
-        //Inicializamos los DAO obteniendo la sesion del Gestor del Main
-        daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
-        daoLibro = new DaoLibro(Main.gestorSesiones.getSession());
-        daoContenido = new DaoContenido(Main.gestorSesiones.getSession());
 
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
                 setEnabled(false);
 
-                daoCurso.session.beginTransaction();
                 listaCursos = daoCurso.buscarTodos();
-                daoCurso.session.getTransaction().commit();
-
-                daoContenido.session.beginTransaction();
                 listaContenido = daoContenido.buscarTodos();
-                daoContenido.session.getTransaction().commit();
                 return null;
             }
 
@@ -202,6 +201,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
             cbAsignatura.addItem(libro.getContenido().getNombre_cas());
             textUnidadesLibro.setText(libro.getUnidades() + "");
+            textPrecio.setText(libro.getPrecio() + "");
 
             textCodigoDeBarrasLibro.setText(libro.getCodigo());
             chkObsoleto.setChecked(libro.getObsoleto());
@@ -459,13 +459,8 @@ public class FrameLibro extends javax.swing.JFrame {
         btnImprimirEtiquetas.setCornerRound(10);
         btnImprimirEtiquetas.setPreferredSize(new java.awt.Dimension(111, 32));
         btnImprimirEtiquetas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnImprimirEtiquetasMouseClicked(evt);
-            }
-        });
-        btnImprimirEtiquetas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimirEtiquetasActionPerformed(evt);
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnImprimirEtiquetasMouseReleased(evt);
             }
         });
 
@@ -941,9 +936,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         if (resp == JOptionPane.YES_OPTION) {
             try {
-                daoLibro.session.beginTransaction();
                 daoLibro.borrar(libro);
-                daoLibro.session.getTransaction().commit();
 
                 JOptionPane.showMessageDialog(this, "Libro eliminado correctamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
 
@@ -1023,22 +1016,17 @@ public class FrameLibro extends javax.swing.JFrame {
                 }
 
                 try {
-                    daoLibro.session.beginTransaction();
                     daoLibro.grabar(newLibro);
-                    libro = daoLibro.buscar(newLibro.getCodigo());
-                    daoLibro.session.getTransaction().commit();
-                    
-                    
 
-                   
                     JOptionPane.showMessageDialog(this, "Libro añadido correctamente.",
                             "Información", JOptionPane.INFORMATION_MESSAGE);
 
                     setEditMode(false);
 
-           
                     isNewLibro = false;
                     btnEdit.setEnabled(true);
+                    
+                    libro = daoLibro.buscar(newLibro.getCodigo());
 
                     RefrescarTabla();
                 } catch (PersistenceException e) {
@@ -1065,6 +1053,8 @@ public class FrameLibro extends javax.swing.JFrame {
             if (errores.equals("")) {
                 //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
 
+                int unidadesOld = libro.getUnidades();
+                
                 libro.setCodigo(textCodigoDeBarrasLibro.getText());
                 libro.setISBN(textISBNLibro.getText());
                 libro.setNombre(textNombreLibro.getText());
@@ -1080,15 +1070,15 @@ public class FrameLibro extends javax.swing.JFrame {
                 }
 
                 try {
-                    daoLibro.session.beginTransaction();
-                    daoLibro.actualizar(libro);
-                    daoLibro.session.getTransaction().commit();
+                    daoLibro.actualizar(unidadesOld, libro);
 
                     JOptionPane.showMessageDialog(this,
                             "Libro actualizado correctamente.", "Información",
                             JOptionPane.INFORMATION_MESSAGE);
 
                     setEditMode(false);
+                    
+                    libro = daoLibro.buscar(libro.getCodigo());
 
                     RefrescarTabla();
                 } catch (PersistenceException e) {
@@ -1137,33 +1127,18 @@ public class FrameLibro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbCursoActionPerformed
 
-    // Imprimir etiquetas de los ejemplares del libro
-
-    private void btnImprimirEtiquetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetasActionPerformed
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
+        try {
+            daoContenido.desconectar();
+            daoCurso.desconectar();
+            daoLibro.desconectar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_formWindowClosed
 
-        System.out.println("Holaaa");
-
-        /*CodigoBarras generadorCodigos = new CodigoBarras();
-        
-         try {
-         List<String> codigos = new ArrayList<String>();
-            
-         for (int i = 0; i < libro.getEjemplares().size(); i++) {
-         codigos.add(libro.getEjemplares().get(i).getCodigo());
-         }
-            
-         generadorCodigos.imprimirList(generadorCodigos.generarCodigoList(codigos));
-         } catch (Exception ex) {
-         JOptionPane.showMessageDialog(this,
-         "Error al imprimir los códigos de barras: \n-" + ex.getMessage(), "Error",
-         JOptionPane.ERROR_MESSAGE);
-            
-         ex.printStackTrace();
-         }*/
-    }//GEN-LAST:event_btnImprimirEtiquetasActionPerformed
-
-    private void btnImprimirEtiquetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetasMouseClicked
+    private void btnImprimirEtiquetasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetasMouseReleased
         // TODO add your handling code here:
         CodigoBarras generadorCodigos = new CodigoBarras();
 
@@ -1186,15 +1161,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
             ex.printStackTrace();
         }
-    }//GEN-LAST:event_btnImprimirEtiquetasMouseClicked
-
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        // TODO add your handling code here:
-        try {
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_formWindowClosed
+    }//GEN-LAST:event_btnImprimirEtiquetasMouseReleased
 
     /**
      * @param args the command line arguments

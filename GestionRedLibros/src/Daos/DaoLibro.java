@@ -56,31 +56,19 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
             this.session.getTransaction().commit();
         } catch (PersistenceException e) {
+            e.printStackTrace();
             throw new PersistenceException();
         }
     }
 
-    @Override
-    public void actualizar(Libro l) throws PersistenceException {
-        Libro libroOld, libroNew;
-
-        libroNew = l;
-
+    public void actualizar(int unidadesOld, Libro libro) throws PersistenceException {
+        
         try {
             this.session.beginTransaction();
 
-            libroOld = (Libro) session.get(Libro.class, l.getCodigo());
+            libro.setEjemplares(actualizarEjemplares(libro, unidadesOld));
 
-            libroOld.setContenido(libroNew.getContenido());
-            libroOld.setISBN(libroNew.getISBN());
-            libroOld.setNombre(libroNew.getNombre());
-            libroOld.setObsoleto(libroNew.getObsoleto());
-            libroOld.setPrecio(libroNew.getPrecio());
-            libroOld.setUnidades(libroNew.getUnidades());
-
-            libroOld.setEjemplares(actualizarEjemplares(libroNew, libroOld));
-
-            this.session.saveOrUpdate(libroOld);
+            this.session.saveOrUpdate(libro);
 
             this.session.getTransaction().commit();
         } catch (PersistenceException e) {
@@ -149,12 +137,12 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
     /* Comprobamos los ejemplares del libro actual para saber si hemos de borrar 
      *  o añadir nuevos ejemplares
      */
-    private List<Ejemplar> actualizarEjemplares(Libro libroNuevo, Libro libroOld) {
-        int cantidad = libroNuevo.getUnidades() - libroOld.getUnidades();
+    private List<Ejemplar> actualizarEjemplares(Libro libro, int unidadesOld) {
+        int cantidad = libro.getUnidades() - unidadesOld;
 
         int codBase;
 
-        List<Ejemplar> ejemplares = libroOld.getEjemplares();
+        List<Ejemplar> ejemplares = libro.getEjemplares();
 
         if (Math.signum(cantidad) > 0) {
             //Añadimos la cantidad de ejemplares que se ha incrementado.
@@ -169,14 +157,14 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
                 codBase++;
 
                 if (codBase < 10) {
-                    codigo_ejemplar = libroOld.getCodigo() + "00" + codBase;
+                    codigo_ejemplar = libro.getCodigo() + "00" + codBase;
                 } else if (codBase < 100) {
-                    codigo_ejemplar = libroOld.getCodigo() + "0" + codBase;
+                    codigo_ejemplar = libro.getCodigo() + "0" + codBase;
                 } else {
-                    codigo_ejemplar = libroOld.getCodigo() + "" + codBase;
+                    codigo_ejemplar = libro.getCodigo() + "" + codBase;
                 }
 
-                Ejemplar ejemplar = new Ejemplar(codigo_ejemplar, libroNuevo, Estado.nuevo, false);
+                Ejemplar ejemplar = new Ejemplar(codigo_ejemplar, libro, Estado.nuevo, false);
 
                 ejemplares.add(ejemplar);
             }

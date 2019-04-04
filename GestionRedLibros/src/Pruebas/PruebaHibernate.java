@@ -50,7 +50,6 @@ public class PruebaHibernate {
             
             dao.grabar(l);
             
-            dao.generarEjemplares(l);
             
             List<Libro> al = new DaoLibro(session).buscarTodos();
             
