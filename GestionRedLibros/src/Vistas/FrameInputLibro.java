@@ -642,6 +642,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         } else {
             //No se ha insertado ningun valor en el campo de texto
             textErrorBusqueda.setVisible(true);
+            isLoading = false;
             textErrorBusqueda.setText("El código no puede ser un campo vacío.");
             textCodigoLibro.setText("");
         }

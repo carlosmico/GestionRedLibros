@@ -31,6 +31,12 @@ public class FrameCarga extends javax.swing.JFrame {
 
         this.setLocationRelativeTo(null);
     }
+    
+    public FrameCarga(String mensaje){
+        initComponents();
+        this.setLocationRelativeTo(null);
+        text.setText(mensaje);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,7 +48,7 @@ public class FrameCarga extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        text = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -52,14 +58,14 @@ public class FrameCarga extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(66, 47, 44));
 
-        jLabel2.setBackground(new java.awt.Color(239, 235, 233));
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/load.gif"))); // NOI18N
-        jLabel2.setText("Recuperando datos en la base de datos");
-        jLabel2.setToolTipText("");
-        jLabel2.setOpaque(true);
+        text.setBackground(new java.awt.Color(239, 235, 233));
+        text.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        text.setForeground(new java.awt.Color(51, 51, 51));
+        text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        text.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/load.gif"))); // NOI18N
+        text.setText("Recuperando datos en la base de datos");
+        text.setToolTipText("");
+        text.setOpaque(true);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -67,14 +73,14 @@ public class FrameCarga extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(12, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(12, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
         );
 
@@ -128,7 +134,7 @@ public class FrameCarga extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel text;
     // End of variables declaration//GEN-END:variables
 }
