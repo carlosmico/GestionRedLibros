@@ -20,19 +20,10 @@ package Vistas;
 import Daos.*;
 import Pojos.*;
 import Utilidades.*;
-import Renders.comboBoxRender;
-import excepciones.BusinessException;
-import java.awt.Component;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import javax.persistence.PersistenceException;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
@@ -48,89 +39,40 @@ public class FrameAlumno extends javax.swing.JFrame {
      */
     private boolean isEditMode;
 
-    private static Libro libro = null;
-    boolean isNewLibro;
+    private Alumno alumno;
 
-    private FrameCarga c = new FrameCarga();
+    private FrameCarga frameCarga;
 
-    FrameCarga frameCarga;
+    private List<Historial> listaHistorial;
 
-    List<Curso> listaCursos;
-    List<Contenido> listaContenido;
+    DaoAlumno daoAlumno;
 
-    DaoCurso daoCurso;
-    static DaoLibro daoLibro;
-    DaoContenido daoContenido;
-
-    public FrameAlumno(Libro libro) {
+    public FrameAlumno(Alumno alumno) {
         initComponents();
 
-        //<editor-fold defaultstate="collapsed" desc="Configuracion inicial de los ComboBox">
-        //Combo Box Curso
-        cbCurso.setEditable(false);
-        cbCurso.setUI(new comboBoxRender());
-        cbCurso.setRenderer(new DefaultListCellRenderer() {
-            @Override
-            public Component getListCellRendererComponent(
-                    JList list, Object value, int index,
-                    boolean isSelected, boolean hasFocus) {
-                JLabel l = (JLabel) super.getListCellRendererComponent(
-                        list, value, index, isSelected, hasFocus);
-                if (isSelected) {
-                    l.setForeground(Colores.fondo);
-                    l.setBackground(Colores.buttons);
-                } else {
-                    l.setForeground(Colores.buttons);
-                    l.setBackground(Colores.fondo);
-                }
-                return l;
-            }
-        });
-
-        cbAsignatura.setEditable(false);
-        cbAsignatura.setUI(new comboBoxRender());
-        cbAsignatura.setRenderer(new DefaultListCellRenderer() {
-            @Override
-            public Component getListCellRendererComponent(
-                    JList list, Object value, int index,
-                    boolean isSelected, boolean hasFocus) {
-                JLabel l = (JLabel) super.getListCellRendererComponent(
-                        list, value, index, isSelected, hasFocus);
-                if (isSelected) {
-                    l.setForeground(Colores.fondo);
-                    l.setBackground(Colores.buttons);
-                } else {
-                    l.setForeground(Colores.buttons);
-                    l.setBackground(Colores.fondo);
-                }
-                return l;
-            }
-        });
-//</editor-fold>
         //<editor-fold defaultstate="collapsed" desc="Configuración inicial de la tabla">
-        tableEjemplares.setFont(textNombreLibro.getFont());
+        tablaHistorial.setFont(textNombreAlumno.getFont());
 //</editor-fold>
 
-        this.libro = libro;
-        this.isNewLibro = this.libro == null;
-
-        btnDelete.setVisible(false);
+        //this.alumno = alumno;
 
         //Deshabilitamos la tabla de ejemplares puesto que es de lectura
-        tableEjemplares.setEnabled(false);
-        btnSave.setVisible(isNewLibro);
+        tablaHistorial.setEnabled(false);
 
         this.setLocationRelativeTo(null);
 
-        daoCurso = new DaoCurso();
-        daoLibro = new DaoLibro();
-        daoContenido = new DaoContenido();
+        daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
+
+        daoAlumno.session.beginTransaction();
+        Alumno alumno1 = daoAlumno.buscar("71230212");
+        daoAlumno.session.getTransaction().commit();
+        
+        alumno = alumno1;
 
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
                 setEnabled(false);
-                listaCursos = daoCurso.buscarTodos();
-                listaContenido = daoContenido.buscarTodos();
+                listaHistorial = alumno1.getHistoriales();
                 return null;
             }
 
@@ -139,13 +81,6 @@ public class FrameAlumno extends javax.swing.JFrame {
 
             protected void done() {
                 //Rellenamos la lista de los libros
-                //<editor-fold defaultstate="collapsed" desc="Rellenamos los datos en el caso de que consultemos algun libro o no">
-
-                setEditMode(isNewLibro);
-
-                btnEdit.setEnabled(!isNewLibro);
-
-                //</editor-fold>
                 rellenarCampos();
                 setEnabled(true);
                 frameCarga.dispose();
@@ -160,7 +95,7 @@ public class FrameAlumno extends javax.swing.JFrame {
 
         //Set imagen del libro
         try {
-            int ran = (int) (Math.floor(Math.random() * 4));
+            int ran = (int) (Math.floor(Math.random() * 3) + 1);
             System.out.println("Resultado: " + ran);
             imgLibro.setIcon(new ImageIcon(getClass().getResource("/Imagenes/image" + ran + ".png")));
         } catch (Exception ex) {
@@ -170,90 +105,87 @@ public class FrameAlumno extends javax.swing.JFrame {
     }
 
     private void rellenarCampos() {
+        //Rellenamos los datos
+        textNIAAlumno.setText(alumno.getNia());
+        textNombreAlumno.setText(alumno.getNombre());
+        textTelefonoAlumno.setText(alumno.getTelefono1());
+        textEmailAlumno.setText(alumno.getEmail1());
 
-        if (listaCursos.size() > 0) {
-            for (int i = 0; i < listaCursos.size(); i++) {
-                cbCurso.addItem(listaCursos.get(i).getAbreviatura());
-            }
-        }
-
-        if (isNewLibro) {
-            textNombreLibro.setText("");
-            textISBNLibro.setText("");
-
-            textUnidadesLibro.setText("");
-
-            textCodigoDeBarrasLibro.setText("");
-            chkObsoleto.setChecked(!isNewLibro);
-        } else {
-            //Rellenamos los datos
-            textNombreLibro.setText(libro.getNombre());
-            textISBNLibro.setText(libro.getISBN());
-
-            for (int i = 0; i < cbCurso.getItemCount(); i++) {
-                if (libro.getContenido().getCurso().getAbreviatura().equals(cbCurso.getItemAt(i).toString())) {
-                    cbCurso.setSelectedIndex(i);
-                    break;
-                }
-            }
-
-            cbAsignatura.addItem(libro.getContenido().getNombre_cas());
-            textUnidadesLibro.setText(libro.getUnidades() + "");
-
-            textCodigoDeBarrasLibro.setText(libro.getCodigo());
-            chkObsoleto.setChecked(libro.getObsoleto());
-
-            //Refrescamos la tabla de ejemplares
-            RefrescarTabla();
-        }
+        //Refrescamos la tabla de ejemplares
+        RefrescarTabla();
     }
 
     //Refrescamos los datos de la tabla recuperados de la BD
     private void RefrescarTabla() {
-        List<Ejemplar> ejemplares = libro.getEjemplares();
 
-        System.out.println("Ejemplares: " + libro.getEjemplares().size());
+        System.out.println("Ejemplares: " + listaHistorial.size());
 
-        if (ejemplares.size() > 0) {
-            DefaultTableModel tableModel = (DefaultTableModel) this.tableEjemplares.getModel();
+        if (listaHistorial.size() > 0) {
+            DefaultTableModel tableModel = (DefaultTableModel) this.tablaHistorial.getModel();
 
             tableModel.setRowCount(0);
 
-            for (int i = 0; i < ejemplares.size(); i++) {
-                Ejemplar ejemplar = ejemplares.get(i);
-                String[] fila = new String[13];
+            for (int i = 0; i < listaHistorial.size(); i++) {
+                Historial h = listaHistorial.get(i);
+                String[] columna = new String[8];
 
-                fila[0] = ejemplar.getCodigo();
+                //Id ejemplar prestado
+                columna[0] = h.getEjemplar().getCodigo();
 
-                switch (ejemplar.getEstado()) {
+                //Nombre ejemplar prestado
+                columna[1] = h.getEjemplar().getLibro().getNombre();
+
+                //Curso escolar
+                columna[2] = h.getCurso_escolar() + "";
+
+                //estado del libro
+                //<editor-fold defaultstate="collapsed" desc="Estado inicial">
+                switch (h.getEstado_inicial()) {
                     case Estado.deteriorado:
-                        fila[1] = "Deteriorado";
+                        columna[3] = "Deteriorado";
                         break;
 
                     case Estado.usado:
-                        fila[1] = "Usado";
+                        columna[3] = "Usado";
                         break;
 
                     case Estado.nuevo:
-                        fila[1] = "Nuevo";
+                        columna[3] = "Nuevo";
                         break;
                 }
+//</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Estado final">
+                switch (h.getEstado_final()) {
+                    case Estado.deteriorado:
+                        columna[4] = "Deteriorado";
+                        break;
 
-                if (ejemplar.isPrestado()) {
-                    fila[2] = "Si";
-                } else {
-                    fila[2] = "No";
+                    case Estado.usado:
+                        columna[4] = "Usado";
+                        break;
+
+                    case Estado.nuevo:
+                        columna[4] = "Nuevo";
+                        break;
                 }
+//</editor-fold>
 
-                tableModel.addRow(fila);
+                //Fechas
+                columna[5] = h.getFecha_inicial() + "";
+                columna[6] = h.getFecha_final() + "";
+
+                columna[7] = h.getObservaciones();
+
+                tableModel.addRow(columna);
             }
 
-            tableEjemplares.setModel(tableModel);
+            tablaHistorial.setModel(tableModel);
 
-            tableEjemplares.repaint();
+            tablaHistorial.repaint();
 
         } else {
-            JOptionPane.showMessageDialog(this, "No hay datos de ejemplares en la Base de Datos.");
+            frameCarga.dispose();
+            JOptionPane.showMessageDialog(this, "No hay datos de historiales en la Base de Datos.");
         }
     }
 
@@ -276,23 +208,22 @@ public class FrameAlumno extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableEjemplares = new javax.swing.JTable();
-        btnImprimirEtiquetas = new com.mommoo.flat.button.FlatButton();
+        tablaHistorial = new javax.swing.JTable();
         panelGeneralSuperior = new javax.swing.JPanel();
         panelSuperior = new javax.swing.JPanel();
         panelNombre = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        textNIAAlumno = new javax.swing.JLabel();
         panelISBN = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        textNombreAlumno = new javax.swing.JLabel();
         panelMedio = new javax.swing.JPanel();
         panelCurso = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        textTelefonoAlumno = new javax.swing.JLabel();
         panelAsignatura = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        textEmailAlumno = new javax.swing.JLabel();
         panelInferior = new javax.swing.JPanel();
         panelUnidades = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -347,7 +278,8 @@ public class FrameAlumno extends javax.swing.JFrame {
         panelLibro.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         imgLibro.setForeground(new java.awt.Color(51, 51, 51));
-        imgLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/image1.png"))); // NOI18N
+        imgLibro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imgLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/person-flat.png"))); // NOI18N
         imgLibro.setPreferredSize(new java.awt.Dimension(192, 192));
 
         javax.swing.GroupLayout panelLibroLayout = new javax.swing.GroupLayout(panelLibro);
@@ -376,9 +308,9 @@ public class FrameAlumno extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
         jLabel9.setText("Ejemplares:");
 
-        tableEjemplares.setBackground(new java.awt.Color(239, 235, 233));
-        tableEjemplares.setForeground(new java.awt.Color(51, 51, 51));
-        tableEjemplares.setModel(new javax.swing.table.DefaultTableModel(
+        tablaHistorial.setBackground(new java.awt.Color(239, 235, 233));
+        tablaHistorial.setForeground(new java.awt.Color(51, 51, 51));
+        tablaHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -394,24 +326,9 @@ public class FrameAlumno extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableEjemplares.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tableEjemplares.setFillsViewportHeight(true);
-        jScrollPane1.setViewportView(tableEjemplares);
-
-        btnImprimirEtiquetas.setBackground(Colores.buttons);
-        btnImprimirEtiquetas.setText("Imprimir etiquetas");
-        btnImprimirEtiquetas.setCornerRound(10);
-        btnImprimirEtiquetas.setPreferredSize(new java.awt.Dimension(111, 32));
-        btnImprimirEtiquetas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnImprimirEtiquetasMouseClicked(evt);
-            }
-        });
-        btnImprimirEtiquetas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimirEtiquetasActionPerformed(evt);
-            }
-        });
+        tablaHistorial.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tablaHistorial.setFillsViewportHeight(true);
+        jScrollPane1.setViewportView(tablaHistorial);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -420,20 +337,17 @@ public class FrameAlumno extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnImprimirEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnImprimirEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -452,9 +366,9 @@ public class FrameAlumno extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setText("NIA:");
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel6.setText("10429497");
+        textNIAAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textNIAAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textNIAAlumno.setText("10429497");
 
         javax.swing.GroupLayout panelNombreLayout = new javax.swing.GroupLayout(panelNombre);
         panelNombre.setLayout(panelNombreLayout);
@@ -465,7 +379,7 @@ public class FrameAlumno extends javax.swing.JFrame {
                 .addGroup(panelNombreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelNombreLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
+                        .addComponent(textNIAAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
                     .addGroup(panelNombreLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(0, 160, Short.MAX_VALUE)))
@@ -477,7 +391,7 @@ public class FrameAlumno extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textNIAAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -489,9 +403,9 @@ public class FrameAlumno extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         jLabel3.setText("Nombre y Apellidos:");
 
-        jLabel12.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel12.setText("Jose Sanchis Belda");
+        textNombreAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textNombreAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textNombreAlumno.setText("Jose Sanchis Belda");
 
         javax.swing.GroupLayout panelISBNLayout = new javax.swing.GroupLayout(panelISBN);
         panelISBN.setLayout(panelISBNLayout);
@@ -502,7 +416,7 @@ public class FrameAlumno extends javax.swing.JFrame {
                 .addGroup(panelISBNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelISBNLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+                        .addComponent(textNombreAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(panelISBNLayout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -514,7 +428,7 @@ public class FrameAlumno extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(textNombreAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -548,9 +462,9 @@ public class FrameAlumno extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(51, 51, 51));
         jLabel7.setText("Telefono:");
 
-        jLabel13.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel13.setText("684092823");
+        textTelefonoAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textTelefonoAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textTelefonoAlumno.setText("684092823");
 
         javax.swing.GroupLayout panelCursoLayout = new javax.swing.GroupLayout(panelCurso);
         panelCurso.setLayout(panelCursoLayout);
@@ -563,7 +477,7 @@ public class FrameAlumno extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panelCursoLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)))
+                        .addComponent(textTelefonoAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelCursoLayout.setVerticalGroup(
@@ -572,7 +486,7 @@ public class FrameAlumno extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addComponent(textTelefonoAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -584,9 +498,9 @@ public class FrameAlumno extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         jLabel5.setText("Correo electrónico:");
 
-        jLabel14.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel14.setText("sanchisbeldajose@gmail.com");
+        textEmailAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textEmailAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textEmailAlumno.setText("sanchisbeldajose@gmail.com");
 
         javax.swing.GroupLayout panelAsignaturaLayout = new javax.swing.GroupLayout(panelAsignatura);
         panelAsignatura.setLayout(panelAsignaturaLayout);
@@ -597,7 +511,7 @@ public class FrameAlumno extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(panelAsignaturaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(textEmailAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelAsignaturaLayout.setVerticalGroup(
@@ -606,7 +520,7 @@ public class FrameAlumno extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addComponent(textEmailAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -831,57 +745,6 @@ public class FrameAlumno extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    // Imprimir etiquetas de los ejemplares del libro
-
-    private void btnImprimirEtiquetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetasActionPerformed
-        // TODO add your handling code here:
-
-        System.out.println("Holaaa");
-
-        /*CodigoBarras generadorCodigos = new CodigoBarras();
-        
-        try {
-            List<String> codigos = new ArrayList<String>();
-            
-            for (int i = 0; i < libro.getEjemplares().size(); i++) {
-                codigos.add(libro.getEjemplares().get(i).getCodigo());
-            }
-            
-            generadorCodigos.imprimirList(generadorCodigos.generarCodigoList(codigos));
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,
-                        "Error al imprimir los códigos de barras: \n-" + ex.getMessage(), "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            
-            ex.printStackTrace();
-        }*/
-    }//GEN-LAST:event_btnImprimirEtiquetasActionPerformed
-
-    private void btnImprimirEtiquetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetasMouseClicked
-        // TODO add your handling code here:
-        CodigoBarras generadorCodigos = new CodigoBarras();
-
-        try {
-            List<String> codigos = new ArrayList<String>();
-
-            for (int i = 0; i < libro.getEjemplares().size(); i++) {
-                codigos.add(libro.getEjemplares().get(i).getCodigo());
-            }
-
-            generadorCodigos.imprimirList(libro, generadorCodigos.generarCodigoList(codigos));
-            
-            JOptionPane.showMessageDialog(this,
-                    "Códigos de los ejemplares generados correctamente.", "Información",
-                    JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Error al generar los códigos de barras: \n-" + ex.getMessage(), "Error",
-                    JOptionPane.ERROR_MESSAGE);
-
-            ex.printStackTrace();
-        }
-    }//GEN-LAST:event_btnImprimirEtiquetasMouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -925,20 +788,15 @@ public class FrameAlumno extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.mommoo.flat.button.FlatButton btnImprimirEtiquetas;
     private com.mommoo.flat.select.FlatCheckBox chkObsoleto;
     private javax.swing.JLabel imgLibro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -960,30 +818,12 @@ public class FrameAlumno extends javax.swing.JFrame {
     private javax.swing.JPanel panelPrecio;
     private javax.swing.JPanel panelSuperior;
     private javax.swing.JPanel panelUnidades;
-    private javax.swing.JTable tableEjemplares;
+    private javax.swing.JTable tablaHistorial;
+    private javax.swing.JLabel textEmailAlumno;
+    private javax.swing.JLabel textNIAAlumno;
+    private javax.swing.JLabel textNombreAlumno;
     private javax.swing.JTextField textPrecio;
+    private javax.swing.JLabel textTelefonoAlumno;
     private javax.swing.JTextField textUnidadesLibro;
     // End of variables declaration//GEN-END:variables
-
-    public void setEditMode(boolean editable) {
-        textNombreLibro.setEditable(editable);
-        textISBNLibro.setEditable(editable);
-        cbCurso.setEditable(editable);
-        cbCurso.setEnabled(editable);
-        cbAsignatura.setEditable(editable);
-        cbAsignatura.setEnabled(editable);
-        textUnidadesLibro.setEditable(editable);
-        chkObsoleto.setEnabled(editable);
-        btnImprimirEtiquetas.setEnabled(editable);
-        textPrecio.setEnabled(editable);
-        btnSave.setVisible(editable);
-
-        if (isNewLibro) {
-            btnDelete.setVisible(false);
-            textCodigoDeBarrasLibro.setEditable(editable);
-        } else {
-            btnDelete.setVisible(editable);
-            textCodigoDeBarrasLibro.setEditable(false);
-        }
-    }
 }

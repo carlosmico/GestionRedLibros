@@ -31,12 +31,13 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    FrameDevoluciones gesDevoluciones = null;
-    FrameEntrega gesEntrega = null;
-    FrameInputLibro inputLibro = null;
-    FrameMatriculas gesMatri = null;
-    FrameOpciones opciones = null;
+    FrameDevoluciones gesDevoluciones;
+    FrameEntrega gesEntrega;
+    FrameInputLibro inputLibro;
+    FrameMatriculas gesMatri;
+    FrameOpciones opciones;
     FrameCarga frameCarga;
+    FrameAlumno frameAlumno;
     
     public static GestorSesiones gestorSesiones;
 
@@ -282,7 +283,10 @@ public class Main extends javax.swing.JFrame {
 
     private void btnConsultaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaAlumnosActionPerformed
         // TODO add your handling code here:
-        System.out.println("Gestion Alumno");
+        if (frameAlumno == null){
+            frameAlumno = new FrameAlumno(null);
+        }
+        frameAlumno.setVisible(true);
     }//GEN-LAST:event_btnConsultaAlumnosActionPerformed
 
     private void btnGestionesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGestionesMouseReleased
