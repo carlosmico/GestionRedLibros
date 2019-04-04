@@ -20,6 +20,7 @@ package Pojos;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
 //Imports Hibernate
@@ -56,7 +57,7 @@ public class Libro implements Serializable{
     private boolean obsoleto;
     private double precio;
     
-    @OneToMany (mappedBy = "libro", fetch=FetchType.LAZY)
+    @OneToMany (cascade = CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "libro")
     private List<Ejemplar> ejemplares;
     
     public Libro(){

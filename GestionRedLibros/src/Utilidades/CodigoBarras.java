@@ -54,7 +54,7 @@ public class CodigoBarras {
                 Barcode39 barcode = new Barcode39();
                 barcode.setCode(codigos.get(i));
 
-                barcode.setBarHeight(30);
+                barcode.setBarHeight(60);
 
                 barcodes.add(barcode);
             }
