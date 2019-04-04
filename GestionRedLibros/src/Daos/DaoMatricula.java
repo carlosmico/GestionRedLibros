@@ -55,6 +55,8 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
     }
 
     public void actualizarMatriculas(List<Matricula> matriculasCargadas) throws Exception {
+        this.session.beginTransaction();
+        
         for (int i = 0; i < matriculasCargadas.size(); i++) {
             Matricula m = matriculasCargadas.get(i);
             
@@ -90,7 +92,11 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                 }
 
                 this.session.saveOrUpdate(matricula);
+                
+                this.session.getTransaction().commit();
             } catch (PersistenceException ex) {
+                this.session.getTransaction().commit();
+                
                 ex.printStackTrace();
                 System.out.println("Error DaoMatricula-actualizar(): " + ex.getMessage());
                 throw new Exception();
