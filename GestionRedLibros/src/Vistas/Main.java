@@ -31,14 +31,14 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    FrameDevoluciones gesDevoluciones;
-    FrameEntrega gesEntrega;
-    FrameInputLibro inputLibro;
-    FrameMatriculas gesMatri;
-    FrameOpciones opciones;
+    FrameDevoluciones frameDevoluciones;
+    FrameEntrega frameEntrega;
+    FrameInputLibro frameInputLibro;
+    FrameMatriculas frameMatriculas;
+    FrameOpciones frameOpciones;
     FrameCarga frameCarga;
-    FrameAlumno frameAlumno;
-    
+    FrameInputAlumno frameInputAlumno;
+
     public static GestorSesiones gestorSesiones;
 
     public Main() throws IOException {
@@ -190,11 +190,6 @@ public class Main extends javax.swing.JFrame {
                 btnGestionesMouseReleased(evt);
             }
         });
-        btnGestiones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGestionesActionPerformed(evt);
-            }
-        });
         jPanel1.add(btnGestiones);
 
         btnOpciones.setBackground(new java.awt.Color(66, 47, 44));
@@ -239,54 +234,54 @@ public class Main extends javax.swing.JFrame {
 
     private void btnDevolucionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucionesActionPerformed
         // TODO add your handling code here:
-        if (gesDevoluciones == null) {
-            gesDevoluciones = new FrameDevoluciones();
+        if (frameDevoluciones == null) {
+            frameDevoluciones = new FrameDevoluciones();
         }
-        gesDevoluciones.setVisible(true);
+        frameDevoluciones.setVisible(true);
     }//GEN-LAST:event_btnDevolucionesActionPerformed
 
     private void btnEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregaActionPerformed
         // TODO add your handling code here:
-        if (gesEntrega == null) {
-            gesEntrega = new FrameEntrega();
+        if (frameEntrega == null) {
+            frameEntrega = new FrameEntrega();
         }
-        gesEntrega.setVisible(true);
+        frameEntrega.setVisible(true);
     }//GEN-LAST:event_btnEntregaActionPerformed
 
     private void btnGestionLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionLibrosActionPerformed
         // TODO add your handling code here:
-        if (inputLibro == null) {
-            inputLibro = new FrameInputLibro(true);
+        if (frameInputLibro == null) {
+            frameInputLibro = new FrameInputLibro(true);
         } else {
-            if (!inputLibro.isVisible()) {
-                inputLibro = null;
-                inputLibro = new FrameInputLibro(true);
+            if (!frameInputLibro.isVisible()) {
+                frameInputLibro = null;
+                frameInputLibro = new FrameInputLibro(true);
             }
         }
-        inputLibro.textTitleFrame.setText("Gestión Libros");
-        inputLibro.setVisible(true);
+        frameInputLibro.textTitleFrame.setText("Gestión Libros");
+        frameInputLibro.setVisible(true);
     }//GEN-LAST:event_btnGestionLibrosActionPerformed
 
     private void btnGestionEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionEjemplarActionPerformed
         // TODO add your handling code here:
-        if (inputLibro == null) {
-            inputLibro = new FrameInputLibro(false);
+        if (frameInputLibro == null) {
+            frameInputLibro = new FrameInputLibro(false);
         } else {
-            if (!inputLibro.isVisible()) {
-                inputLibro = null;
-                inputLibro = new FrameInputLibro(false);
+            if (!frameInputLibro.isVisible()) {
+                frameInputLibro = null;
+                frameInputLibro = new FrameInputLibro(false);
             }
         }
-        inputLibro.textTitleFrame.setText("Gestión Ejemplares");
-        inputLibro.setVisible(true);
+        frameInputLibro.textTitleFrame.setText("Gestión Ejemplares");
+        frameInputLibro.setVisible(true);
     }//GEN-LAST:event_btnGestionEjemplarActionPerformed
 
     private void btnConsultaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaAlumnosActionPerformed
         // TODO add your handling code here:
-        if (frameAlumno == null){
-            frameAlumno = new FrameAlumno(null);
+        if (frameInputAlumno == null) {
+            frameInputAlumno = new FrameInputAlumno();
         }
-        frameAlumno.setVisible(true);
+        frameInputAlumno.setVisible(true);
     }//GEN-LAST:event_btnConsultaAlumnosActionPerformed
 
     private void btnGestionesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGestionesMouseReleased
@@ -294,18 +289,14 @@ public class Main extends javax.swing.JFrame {
         menuPopup.show(evt.getComponent(), 0, 66);
     }//GEN-LAST:event_btnGestionesMouseReleased
 
-    private void btnGestionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGestionesActionPerformed
-
     private void btnMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatriculasActionPerformed
         // TODO add your handling code here:
-        if (gesMatri == null) {
-            gesMatri = new FrameMatriculas();
+        if (frameMatriculas == null) {
+            frameMatriculas = new FrameMatriculas();
         }
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {
-                gesMatri.RefrescarTabla();
+                frameMatriculas.RefrescarTabla();
                 return null;
             }
 
@@ -314,7 +305,7 @@ public class Main extends javax.swing.JFrame {
 
             protected void done() {
                 //Rellenamos la lista de los libros
-                gesMatri.setVisible(true);
+                frameMatriculas.setVisible(true);
 
                 frameCarga.dispose();
             }
@@ -329,9 +320,9 @@ public class Main extends javax.swing.JFrame {
 
     private void btnOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionesActionPerformed
         // TODO add your handling code here:
-        if (opciones == null) {
+        if (frameOpciones == null) {
             try {
-                opciones = new FrameOpciones();
+                frameOpciones = new FrameOpciones();
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InstantiationException ex) {
@@ -342,7 +333,7 @@ public class Main extends javax.swing.JFrame {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        opciones.setVisible(true);
+        frameOpciones.setVisible(true);
     }//GEN-LAST:event_btnOpcionesActionPerformed
 
     /**
