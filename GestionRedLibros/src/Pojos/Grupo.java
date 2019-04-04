@@ -24,6 +24,7 @@ import javax.persistence.Column;
 
 //Imports Hibernate
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -48,7 +49,7 @@ public class Grupo implements Serializable{
     private String turno;
     private String tutor_ppal;
     
-    @OneToMany (mappedBy = "grupo")
+    @OneToMany (mappedBy = "grupo", fetch=FetchType.LAZY)
     private List<Alumno> alumnos;
     
     public Grupo(){

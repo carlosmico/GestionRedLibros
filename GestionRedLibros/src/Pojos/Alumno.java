@@ -64,10 +64,10 @@ public class Alumno implements Serializable {
     @JoinColumn (name = "grupo")
     private Grupo grupo;
 
-    @OneToMany(mappedBy = "alumno")
+    @OneToMany(mappedBy = "alumno", fetch=FetchType.LAZY)
     private List<Matricula> matriculas;
 
-    @OneToMany(mappedBy = "alumno")
+    @OneToMany(mappedBy = "alumno", fetch=FetchType.LAZY)
     private List<Historial> historiales;
     
     public Alumno() {

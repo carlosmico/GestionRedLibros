@@ -24,6 +24,7 @@ import javax.persistence.Column;
 
 //Imports Hibernate
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -51,10 +52,10 @@ public class Curso implements Serializable{
     private String nombre_val;
     private String idPadre;
     
-    @OneToMany (mappedBy = "curso_contenido")
+    @OneToMany (mappedBy = "curso_contenido", fetch=FetchType.LAZY)
     private List<Contenido> contenidos;
     
-    @OneToMany (mappedBy = "curso_alumno")
+    @OneToMany (mappedBy = "curso_alumno", fetch=FetchType.LAZY)
     private List<Alumno> alumnos;
     
     public Curso(){
