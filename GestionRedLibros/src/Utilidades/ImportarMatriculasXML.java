@@ -210,6 +210,8 @@ public class ImportarMatriculasXML {
             dao.actualizarMatriculas(matriculasCargadas);
             dao.session.getTransaction().commit();
         }catch(Exception e){
+            System.out.println("Error: ImportarMatriculasXML - insertarMatriculasBD()");
+            e.printStackTrace();
             throw new Exception();
         }
         

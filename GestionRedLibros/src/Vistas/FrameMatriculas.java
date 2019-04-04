@@ -243,7 +243,7 @@ public class FrameMatriculas extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(this, "Matrículas importadas correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "No se han podido importar las matrículas.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No se han podido importar las matrículas.\n-Revise el archivo XML.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 ex.printStackTrace();
             }
         }
