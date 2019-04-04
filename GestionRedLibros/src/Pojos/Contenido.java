@@ -24,6 +24,7 @@ import javax.persistence.Column;
 
 //Imports Hibernate
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,7 +57,7 @@ public class Contenido implements Serializable{
     private String nombre_cas;
     private String nombre_val;
     
-    @OneToMany (mappedBy = "contenido_libro")
+    @OneToMany (mappedBy = "contenido_libro", fetch=FetchType.LAZY)
     private List<Libro> libros;
     
     public Contenido(){
