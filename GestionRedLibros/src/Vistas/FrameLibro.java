@@ -215,8 +215,6 @@ public class FrameLibro extends javax.swing.JFrame {
     private void RefrescarTabla() {
         List<Ejemplar> ejemplares = libro.getEjemplares();
 
-        System.out.println("Ejemplares: " + libro.getEjemplares().size());
-
         if (ejemplares.size() > 0) {
             DefaultTableModel tableModel = (DefaultTableModel) this.tableEjemplares.getModel();
 
@@ -258,7 +256,7 @@ public class FrameLibro extends javax.swing.JFrame {
         } else {
             frameCarga.dispose();
             btnImprimirEtiquetas.setVisible(false);
-            JOptionPane.showMessageDialog(null, "No hay datos de ejemplares en la Base de Datos.");
+            JOptionPane.showMessageDialog(null, "No hay datos de ejemplares de este libro.");
         }
     }
 
@@ -965,45 +963,46 @@ public class FrameLibro extends javax.swing.JFrame {
 
         String errores = "";
 
+        if (textNombreLibro.getText().equals("")) {
+            errores += "\n- El nombre no puede estar vacío.";
+        }
+
+        if (textISBNLibro.getText().equals("")) {
+            errores += "\n- El ISBN no puede estar vacío.";
+        }
+
+        if (textUnidadesLibro.getText().equals("")) {
+            errores += "\n- El campo de las unidades no puede estar vacío.";
+        }
+
+        try {
+            int un = Integer.parseInt(textUnidadesLibro.getText());
+            if (un <= 0) {
+                errores += "\n- El valor de las unidades debe ser un valor positivo.";
+            }
+        } catch (Exception e) {
+            errores += "\n- El valor de las unidades debe ser un valor numérico.";
+        }
+
+        try {
+            double pre = Double.parseDouble(textPrecio.getText());
+            if (pre <= 0) {
+                errores += "\n- El precio debe ser un valor positivo.";
+            }
+        } catch (Exception e) {
+            errores += "\n- El precio debe ser un valor numérico.";
+        }
+
+        if (textCodigoDeBarrasLibro.getText().equals("")) {
+            errores += "\n- El código del libro no puede estar vacío.";
+        }
+
+        if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
+            errores += "\n- Debe seleccionar una asignatura válida.";
+        }
+
         if (isNewLibro) {
             //Creacion de un nuevo libro
-            if (textNombreLibro.getText().equals("")) {
-                errores += "\n- El nombre no puede estar vacío.";
-            }
-
-            if (textISBNLibro.getText().equals("")) {
-                errores += "\n- El ISBN no puede estar vacío.";
-            }
-
-            if (textUnidadesLibro.getText().equals("")) {
-                errores += "\n- El campo de las unidades no puede estar vacío.";
-            }
-
-            try {
-                int un = Integer.parseInt(textUnidadesLibro.getText());
-                if (un <= 0) {
-                    errores += "\n- El valor de las unidades debe ser un valor positivo.";
-                }
-            } catch (Exception e) {
-                errores += "\n- El valor de las unidades debe ser un valor numérico.";
-            }
-
-            try {
-                double pre = Double.parseDouble(textPrecio.getText());
-                if (pre <= 0) {
-                    errores += "\n- El precio debe ser un valor positivo.";
-                }
-            } catch (Exception e) {
-                errores += "\n- El precio debe ser un valor numérico.";
-            }
-
-            if (textCodigoDeBarrasLibro.getText().equals("")) {
-                errores += "\n- El código del libro no puede estar vacío.";
-            }
-
-            if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
-                errores += "\n- Debe seleccionar una asignatura válida.";
-            }
 
             if (errores.equals("")) {
                 //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
@@ -1026,17 +1025,22 @@ public class FrameLibro extends javax.swing.JFrame {
                 try {
                     daoLibro.session.beginTransaction();
                     daoLibro.grabar(newLibro);
+                    libro = daoLibro.buscar(newLibro.getCodigo());
                     daoLibro.session.getTransaction().commit();
+                    
+                    
 
+                   
                     JOptionPane.showMessageDialog(this, "Libro añadido correctamente.",
                             "Información", JOptionPane.INFORMATION_MESSAGE);
 
                     setEditMode(false);
 
-                    libro = newLibro;
-
+           
                     isNewLibro = false;
+                    btnEdit.setEnabled(true);
 
+                    RefrescarTabla();
                 } catch (PersistenceException e) {
 
                     JOptionPane.showMessageDialog(this,
@@ -1044,7 +1048,7 @@ public class FrameLibro extends javax.swing.JFrame {
                             JOptionPane.ERROR_MESSAGE);
 
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                     JOptionPane.showMessageDialog(this,
                             "Error al crear el libro.", "Error",
                             JOptionPane.ERROR_MESSAGE);
@@ -1058,35 +1062,6 @@ public class FrameLibro extends javax.swing.JFrame {
         } else {
             //Modificacion de un libro existente
 
-            if (textNombreLibro.getText().equals("")) {
-                errores += "\n- El nombre no puede estar vacío.";
-            }
-
-            if (textISBNLibro.getText().equals("")) {
-                errores += "\n- El ISBN no puede estar vacío.";
-            }
-
-            try {
-                if (textUnidadesLibro.getText().equals("")) {
-                    errores += "\n- El campo de las unidades no puede estar vacío.";
-                } else {
-                    int un = Integer.parseInt(textUnidadesLibro.getText());
-                    if (un <= 0) {
-                        errores += "\n- El valor de las unidades debe ser un valor positivo.";
-                    }
-                }
-            } catch (Exception e) {
-                errores += "\n- El valor de las unidades debe ser un valor númerico.";
-            }
-
-            if (textCodigoDeBarrasLibro.getText().equals("")) {
-                errores += "\n- El código del libro no puede estar vacío.";
-            }
-
-            if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
-                errores += "\n- Debe seleccionar una asignatura válida.";
-            }
-
             if (errores.equals("")) {
                 //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
 
@@ -1094,6 +1069,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 libro.setISBN(textISBNLibro.getText());
                 libro.setNombre(textNombreLibro.getText());
                 libro.setObsoleto(chkObsoleto.isChecked());
+                libro.setPrecio(Double.parseDouble(textPrecio.getText()));
                 libro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
 
                 for (int i = 0; i < listaContenido.size(); i++) {
@@ -1113,6 +1089,8 @@ public class FrameLibro extends javax.swing.JFrame {
                             JOptionPane.INFORMATION_MESSAGE);
 
                     setEditMode(false);
+
+                    RefrescarTabla();
                 } catch (PersistenceException e) {
                     JOptionPane.showMessageDialog(this,
                             "El libro ya existe en la Base de Datos.", "Error",
@@ -1128,8 +1106,6 @@ public class FrameLibro extends javax.swing.JFrame {
                         JOptionPane.ERROR_MESSAGE);
             }
         }
-
-        RefrescarTabla();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void cbCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCursoActionPerformed
@@ -1215,9 +1191,6 @@ public class FrameLibro extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
         try {
-            daoContenido.desconectar();
-            daoCurso.desconectar();
-            daoLibro.desconectar();
         } catch (Exception e) {
             e.printStackTrace();
         }

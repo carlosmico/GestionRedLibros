@@ -38,14 +38,25 @@ public class PruebaHibernate {
     public static void main(String[] args) {
         Curso curso = new Curso("1", "DAM", "a", "a", "a", "a");
         Contenido contenido = new Contenido(6, curso, "a", "a", "a", "a");
-        Libro l = new Libro("96799999", contenido, "Libro nuevo", "nombre", 40, true, 0);
+        Libro l = new Libro("444", contenido, "Libro nuevo", "nombre", 40, true, 0);
         Ejemplar ejemplar = new Ejemplar("96799999002", l, 1, true);
         
         try {
             SessionFactory factory = UtilesHibernate.getSessionFactory();
-            Session session = factory.getCurrentSession();
+            Session session = factory.openSession();
             session.beginTransaction();
             
+            DaoLibro dao = new DaoLibro(session);
+            
+            dao.grabar(l);
+            
+            dao.generarEjemplares(l);
+            
+            List<Libro> al = new DaoLibro(session).buscarTodos();
+            
+            for (int i = 0; i < al.size(); i++) {
+                System.out.println(al.get(i).getEjemplares().size());
+            }
             
             
             session.getTransaction().commit();
