@@ -38,6 +38,7 @@ public class DaoEjemplar extends DaoGenerico<Ejemplar, Integer> implements Inter
         this.session = s;
     }
     
+    /*
     @Override
     public void actualizar(Ejemplar e) throws PersistenceException {
 
@@ -87,4 +88,5 @@ public class DaoEjemplar extends DaoGenerico<Ejemplar, Integer> implements Inter
             }
         }
     }
+*/
 }

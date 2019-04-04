@@ -48,9 +48,13 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
     @Override
     public void grabar(Libro libro) throws PersistenceException {
         try {
+            this.session.beginTransaction();
+
             libro.setEjemplares(generarEjemplares(libro));
+
             this.session.save(libro);
-            
+
+            this.session.getTransaction().commit();
         } catch (PersistenceException e) {
             throw new PersistenceException();
         }
@@ -62,11 +66,11 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
         libroNew = l;
 
-        libroOld = (Libro) session.get(Libro.class, l.getCodigo());
-
-        comprobarEjemplares(libroNew, libroOld);
-
         try {
+            this.session.beginTransaction();
+
+            libroOld = (Libro) session.get(Libro.class, l.getCodigo());
+
             libroOld.setContenido(libroNew.getContenido());
             libroOld.setISBN(libroNew.getISBN());
             libroOld.setNombre(libroNew.getNombre());
@@ -74,7 +78,11 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
             libroOld.setPrecio(libroNew.getPrecio());
             libroOld.setUnidades(libroNew.getUnidades());
 
+            libroOld.setEjemplares(actualizarEjemplares(libroNew, libroOld));
+
             this.session.saveOrUpdate(libroOld);
+
+            this.session.getTransaction().commit();
         } catch (PersistenceException e) {
             throw new PersistenceException();
         }
@@ -83,7 +91,11 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
     @Override
     public void borrar(Libro libro) throws PersistenceException {
         try {
+            this.session.beginTransaction();
+
             this.session.delete(libro);
+
+            this.session.getTransaction().commit();
         } catch (PersistenceException e) {
             throw new PersistenceException();
         }
@@ -111,17 +123,9 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
         return lista;
     }
 
-    public List<Ejemplar> getEjemplares(Libro libro) {
-        List<Ejemplar> listaEjemplares = new ArrayList<Ejemplar>();
-
-        Query query = this.session.createQuery("from Ejemplar where libro = '" + libro.getCodigo() + "'");
-        listaEjemplares = query.list();
-        return listaEjemplares;
-    }
-
     private List<Ejemplar> generarEjemplares(Libro libro) {
         List<Ejemplar> ejemplares = new ArrayList<Ejemplar>();
-        
+
         Ejemplar ejemplar;
         String codigo_ejemplar = "";
 
@@ -137,29 +141,51 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
             ejemplar = new Ejemplar(codigo_ejemplar, libro, Estado.nuevo, false);
 
             ejemplares.add(ejemplar);
-            //this.session.save(ejemplar);
         }
-        
+
         return ejemplares;
     }
 
     /* Comprobamos los ejemplares del libro actual para saber si hemos de borrar 
      *  o añadir nuevos ejemplares
      */
-    private void comprobarEjemplares(Libro libroNuevo, Libro libroOld) {
-        Libro libroActual = (Libro) this.session.get(Libro.class, libroNuevo.getCodigo());
-        
+    private List<Ejemplar> actualizarEjemplares(Libro libroNuevo, Libro libroOld) {
         int cantidad = libroNuevo.getUnidades() - libroOld.getUnidades();
-        
-        if (Math.signum(cantidad) > 0){
-            //Creamos ejemplares restantes
-            System.out.println("Se crean " + cantidad + " ejemplares");
-            
-        } else if (Math.signum(cantidad) < 0){
-            //Eliminamos ejemplares restantes
+
+        int codBase;
+
+        List<Ejemplar> ejemplares = libroOld.getEjemplares();
+
+        if (Math.signum(cantidad) > 0) {
+            //Añadimos la cantidad de ejemplares que se ha incrementado.
+
+            String codigo = ejemplares.get(ejemplares.size() - 1).getCodigo();
+
+            codBase = Integer.parseInt(codigo.substring(codigo.length() - 3));
+
+            for (int i = 0; i < cantidad; i++) {
+                String codigo_ejemplar;
+
+                codBase++;
+
+                if (codBase < 10) {
+                    codigo_ejemplar = libroOld.getCodigo() + "00" + codBase;
+                } else if (codBase < 100) {
+                    codigo_ejemplar = libroOld.getCodigo() + "0" + codBase;
+                } else {
+                    codigo_ejemplar = libroOld.getCodigo() + "" + codBase;
+                }
+
+                Ejemplar ejemplar = new Ejemplar(codigo_ejemplar, libroNuevo, Estado.nuevo, false);
+
+                ejemplares.add(ejemplar);
+            }
+        } else if (Math.signum(cantidad) < 0) {
+            //Eliminamos la cantidad de ejemplares que se ha reducido.
             System.out.println("Se eliminan " + Math.abs(cantidad) + " ejemplares");
-            
         }
+
+        return ejemplares;
 
         /*
         int cantidad;

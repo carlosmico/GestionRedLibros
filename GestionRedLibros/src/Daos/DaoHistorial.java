@@ -43,6 +43,8 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
     @Override
     public void grabar(Historial h) throws PersistenceException {
         try {
+            this.session.beginTransaction();
+            
             this.session.save(h);
 
             this.session.getTransaction().commit();
@@ -57,7 +59,9 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         try {
             Historial historial = (Historial) session.get(Historial.class, h.getId());
 
-            if (historial != null) {
+            if (historial == null) {
+                historial = new Historial();
+                
                 historial.setEjemplar(h.getEjemplar());
                 historial.setAlumno(h.getAlumno());
                 historial.setCurso_escolar(h.getCurso_escolar());
@@ -66,11 +70,11 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
                 historial.setFecha_inicial(h.getFecha_inicial());
                 historial.setFecha_final(h.getFecha_final());
                 historial.setObservaciones(h.getObservaciones());
-
-                this.session.saveOrUpdate(historial);
-            } else {
-                this.session.saveOrUpdate(h);
             }
+            
+            this.session.beginTransaction();
+            
+            this.session.saveOrUpdate(historial);
 
             this.session.getTransaction().commit();
         } catch (PersistenceException ex) {
