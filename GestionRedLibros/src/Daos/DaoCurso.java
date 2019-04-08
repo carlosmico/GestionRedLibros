@@ -31,13 +31,52 @@ import org.hibernate.query.Query;
  * @author Carlos
  */
 public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDaoGenerico<Curso, String> {
-    
+
     public Session session;
-    
-    public DaoCurso(Session s){
+
+    public DaoCurso(Session s) {
         this.session = s;
     }
-    
+
+    public void actualizarCursos(List<Curso> cursos) throws Exception {
+        for (int i = 0; i < cursos.size(); i++) {
+            Curso c = cursos.get(i);
+
+            Curso curso = buscar(c.getCodigo());
+            try {
+                this.session.beginTransaction();
+
+                if (curso == null) {
+                    curso = new Curso(
+                            c.getCodigo(),
+                            c.getEnsenanza(),
+                            c.getAbreviatura(),
+                            c.getNombre_cas(),
+                            c.getNombre_val(),
+                            c.getIdPadre()
+                    );
+                } else {
+                    curso.setEnsenanza(c.getEnsenanza());
+                    curso.setAbreviatura(c.getAbreviatura());
+                    curso.setNombre_cas(c.getNombre_cas());
+                    curso.setNombre_val(c.getNombre_val());
+                    curso.setIdPadre(c.getIdPadre());
+                }
+
+                this.session.saveOrUpdate(curso);
+
+                this.session.getTransaction().commit();
+
+            } catch (Exception e) {
+                this.session.getTransaction().commit();
+
+                e.printStackTrace();
+                System.out.println("Error DaoCurso-actualizar(): " + e.getMessage());
+                throw new Exception();
+            }
+        }
+    }
+
     public Curso buscar(String codigo) throws PersistenceException {
         Curso curso;
 
@@ -47,28 +86,27 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
             e.printStackTrace();
             throw new PersistenceException();
         }
-        
+
         return curso;
     }
-    
-    public List<Curso> buscarTodos(){    
+
+    public List<Curso> buscarTodos() {
         List<Curso> lista = new ArrayList<Curso>();
-        
+
         Query query = this.session.createQuery("from Curso where ensenanza = 3 or ensenanza = 5");
         lista = query.list();
 
         return lista;
     }
-    
+
     @Override
-    public void desconectar(){
-        if(this.session != null){
-            try{
+    public void desconectar() {
+        if (this.session != null) {
+            try {
                 this.session.close();
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Error DaoCurso-desconectar()");
             }
         }
     }
 }
-

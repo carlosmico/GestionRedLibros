@@ -18,6 +18,7 @@
 package Daos;
 
 import Pojos.Contenido;
+import Pojos.Matricula;
 import dao.DaoGenerico;
 import dao.InterfaceDaoGenerico;
 import java.util.ArrayList;
@@ -31,14 +32,49 @@ import org.hibernate.query.Query;
  * @author Carlos
  */
 public class DaoContenido extends DaoGenerico<Contenido, Integer> implements InterfaceDaoGenerico<Contenido, Integer> {
-    
+
     public Session session;
-    
-    public DaoContenido(Session s){
+
+    public DaoContenido(Session s) {
         this.session = s;
     }
-    
-    public Contenido buscar(Integer id) throws PersistenceException {
+
+    public void actualizarContenidos(List<Contenido> contenidos) throws Exception {
+        for (int i = 0; i < contenidos.size(); i++) {
+            Contenido c = contenidos.get(i);
+
+            Contenido contenido = buscarContenido(c);
+
+            try {
+                this.session.beginTransaction();
+                
+                if (contenido == null) {
+                    contenido = new Contenido(c.getCurso(),
+                            c.getCodigo(), c.getEnsenanza(), c.getNombre_cas(),
+                            c.getNombre_val());
+                } else {
+                    contenido.setCurso(c.getCurso());
+                    contenido.setEnsenanza(c.getEnsenanza());
+                    contenido.setNombre_cas(c.getNombre_cas());
+                    contenido.setNombre_val(c.getNombre_val());
+                    
+                }
+
+                this.session.saveOrUpdate(contenido);
+                
+                this.session.getTransaction().commit();
+
+            } catch (Exception e) {
+                this.session.getTransaction().commit();
+
+                e.printStackTrace();
+                System.out.println("Error DaoContenido-actualizar(): " + e.getMessage());
+                throw new Exception();
+            }
+        }
+    }
+
+    public Contenido buscar(String id) throws PersistenceException {
         Contenido contenido;
 
         try {
@@ -47,28 +83,42 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
             e.printStackTrace();
             throw new PersistenceException();
         }
-        
+
         return contenido;
     }
-    
-    public List<Contenido> buscarTodos(){    
+
+    public Contenido buscarContenido(Contenido c) {
         List<Contenido> lista = new ArrayList<Contenido>();
-        
+
+        String query = "from Contenido c where c.codigo_contenido = '" + c.getCodigo() + "'"
+                + " and c.curso_contenido = " + c.getCurso().getCodigo();
+
+        lista = this.session.createQuery(query).list();
+
+        if (lista == null || lista.size() == 0) {
+            return null;
+        } else {
+            return lista.get(0);
+        }
+    }
+
+    public List<Contenido> buscarTodos() {
+        List<Contenido> lista = new ArrayList<Contenido>();
+
         Query query = this.session.createQuery("from Contenido where ensenanza = 3 or ensenanza = 5");
         lista = query.list();
-        
+
         return lista;
     }
-    
+
     @Override
-    public void desconectar(){
-        if(this.session != null){
-            try{
+    public void desconectar() {
+        if (this.session != null) {
+            try {
                 this.session.close();
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Error DaoContenido-desconectar()");
             }
         }
     }
 }
-

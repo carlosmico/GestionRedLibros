@@ -74,21 +74,23 @@ public class Alumno implements Serializable {
 
     }
 
-    public Alumno(String nia, String nombre, String apellido1, String apellido2, String fecha_nac, String sexo, String telefono1, String municipio_nac, String documento, String email1, Curso curso_alumno, Grupo grupo) {
+    public Alumno(String nia, String nombre, String apellido1, String apellido2, String fecha_nac, String municipio_nac, String documento, String telefono1, String sexo, String email1, Curso curso_alumno, Grupo grupo) {
+        this.id = nia;
         this.nia = nia;
-        this.id = this.nia;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.fecha_nac = fecha_nac;
         this.municipio_nac = municipio_nac;
         this.documento = documento;
+        this.telefono1 = telefono1;
+        this.sexo = sexo;
         this.email1 = email1;
         this.curso_alumno = curso_alumno;
         this.grupo = grupo;
-        this.sexo = sexo;
-        this.telefono1 = telefono1;
     }
+
+    
 
     public String getTelefono1() {
         return telefono1;

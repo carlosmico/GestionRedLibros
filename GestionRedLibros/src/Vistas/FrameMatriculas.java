@@ -17,6 +17,7 @@
  */
 package Vistas;
 
+import Utilidades.ImportarCursoXML;
 import Daos.DaoMatricula;
 import Pojos.Matricula;
 import javax.swing.JFrame;
@@ -65,7 +66,7 @@ public class FrameMatriculas extends javax.swing.JFrame {
     //Refrescamos los datos de la tabla recuperados de la BD
     public void RefrescarTabla() {
         daoMatricula = new DaoMatricula(gestorSesiones.getSession());
-        
+
         daoMatricula.session.beginTransaction();
         matriculas = daoMatricula.buscarTodos();
         daoMatricula.session.getTransaction().commit();
@@ -99,8 +100,7 @@ public class FrameMatriculas extends javax.swing.JFrame {
             System.out.println("Error");
             //JOptionPane.showMessageDialog(this, "No hay datos de matrículas en la Base de Datos.");
         }
-        
-        
+
     }
 
     /**
@@ -237,8 +237,9 @@ public class FrameMatriculas extends javax.swing.JFrame {
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
-                new ImportarMatriculasXML(chooser.getSelectedFile().getPath());
-
+                //new ImportarMatriculasXML(chooser.getSelectedFile().getPath());
+                new ImportarAlumnosXML(chooser.getSelectedFile().getPath());
+                
                 RefrescarTabla();
 
                 JOptionPane.showMessageDialog(this, "Matrículas importadas correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
