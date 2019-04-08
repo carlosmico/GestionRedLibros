@@ -21,18 +21,18 @@ package Vistas;
  *
  * @author Jose Sanchis
  */
-public class FrameCarga extends javax.swing.JFrame {
+public class FramePopup extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameCarga
      */
-    public FrameCarga() {
+    public FramePopup() {
         initComponents();
 
         this.setLocationRelativeTo(null);
     }
     
-    public FrameCarga(String mensaje){
+    public FramePopup(String mensaje){
         initComponents();
         this.setLocationRelativeTo(null);
         text.setText(mensaje);
@@ -115,20 +115,21 @@ public class FrameCarga extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameCarga.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FramePopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameCarga.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FramePopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameCarga.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FramePopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameCarga.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FramePopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameCarga().setVisible(true);
+                new FramePopup().setVisible(true);
             }
         });
     }

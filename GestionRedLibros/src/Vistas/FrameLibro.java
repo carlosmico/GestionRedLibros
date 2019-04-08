@@ -43,7 +43,7 @@ public class FrameLibro extends javax.swing.JFrame {
     public boolean busquedaPorCodigo = true;
     public boolean isLoading = false;
 
-    private FrameCarga frameCarga = null;
+    private FramePopup frameCarga = null;
 
     DaoLibro daoLibro;
     DaoCurso daoCurso;
@@ -273,7 +273,8 @@ public class FrameLibro extends javax.swing.JFrame {
         });
         menuOpcionesLibro.add(btnEliminar);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Libros");
 
         panelGeneralIzquierdo.setBackground(new java.awt.Color(239, 235, 233));
         panelGeneralIzquierdo.setPreferredSize(new java.awt.Dimension(400, 600));
@@ -1623,7 +1624,7 @@ public class FrameLibro extends javax.swing.JFrame {
             };
             worker.execute();
             if (frameCarga == null) {
-                frameCarga = new FrameCarga();
+                frameCarga = new FramePopup();
             }
             frameCarga.setVisible(true);
         } else {

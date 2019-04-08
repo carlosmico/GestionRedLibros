@@ -54,7 +54,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
     public boolean isLoading = false;
 
     private FrameLibroOld gestLibro = null;
-    private FrameCarga frameCarga = null;
+    private FramePopup frameCarga = null;
     private FrameEjemplares gestEjemplar = null;
 
     DaoLibro daoLibro;
@@ -565,7 +565,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
             };
             worker.execute();
             if (frameCarga == null) {
-                frameCarga = new FrameCarga();
+                frameCarga = new FramePopup();
             }
             frameCarga.setVisible(true);
         }
@@ -629,7 +629,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
             };
             worker.execute();
             if (frameCarga == null) {
-                frameCarga = new FrameCarga();
+                frameCarga = new FramePopup();
             }
             frameCarga.setVisible(true);
         } else {

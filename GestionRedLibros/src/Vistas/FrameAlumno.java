@@ -41,7 +41,7 @@ public class FrameAlumno extends javax.swing.JFrame {
      */
     private Alumno alumno;
 
-    private FrameCarga frameCarga;
+    private FramePopup frameCarga;
 
     private List<Historial> listaHistorial;
 
@@ -78,7 +78,7 @@ public class FrameAlumno extends javax.swing.JFrame {
         };
         worker.execute();
         if (frameCarga == null) {
-            frameCarga = new FrameCarga();
+            frameCarga = new FramePopup();
         }
         frameCarga.setVisible(true);
 

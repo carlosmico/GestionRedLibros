@@ -44,7 +44,7 @@ public class FrameMatriculas extends javax.swing.JFrame {
      */
     GestorSesiones gestorSesiones;
 
-    FrameCarga frameCarga = null;
+    FramePopup frameCarga = null;
 
     public DaoMatricula daoMatricula;
 

@@ -43,7 +43,7 @@ public class FrameInputAlumno extends javax.swing.JFrame {
      */
     public boolean isLoading = false;
 
-    private FrameCarga frameCarga;
+    private FramePopup frameCarga;
     private FrameAlumno frameAlumno;
 
     private DaoAlumno daoAlumno;
@@ -56,8 +56,6 @@ public class FrameInputAlumno extends javax.swing.JFrame {
         textErrorBusqueda.setText("");
 
         this.setLocationRelativeTo(null);
-
-        textNIAAlumno.requestFocusInWindow();
 
         daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
     }
@@ -83,6 +81,7 @@ public class FrameInputAlumno extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar Alumnos");
+        setAlwaysOnTop(true);
         setBackground(new java.awt.Color(239, 235, 233));
         setMinimumSize(new java.awt.Dimension(569, 0));
         setResizable(false);
@@ -245,7 +244,7 @@ public class FrameInputAlumno extends javax.swing.JFrame {
                 public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                         if (!isLoading) {
-                            buscarLibro(textNIAAlumno.getText());
+                            buscarAlumno(textNIAAlumno.getText());
                             isLoading = true;
                         }
                     }
@@ -257,7 +256,7 @@ public class FrameInputAlumno extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         if (!isLoading) {
-            buscarLibro(textNIAAlumno.getText());
+            buscarAlumno(textNIAAlumno.getText());
             isLoading = true;
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -318,7 +317,7 @@ public class FrameInputAlumno extends javax.swing.JFrame {
     public javax.swing.JLabel textTitleFrame;
     // End of variables declaration//GEN-END:variables
 
-    private void buscarLibro(String nia) {
+    private void buscarAlumno(String nia) {
         if (!nia.equals("")) {
             //Se ha insertado un codigo
             SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
@@ -333,10 +332,7 @@ public class FrameInputAlumno extends javax.swing.JFrame {
                 protected void done() {
                     if (alumno != null) {
                         dispose();
-                        if (frameAlumno == null){
-                            frameAlumno = new FrameAlumno(alumno.getNia());
-                        }
-                        frameAlumno.setVisible(true);
+                        FrameEntrega.alumno = alumno;
                     } else {
                         textErrorBusqueda.setVisible(true);
                         textErrorBusqueda.setText("No existen alumnos con este NIA.");
@@ -348,7 +344,7 @@ public class FrameInputAlumno extends javax.swing.JFrame {
             };
             worker.execute();
             if (frameCarga == null) {
-                frameCarga = new FrameCarga();
+                frameCarga = new FramePopup();
             }
             frameCarga.setVisible(true);
         } else {

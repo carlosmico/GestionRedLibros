@@ -35,7 +35,7 @@ public class Main extends javax.swing.JFrame {
     FrameEntrega frameEntrega;
     FrameLibrosNew frameLibros;
     FrameOpciones frameOpciones;
-    FrameCarga frameCarga;
+    FramePopup frameCarga;
 
     public static GestorSesiones gestorSesiones;
 
@@ -48,7 +48,7 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay conexión al servidor");
         }
 
-        //gestorSesiones = new GestorSesiones();
+        gestorSesiones = new GestorSesiones();
         //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
         String icono = "";
         BufferedImage img = null;
@@ -70,7 +70,6 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu1 = new javax.swing.JPopupMenu();
         banner = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -265,7 +264,6 @@ public class Main extends javax.swing.JFrame {
     private com.mommoo.flat.button.FlatButton flatButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JLabel wallpaper;
     // End of variables declaration//GEN-END:variables
 }

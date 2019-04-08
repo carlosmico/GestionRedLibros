@@ -53,9 +53,9 @@ public class FrameLibroOld extends javax.swing.JFrame {
     private static Libro libro = null;
     boolean isNewLibro;
 
-    private FrameCarga c = new FrameCarga();
+    private FramePopup c = new FramePopup();
 
-    FrameCarga frameCarga;
+    FramePopup frameCarga;
 
     List<Curso> listaCursos;
     List<Contenido> listaContenido;
