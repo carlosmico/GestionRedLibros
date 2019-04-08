@@ -33,11 +33,9 @@ public class Main extends javax.swing.JFrame {
      */
     FrameDevoluciones frameDevoluciones;
     FrameEntrega frameEntrega;
-    FrameInputLibro frameInputLibro;
-    FrameMatriculas frameMatriculas;
+    FrameLibrosNew frameLibros;
     FrameOpciones frameOpciones;
     FrameCarga frameCarga;
-    FrameInputAlumno frameInputAlumno;
 
     public static GestorSesiones gestorSesiones;
 
@@ -72,11 +70,6 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        menuPopup = new javax.swing.JPopupMenu();
-        btnGestionLibros = new javax.swing.JMenuItem();
-        btnGestionEjemplar = new javax.swing.JMenuItem();
-        btnConsultaAlumnos = new javax.swing.JMenuItem();
-        btnMatriculas = new javax.swing.JMenuItem();
         banner = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -86,55 +79,6 @@ public class Main extends javax.swing.JFrame {
         btnOpciones = new com.mommoo.flat.button.FlatButton();
         flatButton1 = new com.mommoo.flat.button.FlatButton();
         wallpaper = new javax.swing.JLabel();
-
-        menuPopup.setBackground(new java.awt.Color(66, 47, 44));
-        menuPopup.setForeground(new java.awt.Color(66, 47, 44));
-        menuPopup.setBorderPainted(false);
-        menuPopup.setPreferredSize(new java.awt.Dimension(250, 150));
-
-        btnGestionLibros.setBackground(new java.awt.Color(66, 47, 44));
-        btnGestionLibros.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
-        btnGestionLibros.setForeground(new java.awt.Color(66, 47, 44));
-        btnGestionLibros.setLabel("Libros");
-        btnGestionLibros.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGestionLibrosActionPerformed(evt);
-            }
-        });
-        menuPopup.add(btnGestionLibros);
-
-        btnGestionEjemplar.setBackground(new java.awt.Color(66, 47, 44));
-        btnGestionEjemplar.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
-        btnGestionEjemplar.setForeground(new java.awt.Color(66, 47, 44));
-        btnGestionEjemplar.setLabel("Ejemplar");
-        btnGestionEjemplar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGestionEjemplarActionPerformed(evt);
-            }
-        });
-        menuPopup.add(btnGestionEjemplar);
-
-        btnConsultaAlumnos.setBackground(new java.awt.Color(66, 47, 44));
-        btnConsultaAlumnos.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
-        btnConsultaAlumnos.setForeground(new java.awt.Color(66, 47, 44));
-        btnConsultaAlumnos.setLabel("Alumnos");
-        btnConsultaAlumnos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultaAlumnosActionPerformed(evt);
-            }
-        });
-        menuPopup.add(btnConsultaAlumnos);
-
-        btnMatriculas.setBackground(new java.awt.Color(66, 47, 44));
-        btnMatriculas.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
-        btnMatriculas.setForeground(new java.awt.Color(66, 47, 44));
-        btnMatriculas.setText("Matriculas");
-        btnMatriculas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMatriculasActionPerformed(evt);
-            }
-        });
-        menuPopup.add(btnMatriculas);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión Red Libros");
@@ -182,11 +126,16 @@ public class Main extends javax.swing.JFrame {
         btnGestiones.setBackground(new java.awt.Color(66, 47, 44));
         btnGestiones.setForeground(new java.awt.Color(204, 204, 204));
         btnGestiones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/book.png"))); // NOI18N
-        btnGestiones.setText("  Gestiones");
+        btnGestiones.setText("Libros");
         btnGestiones.setCornerRound(10);
         btnGestiones.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 btnGestionesMouseReleased(evt);
+            }
+        });
+        btnGestiones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestionesActionPerformed(evt);
             }
         });
         jPanel1.add(btnGestiones);
@@ -247,98 +196,35 @@ public class Main extends javax.swing.JFrame {
         frameEntrega.setVisible(true);
     }//GEN-LAST:event_btnEntregaActionPerformed
 
-    private void btnGestionLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionLibrosActionPerformed
-        // TODO add your handling code here:
-        if (frameInputLibro == null) {
-            frameInputLibro = new FrameInputLibro(true);
-        } else {
-            if (!frameInputLibro.isVisible()) {
-                frameInputLibro = null;
-                frameInputLibro = new FrameInputLibro(true);
-            }
-        }
-        frameInputLibro.textTitleFrame.setText("Gestión Libros");
-        frameInputLibro.setVisible(true);
-    }//GEN-LAST:event_btnGestionLibrosActionPerformed
-
-    private void btnGestionEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionEjemplarActionPerformed
-        // TODO add your handling code here:
-        if (frameInputLibro == null) {
-            frameInputLibro = new FrameInputLibro(false);
-        } else {
-            if (!frameInputLibro.isVisible()) {
-                frameInputLibro = null;
-                frameInputLibro = new FrameInputLibro(false);
-            }
-        }
-        frameInputLibro.textTitleFrame.setText("Gestión Ejemplares");
-        frameInputLibro.setVisible(true);
-    }//GEN-LAST:event_btnGestionEjemplarActionPerformed
-
-    private void btnConsultaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaAlumnosActionPerformed
-        // TODO add your handling code here:
-        if (frameInputAlumno == null) {
-            frameInputAlumno = new FrameInputAlumno();
-        } else {
-            if (!frameInputAlumno.isVisible()) {
-                frameInputAlumno = null;
-                frameInputAlumno = new FrameInputAlumno();
-            }
-        }
-        frameInputAlumno.setVisible(true);
-    }//GEN-LAST:event_btnConsultaAlumnosActionPerformed
-
     private void btnGestionesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGestionesMouseReleased
         // TODO add your handling code here:
-        menuPopup.show(evt.getComponent(), 0, 66);
+        if (frameLibros == null) {
+            frameLibros = new FrameLibrosNew();
+        } else {
+            if (!frameLibros.isVisible()) {
+                frameLibros = null;
+                frameLibros = new FrameLibrosNew();
+            }
+        }
+        frameLibros.setVisible(true);
     }//GEN-LAST:event_btnGestionesMouseReleased
-
-    private void btnMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatriculasActionPerformed
-        // TODO add your handling code here:
-        if (frameMatriculas == null) {
-            frameMatriculas = new FrameMatriculas();
-        }
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
-            protected Void doInBackground() throws InterruptedException {
-                frameMatriculas.RefrescarTabla();
-                return null;
-            }
-
-            protected void process(List<Integer> chunks) {
-            }
-
-            protected void done() {
-                //Rellenamos la lista de los libros
-                frameMatriculas.setVisible(true);
-
-                frameCarga.dispose();
-            }
-        };
-        worker.execute();
-        if (frameCarga == null) {
-            frameCarga = new FrameCarga();
-        }
-        frameCarga.setVisible(true);
-
-    }//GEN-LAST:event_btnMatriculasActionPerformed
 
     private void btnOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionesActionPerformed
         // TODO add your handling code here:
         if (frameOpciones == null) {
-            try {
+            frameOpciones = new FrameOpciones();
+        } else {
+            if (!frameOpciones.isVisible()) {
+                frameOpciones = null;
                 frameOpciones = new FrameOpciones();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InstantiationException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         frameOpciones.setVisible(true);
     }//GEN-LAST:event_btnOpcionesActionPerformed
+
+    private void btnGestionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGestionesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,18 +267,13 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel banner;
-    private javax.swing.JMenuItem btnConsultaAlumnos;
     private com.mommoo.flat.button.FlatButton btnDevoluciones;
     private com.mommoo.flat.button.FlatButton btnEntrega;
-    private javax.swing.JMenuItem btnGestionEjemplar;
-    private javax.swing.JMenuItem btnGestionLibros;
     private com.mommoo.flat.button.FlatButton btnGestiones;
-    private javax.swing.JMenuItem btnMatriculas;
     private com.mommoo.flat.button.FlatButton btnOpciones;
     private com.mommoo.flat.button.FlatButton flatButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPopupMenu menuPopup;
     private javax.swing.JLabel wallpaper;
     // End of variables declaration//GEN-END:variables
 }
