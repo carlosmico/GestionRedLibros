@@ -33,7 +33,7 @@ public class Main extends javax.swing.JFrame {
      */
     FrameDevoluciones frameDevoluciones;
     FrameEntrega frameEntrega;
-    FrameLibrosNew frameLibros;
+    FrameLibro frameLibros;
     FrameOpciones frameOpciones;
     FramePopup frameCarga;
 
@@ -206,11 +206,11 @@ public class Main extends javax.swing.JFrame {
     private void btnLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibrosActionPerformed
         // TODO add your handling code here:
         if (frameLibros == null) {
-            frameLibros = new FrameLibrosNew();
+            frameLibros = new FrameLibro();
         } else {
             if (!frameLibros.isVisible()) {
                 frameLibros = null;
-                frameLibros = new FrameLibrosNew();
+                frameLibros = new FrameLibro();
             }
         }
         frameLibros.setVisible(true);
