@@ -33,7 +33,7 @@ public class Main extends javax.swing.JFrame {
      */
     FrameDevoluciones frameDevoluciones;
     FrameEntrega frameEntrega;
-    FrameLibrosNew frameLibros;
+    FrameLibro frameLibros;
     FrameOpciones frameOpciones;
     FrameCarga frameCarga;
 
@@ -48,7 +48,7 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay conexión al servidor");
         }
 
-        //gestorSesiones = new GestorSesiones();
+        gestorSesiones = new GestorSesiones();
         //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
         String icono = "";
         BufferedImage img = null;
@@ -207,11 +207,11 @@ public class Main extends javax.swing.JFrame {
     private void btnLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibrosActionPerformed
         // TODO add your handling code here:
         if (frameLibros == null) {
-            frameLibros = new FrameLibrosNew();
+            frameLibros = new FrameLibro();
         } else {
             if (!frameLibros.isVisible()) {
                 frameLibros = null;
-                frameLibros = new FrameLibrosNew();
+                frameLibros = new FrameLibro();
             }
         }
         frameLibros.setVisible(true);
