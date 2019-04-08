@@ -50,7 +50,7 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay conexión al servidor");
         }
 
-        gestorSesiones = new GestorSesiones();
+        //gestorSesiones = new GestorSesiones();
         //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
         String icono = "";
         BufferedImage img = null;
@@ -144,7 +144,7 @@ public class Main extends javax.swing.JFrame {
         banner.setBackground(new java.awt.Color(58, 39, 35));
         banner.setLayout(new java.awt.GridLayout(2, 1));
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Gestión Red Libros");
