@@ -37,6 +37,57 @@ public class DaoAlumno extends DaoGenerico<Alumno, String> implements InterfaceD
     public DaoAlumno(Session s){
         this.session = s;
     }
+    
+    public void actualizarAlumnos(List<Alumno> alumnos) throws Exception {
+        for (int i = 0; i < alumnos.size(); i++) {
+            Alumno a = alumnos.get(i);
+
+            Alumno alumno = buscar(a.getNia());
+            try {
+                this.session.beginTransaction();
+
+                if (alumno == null) {
+                    alumno = new Alumno(
+                            a.getNia(),
+                            a.getNombre(),
+                            a.getApellido1(),
+                            a.getApellido2(),
+                            a.getFecha_nac(),
+                            a.getMunicipio_nac(),
+                            a.getDocumento(),
+                            a.getTelefono1(),
+                            a.getSexo(),
+                            a.getEmail1(),
+                            a.getCurso(),
+                            a.getGrupo()
+                    );
+                } else {
+                    alumno.setNombre(a.getNombre());
+                    alumno.setApellido1(a.getApellido1());
+                    alumno.setApellido2(a.getApellido2());
+                    alumno.setFecha_nac(a.getFecha_nac());
+                    alumno.setMunicipio_nac(a.getMunicipio_nac());
+                    alumno.setDocumento(a.getDocumento());
+                    alumno.setTelefono1(a.getTelefono1());
+                    alumno.setSexo(a.getSexo());
+                    alumno.setEmail1(a.getEmail1());
+                    alumno.setCurso(a.getCurso());
+                    alumno.setGrupo(a.getGrupo());
+                }
+
+                this.session.saveOrUpdate(alumno);
+
+                this.session.getTransaction().commit();
+
+            } catch (Exception e) {
+                this.session.getTransaction().commit();
+
+                e.printStackTrace();
+                System.out.println("Error DaoAlumno-actualizar(): " + e.getMessage());
+                throw new Exception();
+            }
+        }
+    }
 
     public Alumno buscar(String nia) throws PersistenceException {
         Alumno alumno = null;

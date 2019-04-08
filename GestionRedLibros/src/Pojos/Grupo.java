@@ -40,14 +40,22 @@ import javax.persistence.Table;
 @Table(name = "grupos")
 public class Grupo implements Serializable{
     
+    String id;
+    
     @Id
     @Column (name = "codigo")
     private String codigo_grupo;
     
     private String nombre;
     private String ensenanza;
+    private String linea;
     private String turno;
+    private String modalidad;
+    private String aula;
+    private String capacidad;
     private String tutor_ppal;
+    private String tutor_sec;
+    private String oficial;
     
     @OneToMany (mappedBy = "grupo", fetch=FetchType.LAZY)
     private List<Alumno> alumnos;
@@ -56,13 +64,22 @@ public class Grupo implements Serializable{
         
     }
 
-    public Grupo(String codigo, String nombre, String ensenanza, String turno, String tutor_ppal) {
-        this.codigo_grupo = codigo;
+    public Grupo(String codigo_grupo, String nombre, String ensenanza, String linea, String turno, String modalidad, String aula, String capacidad, String tutor_ppal, String tutor_sec, String oficial) {
+        this.id = codigo_grupo;
+        this.codigo_grupo = codigo_grupo;
         this.nombre = nombre;
         this.ensenanza = ensenanza;
+        this.linea = linea;
         this.turno = turno;
+        this.modalidad = modalidad;
+        this.aula = aula;
+        this.capacidad = capacidad;
         this.tutor_ppal = tutor_ppal;
+        this.tutor_sec = tutor_sec;
+        this.oficial = oficial;
     }
+
+    
 
     public String getCodigo() {
         return codigo_grupo;
@@ -103,6 +120,72 @@ public class Grupo implements Serializable{
     public void setTutor_ppal(String tutor_ppal) {
         this.tutor_ppal = tutor_ppal;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCodigo_grupo() {
+        return codigo_grupo;
+    }
+
+    public void setCodigo_grupo(String codigo_grupo) {
+        this.codigo_grupo = codigo_grupo;
+    }
+
+    public String getLinea() {
+        return linea;
+    }
+
+    public void setLinea(String linea) {
+        this.linea = linea;
+    }
+
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
+    }
+
+    public String getAula() {
+        return aula;
+    }
+
+    public void setAula(String aula) {
+        this.aula = aula;
+    }
+
+    public String getCapacidad() {
+        return capacidad;
+    }
+
+    public void setCapacidad(String capacidad) {
+        this.capacidad = capacidad;
+    }
+
+    public String getTutor_sec() {
+        return tutor_sec;
+    }
+
+    public void setTutor_sec(String tutor_sec) {
+        this.tutor_sec = tutor_sec;
+    }
+
+    public String getOficial() {
+        return oficial;
+    }
+
+    public void setOficial(String oficial) {
+        this.oficial = oficial;
+    }
+    
+    
 
     public List<Alumno> getAlumnos() {
         return alumnos;

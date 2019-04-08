@@ -20,6 +20,7 @@ package Pojos;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 
 //Imports Hibernate
@@ -63,6 +64,15 @@ public class Contenido implements Serializable{
     public Contenido(){
         
     }
+    
+    public Contenido(Curso curso, String codigo, String ensenanza, String nombre_cas, String nombre_val) {
+        this.curso_contenido = curso;
+        this.codigo_contenido = codigo;
+        this.ensenanza = ensenanza;
+        this.nombre_cas = nombre_cas;
+        this.nombre_val = nombre_val;
+    }
+    
 
     public Contenido(int id, Curso curso, String codigo, String ensenanza, String nombre_cas, String nombre_val) {
         this.id = id;
@@ -132,7 +142,7 @@ public class Contenido implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + this.id;
+        hash = 23 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -148,11 +158,13 @@ public class Contenido implements Serializable{
             return false;
         }
         final Contenido other = (Contenido) obj;
-        if (this.id != other.id) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
+
+    
 
     @Override
     public String toString() {

@@ -43,7 +43,7 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         List<Matricula> lista = new ArrayList<Matricula>();
 
         String query = "from Matricula m where m.alumno = '" + m.getAlumno().getNia() + "' and m.curso_escolar = " + m.getCurso_escolar()
-                + " and m.contenido = " + m.getContenido();
+                + " and m.contenido = " + m.getContenido() + " and m.curso = " + m.getCurso();
 
         lista = this.session.createQuery(query).list();
 
@@ -54,15 +54,13 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         }
     }
 
-    public void actualizarMatriculas(List<Matricula> matriculasCargadas) throws Exception {
-        this.session.beginTransaction();
-        
+    public void actualizarMatriculas(List<Matricula> matriculasCargadas) throws Exception {        
         for (int i = 0; i < matriculasCargadas.size(); i++) {
             Matricula m = matriculasCargadas.get(i);
             
             Matricula matriculaEncontrada = buscarMatricula(m);
             
-            Matricula matricula;
+            Matricula matricula = null;
 
             try {
                 if (matriculaEncontrada == null) {
@@ -73,8 +71,6 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                             m.getFec_ini_acis(), m.getFec_fin_acis(), m.getCur_ref_acis(),
                             m.getCurso_pendiente());
                 } else {
-                    matricula = (Matricula) this.session.load(Matricula.class, matriculaEncontrada.getId());
-
                     matricula.setId(matriculaEncontrada.getId());
                     matricula.setCurso_escolar(m.getCurso_escolar());
                     matricula.setAlumno(m.getAlumno());
@@ -93,7 +89,6 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
 
                 this.session.saveOrUpdate(matricula);
                 
-                this.session.getTransaction().commit();
             } catch (PersistenceException ex) {
                 this.session.getTransaction().commit();
                 

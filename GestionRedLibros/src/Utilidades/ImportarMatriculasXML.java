@@ -184,9 +184,7 @@ public class ImportarMatriculasXML {
                 //Buscamos el alumno recuperado del XML
                 DaoAlumno dao = new DaoAlumno(Main.gestorSesiones.getSession());
                 
-                dao.session.beginTransaction();
                 Alumno alumnoObj = dao.buscar(alumno);
-                dao.session.getTransaction().commit();
                 
                 dao.desconectar();
 
