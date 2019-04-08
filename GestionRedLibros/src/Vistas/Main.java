@@ -33,7 +33,12 @@ public class Main extends javax.swing.JFrame {
      */
     FrameDevoluciones frameDevoluciones;
     FrameEntrega frameEntrega;
+<<<<<<< HEAD
     FrameLibrosNew frameLibros;
+=======
+    FrameLibro frameLibro;
+    FrameMatriculas frameMatriculas;
+>>>>>>> master
     FrameOpciones frameOpciones;
     FrameCarga frameCarga;
 
@@ -196,7 +201,29 @@ public class Main extends javax.swing.JFrame {
         frameEntrega.setVisible(true);
     }//GEN-LAST:event_btnEntregaActionPerformed
 
+<<<<<<< HEAD
     private void btnGestionesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGestionesMouseReleased
+=======
+    private void btnGestionLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionLibrosActionPerformed
+        // TODO add your handling code here:
+        if (frameLibro == null) {
+            frameLibro = new FrameLibro();
+        } else {
+            if (!frameLibro.isVisible()) {
+                frameLibro = null;
+                frameLibro = new FrameLibro();
+            }
+        }
+        
+        frameLibro.setVisible(true);
+    }//GEN-LAST:event_btnGestionLibrosActionPerformed
+
+    private void btnGestionEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionEjemplarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGestionEjemplarActionPerformed
+
+    private void btnConsultaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaAlumnosActionPerformed
+>>>>>>> master
         // TODO add your handling code here:
         if (frameLibros == null) {
             frameLibros = new FrameLibrosNew();

@@ -53,7 +53,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
     public boolean buscquedaPorCodigo = true;
     public boolean isLoading = false;
 
-    private FrameLibro gestLibro = null;
+    private FrameLibroOld gestLibro = null;
     private FrameCarga frameCarga = null;
     private FrameEjemplares gestEjemplar = null;
 
@@ -443,7 +443,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
         //Pulsación en el boton de nuevo libro
         this.setVisible(false);
         if (gestLibro == null) {
-            gestLibro = new FrameLibro(null);
+            gestLibro = new FrameLibroOld(null);
         }
         gestLibro.setVisible(true);
     }//GEN-LAST:event_btnNewActionPerformed
@@ -609,7 +609,7 @@ public class FrameInputLibro extends javax.swing.JFrame {
                         dispose();
                         if (isLibroMode) {
                             if (gestLibro == null) {
-                                gestLibro = new FrameLibro(l.getCodigo());
+                                gestLibro = new FrameLibroOld(l.getCodigo());
                             }
                             gestLibro.setVisible(true);
                         } else {
