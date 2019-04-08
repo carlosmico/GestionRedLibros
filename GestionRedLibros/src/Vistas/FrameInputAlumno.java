@@ -334,7 +334,7 @@ public class FrameInputAlumno extends javax.swing.JFrame {
                     if (alumno != null) {
                         dispose();
                         if (frameAlumno == null){
-                            frameAlumno = new FrameAlumno(alumno);
+                            frameAlumno = new FrameAlumno(alumno.getNia());
                         }
                         frameAlumno.setVisible(true);
                     } else {
@@ -354,6 +354,7 @@ public class FrameInputAlumno extends javax.swing.JFrame {
         } else {
             //No se ha insertado ningun valor en el campo de texto
             textErrorBusqueda.setVisible(true);
+            isLoading = false;
             textErrorBusqueda.setText("El NIA no puede ser un campo vacío.");
             textNIAAlumno.setText("");
         }

@@ -61,7 +61,6 @@ public class Main extends javax.swing.JFrame {
         wallpaper.setIcon(imageIcon);
         banner.setVisible(true);
 //</editor-fold>
-
     }
 
     /**
@@ -280,6 +279,11 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (frameInputAlumno == null) {
             frameInputAlumno = new FrameInputAlumno();
+        } else {
+            if (!frameInputAlumno.isVisible()) {
+                frameInputAlumno = null;
+                frameInputAlumno = new FrameInputAlumno();
+            }
         }
         frameInputAlumno.setVisible(true);
     }//GEN-LAST:event_btnConsultaAlumnosActionPerformed
