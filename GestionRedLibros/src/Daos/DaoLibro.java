@@ -58,7 +58,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
     }
 
     public void actualizar(int unidadesOld, Libro libro) throws PersistenceException {
-        
+
         try {
             this.session.beginTransaction();
 
@@ -115,11 +115,17 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
         for (int i = 1; i < libro.getUnidades() + 1; i++) {
             if (i < 10) {
-                codigo_ejemplar = libro.getCodigo() + "00" + i;
+                codigo_ejemplar = libro.getCodigo() + "0000" + i;
             } else if (i < 100) {
+                codigo_ejemplar = libro.getCodigo() + "000" + i;
+            } else if (i < 1000) {
+                codigo_ejemplar = libro.getCodigo() + "00" + i;
+            } else if (i < 10000) {
                 codigo_ejemplar = libro.getCodigo() + "0" + i;
-            } else {
+            } else if (i < 100000) {
                 codigo_ejemplar = libro.getCodigo() + "" + i;
+            } else {
+                codigo_ejemplar = libro.getCodigo() + " error al generar el código";
             }
 
             ejemplar = new Ejemplar(codigo_ejemplar, libro, Estado.nuevo, false);
@@ -153,11 +159,17 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
                 codBase++;
 
                 if (codBase < 10) {
-                    codigo_ejemplar = libro.getCodigo() + "00" + codBase;
+                    codigo_ejemplar = libro.getCodigo() + "0000" + codBase;
                 } else if (codBase < 100) {
+                    codigo_ejemplar = libro.getCodigo() + "000" + codBase;
+                } else if (codBase < 1000) {
+                    codigo_ejemplar = libro.getCodigo() + "00" + codBase;
+                } else if (codBase < 10000) {
                     codigo_ejemplar = libro.getCodigo() + "0" + codBase;
-                } else {
+                } else if (codBase < 100000) {
                     codigo_ejemplar = libro.getCodigo() + "" + codBase;
+                } else {
+                    codigo_ejemplar = libro.getCodigo() + " error al generar el código";
                 }
 
                 Ejemplar ejemplar = new Ejemplar(codigo_ejemplar, libro, Estado.nuevo, false);

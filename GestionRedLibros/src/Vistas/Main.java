@@ -33,7 +33,7 @@ public class Main extends javax.swing.JFrame {
      */
     FrameDevoluciones frameDevoluciones;
     FrameEntrega frameEntrega;
-    FrameInputLibro frameInputLibro;
+    FrameLibro frameLibro;
     FrameMatriculas frameMatriculas;
     FrameOpciones frameOpciones;
     FrameCarga frameCarga;
@@ -249,30 +249,20 @@ public class Main extends javax.swing.JFrame {
 
     private void btnGestionLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionLibrosActionPerformed
         // TODO add your handling code here:
-        if (frameInputLibro == null) {
-            frameInputLibro = new FrameInputLibro(true);
+        if (frameLibro == null) {
+            frameLibro = new FrameLibro();
         } else {
-            if (!frameInputLibro.isVisible()) {
-                frameInputLibro = null;
-                frameInputLibro = new FrameInputLibro(true);
+            if (!frameLibro.isVisible()) {
+                frameLibro = null;
+                frameLibro = new FrameLibro();
             }
         }
-        frameInputLibro.textTitleFrame.setText("Gestión Libros");
-        frameInputLibro.setVisible(true);
+        
+        frameLibro.setVisible(true);
     }//GEN-LAST:event_btnGestionLibrosActionPerformed
 
     private void btnGestionEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionEjemplarActionPerformed
         // TODO add your handling code here:
-        if (frameInputLibro == null) {
-            frameInputLibro = new FrameInputLibro(false);
-        } else {
-            if (!frameInputLibro.isVisible()) {
-                frameInputLibro = null;
-                frameInputLibro = new FrameInputLibro(false);
-            }
-        }
-        frameInputLibro.textTitleFrame.setText("Gestión Ejemplares");
-        frameInputLibro.setVisible(true);
     }//GEN-LAST:event_btnGestionEjemplarActionPerformed
 
     private void btnConsultaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaAlumnosActionPerformed

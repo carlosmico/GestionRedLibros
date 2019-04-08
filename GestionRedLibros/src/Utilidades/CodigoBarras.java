@@ -17,6 +17,7 @@
  */
 package Utilidades;
 
+import Pojos.Ejemplar;
 import Pojos.Libro;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -42,34 +43,71 @@ import javax.print.PrintException;
  */
 public class CodigoBarras {
 
-    public CodigoBarras() {
+    public Barcode39 generarCodigoIndividual(String codigo) {
+        Barcode39 barcode = new Barcode39();
 
+        barcode.setCode(codigo);
+
+        barcode.setBarHeight(60);
+
+        return barcode;
     }
 
     public List<Barcode39> generarCodigoList(List<String> codigos) throws Exception {
-        try {
-            List<Barcode39> barcodes = new ArrayList<Barcode39>();
+        List<Barcode39> barcodes = new ArrayList<Barcode39>();
 
-            for (int i = 0; i < codigos.size(); i++) {
-                Barcode39 barcode = new Barcode39();
-                barcode.setCode(codigos.get(i));
+        for (int i = 0; i < codigos.size(); i++) {
+            Barcode39 barcode = new Barcode39();
 
-                barcode.setBarHeight(60);
+            barcode.setCode(codigos.get(i));
 
-                barcodes.add(barcode);
-            }
+            barcode.setBarHeight(60);
 
-            return barcodes;
-        } catch (Exception e) {
-            throw new Exception();
+            barcodes.add(barcode);
         }
+
+        return barcodes;
+    }
+
+    /*  
+    *   Generamos el PDF correspondiente con los Barcode al ejemplars
+     */
+    public void imprimirIndividual(Ejemplar ejemplar, Barcode39 barcode) throws FileNotFoundException, DocumentException, IOException {
+        comprobarDirectorio();
+
+        String rutapdf = "C://Gestion_Libros//Impresiones//Ejemplar-" + ejemplar.getLibro().getNombre() + "-" + ejemplar.getCodigo() + ".pdf";
+
+        OutputStream os = new FileOutputStream(new File(rutapdf));
+
+        Document doc = new Document();
+
+        PdfWriter pdf = PdfWriter.getInstance(doc, os);
+
+        doc.open();
+
+        doc.add(new Paragraph(ejemplar.getLibro().getContenido().getNombre_cas()));
+
+        Image codeImg = barcode.createImageWithBarcode(pdf.getDirectContent(), BaseColor.BLACK, BaseColor.BLACK);
+
+        doc.add(codeImg);
+
+        doc.add(new Paragraph(""));
+
+        doc.close();
+
+        os.close();
+
+        Desktop.getDesktop().open(new File(rutapdf));
     }
 
     /*  Generamos el PDF correspondiente con los Barcode de cada ejemplar
     *   y cada 8 Barcodes insertados en el pdf pasamos a la siguiente pagina por temas visuales
      */
     public void imprimirList(Libro libro, List<Barcode39> barcodes) throws PrinterException, FileNotFoundException, DocumentException, IOException, PrintException {
-        String rutapdf = "C://gestion_libros//impresiones//" + libro.getNombre() + "-CodigosEjemplares.pdf";
+
+        comprobarDirectorio();
+
+        String rutapdf = "C://Gestion_Libros//Impresiones//" + libro.getNombre() + "-CodigosEjemplares.pdf";
 
         OutputStream os = new FileOutputStream(new File(rutapdf));
 
@@ -105,6 +143,15 @@ public class CodigoBarras {
         os.close();
 
         Desktop.getDesktop().open(new File(rutapdf));
+    }
+
+    private void comprobarDirectorio() {
+        File directorio = new File("C://Gestion_Libros//Impresiones//");
+
+        //Si el directorio no existe lo creamos
+        if (!directorio.exists()) {
+            directorio.mkdir();
+        }
     }
 
 
