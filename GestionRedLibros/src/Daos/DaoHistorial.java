@@ -34,12 +34,22 @@ import org.hibernate.Session;
  */
 public class DaoHistorial extends DaoGenerico<Historial, Integer> implements InterfaceDaoGenerico<Historial, Integer> {
 
+    /**
+     *  Variable de sesion para cualquier acción con la BD
+     */
     public Session session;
 
+    /**
+     *  Constructor del DaoHistorial que recibe una sesion
+     * @param s
+     */
     public DaoHistorial(Session s) {
         this.session = s;
     }
 
+    /**
+     *  Metodo para crear un nuevo Historial en la BD
+     */
     @Override
     public void grabar(Historial h) throws PersistenceException {
         try {
@@ -54,6 +64,9 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         }
     }
 
+    /**
+     *  Metodo para actualizar un Historial en la BD
+     */
     @Override
     public void actualizar(Historial h) throws PersistenceException {
         try {
@@ -83,6 +96,12 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         }
     }
 
+    /**
+     *  Metodo para buscar un Historial mediante su Id en la BD
+     * @param id
+     * @return
+     * @throws PersistenceException
+     */
     public Historial buscar(Integer id) throws PersistenceException {
         Historial historial;
 
@@ -97,6 +116,11 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         return historial;
     }
 
+    /**
+     *  Metodo para obtener una lista de Historiales filtrando por el Alumno recibido
+     * @param alum
+     * @return
+     */
     public List<Historial> buscarPorAlumno(Alumno alum) {
         List<Historial> lista = new ArrayList<Historial>();
 
@@ -106,6 +130,11 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         return lista;
     }
 
+    /**
+     *  Metodo para obtener una lista de Historiales filtrando por el Ejemplar recibido
+     * @param ejemplar
+     * @return
+     */
     public List<Historial> buscarPorEjemplar(Ejemplar ejemplar) {
         List<Historial> lista = new ArrayList<Historial>();
 
@@ -115,6 +144,9 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         return lista;
     }
 
+    /**
+     *  Metodo para obtener una lista de todos los Historiales de la BD
+     */
     public List<Historial> buscarTodos() {
         List<Historial> lista = new ArrayList<Historial>();
 
@@ -124,6 +156,9 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         return lista;
     }
 
+    /**
+     *  Metodo para desconectar la sesion del DAO
+     */
     @Override
     public void desconectar() {
         if (this.session != null) {
