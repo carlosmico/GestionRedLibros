@@ -215,6 +215,7 @@ public class ImportarMatriculasXML {
         } catch (Exception e) {
             System.out.println("Error: ImportarMatriculasXML - insertarMatriculasBD()");
             throw new Exception("Fallo al insertar las matriculas en la base de datos.");
+            e.printStackTrace();
         }
 
         dao.desconectar();
