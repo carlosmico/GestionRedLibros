@@ -19,7 +19,6 @@ package Vistas;
 
 import Daos.*;
 import Pojos.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.stream.Collectors;
 import javax.swing.SwingWorker;
@@ -30,17 +29,6 @@ import javax.swing.SwingWorker;
  */
 public class FrameInputAlumno extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrameDevoluciones
-     */
-    /**
-     * Modos de busqueada: - busquedaPorCodigo = true: por codigo del libro
-     * (codigo de barras) - busquedaPorCodigo = false: por nombre del libro
-     * (debe ser exacto)
-     *
-     * "Por defecto el modo de busqueda es el true, es decir, por el codigo del
-     * libro"
-     */
     public boolean isLoading = false;
 
     private FramePopup frameCarga;
@@ -49,9 +37,12 @@ public class FrameInputAlumno extends javax.swing.JFrame {
 
     private Alumno alumno;
 
+    /**
+     * Creates new form FrameDevoluciones
+     */
     public FrameInputAlumno() {
         initComponents();
-        
+
         //Limpiamos el texto de error
         textErrorBusqueda.setText("");
 
@@ -234,12 +225,22 @@ public class FrameInputAlumno extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * 
+     * Cancelamos la busqueda del alumno
+     */
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    /**
+     * 
+     * Controlamos la pulsación de la tecla intro cuando el focus
+     * lo tiene el TextField (esta opción está para que el escaner
+     * funcione correctamente)
+     */
     private void textNIAAlumnoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNIAAlumnoKeyPressed
         //Controlamos el intro cuando tenemos el foco en el input text
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -247,11 +248,19 @@ public class FrameInputAlumno extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_textNIAAlumnoKeyPressed
 
+    /**
+     * 
+     * Controlamos la pulsación del botón de buscar
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         //Controlamos la pulsación del botón buscar
         buscarAlumno(textNIAAlumno.getText());
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    /**
+     * 
+     * Controlamos cuando cerramos se cierra la ventana para cerrar la sesión
+     */
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
         try {
@@ -308,6 +317,10 @@ public class FrameInputAlumno extends javax.swing.JFrame {
     public javax.swing.JLabel textTitleFrame;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * 
+     * Metodo utilizado para buscar un alumno a partir de su nia
+     */
     public void buscarAlumno(String nia) {
         if (!nia.equals("")) {
             //Se ha insertado un codigo

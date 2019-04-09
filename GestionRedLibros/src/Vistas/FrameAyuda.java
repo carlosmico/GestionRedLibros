@@ -94,7 +94,7 @@ public class FrameAyuda extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Opciones");
+        jLabel1.setText("Ayuda");
         jLabel1.setPreferredSize(new java.awt.Dimension(122, 75));
 
         btnHelp.setBackground(Colores.buttons);
