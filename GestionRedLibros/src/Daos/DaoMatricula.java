@@ -33,12 +33,24 @@ import org.hibernate.query.Query;
  */
 public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements InterfaceDaoGenerico<Matricula, Integer> {
 
+    /**
+     *  Variable de sesion para cualquier acción con la BD
+     */
     public Session session;
 
+    /**
+     *  Constructor del DaoMatricula que recibe una sesion
+     * @param s
+     */
     public DaoMatricula(Session s) {
         this.session = s;
     }
 
+    /**
+     *  Metodo para obtener una matricula mediante un objeto Matricula recibido
+     * @param m
+     * @return
+     */
     public Matricula buscarMatricula(Matricula m) {
         List<Matricula> lista = new ArrayList<Matricula>();
 
@@ -54,6 +66,11 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         }
     }
 
+    /**
+     *  Metodo para actualizar una lista de Matriculas en la BD
+     * @param matriculasCargadas
+     * @throws Exception
+     */
     public void actualizarMatriculas(List<Matricula> matriculasCargadas) throws Exception {        
         for (int i = 0; i < matriculasCargadas.size(); i++) {
             Matricula m = matriculasCargadas.get(i);
@@ -96,6 +113,11 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         }
     }
 
+    /**
+     *  Metodo para obtener una lista de Matriculas filtrando por el Alumno recibido
+     * @param alumno
+     * @return
+     */
     public List<Matricula> buscarPorAlumno(Alumno alumno) {
         List<Matricula> lista = new ArrayList<Matricula>();
 
@@ -105,6 +127,12 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         return lista;
     }
 
+    /**
+     *  Metodo para obtener una lista de Matriculas filtrando por el Curso 
+     *  Escolar recibido
+     * @param curso_escolar
+     * @return
+     */
     public List<Matricula> buscarPorCursoEscolar(Integer curso_escolar) {
         List<Matricula> lista = new ArrayList<Matricula>();
 
@@ -114,6 +142,9 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         return lista;
     }
 
+    /**
+     *  Metodo para obtener una lista de todas las Matriculas de la BD
+     */
     public List<Matricula> buscarTodos() {
         List<Matricula> lista = new ArrayList<Matricula>();
 
@@ -123,6 +154,9 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         return lista;
     }
 
+    /**
+     *  Metodo para desconectar la sesion del DAO
+     */
     @Override
     public void desconectar() {
         if (this.session != null) {

@@ -32,12 +32,24 @@ import org.hibernate.query.Query;
  */
 public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDaoGenerico<Curso, String> {
 
+    /**
+     *  Variable de sesion para cualquier acción con la BD
+     */
     public Session session;
 
+    /**
+     *  Constructor del DaoCurso que recibe una sesion
+     * @param s
+     */
     public DaoCurso(Session s) {
         this.session = s;
     }
 
+    /**
+     *  Metodo para actualizar una lista de Cursos en la BD
+     * @param cursos
+     * @throws Exception
+     */
     public void actualizarCursos(List<Curso> cursos) throws Exception {
         for (int i = 0; i < cursos.size(); i++) {
             Curso c = cursos.get(i);
@@ -77,6 +89,12 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
         }
     }
 
+    /**
+     *  Metodo para buscar un Curso mediante su Codigo en la BD
+     * @param codigo
+     * @return
+     * @throws PersistenceException
+     */
     public Curso buscar(String codigo) throws PersistenceException {
         Curso curso;
 
@@ -90,6 +108,9 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
         return curso;
     }
 
+    /**
+     *  Metodo para obtener una lista de todos los Cursos de la BD
+     */
     public List<Curso> buscarTodos() {
         List<Curso> lista = new ArrayList<Curso>();
 
@@ -99,6 +120,9 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
         return lista;
     }
 
+    /**
+     *  Metodo para desconectar la sesion del DAO
+     */
     @Override
     public void desconectar() {
         if (this.session != null) {

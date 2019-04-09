@@ -30,19 +30,34 @@ import org.hibernate.query.Query;
  *
  * @author Carlos
  */
-public class DaoGrupo extends DaoGenerico<Grupo, String> implements InterfaceDaoGenerico<Grupo, String>{
-     public Session session;
+public class DaoGrupo extends DaoGenerico<Grupo, String> implements InterfaceDaoGenerico<Grupo, String> {
 
+    /**
+     * Variable de sesion para cualquier acción con la BD
+     */
+    public Session session;
+
+    /**
+     * Constructor del DaoGrupo
+     *
+     * @param s
+     */
     public DaoGrupo(Session s) {
         this.session = s;
     }
 
+    /**
+     * Metodo para actualizar una lista de Grupos en la BD
+     *
+     * @param grupos
+     * @throws Exception
+     */
     public void actualizarGrupos(List<Grupo> grupos) throws Exception {
         for (int i = 0; i < grupos.size(); i++) {
             Grupo g = grupos.get(i);
 
             Grupo grupo = buscar(g.getCodigo());
-            
+
             try {
                 this.session.beginTransaction();
 
@@ -87,6 +102,13 @@ public class DaoGrupo extends DaoGenerico<Grupo, String> implements InterfaceDao
         }
     }
 
+    /**
+     * Metodo para buscar un Grupo mediante su Codigo en la BD
+     *
+     * @param codigo
+     * @return
+     * @throws PersistenceException
+     */
     public Grupo buscar(String codigo) throws PersistenceException {
         Grupo grupo;
 
@@ -100,6 +122,9 @@ public class DaoGrupo extends DaoGenerico<Grupo, String> implements InterfaceDao
         return grupo;
     }
 
+    /**
+     * Metodo para buscar una lista de todos los Grupos de la BD
+     */
     public List<Grupo> buscarTodos() {
         List<Grupo> lista = new ArrayList<Grupo>();
 
@@ -109,6 +134,9 @@ public class DaoGrupo extends DaoGenerico<Grupo, String> implements InterfaceDao
         return lista;
     }
 
+    /**
+     *  Metodo para desconectar la sesion del DAO
+     */
     @Override
     public void desconectar() {
         if (this.session != null) {

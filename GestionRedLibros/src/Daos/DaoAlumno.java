@@ -32,12 +32,24 @@ import org.hibernate.Session;
  */
 public class DaoAlumno extends DaoGenerico<Alumno, String> implements InterfaceDaoGenerico<Alumno, String> {
     
+    /**
+     *  Variable de sesion utilizada para cualquier accion con la BD
+     */
     public Session session;
     
+    /**
+     *  Constructor del DaoAlumno que recibe una sesion
+     * @param s
+     */
     public DaoAlumno(Session s){
         this.session = s;
     }
     
+    /**
+     *  Metodo para actualizar una lista de Alumnos en la BD
+     * @param alumnos
+     * @throws Exception
+     */
     public void actualizarAlumnos(List<Alumno> alumnos) throws Exception {
         for (int i = 0; i < alumnos.size(); i++) {
             Alumno a = alumnos.get(i);
@@ -89,6 +101,12 @@ public class DaoAlumno extends DaoGenerico<Alumno, String> implements InterfaceD
         }
     }
 
+    /**
+     * Metodo para buscar un Alumno mediante su NIA en la BD
+     * @param nia
+     * @return
+     * @throws PersistenceException
+     */
     public Alumno buscar(String nia) throws PersistenceException {
         Alumno alumno = null;
 
@@ -102,7 +120,10 @@ public class DaoAlumno extends DaoGenerico<Alumno, String> implements InterfaceD
         
         return alumno;
     }
-
+    
+    /**
+     *  Metodo para obtener una lista de todos los Alumnos de la BD
+     */
     public List<Alumno> buscarTodos() {
         List<Alumno> lista = new ArrayList<Alumno>();
 
@@ -117,6 +138,9 @@ public class DaoAlumno extends DaoGenerico<Alumno, String> implements InterfaceD
         return lista;
     }
     
+    /**
+     *  Metodo para desconectar la sesion del DAO
+     */
     public void desconectar(){
         if(this.session != null){
             try{

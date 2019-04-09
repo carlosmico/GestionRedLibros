@@ -33,12 +33,24 @@ import org.hibernate.query.Query;
  */
 public class DaoContenido extends DaoGenerico<Contenido, Integer> implements InterfaceDaoGenerico<Contenido, Integer> {
 
+    /**
+     *  Variable de sesion para cualquier accion con la BD
+     */
     public Session session;
 
+    /**
+     *  Constructor el DaoContenido que recibe una sesion
+     * @param s
+     */
     public DaoContenido(Session s) {
         this.session = s;
     }
 
+    /**
+     *  Metodo para actualizar una lista de Contenidos en la BD
+     * @param contenidos
+     * @throws Exception
+     */
     public void actualizarContenidos(List<Contenido> contenidos) throws Exception {
         for (int i = 0; i < contenidos.size(); i++) {
             Contenido c = contenidos.get(i);
@@ -74,6 +86,12 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
         }
     }
 
+    /**
+     *  Metodo para buscar un Contenido a través de su ID en la BD
+     * @param id
+     * @return
+     * @throws PersistenceException
+     */
     public Contenido buscar(int id) throws PersistenceException {
         Contenido contenido;
 
@@ -87,6 +105,11 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
         return contenido;
     }
     
+    /**
+     *  Metodo para buscar un Contenido a través de su Codigo en la BD
+     * @param codigo
+     * @return
+     */
     public Contenido buscarPorCodigo(String codigo) {
         List<Contenido> lista = new ArrayList<Contenido>();
 
@@ -101,6 +124,11 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
         }
     }
 
+    /**
+     *  Metodo para buscar un Contenido a través de un objeto Contenido en la BD
+     * @param c
+     * @return
+     */
     public Contenido buscarContenido(Contenido c) {
         List<Contenido> lista = new ArrayList<Contenido>();
 
@@ -116,6 +144,9 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
         }
     }
 
+    /**
+     *  Metodo para obtener una lista de todos los Contenidos de la BD
+     */
     public List<Contenido> buscarTodos() {
         List<Contenido> lista = new ArrayList<Contenido>();
 
@@ -125,6 +156,9 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
         return lista;
     }
 
+    /**
+     *  Metodo para desconectar la sesion del DAO
+     */
     @Override
     public void desconectar() {
         if (this.session != null) {
