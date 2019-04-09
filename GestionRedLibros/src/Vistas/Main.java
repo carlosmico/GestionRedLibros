@@ -12,15 +12,12 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingWorker;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -41,14 +38,22 @@ public class Main extends javax.swing.JFrame {
 
     public Main() throws IOException {
         initComponents();
+        //Centramos la pestaña al centro de la pantalla
+        //(Es irrelevante ya que la maximizamos)
         this.setLocationRelativeTo(null);
+
+        //Maximizamos la pestaña
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        //Comprobamos la conexión al servidor
         if (!GetInternetStatus.isAvailable()) {
             JOptionPane.showMessageDialog(this, "No hay conexión al servidor");
         }
 
+        //Creamos el gestor de sesiones
         gestorSesiones = new GestorSesiones();
+
+        //Configuramos la imagen de fondo de la pantalla principal
         //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
         String icono = "";
         BufferedImage img = null;
@@ -175,28 +180,50 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDevolucionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucionesActionPerformed
-        // TODO add your handling code here:
+        //Acción del botón de 'Devoluciones'
         if (frameDevoluciones == null) {
+            //Si no existe la ventana la creamos
             frameDevoluciones = new FrameDevoluciones();
+        } else {
+            if (!frameDevoluciones.isVisible()) {
+                //Si existe la ventana, y la hemos cerrado
+                //limpiamos la variable y creamos una ventana nueva
+                frameDevoluciones = null;
+                frameDevoluciones = new FrameDevoluciones();
+            } else {
+                //Si la ventana esta abierta y queremos abrir otra
+                //creamos una nueva ventana
+                frameDevoluciones = new FrameDevoluciones();
+            }
         }
+        //Hacemos visible la ventana creada anteriormente
         frameDevoluciones.setVisible(true);
     }//GEN-LAST:event_btnDevolucionesActionPerformed
 
     private void btnEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregaActionPerformed
-        // TODO add your handling code here:
+        //Acción del botón de 'Entrega'
         if (frameEntrega == null) {
             frameEntrega = new FrameEntrega();
+        } else {
+            if (!frameEntrega.isVisible()) {
+                frameEntrega = null;
+                frameEntrega = new FrameEntrega();
+            } else {
+                frameEntrega = new FrameEntrega();
+            }
         }
         frameEntrega.setVisible(true);
     }//GEN-LAST:event_btnEntregaActionPerformed
 
     private void btnOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionesActionPerformed
-        // TODO add your handling code here:
+        //Acción del botón de 'Opciones'
         if (frameOpciones == null) {
             frameOpciones = new FrameOpciones();
         } else {
             if (!frameOpciones.isVisible()) {
                 frameOpciones = null;
+                frameOpciones = new FrameOpciones();
+            } else {
                 frameOpciones = new FrameOpciones();
             }
         }
@@ -204,12 +231,14 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOpcionesActionPerformed
 
     private void btnLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibrosActionPerformed
-        // TODO add your handling code here:
+        //Acción del botón de 'Libros'
         if (frameLibros == null) {
             frameLibros = new FrameLibro();
         } else {
             if (!frameLibros.isVisible()) {
                 frameLibros = null;
+                frameLibros = new FrameLibro();
+            } else {
                 frameLibros = new FrameLibro();
             }
         }

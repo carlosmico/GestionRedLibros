@@ -17,20 +17,15 @@
  */
 package Vistas;
 
+import Daos.DaoAlumno;
 import Pojos.Alumno;
-import Pojos.Libro;
 import Pojos.Matricula;
 import Utilidades.Colores;
-import java.awt.Color;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
 /**
  *
@@ -38,18 +33,29 @@ import javax.swing.UIManager;
  */
 public class FrameEntrega extends javax.swing.JFrame {
 
+    //Creamos el la pestaña InputAlumno
+    private FrameInputAlumno frameInputAlumno;
+
+    //Creamos el DAO del Alumno
+    private DaoAlumno daoAlumno;
+
+    //Creamos el Alumno
+    public static Alumno alumno;
+
     /**
      * Creates new form FrameDevoluciones
      */
-    private FrameInputAlumno frameInputAlumno;
-
-    public static Alumno alumno;
-
     public FrameEntrega() {
         initComponents();
 
+        //Centramos la pestaña al centro de la pantalla
         this.setLocationRelativeTo(null);
+
+        //Maximizamos la pestaña
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        //Inicializamos el DaoAlumno
+        daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
     }
 
     /**
@@ -61,13 +67,20 @@ public class FrameEntrega extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelTitulo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnBuscarAlumno = new com.mommoo.flat.button.FlatButton();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        panelCuerpo = new javax.swing.JPanel();
+        panelNoAlumno = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        panelSiAlumno = new javax.swing.JPanel();
+        textNIAAlumno = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         textCursoEscolar = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Entregas");
@@ -77,7 +90,7 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(58, 39, 35));
+        panelTitulo.setBackground(new java.awt.Color(58, 39, 35));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
@@ -93,119 +106,216 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelTituloLayout = new javax.swing.GroupLayout(panelTitulo);
+        panelTitulo.setLayout(panelTituloLayout);
+        panelTituloLayout.setHorizontalGroup(
+            panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTituloLayout.createSequentialGroup()
                 .addGap(69, 69, 69)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 968, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelTituloLayout.setVerticalGroup(
+            panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(panelTituloLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnBuscarAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel3.setBackground(Colores.fondo);
+        panelCuerpo.setBackground(Colores.fondo);
+
+        panelNoAlumno.setBackground(Colores.fondo);
+        panelNoAlumno.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel3.setBackground(new java.awt.Color(153, 153, 153));
+        jLabel3.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Busca un alumno para realizar una nueva entrega");
+
+        javax.swing.GroupLayout panelNoAlumnoLayout = new javax.swing.GroupLayout(panelNoAlumno);
+        panelNoAlumno.setLayout(panelNoAlumnoLayout);
+        panelNoAlumnoLayout.setHorizontalGroup(
+            panelNoAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelNoAlumnoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelNoAlumnoLayout.setVerticalGroup(
+            panelNoAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelNoAlumnoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        textNIAAlumno.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Curso escolar:");
 
-        textCursoEscolar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textCursoEscolar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         textCursoEscolar.setText("2018");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setText("NIA del Alumno:");
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel5.setText("10429497");
+
+        jLabel6.setText("Enseñanza:");
+
+        jLabel7.setText("Nivel:");
+
+        javax.swing.GroupLayout textNIAAlumnoLayout = new javax.swing.GroupLayout(textNIAAlumno);
+        textNIAAlumno.setLayout(textNIAAlumnoLayout);
+        textNIAAlumnoLayout.setHorizontalGroup(
+            textNIAAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(textNIAAlumnoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textCursoEscolar)
-                .addContainerGap(514, Short.MAX_VALUE))
+                .addGroup(textNIAAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(textNIAAlumnoLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textCursoEscolar))
+                    .addGroup(textNIAAlumnoLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        textNIAAlumnoLayout.setVerticalGroup(
+            textNIAAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(textNIAAlumnoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(textNIAAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(textCursoEscolar))
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(textNIAAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(412, Short.MAX_VALUE))
+        javax.swing.GroupLayout panelSiAlumnoLayout = new javax.swing.GroupLayout(panelSiAlumno);
+        panelSiAlumno.setLayout(panelSiAlumnoLayout);
+        panelSiAlumnoLayout.setHorizontalGroup(
+            panelSiAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSiAlumnoLayout.createSequentialGroup()
+                .addComponent(textNIAAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        panelSiAlumnoLayout.setVerticalGroup(
+            panelSiAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSiAlumnoLayout.createSequentialGroup()
+                .addComponent(textNIAAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(323, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelCuerpoLayout = new javax.swing.GroupLayout(panelCuerpo);
+        panelCuerpo.setLayout(panelCuerpoLayout);
+        panelCuerpoLayout.setHorizontalGroup(
+            panelCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCuerpoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(298, Short.MAX_VALUE))
+                .addGroup(panelCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelNoAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelSiAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panelCuerpoLayout.setVerticalGroup(
+            panelCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCuerpoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelNoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelSiAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelCuerpo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelCuerpo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarAlumnoActionPerformed
-        // TODO add your handling code here:
+        //Acción del botón de 'Devoluciones'
         if (frameInputAlumno == null) {
+            //Si no existe la ventana la creamos
             frameInputAlumno = new FrameInputAlumno();
         } else {
             if (!frameInputAlumno.isVisible()) {
+                //Si existe la ventana, y la hemos cerrado
+                //limpiamos la variable y creamos una ventana nueva
                 frameInputAlumno = null;
                 frameInputAlumno = new FrameInputAlumno();
             }
         }
+        //Hacemos visible la ventana creada anteriormente
         frameInputAlumno.setVisible(true);
     }//GEN-LAST:event_btnBuscarAlumnoActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // TODO add your handling code here:
+        //<editor-fold defaultstate="collapsed" desc="Paneles">
+        panelNoAlumno.setVisible(alumno == null);
+        panelSiAlumno.setVisible(alumno != null);
+//</editor-fold>
+
+        //Si el alumno que hemos comprobado anteriormente existe:
         if (alumno != null) {
-            System.out.println("Se ha recibido el objeto");
+            //Conseguimos el año actual para comprobar la matricula
             LocalDate localDate = LocalDate.now();
             String date = DateTimeFormatter.ofPattern("yyyy").format(localDate);
 
-            List<Matricula> listaMatriculas = alumno.getMatriculas();
-            Matricula matricula = listaMatriculas.stream().filter(matriculaTemp -> matriculaTemp.getCurso_escolar() == Integer.parseInt(date)).collect(Collectors.toList()).get(0);;
+            //Buscamos el alumno con el nia que hemos encontrado
+            //(Tenemos que volverlo a buscar por las relaciones (matriculas, historial))
+            alumno = daoAlumno.buscar(alumno.getNia());
 
-            if (matricula == null) {
-                new FramePopup("Este alumno no esta matriculado en este curso escolar.");
+            //Guardamos sus matriculas en una nueva lista por comodidad
+            List<Matricula> listaMatriculas = alumno.getMatriculas();
+
+            if (listaMatriculas.size() > 0) {
+                //Si la lista tiene mas de una matricula:
+                List<Matricula> listaMatriculasCursoEscolar = listaMatriculas.stream().filter(matriculaTemp -> matriculaTemp.getCurso_escolar() == Integer.parseInt(date)).collect(Collectors.toList());
+
+                if (listaMatriculasCursoEscolar.size() > 0) {
+                    //Si tiene matriculas de este año:
+                    textCursoEscolar.setText(matricula.getCurso_escolar() + "");
+                } else {
+                    //Si la matricula no es de este año:
+                    new FramePopup("Este alumno no esta matriculado en este curso escolar.");
+                }
             } else {
-                textCursoEscolar.setText(matricula.getCurso_escolar()+"");
+                //Si la lista no tiene matriculas:
+                new FramePopup("Este alumno no tiene matriculas.");
             }
         } else {
+            //No se ha buscado ningun alumno
             System.out.println("El alumno continua siendo Null");
         }
     }//GEN-LAST:event_formWindowActivated
@@ -250,9 +360,16 @@ public class FrameEntrega extends javax.swing.JFrame {
     private com.mommoo.flat.button.FlatButton btnBuscarAlumno;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel panelCuerpo;
+    private javax.swing.JPanel panelNoAlumno;
+    private javax.swing.JPanel panelSiAlumno;
+    private javax.swing.JPanel panelTitulo;
     private javax.swing.JLabel textCursoEscolar;
+    private javax.swing.JPanel textNIAAlumno;
     // End of variables declaration//GEN-END:variables
 }

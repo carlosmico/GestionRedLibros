@@ -21,7 +21,7 @@ import Daos.*;
 import Pojos.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.SwingWorker;
 
 /**
@@ -44,7 +44,6 @@ public class FrameInputAlumno extends javax.swing.JFrame {
     public boolean isLoading = false;
 
     private FramePopup frameCarga;
-    private FrameAlumno frameAlumno;
 
     private DaoAlumno daoAlumno;
 
@@ -52,11 +51,14 @@ public class FrameInputAlumno extends javax.swing.JFrame {
 
     public FrameInputAlumno() {
         initComponents();
-
+        
+        //Limpiamos el texto de error
         textErrorBusqueda.setText("");
 
+        //Centramos la pestaña a la pantalla
         this.setLocationRelativeTo(null);
 
+        //Creamos el DAO del Alumno
         daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
     }
 
@@ -235,30 +237,19 @@ public class FrameInputAlumno extends javax.swing.JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void textNIAAlumnoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNIAAlumnoKeyPressed
-        // TODO add your handling code here:
-        if (textNIAAlumno.hasFocus()) {
-            textNIAAlumno.addKeyListener(new KeyAdapter() {
-                public void keyPressed(KeyEvent e) {
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        if (!isLoading) {
-                            buscarAlumno(textNIAAlumno.getText());
-                            isLoading = true;
-                        }
-                    }
-                }
-            });
+        //Controlamos el intro cuando tenemos el foco en el input text
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscarAlumno(textNIAAlumno.getText());
         }
     }//GEN-LAST:event_textNIAAlumnoKeyPressed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-        if (!isLoading) {
-            buscarAlumno(textNIAAlumno.getText());
-            isLoading = true;
-        }
+        //Controlamos la pulsación del botón buscar
+        buscarAlumno(textNIAAlumno.getText());
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -317,28 +308,26 @@ public class FrameInputAlumno extends javax.swing.JFrame {
     public javax.swing.JLabel textTitleFrame;
     // End of variables declaration//GEN-END:variables
 
-    private void buscarAlumno(String nia) {
+    public void buscarAlumno(String nia) {
         if (!nia.equals("")) {
             //Se ha insertado un codigo
-            SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
-                protected Void doInBackground() throws InterruptedException {
-                    alumno = daoAlumno.buscar(nia);
-                    return null;
-                }
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
 
-                protected void process(List<Integer> chunks) {
+                protected Void doInBackground() throws InterruptedException {
+                    alumno = daoAlumno.buscarTodos().stream().filter(a -> a.getNia().equals(nia)).collect(Collectors.toList()).get(0);
+                    System.out.println(alumno == null);
+                    return null;
                 }
 
                 protected void done() {
                     if (alumno != null) {
-                        dispose();
                         FrameEntrega.alumno = alumno;
+                        dispose();
                     } else {
                         textErrorBusqueda.setVisible(true);
                         textErrorBusqueda.setText("No existen alumnos con este NIA.");
                         isLoading = false;
                     }
-
                     frameCarga.dispose();
                 }
             };

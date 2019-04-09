@@ -1647,7 +1647,6 @@ public class FrameLibro extends javax.swing.JFrame {
             protected Void doInBackground() throws InterruptedException {
                 listaLibros = daoLibro.buscarTodos();
                 listaCursos = daoCurso.buscarTodos();
-
                 return null;
             }
 
