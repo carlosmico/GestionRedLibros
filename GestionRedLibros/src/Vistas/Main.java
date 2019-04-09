@@ -219,6 +219,7 @@ public class Main extends javax.swing.JFrame {
             frameEntrega = new FrameEntrega();
         } else {
             if (!frameEntrega.isVisible()) {
+                frameEntrega.alumno = null;
                 frameEntrega = null;
                 frameEntrega = new FrameEntrega();
             } else {

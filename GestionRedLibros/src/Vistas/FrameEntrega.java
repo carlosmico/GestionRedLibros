@@ -21,15 +21,28 @@ import Daos.DaoAlumno;
 import Pojos.Alumno;
 import Pojos.Contenido;
 import Pojos.Matricula;
+import Pruebas.ButtonColumn;
 import Utilidades.Colores;
 import com.mommoo.flat.button.FlatButton;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -244,6 +257,8 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         panelTablas.setLayout(new java.awt.GridLayout(1, 2));
 
+        tablaPendientes.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        tablaPendientes.setForeground(Colores.accent);
         tablaPendientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -255,10 +270,15 @@ public class FrameEntrega extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaPendientes.setRowHeight(32);
+        tablaPendientes.setSelectionBackground(Colores.accent);
+        tablaPendientes.setSelectionForeground(Colores.fondo);
         jScrollPane2.setViewportView(tablaPendientes);
 
         panelTablas.add(jScrollPane2);
 
+        tableEntregados.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        tableEntregados.setForeground(Colores.accent);
         tableEntregados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -270,6 +290,9 @@ public class FrameEntrega extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tableEntregados.setRowHeight(32);
+        tableEntregados.setSelectionBackground(Colores.accent);
+        tableEntregados.setSelectionForeground(Colores.fondo);
         jScrollPane3.setViewportView(tableEntregados);
 
         panelTablas.add(jScrollPane3);
@@ -291,17 +314,18 @@ public class FrameEntrega extends javax.swing.JFrame {
         panelGestionAsignaturasLayout.setHorizontalGroup(
             panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel5)
-                        .addGap(0, 861, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addComponent(panelInfoTablas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
                         .addGroup(panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelTablas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panelInfoTablas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
+                            .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(0, 861, Short.MAX_VALUE))
+                            .addComponent(panelTablas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         panelGestionAsignaturasLayout.setVerticalGroup(
             panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -507,38 +531,63 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         tableModel.setRowCount(0);
 
+        Object[][] contenidoTabla = new Object[listaMatriculas.size()][2];
+
         for (int i = 0; i < listaMatriculas.size(); i++) {
-            Contenido contenido = listaMatriculas.get(i).getContenido();
-            Object[] fila = new String[3];
-
-            //Nombre de la asignatura
-            fila[0] = (String) contenido.getNombre_cas();
-
-            //Boton de más info
-            FlatButton btnMoreInfo = new FlatButton();
-            btnMoreInfo.setBackground(Colores.buttons);
-            btnMoreInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png")));
-            btnMoreInfo.setCornerRound(10);
-            btnMoreInfo.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    System.out.println("Pulsado boton de mas info");
-                }
-            });
-            fila[1] = (FlatButton) btnMoreInfo;
-
-            //Boton asignar
-            FlatButton btnAddContenido = new FlatButton();
-            btnAddContenido.setBackground(Colores.buttons);
-            btnAddContenido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png")));
-            btnAddContenido.setCornerRound(10);
-            btnAddContenido.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    System.out.println("Pulsado boton de mas info");
-                }
-            });
-            fila[2] = (FlatButton) btnAddContenido;
+            contenidoTabla[i][0] = listaMatriculas.get(i).getContenido().getNombre_cas();
+            contenidoTabla[i][1] = "";
         }
 
+        tableModel.setDataVector(
+                contenidoTabla,
+                new Object[]{"Asignaturas", "Gestión"}
+        );
+
+        Action delete = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                JTable table = (JTable) e.getSource();
+                int modelRow = Integer.valueOf(e.getActionCommand());
+                ((DefaultTableModel) table.getModel()).removeRow(modelRow);
+            }
+        };
+
+        ButtonColumn buttonColumn = new ButtonColumn(tablaPendientes, delete, tableModel.getColumnCount() - 1);
+
+        //tablaPendientes.getColumn("Gestión").setCellRenderer(new ButtonRenderer());
+        //tablaPendientes.getColumn("Gestión").setCellEditor(new ButtonEditor(new JCheckBox()));
+        /*
+
+         for (int i = 0; i < listaMatriculas.size(); i++) {
+         Contenido contenido = listaMatriculas.get(i).getContenido();
+         Object[] fila = new String[3];
+
+         //Nombre de la asignatura
+         fila[0] = (String) contenido.getNombre_cas();
+
+         //Boton de más info
+         FlatButton btnMoreInfo = new FlatButton();
+         btnMoreInfo.setBackground(Colores.buttons);
+         btnMoreInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png")));
+         btnMoreInfo.setCornerRound(10);
+         btnMoreInfo.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+         System.out.println("Pulsado boton de mas info");
+         }
+         });
+         fila[1] = (FlatButton) btnMoreInfo;
+
+         //Boton asignar
+         FlatButton btnAddContenido = new FlatButton();
+         btnAddContenido.setBackground(Colores.buttons);
+         btnAddContenido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png")));
+         btnAddContenido.setCornerRound(10);
+         btnAddContenido.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+         System.out.println("Pulsado boton de mas info");
+         }
+         });
+         fila[2] = (FlatButton) btnAddContenido;
+         }*/
         tablaPendientes.setModel(tableModel);
     }
 }
