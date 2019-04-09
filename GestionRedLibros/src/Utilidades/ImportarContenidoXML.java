@@ -43,6 +43,7 @@ import org.xml.sax.SAXException;
  * @author Carlos
  */
 public class ImportarContenidoXML {
+
     DocumentBuilderFactory factory = null;
     DocumentBuilder builder = null;
 
@@ -57,20 +58,13 @@ public class ImportarContenidoXML {
     public ImportarContenidoXML(String ruta) throws Exception {
         factory = DocumentBuilderFactory.newInstance();
 
-        try {
-            builder = factory.newDocumentBuilder();
+        builder = factory.newDocumentBuilder();
 
-            Document doc = builder.parse(ruta);
-            doc.normalize();
+        Document doc = builder.parse(ruta);
+        doc.normalize();
 
-            cargarContenidos(doc);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        cargarContenidos(doc);
+
     }
 
     /**
@@ -124,24 +118,24 @@ public class ImportarContenidoXML {
                 contenidosCargados.add(new Contenido(c, codigo, ensenanza, nombre_cas,
                         nombre_val));
             }
-            
+
             insertarContenidosBD();
+        } else {
+            throw new Exception("No hay datos de asignaturas en el XML.");
         }
     }
-    
+
     private void insertarContenidosBD() throws Exception {
-        
+
         DaoContenido dao = new DaoContenido(Main.gestorSesiones.getSession());
-        
+
         //Insertamos la lista de Contenidos
-        try{
+        try {
             dao.actualizarContenidos(contenidosCargados);
-        }catch(Exception e){
-            System.out.println("Error: ImportarContenidosXML - insertarContenidosBD()");
-            e.printStackTrace();
-            throw new Exception();
+        } catch (Exception e) {
+            throw new Exception("Fallo al insertar las asignaturas en la base de datos.");
         }
-        
+
         dao.desconectar();
     }
 }

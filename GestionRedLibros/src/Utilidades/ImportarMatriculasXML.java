@@ -44,6 +44,7 @@ import org.xml.sax.SAXException;
  * @author Carlos
  */
 public class ImportarMatriculasXML {
+
     SimpleDateFormat sdf;
 
     DocumentBuilderFactory factory = null;
@@ -60,20 +61,12 @@ public class ImportarMatriculasXML {
     public ImportarMatriculasXML(String ruta) throws Exception {
         factory = DocumentBuilderFactory.newInstance();
 
-        try {
-            builder = factory.newDocumentBuilder();
+        builder = factory.newDocumentBuilder();
 
-            Document doc = builder.parse(ruta);
-            doc.normalize();
+        Document doc = builder.parse(ruta);
+        doc.normalize();
 
-            cargarMatriculas(doc);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        cargarMatriculas(doc);
     }
 
     /**
@@ -185,15 +178,15 @@ public class ImportarMatriculasXML {
 
                 //Buscamos el alumno y el contenido recuperado del XML
                 DaoAlumno dao = new DaoAlumno(Main.gestorSesiones.getSession());
-                
+
                 Alumno alumnoObj = dao.buscar(alumno);
-                
+
                 dao.desconectar();
-                
+
                 DaoContenido daoc = new DaoContenido(Main.gestorSesiones.getSession());
-                
+
                 Contenido contenidoObj = daoc.buscarPorCodigo(contenido);
-                
+
                 daoc.desconectar();
 
                 matriculasCargadas.add(new Matricula(0, Integer.parseInt(
@@ -201,26 +194,27 @@ public class ImportarMatriculasXML {
                         idioma, tipo_basico, tipo_predom, acis, fec_ini_acis_date,
                         fec_fin_acis_date, cur_ref_acis, curso_pendiente));
             }
-            
+
             insertarMatriculasBD();
+        } else {
+            throw new Exception("No hay datos de matriculas en el XML.");
         }
     }
 
     private void insertarMatriculasBD() throws Exception {
-        
+
         DaoMatricula dao = new DaoMatricula(Main.gestorSesiones.getSession());
-        
+
         //Insertamos la lista de Matriculas
-        try{
+        try {
             dao.session.beginTransaction();
             dao.actualizarMatriculas(matriculasCargadas);
             dao.session.getTransaction().commit();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Error: ImportarMatriculasXML - insertarMatriculasBD()");
-            e.printStackTrace();
-            throw new Exception();
+            throw new Exception("Fallo al insertar las matriculas en la base de datos.");
         }
-        
+
         dao.desconectar();
     }
 }

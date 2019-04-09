@@ -52,20 +52,12 @@ public class ImportarAlumnosXML {
     public ImportarAlumnosXML(String ruta) throws Exception {
         factory = DocumentBuilderFactory.newInstance();
 
-        try {
-            builder = factory.newDocumentBuilder();
+        builder = factory.newDocumentBuilder();
 
-            Document doc = builder.parse(ruta);
-            doc.normalize();
+        Document doc = builder.parse(ruta);
+        doc.normalize();
 
-            cargarAlumnos(doc);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        cargarAlumnos(doc);
     }
 
     private void cargarAlumnos(Document doc) throws ParseException, Exception {
@@ -163,6 +155,8 @@ public class ImportarAlumnosXML {
             }
 
             insertarCursosBD();
+        } else {
+            throw new Exception("No hay datos de alumnos en el XML.");
         }
     }
 
@@ -174,9 +168,7 @@ public class ImportarAlumnosXML {
         try {
             dao.actualizarAlumnos(alumnosCargados);
         } catch (Exception e) {
-            System.out.println("Error: ImportarAlumnosXML - insertarAlumnosBD()");
-            e.printStackTrace();
-            throw new Exception();
+            throw new Exception("Fallo al insertar los cursos en la base de datos.");
         }
 
         dao.desconectar();

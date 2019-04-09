@@ -48,20 +48,13 @@ public class ImportarGruposXML {
     public ImportarGruposXML(String ruta) throws Exception {
         factory = DocumentBuilderFactory.newInstance();
 
-        try {
-            builder = factory.newDocumentBuilder();
+        builder = factory.newDocumentBuilder();
 
-            Document doc = builder.parse(ruta);
-            doc.normalize();
+        Document doc = builder.parse(ruta);
+        doc.normalize();
 
-            cargarGrupos(doc);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        cargarGrupos(doc);
+
     }
 
     private void cargarGrupos(Document doc) throws ParseException, Exception {
@@ -142,6 +135,8 @@ public class ImportarGruposXML {
             }
 
             insertarGruposBD();
+        } else {
+            throw new Exception("No hay datos de grupos en el XML.");
         }
     }
 
@@ -152,9 +147,7 @@ public class ImportarGruposXML {
         try {
             dao.actualizarGrupos(gruposCargados);
         } catch (Exception e) {
-            System.out.println("Error: ImportarGruposXML - insertarCursosBD()");
-            e.printStackTrace();
-            throw new Exception();
+            throw new Exception("Fallo al importar los grupos en la base de datos.");
         }
 
         dao.desconectar();

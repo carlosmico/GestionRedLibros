@@ -378,7 +378,6 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Dialog" size="18" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Ruta del fichero XML"/>
                       </Properties>
                     </Component>
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnSeleccionCursos">
@@ -392,6 +391,9 @@
                           <Dimension value="[35, 35]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSeleccionCursosActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnImportarCursos">
                       <Properties>
@@ -405,6 +407,9 @@
                           <Dimension value="[111, 32]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImportarCursosActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -476,7 +481,6 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Dialog" size="18" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Ruta del fichero XML"/>
                       </Properties>
                     </Component>
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnSeleccionGrupos">
@@ -490,6 +494,9 @@
                           <Dimension value="[35, 35]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSeleccionGruposActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnImportarGrupos">
                       <Properties>
@@ -503,6 +510,9 @@
                           <Dimension value="[111, 32]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImportarGruposActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -530,7 +540,7 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                      <Component id="textRutaAsignaturas" max="32767" attributes="0"/>
+                                      <Component id="textRutaContenidos" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="btnSeleccionAsignaturas" min="-2" pref="35" max="-2" attributes="0"/>
                                   </Group>
@@ -550,7 +560,7 @@
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="textRutaAsignaturas" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textRutaContenidos" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnSeleccionAsignaturas" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
@@ -569,12 +579,11 @@
                         <Property name="text" type="java.lang.String" value="Importaci&#xf3;n Asignaturas:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="textRutaAsignaturas">
+                    <Component class="javax.swing.JTextField" name="textRutaContenidos">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Dialog" size="18" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Ruta del fichero XML"/>
                       </Properties>
                     </Component>
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnSeleccionAsignaturas">
@@ -588,6 +597,9 @@
                           <Dimension value="[35, 35]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSeleccionAsignaturasActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnImportarAsignaturas">
                       <Properties>
@@ -601,6 +613,9 @@
                           <Dimension value="[111, 32]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImportarAsignaturasActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -672,7 +687,6 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Dialog" size="18" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Ruta del fichero XML"/>
                       </Properties>
                     </Component>
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnSeleccionAlumnos">
@@ -686,6 +700,9 @@
                           <Dimension value="[35, 35]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSeleccionAlumnosActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnImportarAlumnos">
                       <Properties>
@@ -699,6 +716,9 @@
                           <Dimension value="[111, 32]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImportarAlumnosActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -770,7 +790,6 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Dialog" size="18" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Ruta del fichero XML"/>
                       </Properties>
                     </Component>
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnSeleccionMatriculas">
