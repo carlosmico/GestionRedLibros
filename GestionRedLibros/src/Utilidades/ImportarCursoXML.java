@@ -1,6 +1,5 @@
 package Utilidades;
 
-
 import Daos.DaoCurso;
 import Pojos.Curso;
 import Utilidades.ImportarMatriculasXML;
@@ -52,20 +51,12 @@ public class ImportarCursoXML {
     public ImportarCursoXML(String ruta) throws Exception {
         factory = DocumentBuilderFactory.newInstance();
 
-        try {
-            builder = factory.newDocumentBuilder();
+        builder = factory.newDocumentBuilder();
 
-            Document doc = builder.parse(ruta);
-            doc.normalize();
+        Document doc = builder.parse(ruta);
+        doc.normalize();
 
-            cargarCursos(doc);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ImportarMatriculasXML.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        cargarCursos(doc);
     }
 
     private void cargarCursos(Document doc) throws ParseException, Exception {
@@ -114,6 +105,8 @@ public class ImportarCursoXML {
             }
 
             insertarCursosBD();
+        } else {
+            throw new Exception("No hay datos de cursos en el XML.");
         }
     }
 
@@ -125,9 +118,7 @@ public class ImportarCursoXML {
         try {
             dao.actualizarCursos(cursosCargados);
         } catch (Exception e) {
-            System.out.println("Error: ImportarCursosXML - insertarCursosBD()");
-            e.printStackTrace();
-            throw new Exception();
+            throw new Exception("Fallo al insertar los cursos en la base de datos.");
         }
 
         dao.desconectar();

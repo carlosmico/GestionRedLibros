@@ -18,6 +18,10 @@
 package Vistas;
 
 import Utilidades.Colores;
+import Utilidades.ImportarAlumnosXML;
+import Utilidades.ImportarContenidoXML;
+import Utilidades.ImportarCursoXML;
+import Utilidades.ImportarGruposXML;
 import Utilidades.ImportarMatriculasXML;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -29,13 +33,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Jose Sanchis
  */
 public class FrameOpciones extends javax.swing.JFrame {
-
-    //Variables ruta de importación.
-    String rutaImportarMatriculas = "";
-    String rutaImportarAlumnos = "";
-    String rutaImportarCursos = "";
-    String rutaImportarGrupos = "";
-    String rutaImportarContenidos = "";
 
     /**
      * Creates new form FrameDevoluciones
@@ -81,7 +78,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         btnImportarGrupos = new com.mommoo.flat.button.FlatButton();
         jPanel10 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        textRutaAsignaturas = new javax.swing.JTextField();
+        textRutaContenidos = new javax.swing.JTextField();
         btnSeleccionAsignaturas = new com.mommoo.flat.button.FlatButton();
         btnImportarAsignaturas = new com.mommoo.flat.button.FlatButton();
         jPanel11 = new javax.swing.JPanel();
@@ -214,18 +211,27 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel2.setToolTipText("");
 
         textRutaCursos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textRutaCursos.setText("Ruta del fichero XML");
 
         btnSeleccionCursos.setBackground(Colores.buttons);
         btnSeleccionCursos.setText("...");
         btnSeleccionCursos.setCornerRound(10);
         btnSeleccionCursos.setPreferredSize(new java.awt.Dimension(35, 35));
+        btnSeleccionCursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionCursosActionPerformed(evt);
+            }
+        });
 
         btnImportarCursos.setBackground(Colores.buttons);
         btnImportarCursos.setText("Importar");
         btnImportarCursos.setToolTipText("");
         btnImportarCursos.setCornerRound(10);
         btnImportarCursos.setPreferredSize(new java.awt.Dimension(111, 32));
+        btnImportarCursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportarCursosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -268,18 +274,27 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel3.setText("Importación Grupos:");
 
         textRutaGrupos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textRutaGrupos.setText("Ruta del fichero XML");
 
         btnSeleccionGrupos.setBackground(Colores.buttons);
         btnSeleccionGrupos.setText("...");
         btnSeleccionGrupos.setCornerRound(10);
         btnSeleccionGrupos.setPreferredSize(new java.awt.Dimension(35, 35));
+        btnSeleccionGrupos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionGruposActionPerformed(evt);
+            }
+        });
 
         btnImportarGrupos.setBackground(Colores.buttons);
         btnImportarGrupos.setText("Importar");
         btnImportarGrupos.setToolTipText("");
         btnImportarGrupos.setCornerRound(10);
         btnImportarGrupos.setPreferredSize(new java.awt.Dimension(111, 32));
+        btnImportarGrupos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportarGruposActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -321,19 +336,28 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setText("Importación Asignaturas:");
 
-        textRutaAsignaturas.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textRutaAsignaturas.setText("Ruta del fichero XML");
+        textRutaContenidos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         btnSeleccionAsignaturas.setBackground(Colores.buttons);
         btnSeleccionAsignaturas.setText("...");
         btnSeleccionAsignaturas.setCornerRound(10);
         btnSeleccionAsignaturas.setPreferredSize(new java.awt.Dimension(35, 35));
+        btnSeleccionAsignaturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionAsignaturasActionPerformed(evt);
+            }
+        });
 
         btnImportarAsignaturas.setBackground(Colores.buttons);
         btnImportarAsignaturas.setText("Importar");
         btnImportarAsignaturas.setToolTipText("");
         btnImportarAsignaturas.setCornerRound(10);
         btnImportarAsignaturas.setPreferredSize(new java.awt.Dimension(111, 32));
+        btnImportarAsignaturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportarAsignaturasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -347,7 +371,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                         .addComponent(btnImportarAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(textRutaAsignaturas)
+                        .addComponent(textRutaContenidos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSeleccionAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel10Layout.createSequentialGroup()
@@ -362,7 +386,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(6, 6, 6)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textRutaAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textRutaContenidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSeleccionAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnImportarAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -376,18 +400,27 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel5.setText("Importación Alumnos:");
 
         textRutaAlumnos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textRutaAlumnos.setText("Ruta del fichero XML");
 
         btnSeleccionAlumnos.setBackground(Colores.buttons);
         btnSeleccionAlumnos.setText("...");
         btnSeleccionAlumnos.setCornerRound(10);
         btnSeleccionAlumnos.setPreferredSize(new java.awt.Dimension(35, 35));
+        btnSeleccionAlumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionAlumnosActionPerformed(evt);
+            }
+        });
 
         btnImportarAlumnos.setBackground(Colores.buttons);
         btnImportarAlumnos.setText("Importar");
         btnImportarAlumnos.setToolTipText("");
         btnImportarAlumnos.setCornerRound(10);
         btnImportarAlumnos.setPreferredSize(new java.awt.Dimension(111, 32));
+        btnImportarAlumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportarAlumnosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -430,7 +463,6 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel6.setText("Importación Matriculas:");
 
         textRutaMatriculas.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textRutaMatriculas.setText("Ruta del fichero XML");
 
         btnSeleccionMatriculas.setBackground(Colores.buttons);
         btnSeleccionMatriculas.setText("...");
@@ -574,13 +606,9 @@ public class FrameOpciones extends javax.swing.JFrame {
     private void btnImportarMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarMatriculasActionPerformed
         // TODO add your handling code here:
 
-        if (!rutaImportarMatriculas.equals("")) {
+        if (!textRutaMatriculas.getText().equals("")) {
             try {
-                new ImportarMatriculasXML(rutaImportarMatriculas);
-                
-                rutaImportarMatriculas = "";
-                
-                textRutaMatriculas.setText(rutaImportarMatriculas);
+                new ImportarMatriculasXML(textRutaMatriculas.getText());
 
                 JOptionPane.showMessageDialog(this, "Matrículas importadas correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
@@ -604,10 +632,137 @@ public class FrameOpciones extends javax.swing.JFrame {
         int returnVal = chooser.showOpenDialog(null);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            rutaImportarMatriculas = chooser.getSelectedFile().getPath();
-            textRutaMatriculas.setText(rutaImportarMatriculas);
+            textRutaMatriculas.setText(chooser.getSelectedFile().getPath());
         }
     }//GEN-LAST:event_btnSeleccionMatriculasActionPerformed
+
+    private void btnImportarCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarCursosActionPerformed
+        // TODO add your handling code here:
+        if (!textRutaCursos.getText().equals("")) {
+            try {
+                new ImportarCursoXML(textRutaCursos.getText());
+
+                JOptionPane.showMessageDialog(this, "Cursos importados correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "No se han podido importar los cursos.\n-Revise el archivo XML.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un archivo para poder importar los cursos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnImportarCursosActionPerformed
+
+    private void btnSeleccionCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionCursosActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "XML", "xml");
+
+        chooser.setFileFilter(filter);
+
+        int returnVal = chooser.showOpenDialog(null);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            textRutaCursos.setText(chooser.getSelectedFile().getPath());
+        }
+    }//GEN-LAST:event_btnSeleccionCursosActionPerformed
+
+    private void btnSeleccionGruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionGruposActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "XML", "xml");
+
+        chooser.setFileFilter(filter);
+
+        int returnVal = chooser.showOpenDialog(null);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            textRutaGrupos.setText(chooser.getSelectedFile().getPath());
+        }
+    }//GEN-LAST:event_btnSeleccionGruposActionPerformed
+
+    private void btnImportarGruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarGruposActionPerformed
+        // TODO add your handling code here:
+        if (!textRutaGrupos.getText().equals("")) {
+            try {
+                new ImportarGruposXML(textRutaGrupos.getText());
+                
+                JOptionPane.showMessageDialog(this, "Grupos importados correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "No se han podido importar los grupos.\n-Revise el archivo XML.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un archivo para poder importar los grupos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnImportarGruposActionPerformed
+
+    private void btnSeleccionAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionAsignaturasActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "XML", "xml");
+
+        chooser.setFileFilter(filter);
+
+        int returnVal = chooser.showOpenDialog(null);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            textRutaContenidos.setText(chooser.getSelectedFile().getPath());
+        }
+    }//GEN-LAST:event_btnSeleccionAsignaturasActionPerformed
+
+    private void btnImportarAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarAsignaturasActionPerformed
+        // TODO add your handling code here:
+        if (!textRutaContenidos.getText().equals("")) {
+            try {
+                new ImportarContenidoXML(textRutaContenidos.getText());
+
+                JOptionPane.showMessageDialog(this, "Asignaturas importadas correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "No se han podido importar las asignaturas.\n-Revise el archivo XML.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un archivo para poder importar las asignaturas.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnImportarAsignaturasActionPerformed
+
+    private void btnSeleccionAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionAlumnosActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "XML", "xml");
+
+        chooser.setFileFilter(filter);
+
+        int returnVal = chooser.showOpenDialog(null);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            textRutaAlumnos.setText(chooser.getSelectedFile().getPath());
+        }
+    }//GEN-LAST:event_btnSeleccionAlumnosActionPerformed
+
+    private void btnImportarAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarAlumnosActionPerformed
+        // TODO add your handling code here:
+        if (!textRutaAlumnos.getText().equals("")) {
+            try {
+                new ImportarAlumnosXML(textRutaAlumnos.getText());
+
+                JOptionPane.showMessageDialog(this, "Alumnos importados correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "No se han podido importar los alumnos.\n-Revise el archivo XML.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un archivo para poder importar los alumnos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnImportarAlumnosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -678,7 +833,7 @@ public class FrameOpciones extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JTabbedPane tabbedPage;
     private javax.swing.JTextField textRutaAlumnos;
-    private javax.swing.JTextField textRutaAsignaturas;
+    private javax.swing.JTextField textRutaContenidos;
     private javax.swing.JTextField textRutaCursos;
     private javax.swing.JTextField textRutaGrupos;
     private javax.swing.JTextField textRutaMatriculas;
