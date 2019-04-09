@@ -29,10 +29,18 @@ public class GestorSesiones {
     
     SessionFactory factory = null;
     
+    /**
+     *  Constructor de la clase GestorSesiones que inicializa una factory de 
+     *  Hibernate
+     */
     public GestorSesiones(){
         factory = UtilesHibernate.getSessionFactory();
     }
     
+    /**
+     *  Metodo que devuelve un objeto Session
+     * @return Session
+     */
     public Session getSession(){
         Session session = factory.openSession();
         return session;

@@ -43,6 +43,11 @@ import javax.print.PrintException;
  */
 public class CodigoBarras {
 
+    /**
+     *  Metodo para generar un Barcode mediante un Codigo recibido
+     * @param codigo
+     * @return
+     */
     public Barcode39 generarCodigoIndividual(String codigo) {
         Barcode39 barcode = new Barcode39();
 
@@ -53,6 +58,13 @@ public class CodigoBarras {
         return barcode;
     }
 
+    /**
+     *  Metodo para generar una lista de Barcodes mediante una lista de Codigos
+     *  recibida
+     * @param codigos
+     * @return
+     * @throws Exception
+     */
     public List<Barcode39> generarCodigoList(List<String> codigos) throws Exception {
         List<Barcode39> barcodes = new ArrayList<Barcode39>();
 
@@ -69,8 +81,14 @@ public class CodigoBarras {
         return barcodes;
     }
 
-    /*  
-    *   Generamos el PDF correspondiente con los Barcode al ejemplars
+    /**
+     *  Metodo para generar y abrir un PDF correspondiente a un Barcode recibido
+     *  con el titulo del Ejemplar recibido
+     * @param ejemplar
+     * @param barcode
+     * @throws FileNotFoundException
+     * @throws DocumentException
+     * @throws IOException
      */
     public void imprimirIndividual(Ejemplar ejemplar, Barcode39 barcode) throws FileNotFoundException, DocumentException, IOException {
         comprobarDirectorio();
@@ -100,8 +118,16 @@ public class CodigoBarras {
         Desktop.getDesktop().open(new File(rutapdf));
     }
 
-    /*  Generamos el PDF correspondiente con los Barcode de cada ejemplar
-    *   y cada 8 Barcodes insertados en el pdf pasamos a la siguiente pagina por temas visuales
+    /**
+     *  Metodo para generar y abrir un PDF correspondiente a los Barcodes recibidos y con el 
+     *  titulo del Libro recibido
+     * @param libro
+     * @param barcodes
+     * @throws PrinterException
+     * @throws FileNotFoundException
+     * @throws DocumentException
+     * @throws IOException
+     * @throws PrintException
      */
     public void imprimirList(Libro libro, List<Barcode39> barcodes) throws PrinterException, FileNotFoundException, DocumentException, IOException, PrintException {
 
@@ -145,6 +171,9 @@ public class CodigoBarras {
         Desktop.getDesktop().open(new File(rutapdf));
     }
 
+    /**
+     *  Metodo para comprobar si existe un directorio, si no existe se crea
+     */
     private void comprobarDirectorio() {
         File directorio = new File("C://Gestion_Libros//Impresiones//");
 
@@ -153,71 +182,4 @@ public class CodigoBarras {
             directorio.mkdir();
         }
     }
-
-
-    /*
-    public Barcode generarCodigo(String codigo) throws Exception {
-        try {
-            Barcode barcode = BarcodeFactory.createCode39(codigo, true);
-
-            barcode.setDrawingText(true);
-
-            barcode.setBarWidth(2);
-            barcode.setBarHeight(60);
-
-            return barcode;
-        } catch (Exception e) {
-            throw new Exception();
-        }
-    }
-
-    public List<Barcode> generarCodigoList(List<String> codigos) throws Exception {
-        try {
-            List<Barcode> barcodes = new ArrayList<Barcode>();
-
-            for (int i = 0; i < codigos.size(); i++) {
-                Barcode barcode = BarcodeFactory.createCode39(codigos.get(i), true);
-
-                barcode.setDrawingText(true);
-
-                barcode.setBarWidth(2);
-                barcode.setBarHeight(60);
-
-                barcodes.add(barcode);
-            }
-
-            return barcodes;
-        } catch (Exception e) {
-            throw new Exception();
-        }
-    }
-
-    public void imprimir(Barcode barcode) throws PrinterException {
-        PrinterJob job = PrinterJob.getPrinterJob();
-        job.setPrintable(barcode);
-
-        if (job.printDialog()) {
-            try {
-                job.print();
-            } catch (PrinterException ex) {
-                throw new PrinterException();
-            }
-        }
-    }
-
-    public void imprimirList(List<Barcode> barcodes) throws PrinterException {
-        PrinterJob job = PrinterJob.getPrinterJob();
-
-        for (int i = 0; i < barcodes.size(); i++) {
-            job.setPrintable(barcodes.get(i));
-        }
-
-        if (job.printDialog()) {
-            try {
-                job.print();
-            } catch (PrinterException ex) {
-                throw new PrinterException();
-            }
-        }
-    }*/
 }

@@ -49,6 +49,12 @@ public class ImportarAlumnosXML {
 
     List<Alumno> alumnosCargados;
 
+    /**
+     *  Constructor de la clase ImportarAlumnosXML en el que preparamos un XML
+     *  para poder leerlo más tarde
+     * @param ruta
+     * @throws Exception
+     */
     public ImportarAlumnosXML(String ruta) throws Exception {
         factory = DocumentBuilderFactory.newInstance();
 
@@ -60,6 +66,9 @@ public class ImportarAlumnosXML {
         cargarAlumnos(doc);
     }
 
+    /**
+     *  Metodo para obtener una lista de Alumnos de un archivo XML
+     */
     private void cargarAlumnos(Document doc) throws ParseException, Exception {
         alumnosCargados = new ArrayList<Alumno>();
 
@@ -160,6 +169,9 @@ public class ImportarAlumnosXML {
         }
     }
 
+    /**
+     *  Metodo para insertar una lista de Alumnos en la BD
+     */
     private void insertarCursosBD() throws Exception {
 
         DaoAlumno dao = new DaoAlumno(Main.gestorSesiones.getSession());

@@ -28,6 +28,11 @@ import java.net.URLConnection;
  */
 public class GetInternetStatus {
     
+    /**
+     *  Metodo para comprobar la conexión a una URL, si existe conexión devolverá
+     *  True, en caso contrario False
+     * @return
+     */
     public static boolean isAvailable() {
         try {
             final URL url = new URL("http://10.1.1.41");

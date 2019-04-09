@@ -45,6 +45,13 @@ public class ImportarGruposXML {
 
     List<Grupo> gruposCargados;
 
+    /**
+     * Constructor de la clase ImportarGruposXML en el que preparamos un XML
+     * para poder leerlo más tarde
+     *
+     * @param ruta
+     * @throws Exception
+     */
     public ImportarGruposXML(String ruta) throws Exception {
         factory = DocumentBuilderFactory.newInstance();
 
@@ -57,6 +64,9 @@ public class ImportarGruposXML {
 
     }
 
+    /**
+     * Metodo para obtener una lista de Grupos de un archivo XML
+     */
     private void cargarGrupos(Document doc) throws ParseException, Exception {
         gruposCargados = new ArrayList<Grupo>();
 
@@ -140,6 +150,9 @@ public class ImportarGruposXML {
         }
     }
 
+    /**
+     * Metodo para insertar una lista de Grupos en la BD
+     */
     private void insertarGruposBD() throws Exception {
         DaoGrupo dao = new DaoGrupo(Main.gestorSesiones.getSession());
 

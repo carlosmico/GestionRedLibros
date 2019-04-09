@@ -17,7 +17,6 @@
  */
 package Vistas;
 
-import Daos.DaoContenido;
 import Daos.DaoCurso;
 import Daos.DaoLibro;
 import Pojos.Contenido;
@@ -27,7 +26,6 @@ import Renders.comboBoxRender;
 import Utilidades.Colores;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,7 +60,6 @@ public class FrameLibro extends javax.swing.JFrame {
     /**
      *  Inicializamos los componentes y cargamos los datos necesarios.
      */
-    
     public FrameLibro() {
         initComponents();
 
@@ -141,6 +138,8 @@ public class FrameLibro extends javax.swing.JFrame {
             }
         });
 //</editor-fold>
+
+        setEditMode(false);
 
         cargarDatos();
     }
@@ -909,6 +908,11 @@ public class FrameLibro extends javax.swing.JFrame {
         btnCancelar.setText("Cancelar");
         btnCancelar.setCornerRound(10);
         btnCancelar.setPreferredSize(new java.awt.Dimension(111, 32));
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -939,7 +943,7 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeneralDerechoSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelGeneralDerechoSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelCuerpo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
+                    .addComponent(panelCuerpo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeneralDerechoSuperiorLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1552,9 +1556,8 @@ public class FrameLibro extends javax.swing.JFrame {
     /**
      * Activamos los campos del Libro para poder editarlo.
      */
-    
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnVerAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAlumnoActionPerformed
@@ -1624,13 +1627,24 @@ public class FrameLibro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_textNombreLibroBusquedaKeyPressed
 
+    /**
+    *   Metodo para crear un nuevo libro, habilitamos el modo edición y vaciamos
+    *   los campos
+    */
     private void btnNewLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewLibroActionPerformed
-        // TODO add your handling code here:
-        filtroListaLibro(textNombreLibro.getText(), cbCursoLibro.getSelectedItem().toString());
+        libro = null;
+        
+        rellenarCamposLibro();
+        
+        setEditMode(true);
     }//GEN-LAST:event_btnNewLibroActionPerformed
 
+    /**
+    *   Metodo para guardar la acción actual, si el libro actual es null llamamos
+    *   al metodo grabar() del DaoLibro, en caso contrario llamamos al metodo 
+    *   actualizar() del DaoLibro.
+    */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
         String errores = "";
 
         if (textNombreLibro.getText().equals("")) {
@@ -1776,6 +1790,18 @@ public class FrameLibro extends javax.swing.JFrame {
         // TODO add your handling code here:
         filtroListaLibro(textNombreLibro.getText(), cbCursoLibro.getSelectedItem().toString());
     }//GEN-LAST:event_cbCursoLibroItemStateChanged
+
+    /**
+    *   Metodo para cancelar la acción actual, deshabilitamos el modo edición y 
+    *   vaciamos los campos
+    */
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        libro = null;
+        
+        rellenarCamposLibro();
+        
+        setEditMode(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1953,8 +1979,6 @@ public class FrameLibro extends javax.swing.JFrame {
                 }
 
                 frameCarga.dispose();
-
-                isLoading = false;
             }
         };
         worker.execute();
@@ -1964,8 +1988,9 @@ public class FrameLibro extends javax.swing.JFrame {
         frameCarga.setVisible(true);
     }
 
-    
-    
+    /**
+     *  Metodo para filtrar la lista de Libros (Panel Izquierdo)
+     */
     private void filtroListaLibro(String textoNombre, String textoCurso) {
         //Creamos una lista temporal de los libros para realizar la busqueda
         List<Libro> listaFiltroLibros = listaLibros;
@@ -2032,7 +2057,9 @@ public class FrameLibro extends javax.swing.JFrame {
         }
     }
 
-    //Metodo para asignar el modelo de datos a una lista
+    /**
+     *  Metodo para asignar un modelo de datos a una JList
+     */
     private void asignarModeloToList(JList jlist, List<Libro> lista) {
         DefaultListModel listModel = new DefaultListModel();
         for (int i = 0; i < lista.size(); i++) {
@@ -2041,7 +2068,9 @@ public class FrameLibro extends javax.swing.JFrame {
         jlist.setModel(listModel);
     }
 
-    //Metodo para buscar un Libro concreto
+    /**
+     *  Metodo para buscar un Libro mediante el codigo recibido
+     */
     private void buscarLibro(String codigo) {
         if (!codigo.equals("")) {
             //Se ha insertado un codigo
@@ -2067,7 +2096,6 @@ public class FrameLibro extends javax.swing.JFrame {
                                 "Error de búsqueda", JOptionPane.ERROR_MESSAGE);
                     }
 
-                    isLoading = false;
                 }
             };
             worker.execute();
@@ -2077,7 +2105,6 @@ public class FrameLibro extends javax.swing.JFrame {
             frameCarga.setVisible(true);
         } else {
             //No se ha insertado ningun valor en el campo de texto
-            isLoading = false;
 
             libro = null;
 
@@ -2089,7 +2116,9 @@ public class FrameLibro extends javax.swing.JFrame {
         }
     }
 
-    //Metodo para rellenar los campos de un libro
+    /**
+     *  Metodo para rellenar los campos con los datos de un Libro
+     */
     private void rellenarCamposLibro() {
         if (listaCursos.size() > 0) {
             for (int i = 0; i < listaCursos.size(); i++) {
@@ -2119,6 +2148,31 @@ public class FrameLibro extends javax.swing.JFrame {
                     break;
                 }
             }
+        }
+    }
+    
+    /**
+     *  Metodo para habilitar o deshabilitar la edición de un Libro
+     */
+    public void setEditMode(boolean editable) {
+        textNombreLibro.setEditable(editable);
+        textISBNLibro.setEditable(editable);
+        cbCursoLibro.setEditable(editable);
+        cbCursoLibro.setEnabled(editable);
+        cbAsignatura.setEditable(editable);
+        cbAsignatura.setEnabled(editable);
+        textUnidadesLibro.setEditable(editable);
+        chkObsoletoLibro.setEnabled(editable);
+        //btnImprimirEtiquetas.setEnabled(editable);
+        textPrecioLibro.setEnabled(editable);
+        btnGuardar.setVisible(editable);
+
+        if (libro == null) {
+            btnEliminar.setVisible(false);
+            textCodigoLibro.setEditable(editable);
+        } else {
+            btnEliminar.setVisible(editable);
+            textCodigoLibro.setEditable(false);
         }
     }
 }

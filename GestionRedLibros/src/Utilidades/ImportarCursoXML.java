@@ -48,6 +48,13 @@ public class ImportarCursoXML {
 
     List<Curso> cursosCargados;
 
+    /**
+     * Constructor de la clase ImportarCursoXML en el que preparamos un XML para
+     * poder leerlo más tarde
+     *
+     * @param ruta
+     * @throws Exception
+     */
     public ImportarCursoXML(String ruta) throws Exception {
         factory = DocumentBuilderFactory.newInstance();
 
@@ -59,6 +66,9 @@ public class ImportarCursoXML {
         cargarCursos(doc);
     }
 
+    /**
+     * Metodo para obtener una lista de Cursos de un archivo XML
+     */
     private void cargarCursos(Document doc) throws ParseException, Exception {
         cursosCargados = new ArrayList<Curso>();
 
@@ -110,6 +120,9 @@ public class ImportarCursoXML {
         }
     }
 
+    /**
+     * Metodo para insertar una lista de Cursos en la BD
+     */
     private void insertarCursosBD() throws Exception {
 
         DaoCurso dao = new DaoCurso(Main.gestorSesiones.getSession());
