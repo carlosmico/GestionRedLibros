@@ -31,6 +31,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.PersistenceException;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -46,7 +47,6 @@ import javax.swing.SwingWorker;
 public class FrameLibro extends javax.swing.JFrame {
 
     boolean busquedaPorCodigo = true;
-    boolean isLoading = false;
 
     private FramePopup frameCarga = null;
 
@@ -57,10 +57,12 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private List<Libro> listaLibros;
     private List<Curso> listaCursos;
+    private List<Contenido> listaContenido;
 
     /**
-     * Creates new form FrameLibrosNew
+     *  Inicializamos los componentes y cargamos los datos necesarios.
      */
+    
     public FrameLibro() {
         initComponents();
 
@@ -77,11 +79,11 @@ public class FrameLibro extends javax.swing.JFrame {
         daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
         daoLibro = new DaoLibro(Main.gestorSesiones.getSession());
 
-        //Configuramos la parte visuall de los ComboBox
+        //Configuramos la parte visual de los ComboBox
         //<editor-fold defaultstate="collapsed" desc="Configuración Combobox">
-        cbCurso.setEditable(false);
-        cbCurso.setUI(new comboBoxRender());
-        cbCurso.setRenderer(new DefaultListCellRenderer() {
+        cbCursoLibro.setEditable(false);
+        cbCursoLibro.setUI(new comboBoxRender());
+        cbCursoLibro.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(
                     JList list, Object value, int index,
@@ -119,9 +121,9 @@ public class FrameLibro extends javax.swing.JFrame {
             }
         });
 
-        cbCursoSeleccion.setEditable(false);
-        cbCursoSeleccion.setUI(new comboBoxRender());
-        cbCursoSeleccion.setRenderer(new DefaultListCellRenderer() {
+        cbCursoBuscar.setEditable(false);
+        cbCursoBuscar.setUI(new comboBoxRender());
+        cbCursoBuscar.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(
                     JList list, Object value, int index,
@@ -140,7 +142,6 @@ public class FrameLibro extends javax.swing.JFrame {
         });
 //</editor-fold>
 
-        //cargamos los datos
         cargarDatos();
     }
 
@@ -167,7 +168,7 @@ public class FrameLibro extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         textNombreLibroBusqueda = new javax.swing.JTextField();
-        cbCursoSeleccion = new javax.swing.JComboBox();
+        cbCursoBuscar = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jlistLibros = new javax.swing.JList();
         panelTitulo1 = new javax.swing.JPanel();
@@ -196,7 +197,7 @@ public class FrameLibro extends javax.swing.JFrame {
         panelMedio = new javax.swing.JPanel();
         panelCurso = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        cbCurso = new javax.swing.JComboBox();
+        cbCursoLibro = new javax.swing.JComboBox();
         panelAsignatura = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         cbAsignatura = new javax.swing.JComboBox();
@@ -209,10 +210,10 @@ public class FrameLibro extends javax.swing.JFrame {
         textPrecioLibro = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        cbObsoletoLibro = new javax.swing.JCheckBox();
+        chkObsoletoLibro = new javax.swing.JCheckBox();
         jPanel7 = new javax.swing.JPanel();
-        flatButton2 = new com.mommoo.flat.button.FlatButton();
-        flatButton4 = new com.mommoo.flat.button.FlatButton();
+        btnGuardar = new com.mommoo.flat.button.FlatButton();
+        btnCancelar = new com.mommoo.flat.button.FlatButton();
         panelInferiorDerecho = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         panelGeneralDerechoInferior = new javax.swing.JPanel();
@@ -361,11 +362,11 @@ public class FrameLibro extends javax.swing.JFrame {
             }
         });
 
-        cbCursoSeleccion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        cbCursoSeleccion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecciona curso" }));
-        cbCursoSeleccion.addItemListener(new java.awt.event.ItemListener() {
+        cbCursoBuscar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbCursoBuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecciona curso" }));
+        cbCursoBuscar.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbCursoSeleccionItemStateChanged(evt);
+                cbCursoBuscarItemStateChanged(evt);
             }
         });
 
@@ -391,7 +392,7 @@ public class FrameLibro extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(textNombreLibroBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbCursoSeleccion, 0, 220, Short.MAX_VALUE)))
+                        .addComponent(cbCursoBuscar, 0, 220, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -401,7 +402,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cbCursoSeleccion)
+                    .addComponent(cbCursoBuscar)
                     .addComponent(textNombreLibroBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
@@ -422,6 +423,11 @@ public class FrameLibro extends javax.swing.JFrame {
         btnNewLibro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 btnNewLibroMouseReleased(evt);
+            }
+        });
+        btnNewLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewLibroActionPerformed(evt);
             }
         });
 
@@ -641,7 +647,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addGroup(panelISBNLibroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelISBNLibroLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(textISBNLibro, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
+                        .addComponent(textISBNLibro, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE))
                     .addGroup(panelISBNLibroLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -667,8 +673,13 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel6.setText("Curso:");
 
-        cbCurso.setBackground(Colores.fondo);
-        cbCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbCursoLibro.setBackground(Colores.fondo);
+        cbCursoLibro.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbCursoLibro.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbCursoLibroItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelCursoLayout = new javax.swing.GroupLayout(panelCurso);
         panelCurso.setLayout(panelCursoLayout);
@@ -679,7 +690,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addGroup(panelCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCursoLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(cbCurso, 0, 350, Short.MAX_VALUE))
+                        .addComponent(cbCursoLibro, 0, 449, Short.MAX_VALUE))
                     .addGroup(panelCursoLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -691,7 +702,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbCursoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -717,7 +728,7 @@ public class FrameLibro extends javax.swing.JFrame {
                         .addComponent(cbAsignatura, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelAsignaturaLayout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addGap(0, 255, Short.MAX_VALUE)))
+                        .addGap(0, 354, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelAsignaturaLayout.setVerticalGroup(
@@ -758,7 +769,7 @@ public class FrameLibro extends javax.swing.JFrame {
                         .addComponent(textUnidadesLibro))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addGap(0, 144, Short.MAX_VALUE)))
+                        .addGap(0, 210, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -801,7 +812,7 @@ public class FrameLibro extends javax.swing.JFrame {
                         .addComponent(textPrecioLibro))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addGap(0, 170, Short.MAX_VALUE)))
+                        .addGap(0, 236, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -821,11 +832,11 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel10.setText("Estado del libro:");
 
-        cbObsoletoLibro.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        cbObsoletoLibro.setText("Obsoleto");
-        cbObsoletoLibro.addActionListener(new java.awt.event.ActionListener() {
+        chkObsoletoLibro.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        chkObsoletoLibro.setText("Obsoleto");
+        chkObsoletoLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbObsoletoLibroActionPerformed(evt);
+                chkObsoletoLibroActionPerformed(evt);
             }
         });
 
@@ -839,8 +850,8 @@ public class FrameLibro extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(cbObsoletoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(96, Short.MAX_VALUE))
+                        .addComponent(chkObsoletoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -848,7 +859,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbObsoletoLibro)
+                .addComponent(chkObsoletoLibro)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -884,15 +895,20 @@ public class FrameLibro extends javax.swing.JFrame {
 
         jPanel7.setBackground(Colores.fondo);
 
-        flatButton2.setBackground(Colores.buttons);
-        flatButton2.setText("Guardar");
-        flatButton2.setCornerRound(10);
-        flatButton2.setPreferredSize(new java.awt.Dimension(111, 32));
+        btnGuardar.setBackground(Colores.buttons);
+        btnGuardar.setText("Guardar");
+        btnGuardar.setCornerRound(10);
+        btnGuardar.setPreferredSize(new java.awt.Dimension(111, 32));
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
-        flatButton4.setBackground(Colores.buttons);
-        flatButton4.setText("Cancelar");
-        flatButton4.setCornerRound(10);
-        flatButton4.setPreferredSize(new java.awt.Dimension(111, 32));
+        btnCancelar.setBackground(Colores.buttons);
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setCornerRound(10);
+        btnCancelar.setPreferredSize(new java.awt.Dimension(111, 32));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -900,9 +916,9 @@ public class FrameLibro extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(flatButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(flatButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -910,8 +926,8 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(flatButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(flatButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -923,7 +939,7 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeneralDerechoSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelGeneralDerechoSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelCuerpo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 738, Short.MAX_VALUE)
+                    .addComponent(panelCuerpo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeneralDerechoSuperiorLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -946,11 +962,11 @@ public class FrameLibro extends javax.swing.JFrame {
         panelSuperiorDerecho.setLayout(panelSuperiorDerechoLayout);
         panelSuperiorDerechoLayout.setHorizontalGroup(
             panelSuperiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
         );
         panelSuperiorDerechoLayout.setVerticalGroup(
             panelSuperiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
         );
 
         jSplitPane2.setTopComponent(panelSuperiorDerecho);
@@ -1474,7 +1490,7 @@ public class FrameLibro extends javax.swing.JFrame {
         panelInferiorDerecho.setLayout(panelInferiorDerechoLayout);
         panelInferiorDerechoLayout.setHorizontalGroup(
             panelInferiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
         );
         panelInferiorDerechoLayout.setVerticalGroup(
             panelInferiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1487,11 +1503,11 @@ public class FrameLibro extends javax.swing.JFrame {
         panelDerecho.setLayout(panelDerechoLayout);
         panelDerechoLayout.setHorizontalGroup(
             panelDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
         );
         panelDerechoLayout.setVerticalGroup(
             panelDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 610, Short.MAX_VALUE)
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
         );
 
         jSplitPane1.setRightComponent(panelDerecho);
@@ -1510,6 +1526,9 @@ public class FrameLibro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Mostramos el menú desplegable de opciones del libro.
+     */
     private void btnOpcionesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOpcionesMouseReleased
         //Mostramos el menu de opciones en el libro
         menuOpcionesLibro.show(evt.getComponent(), -157, 53);
@@ -1530,6 +1549,10 @@ public class FrameLibro extends javax.swing.JFrame {
          */
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    /**
+     * Activamos los campos del Libro para poder editarlo.
+     */
+    
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -1542,28 +1565,31 @@ public class FrameLibro extends javax.swing.JFrame {
          frameAlumno.setVisible(true);*/
     }//GEN-LAST:event_btnVerAlumnoActionPerformed
 
-    // Al presionar el botón Buscar buscamos el libro y rellenamos sus campos 
-    // en la vista.
-
+    /**
+     * Obtenemos el codigo del libro que se ha introducido y se lo pasamos al
+     * metodo buscarLibro.
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         //Buscamos el libro cuando pulsamos el botón
         buscarLibro(textBusquedaCodigoLibro.getText());
-        isLoading = true;
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void cbObsoletoLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbObsoletoLibroActionPerformed
+    private void chkObsoletoLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkObsoletoLibroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbObsoletoLibroActionPerformed
+    }//GEN-LAST:event_chkObsoletoLibroActionPerformed
 
     private void textPrecioLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textPrecioLibroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textPrecioLibroActionPerformed
 
+    /**
+     * Cuando presionamos la tecla intro sobre el campo de busqueda por codigo
+     * le pasamos al metodo buscarLibro el codigo introducido por el usuario.
+     */
     private void textBusquedaCodigoLibroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             buscarLibro(textBusquedaCodigoLibro.getText());
-            isLoading = true;
         }
     }//GEN-LAST:event_textBusquedaCodigoLibroKeyPressed
 
@@ -1571,10 +1597,10 @@ public class FrameLibro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNewLibroMouseReleased
 
-    private void cbCursoSeleccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoSeleccionItemStateChanged
+    private void cbCursoBuscarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoBuscarItemStateChanged
         // TODO add your handling code here:
-        filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoSeleccion.getSelectedItem().toString());
-    }//GEN-LAST:event_cbCursoSeleccionItemStateChanged
+        filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoBuscar.getSelectedItem().toString());
+    }//GEN-LAST:event_cbCursoBuscarItemStateChanged
 
     private void textNombreLibroBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroBusquedaKeyReleased
         // TODO add your handling code here:
@@ -1585,7 +1611,7 @@ public class FrameLibro extends javax.swing.JFrame {
             textNombreLibroBusqueda.setForeground(new Color(102, 102, 102));
         }
 
-        filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoSeleccion.getSelectedItem().toString());
+        filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoBuscar.getSelectedItem().toString());
     }//GEN-LAST:event_textNombreLibroBusquedaKeyReleased
 
     private void textNombreLibroBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroBusquedaKeyPressed
@@ -1597,6 +1623,159 @@ public class FrameLibro extends javax.swing.JFrame {
             textNombreLibroBusqueda.setForeground(new Color(51, 51, 51));
         }
     }//GEN-LAST:event_textNombreLibroBusquedaKeyPressed
+
+    private void btnNewLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewLibroActionPerformed
+        // TODO add your handling code here:
+        filtroListaLibro(textNombreLibro.getText(), cbCursoLibro.getSelectedItem().toString());
+    }//GEN-LAST:event_btnNewLibroActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        String errores = "";
+
+        if (textNombreLibro.getText().equals("")) {
+            errores += "\n- El nombre no puede estar vacío.";
+        }
+
+        if (textISBNLibro.getText().equals("")) {
+            errores += "\n- El ISBN no puede estar vacío.";
+        }
+
+        if (textUnidadesLibro.getText().equals("")) {
+            errores += "\n- El campo de las unidades no puede estar vacío.";
+        }
+
+        try {
+            int un = Integer.parseInt(textUnidadesLibro.getText());
+            if (un <= 0) {
+                errores += "\n- El valor de las unidades debe ser un valor positivo.";
+            }
+        } catch (Exception e) {
+            errores += "\n- El valor de las unidades debe ser un valor numérico.";
+        }
+
+        try {
+            double pre = Double.parseDouble(textPrecioLibro.getText());
+            if (pre <= 0) {
+                errores += "\n- El precio debe ser un valor positivo.";
+            }
+        } catch (Exception e) {
+            errores += "\n- El precio debe ser un valor numérico.";
+        }
+
+        if (textCodigoLibro.getText().equals("")) {
+            errores += "\n- El código del libro no puede estar vacío.";
+        }
+
+        if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
+            errores += "\n- Debe seleccionar una asignatura válida.";
+        }
+
+        if (libro == null) {
+            //Creacion de un nuevo libro
+
+            if (errores.equals("")) {
+                //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
+                Libro newLibro = new Libro();
+
+                newLibro.setCodigo(textCodigoLibro.getText());
+                newLibro.setISBN(textISBNLibro.getText());
+                newLibro.setNombre(textNombreLibro.getText());
+                newLibro.setObsoleto(chkObsoletoLibro.isSelected());
+                newLibro.setPrecio(Double.parseDouble(textPrecioLibro.getText()));
+                newLibro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
+
+                for (int i = 0; i < listaContenido.size(); i++) {
+                    if (listaContenido.get(i).getNombre_cas().equals(cbAsignatura.getSelectedItem().toString())) {
+                        newLibro.setContenido(listaContenido.get(i));
+                        break;
+                    }
+                }
+
+                try {
+                    daoLibro.grabar(newLibro);
+
+                    JOptionPane.showMessageDialog(this, "Libro añadido correctamente.",
+                            "Información", JOptionPane.INFORMATION_MESSAGE);
+
+                    setEditMode(false);
+                    
+                    libro = daoLibro.buscar(newLibro.getCodigo());
+
+                    //RefrescarTabla();
+                } catch (PersistenceException e) {
+
+                    JOptionPane.showMessageDialog(this,
+                            "El libro ya existe en la Base de Datos.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this,
+                            "Error al crear el libro.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Revise los siguientes errores: \n" + errores, "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+        } else {
+            //Modificacion de un libro existente
+
+            if (errores.equals("")) {
+                //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
+
+                int unidadesOld = libro.getUnidades();
+                
+                libro.setCodigo(textCodigoLibro.getText());
+                libro.setISBN(textISBNLibro.getText());
+                libro.setNombre(textNombreLibro.getText());
+                libro.setObsoleto(chkObsoletoLibro.isSelected());
+                libro.setPrecio(Double.parseDouble(textPrecioLibro.getText()));
+                libro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
+
+                for (int i = 0; i < listaContenido.size(); i++) {
+                    if (listaContenido.get(i).getNombre_cas().equals(cbAsignatura.getSelectedItem().toString())) {
+                        libro.setContenido(listaContenido.get(i));
+                        break;
+                    }
+                }
+
+                try {
+                    daoLibro.actualizar(unidadesOld, libro);
+
+                    JOptionPane.showMessageDialog(this,
+                            "Libro actualizado correctamente.", "Información",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                    setEditMode(false);
+                    
+                    libro = daoLibro.buscar(libro.getCodigo());
+
+                    //RefrescarTabla();
+                } catch (PersistenceException e) {
+                    JOptionPane.showMessageDialog(this,
+                            "El libro ya existe en la Base de Datos.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this,
+                            "Error al actualizar el libro.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Revise los siguientes errores: \n" + errores, "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void cbCursoLibroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoLibroItemStateChanged
+        // TODO add your handling code here:
+        filtroListaLibro(textNombreLibro.getText(), cbCursoLibro.getSelectedItem().toString());
+    }//GEN-LAST:event_cbCursoLibroItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -1645,20 +1824,20 @@ public class FrameLibro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnBadStatus15;
     private com.mommoo.flat.button.FlatButton btnBuscar;
+    private com.mommoo.flat.button.FlatButton btnCancelar;
     private javax.swing.JMenuItem btnEditar;
     private javax.swing.JMenuItem btnEliminar;
     private javax.swing.JLabel btnGoodStatus15;
+    private com.mommoo.flat.button.FlatButton btnGuardar;
     private com.mommoo.flat.button.FlatButton btnNewLibro;
     private com.mommoo.flat.button.FlatButton btnOpciones;
     private javax.swing.JLabel btnRegularStatus15;
     private com.mommoo.flat.button.FlatButton btnVerAlumno;
     private javax.swing.JComboBox cbAsignatura;
-    private javax.swing.JComboBox cbCurso;
-    private javax.swing.JComboBox cbCursoSeleccion;
-    private javax.swing.JCheckBox cbObsoletoLibro;
-    private com.mommoo.flat.button.FlatButton flatButton2;
+    private javax.swing.JComboBox cbCursoBuscar;
+    private javax.swing.JComboBox cbCursoLibro;
+    private javax.swing.JCheckBox chkObsoletoLibro;
     private com.mommoo.flat.button.FlatButton flatButton3;
-    private com.mommoo.flat.button.FlatButton flatButton4;
     private com.mommoo.flat.button.FlatButton flatButton5;
     private com.mommoo.flat.button.FlatButton flatButton6;
     private javax.swing.JLabel jLabel1;
@@ -1747,6 +1926,10 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JTextField textUnidadesLibro;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     *  Cargamos las listas de Libros y Cursos y rellenamos los ComboBox 
+     *  correspondientes.
+     */
     public void cargarDatos() {
         SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
             protected Void doInBackground() throws InterruptedException {
@@ -1758,12 +1941,12 @@ public class FrameLibro extends javax.swing.JFrame {
 
             protected void done() {
                 //Aplicamos el filtro
-                filtroListaLibro(textNombreLibro.getText(), cbCursoSeleccion.getSelectedItem().toString());
+                filtroListaLibro(textNombreLibro.getText(), cbCursoBuscar.getSelectedItem().toString());
 
                 if (listaCursos.size() > 0) {
                     for (int i = 0; i < listaCursos.size(); i++) {
-                        cbCursoSeleccion.addItem(listaCursos.get(i).getAbreviatura() + " - " + listaCursos.get(i).getNombre_cas());
-                        cbCurso.addItem(listaCursos.get(i).getAbreviatura() + " - " + listaCursos.get(i).getNombre_cas());
+                        cbCursoBuscar.addItem(listaCursos.get(i).getAbreviatura() + " - " + listaCursos.get(i).getNombre_cas());
+                        cbCursoLibro.addItem(listaCursos.get(i).getAbreviatura() + " - " + listaCursos.get(i).getNombre_cas());
                     }
                 } else {
                     System.out.println("No se han encontrado cursos.");
@@ -1781,6 +1964,8 @@ public class FrameLibro extends javax.swing.JFrame {
         frameCarga.setVisible(true);
     }
 
+    
+    
     private void filtroListaLibro(String textoNombre, String textoCurso) {
         //Creamos una lista temporal de los libros para realizar la busqueda
         List<Libro> listaFiltroLibros = listaLibros;
@@ -1796,7 +1981,7 @@ public class FrameLibro extends javax.swing.JFrame {
             n = "1";
         }
 
-        if (cbCursoSeleccion.getSelectedItem().toString().equals("Selecciona curso")) {
+        if (cbCursoBuscar.getSelectedItem().toString().equals("Selecciona curso")) {
             c = "0";
         } else {
             c = "1";
@@ -1908,7 +2093,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private void rellenarCamposLibro() {
         if (listaCursos.size() > 0) {
             for (int i = 0; i < listaCursos.size(); i++) {
-                cbCurso.addItem(listaCursos.get(i).getAbreviatura());
+                cbCursoLibro.addItem(listaCursos.get(i).getAbreviatura());
             }
         }
 
@@ -1917,7 +2102,7 @@ public class FrameLibro extends javax.swing.JFrame {
             textISBNLibro.setText("");
             textUnidadesLibro.setText("");
             textCodigoLibro.setText("");
-            cbObsoletoLibro.setSelected(false);
+            chkObsoletoLibro.setSelected(false);
         } else {
             //Rellenamos los datos
             textNombreLibro.setText(libro.getNombre());
@@ -1926,11 +2111,11 @@ public class FrameLibro extends javax.swing.JFrame {
             textUnidadesLibro.setText(libro.getUnidades() + "");
             textPrecioLibro.setText(libro.getPrecio() + "");
             textCodigoLibro.setText(libro.getCodigo());
-            cbObsoletoLibro.setSelected(libro.getObsoleto());
+            chkObsoletoLibro.setSelected(libro.getObsoleto());
 
-            for (int i = 0; i < cbCurso.getItemCount(); i++) {
-                if (libro.getContenido().getCurso().getAbreviatura().equals(cbCurso.getItemAt(i).toString())) {
-                    cbCurso.setSelectedIndex(i);
+            for (int i = 0; i < cbCursoLibro.getItemCount(); i++) {
+                if (libro.getContenido().getCurso().getAbreviatura().equals(cbCursoLibro.getItemAt(i).toString())) {
+                    cbCursoLibro.setSelectedIndex(i);
                     break;
                 }
             }
