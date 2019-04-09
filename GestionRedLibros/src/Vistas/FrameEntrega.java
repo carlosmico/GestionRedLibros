@@ -19,13 +19,17 @@ package Vistas;
 
 import Daos.DaoAlumno;
 import Pojos.Alumno;
+import Pojos.Contenido;
 import Pojos.Matricula;
 import Utilidades.Colores;
+import com.mommoo.flat.button.FlatButton;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -81,6 +85,16 @@ public class FrameEntrega extends javax.swing.JFrame {
         textNIAAlumno = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         textNivel = new javax.swing.JLabel();
+        panelGestionAsignaturas = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        panelTablas = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaPendientes = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tableEntregados = new javax.swing.JTable();
+        panelInfoTablas = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Entregas");
@@ -112,7 +126,7 @@ public class FrameEntrega extends javax.swing.JFrame {
             panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTituloLayout.createSequentialGroup()
                 .addGap(69, 69, 69)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 968, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -222,17 +236,98 @@ public class FrameEntrega extends javax.swing.JFrame {
                 .addContainerGap(440, Short.MAX_VALUE))
         );
 
+        panelGestionAsignaturas.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel5.setText("Listado Asignaturas:");
+
+        panelTablas.setLayout(new java.awt.GridLayout(1, 2));
+
+        tablaPendientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaPendientes);
+
+        panelTablas.add(jScrollPane2);
+
+        tableEntregados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tableEntregados);
+
+        panelTablas.add(jScrollPane3);
+
+        panelInfoTablas.setLayout(new java.awt.GridLayout());
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel6.setText("Pendiente de entrega");
+        panelInfoTablas.add(jLabel6);
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel8.setText("Entregados");
+        panelInfoTablas.add(jLabel8);
+
+        javax.swing.GroupLayout panelGestionAsignaturasLayout = new javax.swing.GroupLayout(panelGestionAsignaturas);
+        panelGestionAsignaturas.setLayout(panelGestionAsignaturasLayout);
+        panelGestionAsignaturasLayout.setHorizontalGroup(
+            panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
+                .addGroup(panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel5)
+                        .addGap(0, 861, Short.MAX_VALUE))
+                    .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelTablas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panelInfoTablas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
+        panelGestionAsignaturasLayout.setVerticalGroup(
+            panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelInfoTablas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelTablas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout panelSiAlumnoLayout = new javax.swing.GroupLayout(panelSiAlumno);
         panelSiAlumno.setLayout(panelSiAlumnoLayout);
         panelSiAlumnoLayout.setHorizontalGroup(
             panelSiAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelSiAlumnoLayout.createSequentialGroup()
                 .addComponent(panelInfoGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelSiAlumnoLayout.setVerticalGroup(
             panelSiAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panelCuerpoLayout = new javax.swing.GroupLayout(panelCuerpo);
@@ -328,6 +423,8 @@ public class FrameEntrega extends javax.swing.JFrame {
                     textCursoEscolar.setText(listaMatriculasCursoEscolar.get(0).getCurso_escolar() + "");
                     textNIAAlumno.setText(alumno.getNia());
                     textNivel.setText(alumno.getCurso().getAbreviatura());
+
+                    rellenarTablas(listaMatriculasCursoEscolar);
                 } else {
                     //Si la matricula no es de este año:
                     new FramePopup("Este alumno no esta matriculado en este curso escolar.");
@@ -384,14 +481,64 @@ public class FrameEntrega extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel panelCuerpo;
+    private javax.swing.JPanel panelGestionAsignaturas;
     private javax.swing.JPanel panelInfoGeneral;
+    private javax.swing.JPanel panelInfoTablas;
     private javax.swing.JPanel panelNoAlumno;
     private javax.swing.JPanel panelSiAlumno;
+    private javax.swing.JPanel panelTablas;
     private javax.swing.JPanel panelTitulo;
+    private javax.swing.JTable tablaPendientes;
+    private javax.swing.JTable tableEntregados;
     private javax.swing.JLabel textCursoEscolar;
     private javax.swing.JLabel textNIAAlumno;
     private javax.swing.JLabel textNivel;
     // End of variables declaration//GEN-END:variables
+
+    private void rellenarTablas(List<Matricula> listaMatriculas) {
+        DefaultTableModel tableModel = (DefaultTableModel) tablaPendientes.getModel();
+
+        tableModel.setRowCount(0);
+
+        for (int i = 0; i < listaMatriculas.size(); i++) {
+            Contenido contenido = listaMatriculas.get(i).getContenido();
+            Object[] fila = new String[3];
+
+            //Nombre de la asignatura
+            fila[0] = (String) contenido.getNombre_cas();
+
+            //Boton de más info
+            FlatButton btnMoreInfo = new FlatButton();
+            btnMoreInfo.setBackground(Colores.buttons);
+            btnMoreInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png")));
+            btnMoreInfo.setCornerRound(10);
+            btnMoreInfo.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    System.out.println("Pulsado boton de mas info");
+                }
+            });
+            fila[1] = (FlatButton) btnMoreInfo;
+
+            //Boton asignar
+            FlatButton btnAddContenido = new FlatButton();
+            btnAddContenido.setBackground(Colores.buttons);
+            btnAddContenido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png")));
+            btnAddContenido.setCornerRound(10);
+            btnAddContenido.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    System.out.println("Pulsado boton de mas info");
+                }
+            });
+            fila[2] = (FlatButton) btnAddContenido;
+        }
+
+        tablaPendientes.setModel(tableModel);
+    }
 }
