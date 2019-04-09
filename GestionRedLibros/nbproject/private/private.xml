@@ -4,12 +4,14 @@
         <group>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameAlumno.java</file>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameLibro.java</file>
-            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameEntrega.java</file>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameInputLibro.java</file>
+<<<<<<< HEAD
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Pojos/Alumno.java</file>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameEjemplares.java</file>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameOpciones.java</file>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/Main.java</file>
+=======
+>>>>>>> master
         </group>
     </open-files>
 </project-private>

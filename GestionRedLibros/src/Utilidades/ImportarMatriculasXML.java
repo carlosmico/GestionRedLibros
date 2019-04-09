@@ -18,8 +18,10 @@
 package Utilidades;
 
 import Daos.DaoAlumno;
+import Daos.DaoContenido;
 import Daos.DaoMatricula;
 import Pojos.Alumno;
+import Pojos.Contenido;
 import Pojos.Matricula;
 import Vistas.Main;
 import java.io.IOException;
@@ -181,15 +183,21 @@ public class ImportarMatriculasXML {
                     fec_fin_acis_date = new java.sql.Date(date.getTime());
                 }
 
-                //Buscamos el alumno recuperado del XML
+                //Buscamos el alumno y el contenido recuperado del XML
                 DaoAlumno dao = new DaoAlumno(Main.gestorSesiones.getSession());
                 
                 Alumno alumnoObj = dao.buscar(alumno);
                 
                 dao.desconectar();
+                
+                DaoContenido daoc = new DaoContenido(Main.gestorSesiones.getSession());
+                
+                Contenido contenidoObj = daoc.buscarPorCodigo(contenido);
+                
+                daoc.desconectar();
 
                 matriculasCargadas.add(new Matricula(0, Integer.parseInt(
-                        curso_escolar), alumnoObj, ensenanza, curso, Integer.parseInt(contenido),
+                        curso_escolar), alumnoObj, ensenanza, curso, contenidoObj,
                         idioma, tipo_basico, tipo_predom, acis, fec_ini_acis_date,
                         fec_fin_acis_date, cur_ref_acis, curso_pendiente));
             }

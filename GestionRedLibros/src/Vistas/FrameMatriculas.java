@@ -97,8 +97,7 @@ public class FrameMatriculas extends javax.swing.JFrame {
 
             tableMatriculas.setModel(tableModel);
         } else {
-            System.out.println("Error");
-            //JOptionPane.showMessageDialog(this, "No hay datos de matrículas en la Base de Datos.");
+            JOptionPane.showMessageDialog(this, "No hay datos de matrículas en la Base de Datos.");
         }
 
     }
@@ -238,7 +237,7 @@ public class FrameMatriculas extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
                 //new ImportarMatriculasXML(chooser.getSelectedFile().getPath());
-                new ImportarAlumnosXML(chooser.getSelectedFile().getPath());
+                new ImportarMatriculasXML(chooser.getSelectedFile().getPath());
                 
                 RefrescarTabla();
 

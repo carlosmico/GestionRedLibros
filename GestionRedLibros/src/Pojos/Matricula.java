@@ -50,7 +50,11 @@ public class Matricula implements Serializable {
 
     private String ensenanza;
     private String curso;
-    private int contenido;
+    
+    @ManyToOne
+    @JoinColumn(name = "contenido")
+    private Contenido contenido;
+    
     private String idioma;
     private String tipo_basico;
     private String tipo_predom;
@@ -64,7 +68,7 @@ public class Matricula implements Serializable {
 
     }
 
-    public Matricula(int curso_escolar, Alumno alumno, String ensenanza, String curso, int contenido, String idioma, String tipo_basico, String tipo_predom, String acis, Date fec_ini_acis, Date fec_fin_acis, String cur_ref_acis, String curso_pendiente) {
+    public Matricula(int curso_escolar, Alumno alumno, String ensenanza, String curso, Contenido contenido, String idioma, String tipo_basico, String tipo_predom, String acis, Date fec_ini_acis, Date fec_fin_acis, String cur_ref_acis, String curso_pendiente) {
         this.curso_escolar = curso_escolar;
         this.alumno = alumno;
         this.ensenanza = ensenanza;
@@ -80,7 +84,7 @@ public class Matricula implements Serializable {
         this.curso_pendiente = curso_pendiente;
     }
 
-    public Matricula(Integer id, int curso_escolar, Alumno alumno, String ensenanza, String curso, int contenido, String idioma, String tipo_basico, String tipo_predom, String acis, Date fec_ini_acis, Date fec_fin_acis, String cur_ref_acis, String curso_pendiente) {
+    public Matricula(Integer id, int curso_escolar, Alumno alumno, String ensenanza, String curso, Contenido contenido, String idioma, String tipo_basico, String tipo_predom, String acis, Date fec_ini_acis, Date fec_fin_acis, String cur_ref_acis, String curso_pendiente) {
         this.id = id;
         this.curso_escolar = curso_escolar;
         this.alumno = alumno;
@@ -137,11 +141,11 @@ public class Matricula implements Serializable {
         this.curso = curso;
     }
 
-    public int getContenido() {
+    public Contenido getContenido() {
         return contenido;
     }
 
-    public void setContenido(int contenido) {
+    public void setContenido(Contenido contenido) {
         this.contenido = contenido;
     }
 

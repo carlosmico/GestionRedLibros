@@ -74,7 +74,7 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
         }
     }
 
-    public Contenido buscar(String id) throws PersistenceException {
+    public Contenido buscar(int id) throws PersistenceException {
         Contenido contenido;
 
         try {
@@ -85,6 +85,20 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
         }
 
         return contenido;
+    }
+    
+    public Contenido buscarPorCodigo(String codigo) {
+        List<Contenido> lista = new ArrayList<Contenido>();
+
+        String query = "from Contenido c where c.codigo_contenido = '" + codigo + "'";
+
+        lista = this.session.createQuery(query).list();
+
+        if (lista == null || lista.size() == 0) {
+            return null;
+        } else {
+            return lista.get(0);
+        }
     }
 
     public Contenido buscarContenido(Contenido c) {
