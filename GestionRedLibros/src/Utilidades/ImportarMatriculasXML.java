@@ -53,10 +53,10 @@ public class ImportarMatriculasXML {
     List<Matricula> matriculasCargadas;
 
     /**
-     * Constructor de la clase en el que preparamos el documento XML a importar
-     *
+     *  Constructor de la clase ImportarMatriculasXML en el que preparamos un XML
+     *  para poder leerlo más tarde
      * @param ruta
-     * @throws java.text.ParseException
+     * @throws Exception
      */
     public ImportarMatriculasXML(String ruta) throws Exception {
         factory = DocumentBuilderFactory.newInstance();
@@ -70,8 +70,7 @@ public class ImportarMatriculasXML {
     }
 
     /**
-     * Una vez preparado el documento XML leemos el documento y obtenemos una
-     * lista de las matrículas.
+     * Metodo para obtener una lista de Matriculas de un archivo XML
      */
     private void cargarMatriculas(Document doc) throws ParseException, Exception {
         sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -201,6 +200,9 @@ public class ImportarMatriculasXML {
         }
     }
 
+    /**
+     * Metodo para insertar una lista de Matriculas en la BD
+     */
     private void insertarMatriculasBD() throws Exception {
 
         DaoMatricula dao = new DaoMatricula(Main.gestorSesiones.getSession());

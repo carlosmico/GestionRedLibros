@@ -50,7 +50,8 @@ public class ImportarContenidoXML {
     List<Contenido> contenidosCargados;
 
     /**
-     * Constructor de la clase en el que preparamos el documento XML a importar
+     * Constructor de la clase ImportarContenidoXML en el que preparamos un XML
+     *  para poder leerlo más tarde
      *
      * @param ruta
      * @throws java.text.ParseException
@@ -68,8 +69,7 @@ public class ImportarContenidoXML {
     }
 
     /**
-     * Una vez preparado el documento XML leemos el documento y obtenemos una
-     * lista de los contenidos.
+     *  Metodo para obtener una lista de Contenidos de un archivo XML
      */
     private void cargarContenidos(Document doc) throws ParseException, Exception {
         contenidosCargados = new ArrayList<Contenido>();
@@ -125,6 +125,9 @@ public class ImportarContenidoXML {
         }
     }
 
+    /**
+     *  Metodo para insertar una lista de Contenidos en la BD
+     */
     private void insertarContenidosBD() throws Exception {
 
         DaoContenido dao = new DaoContenido(Main.gestorSesiones.getSession());

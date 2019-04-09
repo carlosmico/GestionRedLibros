@@ -25,7 +25,7 @@ import java.io.IOException;
 
 /**
  *
- * @author Carlos
+ * @author Jose Sanchis
  */
 public class ImageSelection  implements Transferable{
     private Image image;
