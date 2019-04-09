@@ -23,7 +23,6 @@ import Utilidades.ImportarContenidoXML;
 import Utilidades.ImportarCursoXML;
 import Utilidades.ImportarGruposXML;
 import Utilidades.ImportarMatriculasXML;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -582,6 +581,10 @@ public class FrameOpciones extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * 
+     * Controlador del botón de Ayuda
+     */
     private void btnHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelpActionPerformed
         // TODO add your handling code here:
         switch (tabbedPage.getSelectedIndex()) {
@@ -603,6 +606,10 @@ public class FrameOpciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnHelpActionPerformed
 
+    /**
+     * 
+     * (Pestaña Importaciones) Botón utilizado para importar las matriculas
+     */
     private void btnImportarMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarMatriculasActionPerformed
         // TODO add your handling code here:
 
@@ -620,6 +627,10 @@ public class FrameOpciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnImportarMatriculasActionPerformed
 
+    /**
+     * 
+     * (Pestaña Importaciones) Botón utilizado para seleccionar el archivo XML de las matriculas
+     */
     private void btnSeleccionMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionMatriculasActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
@@ -636,6 +647,10 @@ public class FrameOpciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSeleccionMatriculasActionPerformed
 
+    /**
+     * 
+     * (Pestaña Importaciones) Botón utilizado para importar los cursos
+     */
     private void btnImportarCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarCursosActionPerformed
         // TODO add your handling code here:
         if (!textRutaCursos.getText().equals("")) {
@@ -652,6 +667,10 @@ public class FrameOpciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnImportarCursosActionPerformed
 
+    /**
+     * 
+     * (Pestaña Importaciones) Botón utilizado para seleccionar el archivo XML de los cursos
+     */
     private void btnSeleccionCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionCursosActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
@@ -668,6 +687,10 @@ public class FrameOpciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSeleccionCursosActionPerformed
 
+    /**
+     * 
+     * (Pestaña Importaciones) Botón utilizado para seleccionar el archivo XML de los grupos
+     */
     private void btnSeleccionGruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionGruposActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
@@ -684,6 +707,10 @@ public class FrameOpciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSeleccionGruposActionPerformed
 
+    /**
+     * 
+     * (Pestaña Importaciones) Botón utilizado para importar los grupos
+     */
     private void btnImportarGruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarGruposActionPerformed
         // TODO add your handling code here:
         if (!textRutaGrupos.getText().equals("")) {
@@ -700,6 +727,10 @@ public class FrameOpciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnImportarGruposActionPerformed
 
+    /**
+     * 
+     * (Pestaña Importaciones) Botón utilizado para seleccionar el archivo XML de las asignaturas
+     */
     private void btnSeleccionAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionAsignaturasActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
@@ -716,6 +747,10 @@ public class FrameOpciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSeleccionAsignaturasActionPerformed
 
+    /**
+     * 
+     * (Pestaña Importaciones) Botón utilizado para importar las asignaturas
+     */
     private void btnImportarAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarAsignaturasActionPerformed
         // TODO add your handling code here:
         if (!textRutaContenidos.getText().equals("")) {
@@ -732,6 +767,10 @@ public class FrameOpciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnImportarAsignaturasActionPerformed
 
+    /**
+     * 
+     * (Pestaña Importaciones) Botón utilizado para seleccionar el archivo XML de los alumnos
+     */
     private void btnSeleccionAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionAlumnosActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
@@ -748,6 +787,10 @@ public class FrameOpciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSeleccionAlumnosActionPerformed
 
+    /**
+     * 
+     * (Pestaña Importaciones) Botón utilizado para importar los alumnos
+     */
     private void btnImportarAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarAlumnosActionPerformed
         // TODO add your handling code here:
         if (!textRutaAlumnos.getText().equals("")) {

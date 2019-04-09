@@ -17,6 +17,9 @@
  */
 package Vistas;
 
+import Utilidades.Colores;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Jose Sanchis
@@ -24,18 +27,62 @@ package Vistas;
 public class FramePopup extends javax.swing.JFrame {
 
     /**
-     * Creates new form FrameCarga
+     * Crea el nuevo formulario FramePopup.
+     * (No se cierra por si solo)
      */
     public FramePopup() {
         initComponents();
+        panelButton.setVisible(false);
+        pack();
+        this.setLocationRelativeTo(null);
+    }
 
+    /**
+     * Crea el nuevo formulario FramePopup con texto personalizado.
+     * (No se cierra por si solo)
+     * 
+     * @param mensaje Es el texto que aparece en la ventana
+     */
+    public FramePopup(String mensaje) {
+        initComponents();
+        text.setText(mensaje);
+        panelButton.setVisible(false);
+        pack();
+        this.setLocationRelativeTo(null);
+    }
+
+    /**
+     * Crea el nuevo formulario FramePopup con texto y icono personalizado.
+     * (No se cierra por si solo)
+     * 
+     * @param mensaje Es el texto que aparece en la ventana
+     * @param icon Es la imagen que se muestra en la ventana
+     */
+    public FramePopup(String mensaje, ImageIcon icon) {
+        initComponents();
+        text.setText(mensaje);
+        text.setIcon(icon);
+        panelButton.setVisible(false);
+        pack();
         this.setLocationRelativeTo(null);
     }
     
-    public FramePopup(String mensaje){
+    /**
+     * Crea el nuevo formulario FramePopup con texto, icono y botón personalizado.
+     * (Si puede cerrarse desde el mismo formulario)
+     * 
+     * @param mensaje Es el texto que aparece en la ventana
+     * @param icon Es la imagen que se muestra en la ventana
+     * @param buttonText Es el texto que contendra el Botón
+     * 
+     */
+    public FramePopup(String mensaje, ImageIcon icon, String buttonText) {
         initComponents();
-        this.setLocationRelativeTo(null);
         text.setText(mensaje);
+        text.setIcon(icon);
+        btnButton.setText(buttonText);
+        pack();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -49,6 +96,8 @@ public class FramePopup extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         text = new javax.swing.JLabel();
+        panelButton = new javax.swing.JPanel();
+        btnButton = new com.mommoo.flat.button.FlatButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -67,20 +116,53 @@ public class FramePopup extends javax.swing.JFrame {
         text.setToolTipText("");
         text.setOpaque(true);
 
+        panelButton.setBackground(new java.awt.Color(239, 235, 233));
+
+        btnButton.setBackground(Colores.accent);
+        btnButton.setForeground(Colores.fondo);
+        btnButton.setText("Aceptar");
+        btnButton.setCornerRound(10);
+        btnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelButtonLayout = new javax.swing.GroupLayout(panelButton);
+        panelButton.setLayout(panelButtonLayout);
+        panelButtonLayout.setHorizontalGroup(
+            panelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelButtonLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelButtonLayout.setVerticalGroup(
+            panelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(12, Short.MAX_VALUE)
-                .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(text, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                    .addComponent(panelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(12, 12, 12))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
         );
 
@@ -97,6 +179,13 @@ public class FramePopup extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    /**
+    * Acción del botón de confirmación
+    */
+    private void btnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnButtonActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,7 +224,9 @@ public class FramePopup extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.mommoo.flat.button.FlatButton btnButton;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel panelButton;
     private javax.swing.JLabel text;
     // End of variables declaration//GEN-END:variables
 }

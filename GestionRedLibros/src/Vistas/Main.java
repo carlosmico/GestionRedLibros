@@ -25,17 +25,18 @@ import javax.swing.JOptionPane;
  */
 public class Main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Main
-     */
     FrameDevoluciones frameDevoluciones;
     FrameEntrega frameEntrega;
     FrameLibro frameLibros;
     FrameOpciones frameOpciones;
     FramePopup frameCarga;
+    FrameAyuda frameAyuda;
 
     public static GestorSesiones gestorSesiones;
 
+    /**
+     * Creates new form Main
+     */
     public Main() throws IOException {
         initComponents();
         //Centramos la pestaña al centro de la pantalla
@@ -82,7 +83,7 @@ public class Main extends javax.swing.JFrame {
         btnEntrega = new com.mommoo.flat.button.FlatButton();
         btnLibros = new com.mommoo.flat.button.FlatButton();
         btnOpciones = new com.mommoo.flat.button.FlatButton();
-        flatButton1 = new com.mommoo.flat.button.FlatButton();
+        btnAydua = new com.mommoo.flat.button.FlatButton();
         wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -151,11 +152,16 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel1.add(btnOpciones);
 
-        flatButton1.setBackground(new java.awt.Color(66, 47, 44));
-        flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/help.png"))); // NOI18N
-        flatButton1.setText("  Ayuda");
-        flatButton1.setCornerRound(10);
-        jPanel1.add(flatButton1);
+        btnAydua.setBackground(new java.awt.Color(66, 47, 44));
+        btnAydua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/help.png"))); // NOI18N
+        btnAydua.setText("  Ayuda");
+        btnAydua.setCornerRound(10);
+        btnAydua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAyduaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAydua);
 
         banner.add(jPanel1);
 
@@ -179,6 +185,10 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     *
+     * Este botón lo utilizamos para mostrar la pestaña de Devoluciones
+     */
     private void btnDevolucionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucionesActionPerformed
         //Acción del botón de 'Devoluciones'
         if (frameDevoluciones == null) {
@@ -200,8 +210,11 @@ public class Main extends javax.swing.JFrame {
         frameDevoluciones.setVisible(true);
     }//GEN-LAST:event_btnDevolucionesActionPerformed
 
+    /**
+     *
+     * Este botón lo utilizamos para mostrar la pestaña de Entregas
+     */
     private void btnEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregaActionPerformed
-        //Acción del botón de 'Entrega'
         if (frameEntrega == null) {
             frameEntrega = new FrameEntrega();
         } else {
@@ -215,8 +228,11 @@ public class Main extends javax.swing.JFrame {
         frameEntrega.setVisible(true);
     }//GEN-LAST:event_btnEntregaActionPerformed
 
+    /**
+     *
+     * Este botón lo utilizamos para mostrar la pestaña de Opciones
+     */
     private void btnOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionesActionPerformed
-        //Acción del botón de 'Opciones'
         if (frameOpciones == null) {
             frameOpciones = new FrameOpciones();
         } else {
@@ -230,8 +246,11 @@ public class Main extends javax.swing.JFrame {
         frameOpciones.setVisible(true);
     }//GEN-LAST:event_btnOpcionesActionPerformed
 
+    /**
+     *
+     * Este botón lo utilizamos para mostrar la pestaña de Libros
+     */
     private void btnLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibrosActionPerformed
-        //Acción del botón de 'Libros'
         if (frameLibros == null) {
             frameLibros = new FrameLibro();
         } else {
@@ -244,6 +263,24 @@ public class Main extends javax.swing.JFrame {
         }
         frameLibros.setVisible(true);
     }//GEN-LAST:event_btnLibrosActionPerformed
+
+    /**
+     *
+     * Este botón lo utilizamos para mostrar la pestaña de Ayuda
+     */
+    private void btnAyduaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyduaActionPerformed
+        if (frameAyuda == null) {
+            frameAyuda = new FrameAyuda();
+        } else {
+            if (!frameAyuda.isVisible()) {
+                frameAyuda = null;
+                frameAyuda = new FrameAyuda();
+            } else {
+                frameAyuda = new FrameAyuda();
+            }
+        }
+        frameAyuda.setVisible(true);
+    }//GEN-LAST:event_btnAyduaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,11 +323,11 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel banner;
+    private com.mommoo.flat.button.FlatButton btnAydua;
     private com.mommoo.flat.button.FlatButton btnDevoluciones;
     private com.mommoo.flat.button.FlatButton btnEntrega;
     private com.mommoo.flat.button.FlatButton btnLibros;
     private com.mommoo.flat.button.FlatButton btnOpciones;
-    private com.mommoo.flat.button.FlatButton flatButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel wallpaper;
