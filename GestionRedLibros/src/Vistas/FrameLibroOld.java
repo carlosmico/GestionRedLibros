@@ -134,6 +134,8 @@ public class FrameLibroOld extends javax.swing.JFrame {
             protected Void doInBackground() throws InterruptedException {
                 setEnabled(false);
 
+        
+        
                 listaCursos = daoCurso.buscarTodos();
                 listaContenido = daoContenido.buscarTodos();
                 return null;
@@ -1772,12 +1774,12 @@ public class FrameLibroOld extends javax.swing.JFrame {
             textNombreLibro.setForeground(new Color(102, 102, 102));
         }
 
-        filtroListaLibro(textNombreLibro.getText(), cbCurso.getSelectedItem().toString());
+//        filtroListaLibro(textNombreLibro.getText(), cbCurso.getSelectedItem().toString());
     }//GEN-LAST:event_textNombreLibro1KeyReleased
 
     private void cbCurso1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCurso1ItemStateChanged
         // TODO add your handling code here:
-        //filtroListaLibro(textNombreLibro.getText(), cbCurso.getSelectedItem().toString());
+        filtroListaLibro(textNombreLibro.getText(), cbCurso.getSelectedItem().toString());
     }//GEN-LAST:event_cbCurso1ItemStateChanged
 
     private void jlistResultadoLibrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlistResultadoLibrosMouseClicked

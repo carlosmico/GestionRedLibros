@@ -265,7 +265,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="textNombreLibroBusqueda" min="-2" pref="200" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cbCursoSeleccion" pref="220" max="32767" attributes="0"/>
+                                      <Component id="cbCursoBuscar" pref="220" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -279,7 +279,7 @@
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="cbCursoSeleccion" max="32767" attributes="0"/>
+                                  <Component id="cbCursoBuscar" max="32767" attributes="0"/>
                                   <Component id="textNombreLibroBusqueda" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -324,7 +324,7 @@
                         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textNombreLibroBusquedaKeyReleased"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="cbCursoSeleccion">
+                    <Component class="javax.swing.JComboBox" name="cbCursoBuscar">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Dialog" size="18" style="1"/>
@@ -336,7 +336,7 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbCursoSeleccionItemStateChanged"/>
+                        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbCursoBuscarItemStateChanged"/>
                       </Events>
                     </Component>
                     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -435,6 +435,7 @@
                       </Properties>
                       <Events>
                         <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnNewLibroMouseReleased"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNewLibroActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -458,7 +459,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jSplitPane2" alignment="0" pref="406" max="32767" attributes="0"/>
+                  <Component id="jSplitPane2" alignment="0" pref="100" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -496,12 +497,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" alignment="0" pref="406" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="954" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" alignment="0" pref="430" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="526" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -538,7 +539,7 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="panelCuerpo" alignment="1" pref="738" max="32767" attributes="0"/>
+                                          <Component id="panelCuerpo" alignment="1" pref="942" max="32767" attributes="0"/>
                                           <Group type="102" alignment="1" attributes="0">
                                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                               <Component id="jPanel7" min="-2" pref="234" max="-2" attributes="0"/>
@@ -853,7 +854,7 @@
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" attributes="0">
                                                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                                          <Component id="textISBNLibro" pref="350" max="32767" attributes="0"/>
+                                                          <Component id="textISBNLibro" pref="449" max="32767" attributes="0"/>
                                                       </Group>
                                                       <Group type="102" attributes="0">
                                                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
@@ -935,7 +936,7 @@
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" attributes="0">
                                                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                                          <Component id="cbCurso" pref="350" max="32767" attributes="0"/>
+                                                          <Component id="cbCursoLibro" pref="449" max="32767" attributes="0"/>
                                                       </Group>
                                                       <Group type="102" attributes="0">
                                                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
@@ -952,7 +953,7 @@
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="cbCurso" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="cbCursoLibro" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -967,7 +968,7 @@
                                             <Property name="text" type="java.lang.String" value="Curso:"/>
                                           </Properties>
                                         </Component>
-                                        <Component class="javax.swing.JComboBox" name="cbCurso">
+                                        <Component class="javax.swing.JComboBox" name="cbCursoLibro">
                                           <Properties>
                                             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                               <Connection code="Colores.fondo" type="code"/>
@@ -979,6 +980,9 @@
                                               <StringArray count="0"/>
                                             </Property>
                                           </Properties>
+                                          <Events>
+                                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbCursoLibroItemStateChanged"/>
+                                          </Events>
                                         </Component>
                                       </SubComponents>
                                     </Container>
@@ -1001,7 +1005,7 @@
                                                       </Group>
                                                       <Group type="102" attributes="0">
                                                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace min="0" pref="255" max="32767" attributes="0"/>
+                                                          <EmptySpace min="0" pref="354" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                   <EmptySpace max="-2" attributes="0"/>
@@ -1077,7 +1081,7 @@
                                                       </Group>
                                                       <Group type="102" attributes="0">
                                                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace min="0" pref="144" max="32767" attributes="0"/>
+                                                          <EmptySpace min="0" pref="210" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                   <EmptySpace max="-2" attributes="0"/>
@@ -1145,7 +1149,7 @@
                                                       </Group>
                                                       <Group type="102" attributes="0">
                                                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace min="0" pref="170" max="32767" attributes="0"/>
+                                                          <EmptySpace min="0" pref="236" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                   <EmptySpace max="-2" attributes="0"/>
@@ -1213,10 +1217,10 @@
                                                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                                       <Group type="102" attributes="0">
                                                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                                          <Component id="cbObsoletoLibro" min="-2" pref="108" max="-2" attributes="0"/>
+                                                          <Component id="chkObsoletoLibro" min="-2" pref="108" max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
-                                                  <EmptySpace pref="96" max="32767" attributes="0"/>
+                                                  <EmptySpace pref="162" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
@@ -1226,7 +1230,7 @@
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="cbObsoletoLibro" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="chkObsoletoLibro" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -1241,7 +1245,7 @@
                                             <Property name="text" type="java.lang.String" value="Estado del libro:"/>
                                           </Properties>
                                         </Component>
-                                        <Component class="javax.swing.JCheckBox" name="cbObsoletoLibro">
+                                        <Component class="javax.swing.JCheckBox" name="chkObsoletoLibro">
                                           <Properties>
                                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                               <Font name="Dialog" size="18" style="1"/>
@@ -1249,7 +1253,7 @@
                                             <Property name="text" type="java.lang.String" value="Obsoleto"/>
                                           </Properties>
                                           <Events>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbObsoletoLibroActionPerformed"/>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkObsoletoLibroActionPerformed"/>
                                           </Events>
                                         </Component>
                                       </SubComponents>
@@ -1270,9 +1274,9 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="flatButton2" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="flatButton4" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -1282,8 +1286,8 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="flatButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="flatButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="btnGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="32767" attributes="0"/>
                                       </Group>
@@ -1291,7 +1295,7 @@
                                 </DimensionLayout>
                               </Layout>
                               <SubComponents>
-                                <Component class="com.mommoo.flat.button.FlatButton" name="flatButton2">
+                                <Component class="com.mommoo.flat.button.FlatButton" name="btnGuardar">
                                   <Properties>
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                       <Connection code="Colores.buttons" type="code"/>
@@ -1302,8 +1306,11 @@
                                       <Dimension value="[111, 32]"/>
                                     </Property>
                                   </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarActionPerformed"/>
+                                  </Events>
                                 </Component>
-                                <Component class="com.mommoo.flat.button.FlatButton" name="flatButton4">
+                                <Component class="com.mommoo.flat.button.FlatButton" name="btnCancelar">
                                   <Properties>
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                       <Connection code="Colores.buttons" type="code"/>
@@ -1338,7 +1345,7 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" alignment="0" pref="406" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="0" pref="100" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
