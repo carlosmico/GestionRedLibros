@@ -1772,7 +1772,7 @@ public class FrameLibroOld extends javax.swing.JFrame {
             textNombreLibro.setForeground(new Color(102, 102, 102));
         }
 
-        //filtroListaLibro(textNombreLibro.getText(), cbCurso.getSelectedItem().toString());
+        filtroListaLibro(textNombreLibro.getText(), cbCurso.getSelectedItem().toString());
     }//GEN-LAST:event_textNombreLibro1KeyReleased
 
     private void cbCurso1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCurso1ItemStateChanged
