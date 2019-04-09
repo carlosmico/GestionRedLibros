@@ -1489,17 +1489,11 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private void textBusquedaCodigoLibroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroKeyPressed
         // TODO add your handling code here:
-        if (textBusquedaCodigoLibro.hasFocus()) {
-            textBusquedaCodigoLibro.addKeyListener(new KeyAdapter() {
-                public void keyPressed(KeyEvent e) {
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        if (!isLoading) {
-                            buscarLibro(textBusquedaCodigoLibro.getText());
-                            isLoading = true;
-                        }
-                    }
-                }
-            });
+        int key = evt.getKeyCode();
+
+        if (key == KeyEvent.VK_ENTER) {
+            buscarLibro(textBusquedaCodigoLibro.getText());
+            isLoading = true;
         }
     }//GEN-LAST:event_textBusquedaCodigoLibroKeyPressed
 
@@ -1517,16 +1511,24 @@ public class FrameLibro extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameLibro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameLibro.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameLibro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameLibro.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameLibro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameLibro.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameLibro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameLibro.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -1662,11 +1664,13 @@ public class FrameLibro extends javax.swing.JFrame {
                 }
 
                 frameCarga.dispose();
+
+                isLoading = false;
             }
         };
         worker.execute();
         if (frameCarga == null) {
-            frameCarga = new FrameCarga();
+            frameCarga = new FramePopup();
         }
         frameCarga.setVisible(true);
     }
@@ -1785,11 +1789,9 @@ public class FrameLibro extends javax.swing.JFrame {
 
             rellenarCamposLibro();
 
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(FrameLibro.this,
                     "El código no puede ser un campo vacío.",
                     "Error de búsqueda", JOptionPane.ERROR_MESSAGE);
-
-            textCodigoLibro.setText("");
         }
     }
 

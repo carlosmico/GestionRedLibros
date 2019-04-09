@@ -18,13 +18,24 @@
 package Vistas;
 
 import Utilidades.Colores;
+import Utilidades.ImportarMatriculasXML;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author Jose Sanchis
  */
 public class FrameOpciones extends javax.swing.JFrame {
+
+    //Variables ruta de importación.
+    String rutaImportarMatriculas = "";
+    String rutaImportarAlumnos = "";
+    String rutaImportarCursos = "";
+    String rutaImportarGrupos = "";
+    String rutaImportarContenidos = "";
 
     /**
      * Creates new form FrameDevoluciones
@@ -33,7 +44,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         initComponents();
         //<editor-fold defaultstate="collapsed" desc="Configuracion Tabbed PAne">
         //tabbedPage.setIconAt(1, new ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-down-outline.png")));
-                //</editor-fold>
+        //</editor-fold>
 
         this.setLocationRelativeTo(null);
     }
@@ -60,27 +71,27 @@ public class FrameOpciones extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        textRutaCursos = new javax.swing.JTextField();
         btnSeleccionCursos = new com.mommoo.flat.button.FlatButton();
         btnImportarCursos = new com.mommoo.flat.button.FlatButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        textRutaGrupos = new javax.swing.JTextField();
         btnSeleccionGrupos = new com.mommoo.flat.button.FlatButton();
         btnImportarGrupos = new com.mommoo.flat.button.FlatButton();
         jPanel10 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        textRutaAsignaturas = new javax.swing.JTextField();
         btnSeleccionAsignaturas = new com.mommoo.flat.button.FlatButton();
         btnImportarAsignaturas = new com.mommoo.flat.button.FlatButton();
         jPanel11 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        textRutaAlumnos = new javax.swing.JTextField();
         btnSeleccionAlumnos = new com.mommoo.flat.button.FlatButton();
         btnImportarAlumnos = new com.mommoo.flat.button.FlatButton();
         jPanel12 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        textRutaMatriculas = new javax.swing.JTextField();
         btnSeleccionMatriculas = new com.mommoo.flat.button.FlatButton();
         btnImportarMatriculas = new com.mommoo.flat.button.FlatButton();
 
@@ -202,8 +213,8 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel2.setText("Importación Cursos:");
         jLabel2.setToolTipText("");
 
-        jTextField1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jTextField1.setText("Ruta del fichero XML");
+        textRutaCursos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textRutaCursos.setText("Ruta del fichero XML");
 
         btnSeleccionCursos.setBackground(Colores.buttons);
         btnSeleccionCursos.setText("...");
@@ -224,7 +235,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+                        .addComponent(textRutaCursos, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSeleccionCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
@@ -243,7 +254,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textRutaCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSeleccionCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnImportarCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -256,8 +267,8 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setText("Importación Grupos:");
 
-        jTextField2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jTextField2.setText("Ruta del fichero XML");
+        textRutaGrupos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textRutaGrupos.setText("Ruta del fichero XML");
 
         btnSeleccionGrupos.setBackground(Colores.buttons);
         btnSeleccionGrupos.setText("...");
@@ -281,7 +292,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                         .addComponent(btnImportarGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+                        .addComponent(textRutaGrupos, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSeleccionGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -297,7 +308,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textRutaGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSeleccionGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnImportarGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -310,8 +321,8 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setText("Importación Asignaturas:");
 
-        jTextField3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jTextField3.setText("Ruta del fichero XML");
+        textRutaAsignaturas.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textRutaAsignaturas.setText("Ruta del fichero XML");
 
         btnSeleccionAsignaturas.setBackground(Colores.buttons);
         btnSeleccionAsignaturas.setText("...");
@@ -336,7 +347,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                         .addComponent(btnImportarAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jTextField3)
+                        .addComponent(textRutaAsignaturas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSeleccionAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel10Layout.createSequentialGroup()
@@ -351,7 +362,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(6, 6, 6)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textRutaAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSeleccionAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnImportarAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -364,8 +375,8 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setText("Importación Alumnos:");
 
-        jTextField4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jTextField4.setText("Ruta del fichero XML");
+        textRutaAlumnos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textRutaAlumnos.setText("Ruta del fichero XML");
 
         btnSeleccionAlumnos.setBackground(Colores.buttons);
         btnSeleccionAlumnos.setText("...");
@@ -387,7 +398,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jTextField4)
+                        .addComponent(textRutaAlumnos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSeleccionAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel11Layout.createSequentialGroup()
@@ -405,7 +416,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textRutaAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSeleccionAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnImportarAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -418,19 +429,29 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel6.setText("Importación Matriculas:");
 
-        jTextField5.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jTextField5.setText("Ruta del fichero XML");
+        textRutaMatriculas.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textRutaMatriculas.setText("Ruta del fichero XML");
 
         btnSeleccionMatriculas.setBackground(Colores.buttons);
         btnSeleccionMatriculas.setText("...");
         btnSeleccionMatriculas.setCornerRound(10);
         btnSeleccionMatriculas.setPreferredSize(new java.awt.Dimension(35, 35));
+        btnSeleccionMatriculas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionMatriculasActionPerformed(evt);
+            }
+        });
 
         btnImportarMatriculas.setBackground(Colores.buttons);
         btnImportarMatriculas.setText("Importar");
         btnImportarMatriculas.setToolTipText("");
         btnImportarMatriculas.setCornerRound(10);
         btnImportarMatriculas.setPreferredSize(new java.awt.Dimension(111, 32));
+        btnImportarMatriculas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportarMatriculasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -441,7 +462,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jTextField5)
+                        .addComponent(textRutaMatriculas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSeleccionMatriculas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel12Layout.createSequentialGroup()
@@ -459,7 +480,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textRutaMatriculas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSeleccionMatriculas, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnImportarMatriculas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -531,7 +552,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
     private void btnHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelpActionPerformed
         // TODO add your handling code here:
-        switch(tabbedPage.getSelectedIndex()){
+        switch (tabbedPage.getSelectedIndex()) {
             case 0:
                 //Ayuda de la pestaña general (opciones)
                 break;
@@ -549,6 +570,44 @@ public class FrameOpciones extends javax.swing.JFrame {
                 break;
         }
     }//GEN-LAST:event_btnHelpActionPerformed
+
+    private void btnImportarMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarMatriculasActionPerformed
+        // TODO add your handling code here:
+
+        if (!rutaImportarMatriculas.equals("")) {
+            try {
+                new ImportarMatriculasXML(rutaImportarMatriculas);
+                
+                rutaImportarMatriculas = "";
+                
+                textRutaMatriculas.setText(rutaImportarMatriculas);
+
+                JOptionPane.showMessageDialog(this, "Matrículas importadas correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "No se han podido importar las matrículas.\n-Revise el archivo XML.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un archivo para poder importar las matrículas.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnImportarMatriculasActionPerformed
+
+    private void btnSeleccionMatriculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionMatriculasActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "XML", "xml");
+
+        chooser.setFileFilter(filter);
+
+        int returnVal = chooser.showOpenDialog(null);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            rutaImportarMatriculas = chooser.getSelectedFile().getPath();
+            textRutaMatriculas.setText(rutaImportarMatriculas);
+        }
+    }//GEN-LAST:event_btnSeleccionMatriculasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -617,11 +676,11 @@ public class FrameOpciones extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTabbedPane tabbedPage;
+    private javax.swing.JTextField textRutaAlumnos;
+    private javax.swing.JTextField textRutaAsignaturas;
+    private javax.swing.JTextField textRutaCursos;
+    private javax.swing.JTextField textRutaGrupos;
+    private javax.swing.JTextField textRutaMatriculas;
     // End of variables declaration//GEN-END:variables
 }

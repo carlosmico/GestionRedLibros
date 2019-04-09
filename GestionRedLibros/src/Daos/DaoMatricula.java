@@ -43,7 +43,7 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         List<Matricula> lista = new ArrayList<Matricula>();
 
         String query = "from Matricula m where m.alumno = '" + m.getAlumno().getNia() + "' and m.curso_escolar = " + m.getCurso_escolar()
-                + " and m.contenido = " + m.getContenido() + " and m.curso = " + m.getCurso();
+                + " and m.contenido = " + m.getContenido().getId() + " and m.curso = " + m.getCurso();
 
         lista = this.session.createQuery(query).list();
 
@@ -58,12 +58,10 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         for (int i = 0; i < matriculasCargadas.size(); i++) {
             Matricula m = matriculasCargadas.get(i);
             
-            Matricula matriculaEncontrada = buscarMatricula(m);
-            
-            Matricula matricula = null;
+            Matricula matricula = buscarMatricula(m);
 
             try {
-                if (matriculaEncontrada == null) {
+                if (matricula == null) {
 
                     matricula = new Matricula(m.getCurso_escolar(),
                             m.getAlumno(), m.getEnsenanza(), m.getCurso(), m.getContenido(),
@@ -71,7 +69,6 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                             m.getFec_ini_acis(), m.getFec_fin_acis(), m.getCur_ref_acis(),
                             m.getCurso_pendiente());
                 } else {
-                    matricula.setId(matriculaEncontrada.getId());
                     matricula.setCurso_escolar(m.getCurso_escolar());
                     matricula.setAlumno(m.getAlumno());
                     matricula.setEnsenanza(m.getEnsenanza());
