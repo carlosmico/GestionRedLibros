@@ -72,6 +72,24 @@ public class Curso implements Serializable{
         this.idPadre = idPadre;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCodigo_curso() {
+        return codigo_curso;
+    }
+
+    public void setCodigo_curso(String codigo_curso) {
+        this.codigo_curso = codigo_curso;
+    }
+    
+    
+
     public String getCodigo() {
         return codigo_curso;
     }
@@ -164,7 +182,7 @@ public class Curso implements Serializable{
 
     @Override
     public String toString() {
-        return "Curso{" + "codigo=" + codigo_curso + ", ensenanza=" + ensenanza + ", abreviatura=" + abreviatura + ", nombre_cas=" + nombre_cas + ", nombre_val=" + nombre_val + ", idPadre=" + idPadre + '}';
+        return abreviatura + " - " + nombre_cas;
     }
     
     

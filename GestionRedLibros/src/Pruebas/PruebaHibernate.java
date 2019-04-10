@@ -44,22 +44,13 @@ public class PruebaHibernate {
         try {
             SessionFactory factory = UtilesHibernate.getSessionFactory();
             Session session = factory.openSession();
-            session.beginTransaction();
             
             DaoLibro dao = new DaoLibro(session);
             
-            dao.grabar(l);
-            
-            
-            List<Libro> al = new DaoLibro(session).buscarTodos();
-            
-            for (int i = 0; i < al.size(); i++) {
-                System.out.println(al.get(i).getEjemplares().size());
-            }
-            
-            
-            session.getTransaction().commit();
-            session.close();
+            System.out.println(dao.buscarTodos().size());
+           
+
+
             //DaoContenido daoc = new DaoContenido();
 
             //System.out.println(daoc.buscarTodos().get(0).getLibros().size());

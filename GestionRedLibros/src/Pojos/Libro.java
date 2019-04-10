@@ -48,7 +48,7 @@ public class Libro implements Serializable{
     private String codigo_libro;
     
     @ManyToOne
-    @JoinColumn (name = "contenido")
+    @JoinColumn (name = "id_contenido")
     private Contenido contenido_libro;
     
     private String nombre;
@@ -167,6 +167,6 @@ public class Libro implements Serializable{
 
     @Override
     public String toString() {
-        return "Libro{" + "codigo=" + codigo_libro + ", contenido=" + contenido_libro + ", nombre=" + nombre + ", ISBN=" + ISBN + ", unidades=" + unidades + ", obsoleto=" + obsoleto + ", precio=" + precio + '}';
+        return nombre;
     }
 }
