@@ -18,22 +18,28 @@
 package Vistas;
 
 import Daos.DaoCurso;
+import Daos.DaoLibro;
 import Daos.DaoMatricula;
 import Pojos.Curso;
+import Pojos.Ejemplar;
 import Pojos.Libro;
 import Pojos.Matricula;
 import Renders.comboBoxRender;
 import Utilidades.Colores;
+import Utilidades.Estado;
 import static Vistas.FrameEntrega.alumno;
 import excepciones.BusinessException;
 import java.awt.Component;
 import java.time.LocalDate;
+import static java.util.Collections.list;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.SwingWorker;
@@ -43,38 +49,43 @@ import javax.swing.SwingWorker;
  * @author Jose Sanchis
  */
 public class FrameConfirmacionEntrega extends javax.swing.JFrame {
-
-    private DaoMatricula daoMatricula;
+    
+    private DaoLibro daoLibro;
     private DaoCurso daoCurso;
-
+    
     private List<Curso> listaCurso;
-
+    private List<Ejemplar> listaEjemplares;
+    
     private FramePopup framePopup;
-
+    
     private Matricula matricula;
     private Libro libro;
+    private Ejemplar ejemplar;
 
     /**
      * Creates new form FrameConfirmacionEntrega
      */
     public FrameConfirmacionEntrega(Matricula idMatricula) {
         initComponents();
-
+        
         this.matricula = idMatricula;
 
         //daoMatricula = new DaoMatricula(Main.gestorSesiones.getSession());
         daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
         
+        daoLibro = new DaoLibro(Main.gestorSesiones.getSession());
+
+        //daoLibro.buscarPorContenido(null);
         List<Libro> listaLibros = this.matricula.getContenido().getLibros();
         for (int i = 0; i < listaLibros.size(); i++) {
-            if (listaLibros.get(i).getContenido().getId() == this.matricula.getContenido().getId()){
-                System.out.println(listaLibros.get(i).getNombre());
+            if (listaLibros.get(i).getContenido().getId() == this.matricula.getContenido().getId()) {
+                libro = listaLibros.get(i);
                 break;
             }
         }
-
+        
         cargarDatos();
-
+        
         this.setLocationRelativeTo(null);
     }
 
@@ -131,19 +142,19 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
         panelEstadoParent15 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         panelEstado15 = new javax.swing.JPanel();
-        btnBadStatus15 = new javax.swing.JLabel();
-        btnRegularStatus15 = new javax.swing.JLabel();
-        btnGoodStatus15 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
+        btnBadStatus = new javax.swing.JLabel();
+        btnRegularStatus = new javax.swing.JLabel();
+        btnGoodStatus = new javax.swing.JLabel();
+        panelCodigoEjemplar = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         flatButton3 = new com.mommoo.flat.button.FlatButton();
-        jPanel1 = new javax.swing.JPanel();
+        panelListaEjemplres = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        listEjemplares = new javax.swing.JList();
+        rbTodos = new javax.swing.JRadioButton();
+        rbNuevos = new javax.swing.JRadioButton();
+        rbUsados = new javax.swing.JRadioButton();
         panelBotonera = new javax.swing.JPanel();
         btnCancel = new com.mommoo.flat.button.FlatButton();
         flatButton1 = new com.mommoo.flat.button.FlatButton();
@@ -273,7 +284,7 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelAcisSi.setLayout(new java.awt.GridLayout());
+        panelAcisSi.setLayout(new java.awt.GridLayout(1, 0));
 
         panelFechaIniAcis.setBackground(Colores.fondo);
 
@@ -387,7 +398,7 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(textCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel20))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         panelCursoLayout.setVerticalGroup(
             panelCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -422,10 +433,8 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
                     .addGroup(panelAsignaturaLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(textAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelAsignaturaLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(jLabel2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelAsignaturaLayout.setVerticalGroup(
             panelAsignaturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -565,7 +574,7 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
             .addGroup(panelTituloEjemplaresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelCuerpoEjemplares.setBackground(Colores.fondo);
@@ -580,17 +589,17 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
         panelEstado15.setBackground(new java.awt.Color(239, 235, 233));
         panelEstado15.setLayout(new java.awt.GridLayout(1, 0, 5, 5));
 
-        btnBadStatus15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnBadStatus15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
-        panelEstado15.add(btnBadStatus15);
+        btnBadStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnBadStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
+        panelEstado15.add(btnBadStatus);
 
-        btnRegularStatus15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnRegularStatus15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
-        panelEstado15.add(btnRegularStatus15);
+        btnRegularStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnRegularStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
+        panelEstado15.add(btnRegularStatus);
 
-        btnGoodStatus15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnGoodStatus15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
-        panelEstado15.add(btnGoodStatus15);
+        btnGoodStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnGoodStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
+        panelEstado15.add(btnGoodStatus);
 
         javax.swing.GroupLayout panelEstadoParent15Layout = new javax.swing.GroupLayout(panelEstadoParent15);
         panelEstadoParent15.setLayout(panelEstadoParent15Layout);
@@ -617,8 +626,8 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
                 .addContainerGap(60, Short.MAX_VALUE))
         );
 
-        jPanel10.setBackground(new java.awt.Color(239, 235, 233));
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        panelCodigoEjemplar.setBackground(new java.awt.Color(239, 235, 233));
+        panelCodigoEjemplar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel15.setBackground(Colores.accent);
         jLabel15.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -632,27 +641,27 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
         flatButton3.setCornerRound(10);
         flatButton3.setPreferredSize(new java.awt.Dimension(169, 32));
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelCodigoEjemplarLayout = new javax.swing.GroupLayout(panelCodigoEjemplar);
+        panelCodigoEjemplar.setLayout(panelCodigoEjemplarLayout);
+        panelCodigoEjemplarLayout.setHorizontalGroup(
+            panelCodigoEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCodigoEjemplarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGroup(panelCodigoEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCodigoEjemplarLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addGroup(panelCodigoEjemplarLayout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCodigoEjemplarLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(flatButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        panelCodigoEjemplarLayout.setVerticalGroup(
+            panelCodigoEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCodigoEjemplarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -662,65 +671,85 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.setBackground(Colores.fondo);
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        panelListaEjemplres.setBackground(Colores.fondo);
+        panelListaEjemplres.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jScrollPane1.setBorder(null);
 
-        jList1.setBackground(Colores.fondo);
-        jList1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jList1.setForeground(Colores.accent);
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        listEjemplares.setBackground(Colores.fondo);
+        listEjemplares.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        listEjemplares.setForeground(Colores.accent);
+        listEjemplares.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jList1.setSelectionBackground(Colores.accent);
-        jList1.setSelectionForeground(Colores.fondo);
-        jScrollPane1.setViewportView(jList1);
+        listEjemplares.setSelectionBackground(Colores.accent);
+        listEjemplares.setSelectionForeground(Colores.fondo);
+        listEjemplares.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listEjemplaresValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listEjemplares);
 
-        rbgEstados.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jRadioButton1.setForeground(Colores.accent);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Todos");
+        rbgEstados.add(rbTodos);
+        rbTodos.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        rbTodos.setForeground(Colores.accent);
+        rbTodos.setSelected(true);
+        rbTodos.setText("Todos");
+        rbTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbTodosActionPerformed(evt);
+            }
+        });
 
-        rbgEstados.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jRadioButton2.setForeground(Colores.accent);
-        jRadioButton2.setText("Nuevos");
+        rbgEstados.add(rbNuevos);
+        rbNuevos.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        rbNuevos.setForeground(Colores.accent);
+        rbNuevos.setText("Nuevos");
+        rbNuevos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbNuevosActionPerformed(evt);
+            }
+        });
 
-        rbgEstados.add(jRadioButton3);
-        jRadioButton3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jRadioButton3.setForeground(Colores.accent);
-        jRadioButton3.setText("Usados");
+        rbgEstados.add(rbUsados);
+        rbUsados.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        rbUsados.setForeground(Colores.accent);
+        rbUsados.setText("Usados");
+        rbUsados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbUsadosActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelListaEjemplresLayout = new javax.swing.GroupLayout(panelListaEjemplres);
+        panelListaEjemplres.setLayout(panelListaEjemplresLayout);
+        panelListaEjemplresLayout.setHorizontalGroup(
+            panelListaEjemplresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListaEjemplresLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelListaEjemplresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
+                    .addGroup(panelListaEjemplresLayout.createSequentialGroup()
+                        .addComponent(rbTodos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton2)
+                        .addComponent(rbNuevos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRadioButton3)))
+                        .addComponent(rbUsados)))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelListaEjemplresLayout.setVerticalGroup(
+            panelListaEjemplresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListaEjemplresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
+                .addGroup(panelListaEjemplresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbTodos)
+                    .addComponent(rbNuevos)
+                    .addComponent(rbUsados))
                 .addContainerGap())
         );
 
@@ -730,10 +759,10 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
             panelCuerpoEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCuerpoEjemplaresLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelListaEjemplres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelCuerpoEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelCodigoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelEstadoParent15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -742,9 +771,9 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
             .addGroup(panelCuerpoEjemplaresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelCuerpoEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelListaEjemplres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelCuerpoEjemplaresLayout.createSequentialGroup()
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panelCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelEstadoParent15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -863,6 +892,25 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelMouseClicked
 
+    private void rbTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbTodosActionPerformed
+        asignarModeloToList(listEjemplares, listaEjemplares);
+    }//GEN-LAST:event_rbTodosActionPerformed
+
+    private void rbNuevosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNuevosActionPerformed
+        // TODO add your handling code here:
+        getEjemplaresFiltrados(Estado.nuevo);
+    }//GEN-LAST:event_rbNuevosActionPerformed
+
+    private void rbUsadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbUsadosActionPerformed
+        getEjemplaresFiltrados(Estado.usado);
+    }//GEN-LAST:event_rbUsadosActionPerformed
+
+    private void listEjemplaresValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listEjemplaresValueChanged
+        // TODO add your handling code here:
+        ejemplar = (Ejemplar)listEjemplares.getSelectedValue();
+        rellenarEjemplar();
+    }//GEN-LAST:event_listEjemplaresValueChanged
+
     /**
      * @param args the command line arguments
      */
@@ -899,10 +947,10 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btnBadStatus15;
+    private javax.swing.JLabel btnBadStatus;
     private com.mommoo.flat.button.FlatButton btnCancel;
-    private javax.swing.JLabel btnGoodStatus15;
-    private javax.swing.JLabel btnRegularStatus15;
+    private javax.swing.JLabel btnGoodStatus;
+    private javax.swing.JLabel btnRegularStatus;
     private com.mommoo.flat.button.FlatButton flatButton1;
     private com.mommoo.flat.button.FlatButton flatButton3;
     private javax.swing.JLabel jLabel1;
@@ -920,17 +968,13 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JList jList1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList listEjemplares;
     private javax.swing.JPanel panelAcis;
     private javax.swing.JPanel panelAcisSi;
     private javax.swing.JPanel panelAsignatura;
     private javax.swing.JPanel panelBotonera;
+    private javax.swing.JPanel panelCodigoEjemplar;
     private javax.swing.JPanel panelCuerpo;
     private javax.swing.JPanel panelCuerpoEjemplares;
     private javax.swing.JPanel panelCurso;
@@ -943,11 +987,15 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
     private javax.swing.JPanel panelFechaFinAcis;
     private javax.swing.JPanel panelFechaIniAcis;
     private javax.swing.JPanel panelIdioma;
+    private javax.swing.JPanel panelListaEjemplres;
     private javax.swing.JPanel panelSuperior;
     private javax.swing.JPanel panelTipoBasico;
     private javax.swing.JPanel panelTipoPredominante;
     private javax.swing.JPanel panelTitulo;
     private javax.swing.JPanel panelTituloEjemplares;
+    private javax.swing.JRadioButton rbNuevos;
+    private javax.swing.JRadioButton rbTodos;
+    private javax.swing.JRadioButton rbUsados;
     private javax.swing.ButtonGroup rbgEstados;
     private javax.swing.JLabel textAcis;
     private javax.swing.JLabel textAsignatura;
@@ -961,7 +1009,8 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
     private javax.swing.JLabel textTipoPredominante;
     // End of variables declaration//GEN-END:variables
 
-    public void rellenarDatos() {
+    public void rellenarDatosMatricula() {
+        //<editor-fold defaultstate="collapsed" desc="Datos Matriculas">
         //Curso
         textCurso.setText(this.matricula.getCurso());
 
@@ -1007,22 +1056,51 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
         } else {
             panelTipoPredominante.setVisible(false);
         }
+//</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc="Datos Ejemplares">
+        if (listaEjemplares.size() > 0) {
+            asignarModeloToList(listEjemplares, listaEjemplares);
+        }
+//</editor-fold>
     }
 
+    /**
+     * Filtrado de ejemplares.
+     */
+    private void getEjemplaresFiltrados(int estado) {
+        List<Ejemplar> listaEjemplaresTemp = listaEjemplares.
+                stream().filter(ejemplar -> ejemplar.getEstado() == estado).collect(Collectors.toList());
+        asignarModeloToList(listEjemplares, listaEjemplaresTemp);
+    }
+
+    /**
+     * Metodo para asignar un modelo de datos a una JList
+     */
+    private void asignarModeloToList(JList jlist, List<Ejemplar> lista) {
+        DefaultListModel listModel = new DefaultListModel();
+        for (int i = 0; i < lista.size(); i++) {
+            listModel.addElement(lista.get(i));
+        }
+        jlist.setModel(listModel);
+    }
+    
     private Curso getCursoName(String cursoABuscar) {
         return listaCurso.stream().filter(curso -> curso.getCodigo().equals(cursoABuscar)).collect(Collectors.toList()).get(0);
     }
-
+    
     private void cargarDatos() {
         SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
             protected Void doInBackground() throws InterruptedException {
                 listaCurso = daoCurso.buscarTodos();
                 return null;
             }
-
+            
             protected void done() {
                 System.out.println(matricula);
-                rellenarDatos();
+                if (libro != null) {
+                    listaEjemplares = libro.getEjemplares();
+                }
+                rellenarDatosMatricula();
                 pack();
                 framePopup.dispose();
             }
@@ -1032,5 +1110,47 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
             framePopup = new FramePopup();
         }
         framePopup.setVisible(true);
+    }
+
+    private void rellenarEjemplar() {
+        setEstado(ejemplar.getEstado());
+    }
+    
+    public void setEstado(int estado) {
+
+        switch (estado) {
+            case Estado.deteriorado:
+                //El libro se encuentra en mal estado
+
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad.png")));               //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular_disabled.png")));  //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good_disabled.png")));     //Good face
+                break;
+
+            case Estado.usado:
+                //El libro se encuentra en mal estado
+
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular.png")));          //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good_disabled.png")));    //Good face
+                break;
+
+            case Estado.nuevo:
+                //El libro se encuentra en mal estado
+
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular_disabled.png"))); //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good.png")));             //Good face
+                break;
+        }
     }
 }
