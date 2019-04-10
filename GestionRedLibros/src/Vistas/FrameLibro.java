@@ -47,6 +47,9 @@ public class FrameLibro extends javax.swing.JFrame {
     boolean modoEdicion = false;
     boolean busquedaPorCodigo = true;
 
+    String placeHolderCodigo = "Introduce o escanea codigo...",
+            placeHolderNombre = "Introduce nombre...";
+
     private FramePopup frameCarga = null;
 
     DaoLibro daoLibro;
@@ -72,6 +75,10 @@ public class FrameLibro extends javax.swing.JFrame {
 
         //Ponemos el foco en el textField del codigo
         textCodigoLibro.requestFocusInWindow();
+        
+        //Configuramos los PlaceHolders
+        textNombreLibroBusqueda.setText(placeHolderNombre);
+        textBusquedaCodigoLibro.setText(placeHolderCodigo);
 
         //Inicializamos los Daos
         daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
@@ -317,8 +324,16 @@ public class FrameLibro extends javax.swing.JFrame {
 
         textBusquedaCodigoLibro.setBackground(Colores.fondo);
         textBusquedaCodigoLibro.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textBusquedaCodigoLibro.setForeground(new java.awt.Color(0, 0, 0));
+        textBusquedaCodigoLibro.setForeground(new java.awt.Color(153, 153, 153));
         textBusquedaCodigoLibro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        textBusquedaCodigoLibro.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textBusquedaCodigoLibroFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textBusquedaCodigoLibroFocusLost(evt);
+            }
+        });
         textBusquedaCodigoLibro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 textBusquedaCodigoLibroKeyPressed(evt);
@@ -354,7 +369,6 @@ public class FrameLibro extends javax.swing.JFrame {
         textNombreLibroBusqueda.setBackground(Colores.fondo);
         textNombreLibroBusqueda.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         textNombreLibroBusqueda.setForeground(new java.awt.Color(153, 153, 153));
-        textNombreLibroBusqueda.setText("Escribe nombre...");
         textNombreLibroBusqueda.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textNombreLibroBusqueda.setMinimumSize(new java.awt.Dimension(200, 32));
         textNombreLibroBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1539,8 +1553,7 @@ public class FrameLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOpcionesMouseReleased
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        cbCursoLibro.removeAllItems();
-        cbAsignatura.removeAllItems();
+        vaciarCursosYContenidos();
 
         if (libro != null) {
             daoLibro.borrar(libro);
@@ -1591,11 +1604,18 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private void textBusquedaCodigoLibroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            buscarLibro(textBusquedaCodigoLibro.getText());
+        if (!modoEdicion) {
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                buscarLibro(textBusquedaCodigoLibro.getText());
+            }
         }
     }//GEN-LAST:event_textBusquedaCodigoLibroKeyPressed
 
+    /**
+     * Metodo para filtrar la lista de Libros al cambiar el Curso seleccionado_
+     *
+     * @param evt
+     */
     private void cbCursoBuscarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoBuscarItemStateChanged
         // TODO add your handling code here:
         filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoBuscar.getSelectedItem().toString());
@@ -1606,7 +1626,7 @@ public class FrameLibro extends javax.swing.JFrame {
         String nombreLibro = textNombreLibroBusqueda.getText();
 
         if (nombreLibro.length() == 0) {
-            textNombreLibroBusqueda.setText("Escribe nombre...");
+            textNombreLibroBusqueda.setText(placeHolderNombre);
             textNombreLibroBusqueda.setForeground(new Color(102, 102, 102));
         }
 
@@ -1617,7 +1637,7 @@ public class FrameLibro extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nombreLibro = textNombreLibroBusqueda.getText();
 
-        if (nombreLibro.length() > 0 && nombreLibro.equals("Escribe nombre...")) {
+        if (nombreLibro.length() > 0 && nombreLibro.equals(placeHolderNombre)) {
             textNombreLibroBusqueda.setText("");
             textNombreLibroBusqueda.setForeground(new Color(51, 51, 51));
         }
@@ -1779,7 +1799,9 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private void cbCursoLibroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoLibroItemStateChanged
         // TODO add your handling code here:
-        rellenarContenidosLibro();
+        if (modoEdicion) {
+            rellenarContenidosLibro();
+        }
     }//GEN-LAST:event_cbCursoLibroItemStateChanged
 
     /**
@@ -1791,8 +1813,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         setEditMode(false);
 
-        cbCursoLibro.removeAllItems();
-        cbAsignatura.removeAllItems();
+        vaciarCursosYContenidos();
 
         rellenarCamposLibro();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -1801,12 +1822,41 @@ public class FrameLibro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnImprimirEtiquetasActionPerformed
 
+    /**
+     * Metodo para rellenar el ComboBox de Asignaturas cuando cambie el curso
+     * seleccionado
+     *
+     * @param evt
+     */
     private void jlistLibrosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jlistLibrosValueChanged
         // TODO add your handling code here:
-        libro = (Libro) jlistLibros.getSelectedValue();
+        if (!modoEdicion) {
+            libro = (Libro) jlistLibros.getSelectedValue();
 
-        rellenarCamposLibro();
+            rellenarCamposLibro();
+        }
     }//GEN-LAST:event_jlistLibrosValueChanged
+
+    /**
+     * Metodo para simular el PlaceHolder del JTextField buscar por codigo
+     * @param evt 
+     */
+    private void textBusquedaCodigoLibroFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroFocusGained
+        if (textBusquedaCodigoLibro.getText().equals(placeHolderCodigo)) {
+            textBusquedaCodigoLibro.setText("");
+            textBusquedaCodigoLibro.setForeground(new Color(51, 51, 51));
+        }
+    }//GEN-LAST:event_textBusquedaCodigoLibroFocusGained
+
+    /**
+     * Metodo para simular el PlaceHolder del JTextField buscar por codigo
+     * @param evt 
+     */
+    private void textBusquedaCodigoLibroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroFocusLost
+        // TODO add your handling code here:
+        textBusquedaCodigoLibro.setForeground(new Color(102, 102, 102));
+        textBusquedaCodigoLibro.setText(placeHolderCodigo);
+    }//GEN-LAST:event_textBusquedaCodigoLibroFocusLost
 
     /**
      * @param args the command line arguments
@@ -2000,7 +2050,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         //Clasificamos el filtro
         //<editor-fold defaultstate="collapsed" desc="Clasificacion del filtro">
-        if (textNombreLibroBusqueda.getText().equals("Escribe nombre...")) {
+        if (textNombreLibroBusqueda.getText().equals(placeHolderNombre)) {
             n = "0";
         } else {
             n = "1";
@@ -2132,15 +2182,25 @@ public class FrameLibro extends javax.swing.JFrame {
             textCodigoLibro.setText(libro.getCodigo());
             textNombreLibro.setText(libro.getNombre());
             textISBNLibro.setText(libro.getISBN());
-            
+
             rellenaCursosLibro();
 
             for (int i = 0; i < cbCursoLibro.getItemCount(); i++) {
                 Curso c = (Curso) cbCursoLibro.getItemAt(i);
 
-                if (libro.getContenido().getCurso().getId() == c.getId()) {
+                if (libro.getContenido().getCurso().getId().equals(c.getId())) {
                     cbCursoLibro.setSelectedIndex(i);
                     break;
+                }
+            }
+
+            rellenarContenidosLibro();
+
+            for (int i = 0; i < cbAsignatura.getItemCount(); i++) {
+                Contenido c = (Contenido) cbAsignatura.getItemAt(i);
+
+                if (libro.getContenido().getId() == c.getId()) {
+                    cbAsignatura.setSelectedIndex(i);
                 }
             }
 
@@ -2156,7 +2216,6 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private void rellenaCursosBusqueda() {
         if (listaCursos.size() > 0) {
-
             for (int i = 0; i < listaCursos.size(); i++) {
                 cbCursoBuscar.addItem(listaCursos.get(i).getAbreviatura() + " - " + listaCursos.get(i).getNombre_cas());
             }
@@ -2177,7 +2236,6 @@ public class FrameLibro extends javax.swing.JFrame {
 
             for (int i = 0; i < listaCursos.size(); i++) {
                 cbCursoLibro.addItem(listaCursos.get(i));
-                //cbCursoLibro.addItem(listaCursos.get(i).getAbreviatura() + " - " + listaCursos.get(i).getNombre_cas());
             }
         } else {
             JOptionPane.showMessageDialog(FrameLibro.this,
@@ -2191,14 +2249,24 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private void rellenarContenidosLibro() {
         Curso cursoSeleccionado = (Curso) cbCursoLibro.getSelectedItem();
-        
+
         cbAsignatura.removeAllItems();
 
         if (cursoSeleccionado != null) {
             for (int i = 0; i < cursoSeleccionado.getContenidos().size(); i++) {
                 cbAsignatura.addItem(cursoSeleccionado.getContenidos().get(i));
             }
+        } else {
+            System.out.println("No hay curso seleccionado");
         }
+    }
+
+    /**
+     * Metodo para vaciar los ComboBox de Cursos y Contenidos
+     */
+    private void vaciarCursosYContenidos() {
+        cbCursoLibro.removeAllItems();
+        cbAsignatura.removeAllItems();
     }
 
     /**
