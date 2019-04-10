@@ -168,6 +168,6 @@ public class Contenido implements Serializable{
 
     @Override
     public String toString() {
-        return "Contenido{" + "id=" + id + ", curso=" + curso_contenido + ", codigo=" + codigo_contenido + ", ensenanza=" + ensenanza + ", nombre_cas=" + nombre_cas + ", nombre_val=" + nombre_val + '}';
+        return codigo_contenido + " - " + nombre_cas;
     }
 }

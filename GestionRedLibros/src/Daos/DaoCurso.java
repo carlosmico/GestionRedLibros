@@ -81,7 +81,6 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
 
             } catch (Exception e) {
                 this.session.getTransaction().commit();
-
                 e.printStackTrace();
                 System.out.println("Error DaoCurso-actualizar(): " + e.getMessage());
                 throw new Exception();
