@@ -5,9 +5,7 @@
  */
 package Vistas;
 
-import Utilidades.DimensionesFrame;
-import Utilidades.GestorSesiones;
-import Utilidades.GetInternetStatus;
+import Utilidades.*;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -77,13 +75,15 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         banner = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        flatButton1 = new com.mommoo.flat.button.FlatButton();
         jPanel1 = new javax.swing.JPanel();
-        btnDevoluciones = new com.mommoo.flat.button.FlatButton();
-        btnEntrega = new com.mommoo.flat.button.FlatButton();
         btnLibros = new com.mommoo.flat.button.FlatButton();
-        btnOpciones = new com.mommoo.flat.button.FlatButton();
+        btnEntrega = new com.mommoo.flat.button.FlatButton();
+        btnDevoluciones = new com.mommoo.flat.button.FlatButton();
         btnAydua = new com.mommoo.flat.button.FlatButton();
+        btnOpciones = new com.mommoo.flat.button.FlatButton();
         wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -93,40 +93,43 @@ public class Main extends javax.swing.JFrame {
         banner.setBackground(new java.awt.Color(58, 39, 35));
         banner.setLayout(new java.awt.GridLayout(2, 1));
 
+        jPanel2.setBackground(Colores.accent);
+
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Gestión Red Libros");
-        banner.add(jLabel1);
+
+        flatButton1.setBackground(Colores.buttons);
+        flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/help.png"))); // NOI18N
+        flatButton1.setCornerRound(10);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+                .addGap(91, 91, 91)
+                .addComponent(flatButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(flatButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        banner.add(jPanel2);
 
         jPanel1.setBackground(new java.awt.Color(58, 39, 35));
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 37));
         jPanel1.setLayout(new java.awt.GridLayout(1, 4, 5, 0));
-
-        btnDevoluciones.setBackground(new java.awt.Color(66, 47, 44));
-        btnDevoluciones.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
-        btnDevoluciones.setForeground(new java.awt.Color(204, 204, 204));
-        btnDevoluciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-down.png"))); // NOI18N
-        btnDevoluciones.setText("  Devoluciones");
-        btnDevoluciones.setCornerRound(10);
-        btnDevoluciones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDevolucionesActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnDevoluciones);
-
-        btnEntrega.setBackground(new java.awt.Color(66, 47, 44));
-        btnEntrega.setForeground(new java.awt.Color(204, 204, 204));
-        btnEntrega.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up.png"))); // NOI18N
-        btnEntrega.setText("  Entregas");
-        btnEntrega.setCornerRound(10);
-        btnEntrega.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEntregaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnEntrega);
 
         btnLibros.setBackground(new java.awt.Color(66, 47, 44));
         btnLibros.setForeground(new java.awt.Color(204, 204, 204));
@@ -140,21 +143,34 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel1.add(btnLibros);
 
-        btnOpciones.setBackground(new java.awt.Color(66, 47, 44));
-        btnOpciones.setForeground(new java.awt.Color(204, 204, 204));
-        btnOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/ballot.png"))); // NOI18N
-        btnOpciones.setText("  Opciones");
-        btnOpciones.setCornerRound(10);
-        btnOpciones.addActionListener(new java.awt.event.ActionListener() {
+        btnEntrega.setBackground(new java.awt.Color(66, 47, 44));
+        btnEntrega.setForeground(new java.awt.Color(204, 204, 204));
+        btnEntrega.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up.png"))); // NOI18N
+        btnEntrega.setText("Entregas");
+        btnEntrega.setCornerRound(10);
+        btnEntrega.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpcionesActionPerformed(evt);
+                btnEntregaActionPerformed(evt);
             }
         });
-        jPanel1.add(btnOpciones);
+        jPanel1.add(btnEntrega);
+
+        btnDevoluciones.setBackground(new java.awt.Color(66, 47, 44));
+        btnDevoluciones.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
+        btnDevoluciones.setForeground(new java.awt.Color(204, 204, 204));
+        btnDevoluciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-down.png"))); // NOI18N
+        btnDevoluciones.setText("Devoluciones");
+        btnDevoluciones.setCornerRound(10);
+        btnDevoluciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDevolucionesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnDevoluciones);
 
         btnAydua.setBackground(new java.awt.Color(66, 47, 44));
-        btnAydua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/help.png"))); // NOI18N
-        btnAydua.setText("  Ayuda");
+        btnAydua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/calendar-search.png"))); // NOI18N
+        btnAydua.setText("Historial");
         btnAydua.setCornerRound(10);
         btnAydua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,6 +178,18 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnAydua);
+
+        btnOpciones.setBackground(new java.awt.Color(66, 47, 44));
+        btnOpciones.setForeground(new java.awt.Color(204, 204, 204));
+        btnOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/ballot.png"))); // NOI18N
+        btnOpciones.setText("Opciones");
+        btnOpciones.setCornerRound(10);
+        btnOpciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpcionesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnOpciones);
 
         banner.add(jPanel1);
 
@@ -329,8 +357,10 @@ public class Main extends javax.swing.JFrame {
     private com.mommoo.flat.button.FlatButton btnEntrega;
     private com.mommoo.flat.button.FlatButton btnLibros;
     private com.mommoo.flat.button.FlatButton btnOpciones;
+    private com.mommoo.flat.button.FlatButton flatButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel wallpaper;
     // End of variables declaration//GEN-END:variables
 }

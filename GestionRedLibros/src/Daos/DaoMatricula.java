@@ -65,6 +65,25 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
             return lista.get(0);
         }
     }
+    
+    /**
+     *  Metodo para obtener una matricula mediante un objeto Matricula recibido
+     * @param m
+     * @return
+     */
+    public Matricula buscarPorId(int id) {
+        Matricula matricula = null;
+
+        try {
+            matricula = (Matricula) this.session.get(Matricula.class, id);
+
+        } catch (PersistenceException e) {
+            e.printStackTrace();
+            throw new PersistenceException();
+        }
+        
+        return matricula;
+    }
 
     /**
      *  Metodo para actualizar una lista de Matriculas en la BD

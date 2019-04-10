@@ -17,6 +17,7 @@
  */
 package Pruebas;
 
+import Utilidades.ButtonColumn;
 import Utilidades.Colores;
 import com.mommoo.flat.button.FlatButton;
 import java.awt.event.ActionEvent;

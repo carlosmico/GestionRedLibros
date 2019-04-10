@@ -1,4 +1,4 @@
-package Pruebas;
+package Utilidades;
 
 import Utilidades.Colores;
 import java.awt.*;
