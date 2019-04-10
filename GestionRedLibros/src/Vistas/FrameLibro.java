@@ -180,7 +180,6 @@ public class FrameLibro extends javax.swing.JFrame {
         jlistLibros = new javax.swing.JList();
         panelTitulo1 = new javax.swing.JPanel();
         textTitulo1 = new javax.swing.JLabel();
-        btnNewLibro = new com.mommoo.flat.button.FlatButton();
         panelDerecho = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         panelSuperiorDerecho = new javax.swing.JPanel();
@@ -190,6 +189,7 @@ public class FrameLibro extends javax.swing.JFrame {
         textTitulo = new javax.swing.JLabel();
         btnOpciones = new com.mommoo.flat.button.FlatButton();
         labelInfoEdicion = new javax.swing.JLabel();
+        btnNewLibro = new com.mommoo.flat.button.FlatButton();
         panelCuerpo = new javax.swing.JPanel();
         panelCodigoLibro = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -439,16 +439,6 @@ public class FrameLibro extends javax.swing.JFrame {
         textTitulo1.setForeground(new java.awt.Color(239, 235, 233));
         textTitulo1.setText("Buscar");
 
-        btnNewLibro.setBackground(Colores.accent);
-        btnNewLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png"))); // NOI18N
-        btnNewLibro.setCornerRound(10);
-        btnNewLibro.setPreferredSize(new java.awt.Dimension(48, 48));
-        btnNewLibro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewLibroActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelTitulo1Layout = new javax.swing.GroupLayout(panelTitulo1);
         panelTitulo1.setLayout(panelTitulo1Layout);
         panelTitulo1Layout.setHorizontalGroup(
@@ -456,18 +446,14 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(panelTitulo1Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(textTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnNewLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(250, Short.MAX_VALUE))
         );
         panelTitulo1Layout.setVerticalGroup(
             panelTitulo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTitulo1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelTitulo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNewLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(textTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelGeneralIzquierdoLayout = new javax.swing.GroupLayout(panelGeneralIzquierdo);
@@ -543,6 +529,16 @@ public class FrameLibro extends javax.swing.JFrame {
         labelInfoEdicion.setForeground(Colores.fondo);
         labelInfoEdicion.setText("modo edición");
 
+        btnNewLibro.setBackground(Colores.accent);
+        btnNewLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png"))); // NOI18N
+        btnNewLibro.setCornerRound(10);
+        btnNewLibro.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnNewLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewLibroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelTituloLayout = new javax.swing.GroupLayout(panelTitulo);
         panelTitulo.setLayout(panelTituloLayout);
         panelTituloLayout.setHorizontalGroup(
@@ -553,6 +549,8 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelInfoEdicion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNewLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -561,6 +559,7 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(panelTituloLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnNewLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(textTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
