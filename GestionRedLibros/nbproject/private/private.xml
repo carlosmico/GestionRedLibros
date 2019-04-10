@@ -5,7 +5,9 @@
         <group>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameLibro.java</file>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Pojos/Libro.java</file>
+            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Daos/DaoCurso.java</file>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Daos/DaoLibro.java</file>
+            <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Pojos/Contenido.java</file>
         </group>
     </open-files>
 </project-private>
