@@ -1559,8 +1559,14 @@ public class FrameLibro extends javax.swing.JFrame {
             daoLibro.borrar(libro);
 
             JOptionPane.showMessageDialog(this, "Libro eliminado correctamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            
+            libro = null;
+            
+            rellenarCamposLibro();
 
             cargarDatos();
+        }else{
+            JOptionPane.showMessageDialog(this, "Selecciona un libro para poder eliminarlo.", "Eliminar", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -2288,10 +2294,8 @@ public class FrameLibro extends javax.swing.JFrame {
         panelBotoneraEdicion.setVisible(editable);
 
         if (libro == null) {
-            btnEliminar.setVisible(false);
             textCodigoLibro.setEnabled(editable);
         } else {
-            btnEliminar.setVisible(editable);
             textCodigoLibro.setEnabled(false);
         }
     }
