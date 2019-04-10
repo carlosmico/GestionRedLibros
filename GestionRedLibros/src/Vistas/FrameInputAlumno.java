@@ -231,6 +231,7 @@ public class FrameInputAlumno extends javax.swing.JFrame {
      */
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
+        FrameEntrega.alumno=FrameEntrega.alumnoOld;
         this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
@@ -328,12 +329,12 @@ public class FrameInputAlumno extends javax.swing.JFrame {
 
                 protected Void doInBackground() throws InterruptedException {
                     alumno = daoAlumno.buscarTodos().stream().filter(a -> a.getNia().equals(nia)).collect(Collectors.toList()).get(0);
-                    System.out.println(alumno == null);
                     return null;
                 }
 
                 protected void done() {
                     if (alumno != null) {
+                        FrameEntrega.isLoad = false;
                         FrameEntrega.alumno = alumno;
                         dispose();
                     } else {

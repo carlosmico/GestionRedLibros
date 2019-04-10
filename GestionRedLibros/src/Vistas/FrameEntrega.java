@@ -24,10 +24,12 @@ import Utilidades.ButtonColumn;
 import Utilidades.Colores;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
@@ -49,10 +51,10 @@ public class FrameEntrega extends javax.swing.JFrame {
     private DaoAlumno daoAlumno;
 
     //Creamos el Alumno
-    public static Alumno alumno;
+    public static Alumno alumno, alumnoOld;
 
     //Variable para controlar la carga de los datos
-    private boolean isLoad = false;
+    public static boolean isLoad = false;
 
     /**
      * Creates new form FrameDevoluciones
@@ -68,6 +70,10 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         //Inicializamos el DaoAlumno
         daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
+        
+        //Deshabilitamos la edicion de las celdas en las tablas
+        tablaPendientes.setDefaultEditor(Object.class, null);
+        tableEntregados.setDefaultEditor(Object.class, null);
     }
 
     /**
@@ -189,7 +195,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         textCursoEscolar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         textCursoEscolar.setForeground(new java.awt.Color(51, 51, 51));
-        textCursoEscolar.setText("018");
+        textCursoEscolar.setText("2019");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
@@ -264,9 +270,10 @@ public class FrameEntrega extends javax.swing.JFrame {
                 "Asignatura", "Curso", "Idioma", "Gestión"
             }
         ));
-        tablaPendientes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        tablaPendientes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tablaPendientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tablaPendientes.setRowHeight(32);
+        tablaPendientes.setRowSelectionAllowed(false);
         tablaPendientes.setSelectionBackground(Colores.accent);
         tablaPendientes.setSelectionForeground(Colores.fondo);
         jScrollPane2.setViewportView(tablaPendientes);
@@ -391,7 +398,17 @@ public class FrameEntrega extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Mostramos el formulario de busqueda para el alumno.
+     */
     private void btnBuscarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarAlumnoActionPerformed
+        alumnoOld = alumno;
+        alumno = null;
+        //<editor-fold defaultstate="collapsed" desc="Paneles">
+        panelNoAlumno.setVisible(alumno == null);
+        panelSiAlumno.setVisible(alumno != null);
+//</editor-fold>
+
         //Acción del botón de 'Devoluciones'
         if (frameInputAlumno == null) {
             //Si no existe la ventana la creamos
@@ -408,22 +425,21 @@ public class FrameEntrega extends javax.swing.JFrame {
         frameInputAlumno.setVisible(true);
     }//GEN-LAST:event_btnBuscarAlumnoActionPerformed
 
+    /**
+     * Controlamos el objeto de vuelta cuando se activa esta ventana.
+     */
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         //<editor-fold defaultstate="collapsed" desc="Paneles">
         panelNoAlumno.setVisible(alumno == null);
         panelSiAlumno.setVisible(alumno != null);
 //</editor-fold>
 
-        //Si el alumno que hemos comprobado anteriormente existe:
         if (alumno != null) {
             //Buscamos el alumno con el nia que hemos encontrado
             //(Tenemos que volverlo a buscar por las relaciones (matriculas, historial))
             if (!isLoad) {
                 cargarDatos();
             }
-        } else {
-            //No se ha buscado ningun alumno
-            System.out.println("El alumno continua siendo Null");
         }
     }//GEN-LAST:event_formWindowActivated
 
@@ -446,7 +462,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
@@ -501,23 +517,28 @@ public class FrameEntrega extends javax.swing.JFrame {
 
     private void rellenarTablaPendiente(List<Matricula> listaMatriculas) {
         DefaultTableModel tableModel = (DefaultTableModel) tablaPendientes.getModel();
-
+        
         tableModel.setRowCount(0);
-
+        
         Object[][] contenidoTabla = new Object[listaMatriculas.size()][4];
-
+        
         for (int i = 0; i < listaMatriculas.size(); i++) {
             contenidoTabla[i][0] = listaMatriculas.get(i).getContenido().getNombre_cas();
             contenidoTabla[i][1] = listaMatriculas.get(i).getContenido().getCurso().getAbreviatura();
-            contenidoTabla[i][2] = listaMatriculas.get(i).getId();
+            
+            if (listaMatriculas.get(i).getIdioma().equals(" ")) {
+                contenidoTabla[i][2] = "Por defecto";
+            } else {
+                contenidoTabla[i][2] = listaMatriculas.get(i).getIdioma();
+            }
             contenidoTabla[i][3] = "";
         }
-
+        
         tableModel.setDataVector(
                 contenidoTabla,
                 new Object[]{"Asignaturas", "Curso", "Idioma", "Gestión"}
         );
-
+        
         Action delete = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 JTable table = (JTable) e.getSource();
@@ -526,52 +547,67 @@ public class FrameEntrega extends javax.swing.JFrame {
                 new FrameConfirmacionEntrega(listaMatriculas.get(modelRow)).setVisible(true);
             }
         };
-
+        
         ButtonColumn buttonColumn = new ButtonColumn(tablaPendientes, delete, tableModel.getColumnCount() - 1);
         tablaPendientes.setModel(tableModel);
     }
 
+    /**
+     * Este metodo se utiliza para cargar los datos de el alumno encontrado
+     * anteriormente.
+     */
     private void cargarDatos() {
         SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
             protected Void doInBackground() throws InterruptedException {
-                //Cargamos los datos de los libros y ejemplares
                 alumno = daoAlumno.buscar(alumno.getNia());
                 return null;
             }
-
+            
             protected void done() {
-                //Conseguimos el año actual para comprobar la matricula
                 LocalDate localDate = LocalDate.now();
                 //String date = DateTimeFormatter.ofPattern("yyyy").format(localDate);
                 String date = "2018";
-
-                //Guardamos sus matriculas en una nueva lista por comodidad
+                
                 List<Matricula> listaMatriculas = alumno.getMatriculas();
-
+                
                 if (listaMatriculas.size() > 0) {
-                    //Si la lista tiene mas de una matricula:
                     List<Matricula> listaMatriculasCursoEscolar = listaMatriculas.stream().filter(matriculaTemp -> matriculaTemp.getCurso_escolar() == Integer.parseInt(date)).collect(Collectors.toList());
-
+                    
+                    textNIAAlumno.setText(alumno.getNia());
+                    
                     if (listaMatriculasCursoEscolar.size() > 0) {
-                        //Si tiene matriculas de este año:
+                        
                         textCursoEscolar.setText(listaMatriculasCursoEscolar.get(0).getCurso_escolar() + "");
-                        textNIAAlumno.setText(alumno.getNia());
-
+                        
                         rellenarTablaPendiente(listaMatriculasCursoEscolar);
+                        
                     } else {
-                        //Si la matricula no es de este año:
-                        new FramePopup("Este alumno no esta matriculado en este curso escolar.");
+                        setEnabled(false);
+                        
+                        showFramePopup("Este alumno no esta matriculado en este curso escolar.");
                     }
                 } else {
-                    //Si la lista no tiene matriculas:
-                    new FramePopup("Este alumno no tiene matriculas.");
+                    showFramePopup("El alumno no esta matriculado.");
                 }
-                System.out.println("Done");
                 isLoad = true;
                 framePopup.dispose();
             }
+            
+            private void showFramePopup(String texto) {
+                Action cerrarVentana = new AbstractAction() {
+                    public void actionPerformed(ActionEvent e) {
+                        dispose();
+                    }
+                };
+                
+                new FramePopup(texto,
+                        new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                        cerrarVentana
+                ).setVisible(true);
+            }
         };
         worker.execute();
+        //Mostramos la ventana de carga tan solo si 'isLoad == true'
         if ((framePopup == null) && (!isLoad)) {
             framePopup = new FramePopup();
         }

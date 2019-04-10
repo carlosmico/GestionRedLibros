@@ -20,6 +20,7 @@ package Vistas;
 import Daos.DaoCurso;
 import Daos.DaoMatricula;
 import Pojos.Curso;
+import Pojos.Libro;
 import Pojos.Matricula;
 import Renders.comboBoxRender;
 import Utilidades.Colores;
@@ -51,6 +52,7 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
     private FramePopup framePopup;
 
     private Matricula matricula;
+    private Libro libro;
 
     /**
      * Creates new form FrameConfirmacionEntrega
@@ -62,25 +64,16 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
 
         //daoMatricula = new DaoMatricula(Main.gestorSesiones.getSession());
         daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
-
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-            protected Void doInBackground() throws InterruptedException {
-                listaCurso = daoCurso.buscarTodos();
-                return null;
+        
+        List<Libro> listaLibros = this.matricula.getContenido().getLibros();
+        for (int i = 0; i < listaLibros.size(); i++) {
+            if (listaLibros.get(i).getContenido().getId() == this.matricula.getContenido().getId()){
+                System.out.println(listaLibros.get(i).getNombre());
+                break;
             }
-
-            protected void done() {
-                System.out.println(matricula);
-                rellenarDatos();
-                pack();
-                framePopup.dispose();
-            }
-        };
-        worker.execute();
-        if (framePopup == null) {
-            framePopup = new FramePopup();
         }
-        framePopup.setVisible(true);
+
+        cargarDatos();
 
         this.setLocationRelativeTo(null);
     }
@@ -1001,12 +994,43 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
             textCursoAcis.setText(getCursoName(this.matricula.getCur_ref_acis()).getAbreviatura());
         }
 
-        //Tipos
-        textTipoBasico.setText(this.matricula.getTipo_basico());
-        textTipoPredominante.setText(this.matricula.getTipo_predom());
+        //Tipo básico
+        if (this.matricula.getTipo_basico().equals("N")) {
+            panelTipoBasico.setVisible(false);
+        } else {
+            textTipoBasico.setText("Pendiente");
+        }
+
+        //Tipo Predominante
+        if (this.matricula.getTipo_predom().equals("I")) {
+            textTipoPredominante.setText("Incompatible");
+        } else {
+            panelTipoPredominante.setVisible(false);
+        }
     }
 
     private Curso getCursoName(String cursoABuscar) {
         return listaCurso.stream().filter(curso -> curso.getCodigo().equals(cursoABuscar)).collect(Collectors.toList()).get(0);
+    }
+
+    private void cargarDatos() {
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+            protected Void doInBackground() throws InterruptedException {
+                listaCurso = daoCurso.buscarTodos();
+                return null;
+            }
+
+            protected void done() {
+                System.out.println(matricula);
+                rellenarDatos();
+                pack();
+                framePopup.dispose();
+            }
+        };
+        worker.execute();
+        if (framePopup == null) {
+            framePopup = new FramePopup();
+        }
+        framePopup.setVisible(true);
     }
 }

@@ -18,6 +18,7 @@
 package Vistas;
 
 import Utilidades.Colores;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 
 /**
@@ -27,8 +28,7 @@ import javax.swing.ImageIcon;
 public class FramePopup extends javax.swing.JFrame {
 
     /**
-     * Crea el nuevo formulario FramePopup.
-     * (No se cierra por si solo)
+     * Crea el nuevo formulario FramePopup. (No se cierra por si solo)
      */
     public FramePopup() {
         initComponents();
@@ -38,9 +38,9 @@ public class FramePopup extends javax.swing.JFrame {
     }
 
     /**
-     * Crea el nuevo formulario FramePopup con texto personalizado.
-     * (No se cierra por si solo)
-     * 
+     * Crea el nuevo formulario FramePopup con texto personalizado. (No se
+     * cierra por si solo)
+     *
      * @param mensaje Es el texto que aparece en la ventana
      */
     public FramePopup(String mensaje) {
@@ -52,9 +52,9 @@ public class FramePopup extends javax.swing.JFrame {
     }
 
     /**
-     * Crea el nuevo formulario FramePopup con texto y icono personalizado.
-     * (No se cierra por si solo)
-     * 
+     * Crea el nuevo formulario FramePopup con texto y icono personalizado. (No
+     * se cierra por si solo)
+     *
      * @param mensaje Es el texto que aparece en la ventana
      * @param icon Es la imagen que se muestra en la ventana
      */
@@ -66,21 +66,58 @@ public class FramePopup extends javax.swing.JFrame {
         pack();
         this.setLocationRelativeTo(null);
     }
-    
+
     /**
-     * Crea el nuevo formulario FramePopup con texto, icono y botón personalizado.
-     * (Si puede cerrarse desde el mismo formulario)
-     * 
+     * Crea el nuevo formulario FramePopup con texto, icono y botón
+     * personalizado. (Si puede cerrarse desde el mismo formulario)
+     *
      * @param mensaje Es el texto que aparece en la ventana
      * @param icon Es la imagen que se muestra en la ventana
      * @param buttonText Es el texto que contendra el Botón
-     * 
+     *
      */
     public FramePopup(String mensaje, ImageIcon icon, String buttonText) {
         initComponents();
         text.setText(mensaje);
         text.setIcon(icon);
         btnButton.setText(buttonText);
+        pack();
+        this.setLocationRelativeTo(null);
+    }
+
+    /**
+     * Crea el nuevo formulario FramePopup con texto, icono y botón
+     * personalizado con acción personalizada. (Si puede cerrarse desde el mismo
+     * formulario)
+     *
+     * @param mensaje Es el texto que aparece en la ventana
+     * @param icon Es la imagen que se muestra en la ventana
+     * @param buttonText Es el texto que contendra el Botón
+     * @param action Es la acción que realizará el Botón
+     */
+    public FramePopup(String mensaje, ImageIcon icon, String buttonText, Action action) {
+        initComponents();
+        text.setText(mensaje);
+        text.setIcon(icon);
+        btnButton.setText(buttonText);
+        btnButton.addActionListener(action);
+        pack();
+        this.setLocationRelativeTo(null);
+    }
+
+    /**
+     * Crea el nuevo formulario FramePopup con texto, icono y botón
+     * personalizado. (Si puede cerrarse desde el mismo formulario)
+     *
+     * @param mensaje Es el texto que aparece en la ventana
+     * @param icon Es la imagen que se muestra en la ventana
+     * @param action Es la acción que realizará el Botón
+     */
+    public FramePopup(String mensaje, ImageIcon icon, Action action) {
+        initComponents();
+        text.setText(mensaje);
+        text.setIcon(icon);
+        btnButton.addActionListener(action);
         pack();
         this.setLocationRelativeTo(null);
     }
@@ -181,8 +218,8 @@ public class FramePopup extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-    * Acción del botón de confirmación
-    */
+     * Acción del botón de confirmación
+     */
     private void btnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnButtonActionPerformed
         dispose();
     }//GEN-LAST:event_btnButtonActionPerformed
