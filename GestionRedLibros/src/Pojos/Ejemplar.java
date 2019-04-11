@@ -36,29 +36,28 @@ import javax.persistence.Table;
  *
  * @author Carlos Micó
  */
-
 @Entity
 @Table(name = "ejemplares")
 public class Ejemplar implements Serializable {
-    
+
     private String id;
-    
+
     @Id
-    @Column (name = "codigo")
+    @Column(name = "codigo")
     private String codigo_ejemplar;
-    
+
     @ManyToOne
-    @JoinColumn (name = "id_libro")
+    @JoinColumn(name = "id_libro")
     private Libro libro;
-    
+
     private int estado;
     private boolean prestado;
-    
-    @OneToMany(mappedBy = "ejemplar", fetch=FetchType.LAZY)
+
+    @OneToMany(mappedBy = "ejemplar", fetch = FetchType.LAZY)
     private List<Historial> historiales;
-    
-    public Ejemplar(){
-        
+
+    public Ejemplar() {
+
     }
 
     public Ejemplar(String codigo, Libro libro, int estado, boolean prestado) {
@@ -137,6 +136,6 @@ public class Ejemplar implements Serializable {
 
     @Override
     public String toString() {
-        return "Ejemplar{" + "codigo=" + codigo_ejemplar + ", libro=" + libro + ", estado=" + estado + ", prestado=" + prestado + '}';
+        return codigo_ejemplar;
     }
 }

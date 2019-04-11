@@ -37,12 +37,13 @@ import org.hibernate.Session;
 public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDaoGenerico<Libro, String> {
 
     /**
-     *  Variable de sesion para cualquier acción con la BD
+     * Variable de sesion para cualquier acción con la BD
      */
     public Session session;
 
     /**
-     *  Constructor del DaoLibro que recibe una sesion
+     * Constructor del DaoLibro que recibe una sesion
+     *
      * @param s
      */
     public DaoLibro(Session s) {
@@ -50,8 +51,8 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
     }
 
     /**
-     *  Metodo para crear un Libro en la BD, antes de crear el libro se crearán 
-     *  sus ejemplares
+     * Metodo para crear un Libro en la BD, antes de crear el libro se crearán
+     * sus ejemplares
      */
     @Override
     public void grabar(Libro libro) throws PersistenceException {
@@ -65,15 +66,16 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
             this.session.getTransaction().commit();
         } catch (PersistenceException e) {
             this.session.getTransaction().commit();
-            
+
             e.printStackTrace();
             throw new PersistenceException();
         }
     }
 
     /**
-     *  Metodo para actualizar un Libro en la BD, antes de actualizar el libro
-     *  se actualizarán sus ejemplares
+     * Metodo para actualizar un Libro en la BD, antes de actualizar el libro se
+     * actualizarán sus ejemplares
+     *
      * @param unidadesOld
      * @param libro
      * @throws PersistenceException
@@ -94,7 +96,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
     }
 
     /**
-     *  Metodo para eliminar un Libro de la BD
+     * Metodo para eliminar un Libro de la BD
      */
     @Override
     public void borrar(Libro libro) throws PersistenceException {
@@ -110,7 +112,8 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
     }
 
     /**
-     *  Metodo para obtener un Libro mediante su Codigo
+     * Metodo para obtener un Libro mediante su Codigo
+     *
      * @param codigo
      * @return
      * @throws PersistenceException
@@ -127,18 +130,18 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
         return libro;
     }
-    
-    public List<Libro> buscarPorContenido(Contenido contenido){
+
+    public List<Libro> buscarPorContenido(Contenido contenido) {
         List<Libro> lista = new ArrayList<Libro>();
 
         org.hibernate.query.Query query = this.session.createQuery("from Libro where contenido_libro=" + contenido.getId());
         lista = query.list();
 
-        return lista; 
+        return lista;
     }
 
     /**
-     *  Metodo para obtener una lista de todos los Libros de la BD
+     * Metodo para obtener una lista de todos los Libros de la BD
      */
     public List<Libro> buscarTodos() {
         List<Libro> lista = new ArrayList<Libro>();
@@ -150,7 +153,8 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
     }
 
     /**
-     *  Metodo para generar y obtener una lista de Ejemplares de un Libro recibido
+     * Metodo para generar y obtener una lista de Ejemplares de un Libro
+     * recibido
      */
     private List<Ejemplar> generarEjemplares(Libro libro) {
         List<Ejemplar> ejemplares = new ArrayList<Ejemplar>();
@@ -170,7 +174,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
             } else if (i < 100000) {
                 codigo_ejemplar = libro.getCodigo() + "" + i;
             } else {
-                codigo_ejemplar = libro.getCodigo() + " error al generar el código";
+                codigo_ejemplar = libro.getCodigo() + "YOUFOUNDTHEIMPOSIBLEEASTEREGG";
             }
 
             ejemplar = new Ejemplar(codigo_ejemplar, libro, Estado.nuevo, false);
@@ -182,7 +186,8 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
     }
 
     /**
-     *  Metodo para actualizar y obtener una lista de Ejemplares de un Libro recibido
+     * Metodo para actualizar y obtener una lista de Ejemplares de un Libro
+     * recibido
      */
     private List<Ejemplar> actualizarEjemplares(Libro libro, int unidadesOld) {
         int cantidad = libro.getUnidades() - unidadesOld;
@@ -196,7 +201,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
             String codigo = ejemplares.get(ejemplares.size() - 1).getCodigo();
 
-            codBase = Integer.parseInt(codigo.substring(codigo.length() - 3));
+            codBase = Integer.parseInt(codigo.substring(codigo.length() - 5));
 
             for (int i = 0; i < cantidad; i++) {
                 String codigo_ejemplar;
@@ -214,7 +219,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
                 } else if (codBase < 100000) {
                     codigo_ejemplar = libro.getCodigo() + "" + codBase;
                 } else {
-                    codigo_ejemplar = libro.getCodigo() + " error al generar el código";
+                    codigo_ejemplar = libro.getCodigo() + "YOUFOUNDTHEIMPOSIBLEEASTEREGG";
                 }
 
                 Ejemplar ejemplar = new Ejemplar(codigo_ejemplar, libro, Estado.nuevo, false);
@@ -230,7 +235,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
     }
 
     /**
-     *  Metodo para desconectar la sesion del DAO
+     * Metodo para desconectar la sesion del DAO
      */
     @Override
     public void desconectar() {

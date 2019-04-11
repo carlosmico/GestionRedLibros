@@ -26,7 +26,11 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.Barcode39;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,6 +40,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.print.PrintException;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -44,7 +49,8 @@ import javax.print.PrintException;
 public class CodigoBarras {
 
     /**
-     *  Metodo para generar un Barcode mediante un Codigo recibido
+     * Metodo para generar un Barcode mediante un Codigo recibido
+     *
      * @param codigo
      * @return
      */
@@ -59,8 +65,9 @@ public class CodigoBarras {
     }
 
     /**
-     *  Metodo para generar una lista de Barcodes mediante una lista de Codigos
-     *  recibida
+     * Metodo para generar una lista de Barcodes mediante una lista de Codigos
+     * recibida
+     *
      * @param codigos
      * @return
      * @throws Exception
@@ -82,8 +89,9 @@ public class CodigoBarras {
     }
 
     /**
-     *  Metodo para generar y abrir un PDF correspondiente a un Barcode recibido
-     *  con el titulo del Ejemplar recibido
+     * Metodo para generar y abrir un PDF correspondiente a un Barcode recibido
+     * con el titulo del Ejemplar recibido
+     *
      * @param ejemplar
      * @param barcode
      * @throws FileNotFoundException
@@ -119,8 +127,9 @@ public class CodigoBarras {
     }
 
     /**
-     *  Metodo para generar y abrir un PDF correspondiente a los Barcodes recibidos y con el 
-     *  titulo del Libro recibido
+     * Metodo para generar y abrir un PDF correspondiente a los Barcodes
+     * recibidos y con el titulo del Libro recibido
+     *
      * @param libro
      * @param barcodes
      * @throws PrinterException
@@ -172,7 +181,39 @@ public class CodigoBarras {
     }
 
     /**
-     *  Metodo para comprobar si existe un directorio, si no existe se crea
+     * Nos devuelve una imageIcon del codigo de Barras.
+     *
+     * @param barcode El el barcode de donde generara la imágen
+     * @param width El ancho de la imágen que queremos
+     * @param height El alto de la imágen que queremos
+     */
+    public ImageIcon getImage(Barcode39 barcode, int width, int height) {
+        //ImageIcon icon = new ImageIcon(barcode.drawBarcode());  
+        java.awt.Image img = barcode.createAwtImage(Color.WHITE, Color.BLACK);
+        ImageIcon icon = new ImageIcon(getScaledImage(img, width, height));
+        return icon;
+    }
+
+    /**
+     * Metodo para redimensionar la imagen que generamos del Barcode
+     * @param srcImg Imagen a redimensionar
+     * @param w Ancho de la imágen que queremos
+     * @param h Alto de la imágen que queremos
+     * @return Devuelve la imagen redimensionada
+     */
+    private java.awt.Image getScaledImage(java.awt.Image srcImg, int w, int h) {
+        BufferedImage imgRedimensionada = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = imgRedimensionada.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return imgRedimensionada;
+    }
+
+    /**
+     * Metodo para comprobar si existe un directorio, si no existe se crea
      */
     private void comprobarDirectorio() {
         File directorio = new File("C://Gestion_Libros//Impresiones//");

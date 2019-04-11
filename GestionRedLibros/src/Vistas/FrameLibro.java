@@ -47,8 +47,8 @@ public class FrameLibro extends javax.swing.JFrame {
     boolean modoEdicion = false;
     boolean busquedaPorCodigo = true;
 
-    String placeHolderCodigo = "Introduce o escanea codigo...",
-            placeHolderNombre = "Introduce nombre...";
+    String placeHolderCodigo = "Introduce o escanea codigo…",
+            placeHolderNombre = "Introduce nombre…";
 
     private FramePopup frameCarga = null;
 

@@ -56,6 +56,8 @@ public class FrameEntrega extends javax.swing.JFrame {
     //Variable para controlar la carga de los datos
     public static boolean isLoad = false;
 
+    public static int isConfirmationReady = 0;
+
     /**
      * Creates new form FrameDevoluciones
      */
@@ -70,7 +72,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         //Inicializamos el DaoAlumno
         daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
-        
+
         //Deshabilitamos la edicion de las celdas en las tablas
         tablaPendientes.setDefaultEditor(Object.class, null);
         tableEntregados.setDefaultEditor(Object.class, null);
@@ -440,6 +442,21 @@ public class FrameEntrega extends javax.swing.JFrame {
             if (!isLoad) {
                 cargarDatos();
             }
+
+            //Cuando hayamos realizado la confirmacion de la entrega
+            switch (isConfirmationReady) {
+                case 0:
+                    System.out.println("Todavia no se ha realizado la confirmacion de la entrega");
+                    break;
+                case 1:
+                    System.out.println("Se ha realizado la confirmacion de la entrega 1");
+                    isConfirmationReady = 0; //Se resetea la variable
+                    break;
+                case 2:
+                    System.out.println("Se ha realizado la confirmacion de la entrega 2");
+                    isConfirmationReady = 0; //Se resetea la variable
+                    break;
+            }
         }
     }//GEN-LAST:event_formWindowActivated
 
@@ -462,7 +479,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                    
+
                 }
             }
         } catch (ClassNotFoundException ex) {
@@ -517,15 +534,15 @@ public class FrameEntrega extends javax.swing.JFrame {
 
     private void rellenarTablaPendiente(List<Matricula> listaMatriculas) {
         DefaultTableModel tableModel = (DefaultTableModel) tablaPendientes.getModel();
-        
+
         tableModel.setRowCount(0);
-        
+
         Object[][] contenidoTabla = new Object[listaMatriculas.size()][4];
-        
+
         for (int i = 0; i < listaMatriculas.size(); i++) {
             contenidoTabla[i][0] = listaMatriculas.get(i).getContenido().getNombre_cas();
             contenidoTabla[i][1] = listaMatriculas.get(i).getContenido().getCurso().getAbreviatura();
-            
+
             if (listaMatriculas.get(i).getIdioma().equals(" ")) {
                 contenidoTabla[i][2] = "Por defecto";
             } else {
@@ -533,12 +550,12 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
             contenidoTabla[i][3] = "";
         }
-        
+
         tableModel.setDataVector(
                 contenidoTabla,
                 new Object[]{"Asignaturas", "Curso", "Idioma", "Gestión"}
         );
-        
+
         Action delete = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 JTable table = (JTable) e.getSource();
@@ -547,7 +564,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                 new FrameConfirmacionEntrega(listaMatriculas.get(modelRow)).setVisible(true);
             }
         };
-        
+
         ButtonColumn buttonColumn = new ButtonColumn(tablaPendientes, delete, tableModel.getColumnCount() - 1);
         tablaPendientes.setModel(tableModel);
     }
@@ -562,28 +579,28 @@ public class FrameEntrega extends javax.swing.JFrame {
                 alumno = daoAlumno.buscar(alumno.getNia());
                 return null;
             }
-            
+
             protected void done() {
                 LocalDate localDate = LocalDate.now();
                 //String date = DateTimeFormatter.ofPattern("yyyy").format(localDate);
                 String date = "2018";
-                
+
                 List<Matricula> listaMatriculas = alumno.getMatriculas();
-                
+
                 if (listaMatriculas.size() > 0) {
                     List<Matricula> listaMatriculasCursoEscolar = listaMatriculas.stream().filter(matriculaTemp -> matriculaTemp.getCurso_escolar() == Integer.parseInt(date)).collect(Collectors.toList());
-                    
+
                     textNIAAlumno.setText(alumno.getNia());
-                    
+
                     if (listaMatriculasCursoEscolar.size() > 0) {
-                        
+
                         textCursoEscolar.setText(listaMatriculasCursoEscolar.get(0).getCurso_escolar() + "");
-                        
+
                         rellenarTablaPendiente(listaMatriculasCursoEscolar);
-                        
+
                     } else {
                         setEnabled(false);
-                        
+
                         showFramePopup("Este alumno no esta matriculado en este curso escolar.");
                     }
                 } else {
@@ -592,14 +609,14 @@ public class FrameEntrega extends javax.swing.JFrame {
                 isLoad = true;
                 framePopup.dispose();
             }
-            
+
             private void showFramePopup(String texto) {
                 Action cerrarVentana = new AbstractAction() {
                     public void actionPerformed(ActionEvent e) {
                         dispose();
                     }
                 };
-                
+
                 new FramePopup(texto,
                         new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                         cerrarVentana

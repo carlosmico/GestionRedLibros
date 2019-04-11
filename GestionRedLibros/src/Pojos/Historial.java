@@ -37,34 +37,44 @@ import javax.persistence.Table;
  *
  * @author Carlos Micó
  */
-
 @Entity
 @Table(name = "historial")
-public class Historial implements Serializable{
-    
+public class Historial implements Serializable {
+
     private static final long serialVersionUID = -5514760462301220827L;
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     @ManyToOne
-    @JoinColumn (name = "id_ejemplar")
+    @JoinColumn(name = "id_ejemplar")
     private Ejemplar ejemplar;
-    
+
     @ManyToOne
-    @JoinColumn (name = "id_alumno")
+    @JoinColumn(name = "id_alumno")
     private Alumno alumno;
-    
+
     private int curso_escolar;
     private int estado_inicial;
     private int estado_final;
     private Date fecha_inicial;
     private Date fecha_final;
     private String observaciones;
-    
-    public Historial(){
-        
+
+    public Historial() {
+
+    }
+
+    public Historial(Ejemplar ejemplar, Alumno alumno, int curso_escolar, int estado_inicial, int estado_final, Date fecha_inicial, Date fecha_final, String observaciones) {
+        this.ejemplar = ejemplar;
+        this.alumno = alumno;
+        this.curso_escolar = curso_escolar;
+        this.estado_inicial = estado_inicial;
+        this.estado_final = estado_final;
+        this.fecha_inicial = fecha_inicial;
+        this.fecha_final = fecha_final;
+        this.observaciones = observaciones;
     }
 
     public Historial(int id, Ejemplar ejemplar, Alumno alumno, int curso_escolar, int estado_inicial, int estado_final, Date fecha_inicial, Date fecha_final, String observaciones) {
