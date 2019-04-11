@@ -7,15 +7,20 @@ package Vistas;
 
 import Utilidades.*;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -32,37 +37,89 @@ public class Main extends javax.swing.JFrame {
 
     public static GestorSesiones gestorSesiones;
 
+    private boolean existeConexion;
+
     /**
      * Creates new form Main
      */
     public Main() throws IOException {
-        initComponents();
-        //Centramos la pestaña al centro de la pantalla
-        //(Es irrelevante ya que la maximizamos)
-        this.setLocationRelativeTo(null);
 
-        //Maximizamos la pestaña
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //Carga de configuración inicial
+        String ip = "10.1.1.41";
 
-        //Comprobamos la conexión al servidor
-        if (!GetInternetStatus.isAvailable()) {
-            JOptionPane.showMessageDialog(this, "No hay conexión al servidor");
-        }
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+            protected Void doInBackground() throws InterruptedException {
 
-        //Creamos el gestor de sesiones
-        gestorSesiones = new GestorSesiones();
+                try{
+                    ComprobarConexion.comprobarConexion(ip, 3306, "institut", "root", "");
+                    existeConexion = true;
+                }catch(Exception e){
+                    existeConexion = false;
+                }
+                
 
-        //Configuramos la imagen de fondo de la pantalla principal
-        //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
-        String icono = "";
-        BufferedImage img = null;
-        icono = "../Imagenes/wallpaper.jpg";
-        img = ImageIO.read(new File(icono));
-        Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
-        ImageIcon imageIcon = new ImageIcon(image);
-        wallpaper.setIcon(imageIcon);
-        banner.setVisible(true);
+                return null;
+            }
+
+            protected void done() {
+                if (existeConexion) {
+                    System.out.println("Conexión con el servidor correcta!");
+
+                    gestorSesiones = new GestorSesiones();
+
+                    frameCarga.dispose();
+
+                    initComponents();
+
+                    //Centramos la pestaña al centro de la pantalla
+                    //(Es irrelevante ya que la maximizamos)
+                    setLocationRelativeTo(null);
+
+                    //Maximizamos la pestaña
+                    setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+                    //Comprobamos la conexión al servidor
+                    //Configuramos la imagen de fondo de la pantalla principal
+                    //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
+                    String icono = "";
+                    BufferedImage img = null;
+                    icono = "../Imagenes/wallpaper.jpg";
+                    try {
+                        img = ImageIO.read(new File(icono));
+                    } catch (IOException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
+                    ImageIcon imageIcon = new ImageIcon(image);
+                    wallpaper.setIcon(imageIcon);
+                    banner.setVisible(true);
 //</editor-fold>
+                } else {
+                    frameCarga.dispose();
+
+                    dispose();
+
+                    Action abrirOpciones = new AbstractAction() {
+                        public void actionPerformed(ActionEvent e) {
+                            FrameOpciones fo = new FrameOpciones();
+                            fo.setVisible(true);
+                            fo.setFocusable(true);
+                        }
+                    };
+
+                    new FramePopup("No hay conexión al servidor, revise la dirección IP",
+                            new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                            abrirOpciones
+                    ).setVisible(true);
+                }
+            }
+        };
+        worker.execute();
+        if (frameCarga == null) {
+            frameCarga = new FramePopup("Comprobando conexión con el servidor");
+        }
+        frameCarga.setVisible(true);
+
     }
 
     /**

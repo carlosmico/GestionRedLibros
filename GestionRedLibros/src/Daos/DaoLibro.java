@@ -91,6 +91,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
             this.session.getTransaction().commit();
         } catch (PersistenceException e) {
+            this.session.getTransaction().commit();
             throw new PersistenceException();
         }
     }
@@ -107,6 +108,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
             this.session.getTransaction().commit();
         } catch (PersistenceException e) {
+            this.session.getTransaction().commit();
             throw new PersistenceException();
         }
     }
