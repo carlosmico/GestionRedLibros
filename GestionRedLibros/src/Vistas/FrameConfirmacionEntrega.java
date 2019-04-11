@@ -1209,7 +1209,6 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
     private void rellenarEjemplar() {
         CodigoBarras cb = new CodigoBarras();
         ImageIcon icon = cb.getImage(cb.generarCodigoIndividual(ejemplar.getCodigo()), 400, 120);
-        icon.getImage().getScaledInstance(360, 120, Image.SCALE_SMOOTH);
         imgCodigo.setIcon(icon);
         textCodigo.setText(ejemplar.getCodigo());
         textTituloLibro.setText(ejemplar.getLibro().getNombre());

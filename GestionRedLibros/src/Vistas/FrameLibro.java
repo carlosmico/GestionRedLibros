@@ -21,17 +21,22 @@ import Daos.DaoCurso;
 import Daos.DaoLibro;
 import Pojos.Contenido;
 import Pojos.Curso;
+import Pojos.Ejemplar;
 import Pojos.Libro;
 import Renders.comboBoxRender;
+import Utilidades.CodigoBarras;
 import Utilidades.Colores;
+import Utilidades.Estado;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.PersistenceException;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -45,7 +50,8 @@ import javax.swing.SwingWorker;
 public class FrameLibro extends javax.swing.JFrame {
 
     boolean modoEdicion = false;
-    boolean busquedaPorCodigo = true;
+
+    public int contadorEjemplar;
 
     String placeHolderCodigo = "Introduce o escanea codigo…",
             placeHolderNombre = "Introduce nombre…";
@@ -60,6 +66,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private List<Libro> listaLibros;
     private List<Curso> listaCursos;
     private List<Contenido> listaContenido;
+    private List<Ejemplar> listaEjemplares;
 
     /**
      * Inicializamos los componentes y cargamos los datos necesarios.
@@ -75,7 +82,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         //Ponemos el foco en el textField del codigo
         textCodigoLibro.requestFocusInWindow();
-        
+
         //Configuramos los PlaceHolders
         textNombreLibroBusqueda.setText(placeHolderNombre);
         textBusquedaCodigoLibro.setText(placeHolderCodigo);
@@ -148,6 +155,8 @@ public class FrameLibro extends javax.swing.JFrame {
 //</editor-fold>
 
         setEditMode(false);
+
+        mostrarElementosEjemplares(libro != null);
 
         cargarDatos();
     }
@@ -226,20 +235,16 @@ public class FrameLibro extends javax.swing.JFrame {
         panelGeneralDerechoInferior = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        flatButton5 = new com.mommoo.flat.button.FlatButton();
-        flatButton6 = new com.mommoo.flat.button.FlatButton();
+        textTotalEjemplares = new javax.swing.JLabel();
+        btnSiguiente = new com.mommoo.flat.button.FlatButton();
+        btnAnterior = new com.mommoo.flat.button.FlatButton();
         jPanel9 = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        flatButton3 = new com.mommoo.flat.button.FlatButton();
         panelEstadoParent15 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         panelEstado15 = new javax.swing.JPanel();
-        btnBadStatus15 = new javax.swing.JLabel();
-        btnRegularStatus15 = new javax.swing.JLabel();
-        btnGoodStatus15 = new javax.swing.JLabel();
+        btnBadStatus = new javax.swing.JLabel();
+        btnRegularStatus = new javax.swing.JLabel();
+        btnGoodStatus = new javax.swing.JLabel();
         panelPrestado = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
@@ -257,12 +262,16 @@ public class FrameLibro extends javax.swing.JFrame {
         jPanel16 = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
         textEmailAlumno = new javax.swing.JLabel();
-        jPanel17 = new javax.swing.JPanel();
-        btnVerAlumno = new com.mommoo.flat.button.FlatButton();
         panelNoPrestado = new javax.swing.JPanel();
         jLabel36 = new javax.swing.JLabel();
         jPanel18 = new javax.swing.JPanel();
-        jLabel37 = new javax.swing.JLabel();
+        textNoPrestado = new javax.swing.JLabel();
+        panelCodigoEjemplar = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        imgCodigo = new javax.swing.JLabel();
+        flatButton3 = new com.mommoo.flat.button.FlatButton();
+        textCodigo = new javax.swing.JLabel();
+        textTituloLibro = new javax.swing.JLabel();
 
         menuOpcionesLibro.setBackground(new java.awt.Color(66, 47, 44));
         menuOpcionesLibro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -979,7 +988,7 @@ public class FrameLibro extends javax.swing.JFrame {
         panelSuperiorDerecho.setLayout(panelSuperiorDerechoLayout);
         panelSuperiorDerechoLayout.setHorizontalGroup(
             panelSuperiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 947, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelSuperiorDerechoLayout.setVerticalGroup(
             panelSuperiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1005,17 +1014,27 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel1.setForeground(Colores.fondo);
         jLabel1.setText("Ejemplares");
 
-        jLabel12.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        jLabel12.setForeground(Colores.fondo);
-        jLabel12.setText("1 de 25");
+        textTotalEjemplares.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+        textTotalEjemplares.setForeground(Colores.fondo);
+        textTotalEjemplares.setText("1 de 25");
 
-        flatButton5.setBackground(Colores.buttons);
-        flatButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/arrow-right.png"))); // NOI18N
-        flatButton5.setCornerRound(10);
+        btnSiguiente.setBackground(Colores.buttons);
+        btnSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/arrow-right.png"))); // NOI18N
+        btnSiguiente.setCornerRound(10);
+        btnSiguiente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSiguienteMouseClicked(evt);
+            }
+        });
 
-        flatButton6.setBackground(Colores.buttons);
-        flatButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/arrow-left.png"))); // NOI18N
-        flatButton6.setCornerRound(10);
+        btnAnterior.setBackground(Colores.buttons);
+        btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/arrow-left.png"))); // NOI18N
+        btnAnterior.setCornerRound(10);
+        btnAnterior.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAnteriorMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -1025,11 +1044,11 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addGap(50, 50, 50)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel12)
+                .addComponent(textTotalEjemplares)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(flatButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(flatButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -1037,59 +1056,14 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(flatButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                    .addComponent(flatButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                    .addComponent(btnAnterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(textTotalEjemplares, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         jPanel9.setBackground(Colores.fondo);
-
-        jPanel10.setBackground(new java.awt.Color(239, 235, 233));
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-
-        jLabel13.setBackground(Colores.accent);
-        jLabel13.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel13.setText("Codigo del libro:");
-
-        jLabel14.setToolTipText("");
-
-        flatButton3.setBackground(Colores.buttons);
-        flatButton3.setText("Imprimir etiqueta");
-        flatButton3.setCornerRound(10);
-        flatButton3.setPreferredSize(new java.awt.Dimension(169, 32));
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(flatButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(flatButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         panelEstadoParent15.setBackground(new java.awt.Color(239, 235, 233));
         panelEstadoParent15.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -1101,17 +1075,17 @@ public class FrameLibro extends javax.swing.JFrame {
         panelEstado15.setBackground(new java.awt.Color(239, 235, 233));
         panelEstado15.setLayout(new java.awt.GridLayout(1, 0, 5, 5));
 
-        btnBadStatus15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnBadStatus15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
-        panelEstado15.add(btnBadStatus15);
+        btnBadStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnBadStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
+        panelEstado15.add(btnBadStatus);
 
-        btnRegularStatus15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnRegularStatus15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
-        panelEstado15.add(btnRegularStatus15);
+        btnRegularStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnRegularStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
+        panelEstado15.add(btnRegularStatus);
 
-        btnGoodStatus15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnGoodStatus15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
-        panelEstado15.add(btnGoodStatus15);
+        btnGoodStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnGoodStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
+        panelEstado15.add(btnGoodStatus);
 
         javax.swing.GroupLayout panelEstadoParent15Layout = new javax.swing.GroupLayout(panelEstadoParent15);
         panelEstadoParent15.setLayout(panelEstadoParent15Layout);
@@ -1289,7 +1263,7 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textEmailAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textEmailAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
                     .addGroup(jPanel16Layout.createSequentialGroup()
                         .addComponent(jLabel35)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -1338,35 +1312,6 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel17.setBackground(Colores.fondo);
-
-        btnVerAlumno.setBackground(Colores.buttons);
-        btnVerAlumno.setText("Ver Alumno");
-        btnVerAlumno.setCornerRound(10);
-        btnVerAlumno.setPreferredSize(new java.awt.Dimension(111, 32));
-        btnVerAlumno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerAlumnoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
-        jPanel17.setLayout(jPanel17Layout);
-        jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnVerAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnVerAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout panelPrestadoLayout = new javax.swing.GroupLayout(panelPrestado);
         panelPrestado.setLayout(panelPrestadoLayout);
         panelPrestadoLayout.setHorizontalGroup(
@@ -1381,10 +1326,7 @@ public class FrameLibro extends javax.swing.JFrame {
                         .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelPrestadoLayout.createSequentialGroup()
                         .addComponent(jLabel30)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrestadoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelPrestadoLayout.setVerticalGroup(
@@ -1396,8 +1338,6 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addGroup(panelPrestadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1410,9 +1350,9 @@ public class FrameLibro extends javax.swing.JFrame {
 
         jPanel18.setBackground(new java.awt.Color(239, 235, 233));
 
-        jLabel37.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel37.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel37.setText("Este libro no se encuentra prestado por el momento.");
+        textNoPrestado.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textNoPrestado.setForeground(new java.awt.Color(51, 51, 51));
+        textNoPrestado.setText("Este libro no se encuentra prestado por el momento.");
 
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
@@ -1420,14 +1360,14 @@ public class FrameLibro extends javax.swing.JFrame {
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel37)
+                .addComponent(textNoPrestado)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel37)
+                .addComponent(textNoPrestado)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1455,15 +1395,74 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        panelCodigoEjemplar.setBackground(new java.awt.Color(239, 235, 233));
+        panelCodigoEjemplar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel15.setBackground(Colores.accent);
+        jLabel15.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel15.setText("Codigo del libro:");
+
+        imgCodigo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imgCodigo.setToolTipText("");
+
+        flatButton3.setBackground(Colores.buttons);
+        flatButton3.setText("Imprimir etiqueta");
+        flatButton3.setCornerRound(10);
+        flatButton3.setPreferredSize(new java.awt.Dimension(169, 32));
+
+        textCodigo.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        textCodigo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        textTituloLibro.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        textTituloLibro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout panelCodigoEjemplarLayout = new javax.swing.GroupLayout(panelCodigoEjemplar);
+        panelCodigoEjemplar.setLayout(panelCodigoEjemplarLayout);
+        panelCodigoEjemplarLayout.setHorizontalGroup(
+            panelCodigoEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCodigoEjemplarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelCodigoEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCodigoEjemplarLayout.createSequentialGroup()
+                        .addGap(0, 233, Short.MAX_VALUE)
+                        .addComponent(flatButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelCodigoEjemplarLayout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelCodigoEjemplarLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(panelCodigoEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(imgCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(textTituloLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
+        panelCodigoEjemplarLayout.setVerticalGroup(
+            panelCodigoEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCodigoEjemplarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textTituloLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(imgCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(flatButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(panelEstadoParent15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelEstadoParent15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelPrestado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1480,7 +1479,7 @@ public class FrameLibro extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelNoPrestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panelCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelEstadoParent15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1507,11 +1506,11 @@ public class FrameLibro extends javax.swing.JFrame {
         panelInferiorDerecho.setLayout(panelInferiorDerechoLayout);
         panelInferiorDerechoLayout.setHorizontalGroup(
             panelInferiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 947, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1236, Short.MAX_VALUE)
         );
         panelInferiorDerechoLayout.setVerticalGroup(
             panelInferiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
         );
 
         jSplitPane2.setBottomComponent(panelInferiorDerecho);
@@ -1524,7 +1523,7 @@ public class FrameLibro extends javax.swing.JFrame {
         );
         panelDerechoLayout.setVerticalGroup(
             panelDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 610, Short.MAX_VALUE)
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
         );
 
         jSplitPane1.setRightComponent(panelDerecho);
@@ -1558,13 +1557,13 @@ public class FrameLibro extends javax.swing.JFrame {
             daoLibro.borrar(libro);
 
             JOptionPane.showMessageDialog(this, "Libro eliminado correctamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            
+
             libro = null;
-            
+
             rellenarCamposLibro();
 
             cargarDatos();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Selecciona un libro para poder eliminarlo.", "Eliminar", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -1577,14 +1576,6 @@ public class FrameLibro extends javax.swing.JFrame {
 
         setEditMode(true);
     }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void btnVerAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAlumnoActionPerformed
-        // TODO add your handling code here:
-        /*if (frameAlumno == null){
-         frameAlumno = new FrameAlumno(alumno.getNia());
-         }
-         frameAlumno.setVisible(true);*/
-    }//GEN-LAST:event_btnVerAlumnoActionPerformed
 
     /**
      * Obtenemos el codigo del libro que se ha introducido y se lo pasamos al
@@ -1844,7 +1835,8 @@ public class FrameLibro extends javax.swing.JFrame {
 
     /**
      * Metodo para simular el PlaceHolder del JTextField buscar por codigo
-     * @param evt 
+     *
+     * @param evt
      */
     private void textBusquedaCodigoLibroFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroFocusGained
         if (textBusquedaCodigoLibro.getText().equals(placeHolderCodigo)) {
@@ -1855,13 +1847,33 @@ public class FrameLibro extends javax.swing.JFrame {
 
     /**
      * Metodo para simular el PlaceHolder del JTextField buscar por codigo
-     * @param evt 
+     *
+     * @param evt
      */
     private void textBusquedaCodigoLibroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroFocusLost
         // TODO add your handling code here:
         textBusquedaCodigoLibro.setForeground(new Color(102, 102, 102));
         textBusquedaCodigoLibro.setText(placeHolderCodigo);
     }//GEN-LAST:event_textBusquedaCodigoLibroFocusLost
+
+    private void btnAnteriorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnteriorMouseClicked
+        if (contadorEjemplar < 2) {
+            contadorEjemplar = listaEjemplares.size();
+        } else {
+            contadorEjemplar--;
+        }
+        rellenarCamposEjemplares();
+    }//GEN-LAST:event_btnAnteriorMouseClicked
+
+    private void btnSiguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSiguienteMouseClicked
+        // TODO add your handling code here:
+        if (contadorEjemplar == listaEjemplares.size()) {
+            contadorEjemplar = 1;
+        } else {
+            contadorEjemplar++;
+        }
+        rellenarCamposEjemplares();
+    }//GEN-LAST:event_btnSiguienteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1908,30 +1920,28 @@ public class FrameLibro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btnBadStatus15;
+    private com.mommoo.flat.button.FlatButton btnAnterior;
+    private javax.swing.JLabel btnBadStatus;
     private com.mommoo.flat.button.FlatButton btnBuscar;
     private com.mommoo.flat.button.FlatButton btnCancelar;
     private javax.swing.JMenuItem btnEditar;
     private javax.swing.JMenuItem btnEliminar;
-    private javax.swing.JLabel btnGoodStatus15;
+    private javax.swing.JLabel btnGoodStatus;
     private com.mommoo.flat.button.FlatButton btnGuardar;
     private javax.swing.JMenuItem btnImprimirEtiquetas;
     private com.mommoo.flat.button.FlatButton btnNewLibro;
     private com.mommoo.flat.button.FlatButton btnOpciones;
-    private javax.swing.JLabel btnRegularStatus15;
-    private com.mommoo.flat.button.FlatButton btnVerAlumno;
+    private javax.swing.JLabel btnRegularStatus;
+    private com.mommoo.flat.button.FlatButton btnSiguiente;
     private javax.swing.JComboBox cbAsignatura;
     private javax.swing.JComboBox cbCursoBuscar;
     private javax.swing.JComboBox cbCursoLibro;
     private javax.swing.JCheckBox chkObsoletoLibro;
     private com.mommoo.flat.button.FlatButton flatButton3;
-    private com.mommoo.flat.button.FlatButton flatButton5;
-    private com.mommoo.flat.button.FlatButton flatButton6;
+    private javax.swing.JLabel imgCodigo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -1942,7 +1952,6 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1950,14 +1959,12 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1976,6 +1983,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JPopupMenu menuOpcionesLibro;
     private javax.swing.JPanel panelAsignatura;
     private javax.swing.JPanel panelBotoneraEdicion;
+    private javax.swing.JPanel panelCodigoEjemplar;
     private javax.swing.JPanel panelCodigoLibro;
     private javax.swing.JPanel panelCuerpo;
     private javax.swing.JPanel panelCurso;
@@ -1998,10 +2006,12 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JPanel panelTitulo;
     private javax.swing.JPanel panelTitulo1;
     private javax.swing.JTextField textBusquedaCodigoLibro;
+    private javax.swing.JLabel textCodigo;
     private javax.swing.JTextField textCodigoLibro;
     private javax.swing.JLabel textEmailAlumno;
     private javax.swing.JTextField textISBNLibro;
     private javax.swing.JLabel textNIAAlumno;
+    private javax.swing.JLabel textNoPrestado;
     private javax.swing.JLabel textNombreAlumno;
     private javax.swing.JTextField textNombreLibro;
     private javax.swing.JTextField textNombreLibroBusqueda;
@@ -2009,6 +2019,8 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JLabel textTelefonoAlumno;
     private javax.swing.JLabel textTitulo;
     private javax.swing.JLabel textTitulo1;
+    private javax.swing.JLabel textTituloLibro;
+    private javax.swing.JLabel textTotalEjemplares;
     private javax.swing.JTextField textUnidadesLibro;
     // End of variables declaration//GEN-END:variables
 
@@ -2141,14 +2153,13 @@ public class FrameLibro extends javax.swing.JFrame {
                 protected void done() {
                     frameCarga.dispose();
 
-                    if (libro != null) {
-                        rellenarCamposLibro();
-                    } else {
-                        rellenarCamposLibro();
+                    if (libro == null) {
 
                         JOptionPane.showMessageDialog(FrameLibro.this,
                                 "No existe ningún libro con este código.",
                                 "Error de búsqueda", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        rellenarCamposLibro();
                     }
 
                 }
@@ -2213,7 +2224,34 @@ public class FrameLibro extends javax.swing.JFrame {
             textUnidadesLibro.setText(libro.getUnidades() + "");
             textPrecioLibro.setText(libro.getPrecio() + "");
             chkObsoletoLibro.setSelected(libro.getObsoleto());
+
+            contadorEjemplar = 1;
+            rellenarCamposEjemplares();
         }
+    }
+
+    private void rellenarCamposEjemplares() {
+        listaEjemplares = libro.getEjemplares();
+        mostrarElementosEjemplares(true);
+
+        textTotalEjemplares.setText(contadorEjemplar + " de " + listaEjemplares.size()
+        );
+
+        //Panel del codigo
+        CodigoBarras cb = new CodigoBarras();
+        Ejemplar ejemplarActual = listaEjemplares.get(contadorEjemplar - 1);
+        ImageIcon icon = cb.getImage(cb.generarCodigoIndividual(ejemplarActual.getCodigo()), 320, 120);
+        imgCodigo.setIcon(icon);
+        textCodigo.setText(ejemplarActual.getCodigo());
+        textTituloLibro.setText(ejemplarActual.getLibro().getNombre());
+
+        //panel del alumno
+        if (panelPrestado.isVisible()) {
+
+        }
+
+        //Panel del estado
+        setEstado(ejemplarActual.getEstado());
     }
 
     /**
@@ -2297,5 +2335,73 @@ public class FrameLibro extends javax.swing.JFrame {
         } else {
             textCodigoLibro.setEnabled(false);
         }
+    }
+
+    private void mostrarElementosEjemplares(boolean b) {
+        btnSiguiente.setVisible(b);
+        btnAnterior.setVisible(b);
+        textTotalEjemplares.setVisible(b);
+        btnImprimirEtiquetas.setVisible(b);
+        setVisiblePanelAlumno(b);
+
+        if (libro == null) {
+            textNoPrestado.setText("Selecciona un libro para ver sus ejemplares.");
+            setEstado(-1);
+        } else {
+            setVisiblePanelAlumno(listaEjemplares.get(contadorEjemplar - 1).isPrestado());
+            if (!listaEjemplares.get(contadorEjemplar - 1).isPrestado()) {
+                textNoPrestado.setText("Este ejemplar no se ha prestado a ningún alumno.");
+            }
+        }
+    }
+
+    public void setEstado(int estado) {
+
+        switch (estado) {
+            case Estado.deteriorado:
+                //El libro se encuentra en mal estado
+
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad.png")));               //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular_disabled.png")));  //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good_disabled.png")));     //Good face
+                break;
+
+            case Estado.usado:
+                //El libro se encuentra en mal estado
+
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular.png")));          //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good_disabled.png")));    //Good face
+                break;
+
+            case Estado.nuevo:
+                //El libro se encuentra en mal estado
+
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular_disabled.png"))); //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good.png")));             //Good face
+                break;
+            default:
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular_disabled.png"))); //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good_disabled.png")));             //Good face
+        }
+    }
+
+    private void setVisiblePanelAlumno(boolean visible) {
+        panelPrestado.setVisible(visible);
+        panelNoPrestado.setVisible(!visible);
     }
 }
