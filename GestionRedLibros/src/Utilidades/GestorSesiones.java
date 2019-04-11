@@ -20,29 +20,39 @@ package Utilidades;
 import hibernate.UtilesHibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 /**
  *
  * @author Carlos
  */
 public class GestorSesiones {
-    
-    SessionFactory factory = null;
-    
+
+    private static SessionFactory sessionFactory;
+
     /**
-     *  Constructor de la clase GestorSesiones que inicializa una factory de 
-     *  Hibernate
+     * Constructor de la clase GestorSesiones que inicializa una factory de
+     * Hibernate
      */
-    public GestorSesiones(){
-        factory = UtilesHibernate.getSessionFactory();
+    public GestorSesiones() {
+        try {
+            Configuration configuration = new Configuration().configure();
+
+            sessionFactory = configuration.buildSessionFactory();
+        } catch (Throwable ex) {
+            System.err.println("Initial SessionFactory creation failed " + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
     }
-    
+
+
     /**
-     *  Metodo que devuelve un objeto Session
+     * Metodo que devuelve un objeto Session
+     *
      * @return Session
      */
-    public Session getSession(){
-        Session session = factory.openSession();
+    public Session getSession() {
+        Session session = sessionFactory.openSession();
         return session;
     }
 }

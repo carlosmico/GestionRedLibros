@@ -17,34 +17,44 @@
  */
 package Utilidades;
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+import com.sun.org.apache.xerces.internal.impl.io.MalformedByteSequenceException;
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  *
  * @author Jose Sanchis
  */
-public class GetInternetStatus {
-    
+public class ComprobarConexion {
+
     /**
-     *  Metodo para comprobar la conexión a una URL, si existe conexión devolverá
-     *  True, en caso contrario False
+     * Metodo para comprobar la conexión a una URL, si existe conexión devolverá
+     * True, en caso contrario False
+     *
      * @return
      */
-    public static boolean isAvailable() {
-        try {
-            final URL url = new URL("http://10.1.1.41");
-            final URLConnection conn = url.openConnection();
-            conn.connect();
-            conn.getInputStream().close();
+    public static boolean comprobarConexion(String ip, int puerto, String nombreBD, String usuario, String password) throws Exception  {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection con = null;
+        con = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + puerto + "/" + nombreBD, usuario, password);
+        
+        if(con.isValid(10000)){
+            final PreparedStatement statement = con.prepareStatement("SELECT 1");
+            
             return true;
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        }else{
+            con.close();
             return false;
         }
     }
-    
 }

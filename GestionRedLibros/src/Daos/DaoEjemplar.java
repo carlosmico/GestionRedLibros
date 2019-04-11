@@ -65,6 +65,7 @@ public class DaoEjemplar extends DaoGenerico<Ejemplar, Integer> implements Inter
 
             this.session.getTransaction().commit();
         } catch (PersistenceException ex) {
+            this.session.getTransaction().commit();
             throw new PersistenceException();
         }
     }

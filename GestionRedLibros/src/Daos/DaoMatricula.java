@@ -34,12 +34,13 @@ import org.hibernate.query.Query;
 public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements InterfaceDaoGenerico<Matricula, Integer> {
 
     /**
-     *  Variable de sesion para cualquier acción con la BD
+     * Variable de sesion para cualquier acción con la BD
      */
     public Session session;
 
     /**
-     *  Constructor del DaoMatricula que recibe una sesion
+     * Constructor del DaoMatricula que recibe una sesion
+     *
      * @param s
      */
     public DaoMatricula(Session s) {
@@ -47,53 +48,15 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
     }
 
     /**
-     *  Metodo para obtener una matricula mediante un objeto Matricula recibido
-     * @param m
-     * @return
-     */
-    public Matricula buscarMatricula(Matricula m) {
-        List<Matricula> lista = new ArrayList<Matricula>();
-
-        String query = "from Matricula m where m.alumno = '" + m.getAlumno().getNia() + "' and m.curso_escolar = " + m.getCurso_escolar()
-                + " and m.contenido = " + m.getContenido().getId() + " and m.curso = " + m.getCurso();
-
-        lista = this.session.createQuery(query).list();
-
-        if (lista == null || lista.size() == 0) {
-            return null;
-        } else {
-            return lista.get(0);
-        }
-    }
-    
-    /**
-     *  Metodo para obtener una matricula mediante un objeto Matricula recibido
-     * @param m
-     * @return
-     */
-    public Matricula buscarPorId(int id) {
-        Matricula matricula = null;
-
-        try {
-            matricula = (Matricula) this.session.get(Matricula.class, id);
-
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-            throw new PersistenceException();
-        }
-        
-        return matricula;
-    }
-
-    /**
-     *  Metodo para actualizar una lista de Matriculas en la BD
+     * Metodo para actualizar una lista de Matriculas en la BD
+     *
      * @param matriculasCargadas
      * @throws Exception
      */
-    public void actualizarMatriculas(List<Matricula> matriculasCargadas) throws Exception {        
+    public void actualizarMatriculas(List<Matricula> matriculasCargadas) throws Exception {
         for (int i = 0; i < matriculasCargadas.size(); i++) {
             Matricula m = matriculasCargadas.get(i);
-            
+
             Matricula matricula = buscarMatricula(m);
 
             try {
@@ -121,10 +84,10 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                 }
 
                 this.session.saveOrUpdate(matricula);
-                
+
             } catch (PersistenceException ex) {
                 this.session.getTransaction().commit();
-                
+
                 ex.printStackTrace();
                 System.out.println("Error DaoMatricula-actualizar(): " + ex.getMessage());
                 throw new Exception();
@@ -133,7 +96,50 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
     }
 
     /**
-     *  Metodo para obtener una lista de Matriculas filtrando por el Alumno recibido
+     * Metodo para obtener una matricula mediante un objeto Matricula recibido
+     *
+     * @param m
+     * @return
+     */
+    public Matricula buscarMatricula(Matricula m) {
+        List<Matricula> lista = new ArrayList<Matricula>();
+
+        String query = "from Matricula m where m.alumno = '" + m.getAlumno().getNia() + "' and m.curso_escolar = " + m.getCurso_escolar()
+                + " and m.contenido = " + m.getContenido().getId() + " and m.curso = " + m.getCurso();
+
+        lista = this.session.createQuery(query).list();
+
+        if (lista == null || lista.size() == 0) {
+            return null;
+        } else {
+            return lista.get(0);
+        }
+    }
+
+    /**
+     * Metodo para obtener una matricula mediante un objeto Matricula recibido
+     *
+     * @param m
+     * @return
+     */
+    public Matricula buscarPorId(int id) {
+        Matricula matricula = null;
+
+        try {
+            matricula = (Matricula) this.session.get(Matricula.class, id);
+
+        } catch (PersistenceException e) {
+            e.printStackTrace();
+            throw new PersistenceException();
+        }
+
+        return matricula;
+    }
+
+    /**
+     * Metodo para obtener una lista de Matriculas filtrando por el Alumno
+     * recibido
+     *
      * @param alumno
      * @return
      */
@@ -147,8 +153,9 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
     }
 
     /**
-     *  Metodo para obtener una lista de Matriculas filtrando por el Curso 
-     *  Escolar recibido
+     * Metodo para obtener una lista de Matriculas filtrando por el Curso
+     * Escolar recibido
+     *
      * @param curso_escolar
      * @return
      */
@@ -162,7 +169,7 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
     }
 
     /**
-     *  Metodo para obtener una lista de todas las Matriculas de la BD
+     * Metodo para obtener una lista de todas las Matriculas de la BD
      */
     public List<Matricula> buscarTodos() {
         List<Matricula> lista = new ArrayList<Matricula>();
@@ -174,7 +181,7 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
     }
 
     /**
-     *  Metodo para desconectar la sesion del DAO
+     * Metodo para desconectar la sesion del DAO
      */
     @Override
     public void desconectar() {

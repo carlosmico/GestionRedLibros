@@ -59,6 +59,7 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
 
             this.session.getTransaction().commit();
         } catch (PersistenceException ex) {
+            this.session.getTransaction().commit();
             System.out.println("Error DaoHistorial-grabar(): " + ex.getMessage());
             throw new PersistenceException();
         }
@@ -91,6 +92,7 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
 
             this.session.getTransaction().commit();
         } catch (PersistenceException ex) {
+            this.session.getTransaction().commit();
             System.out.println("Error DaoHistorial-actualizar(): " + ex.getMessage());
             throw new PersistenceException();
         }
