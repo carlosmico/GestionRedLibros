@@ -161,7 +161,7 @@ public class CodigoBarras {
                 contador = 8;
                 doc.newPage();
             }
-
+            
             doc.add(new Paragraph(libro.getContenido().getNombre_cas()));
 
             Image codeImg = barcodes.get(i).createImageWithBarcode(pdf.getDirectContent(), BaseColor.BLACK, BaseColor.BLACK);
@@ -196,6 +196,7 @@ public class CodigoBarras {
 
     /**
      * Metodo para redimensionar la imagen que generamos del Barcode
+     *
      * @param srcImg Imagen a redimensionar
      * @param w Ancho de la imágen que queremos
      * @param h Alto de la imágen que queremos
@@ -220,7 +221,7 @@ public class CodigoBarras {
 
         //Si el directorio no existe lo creamos
         if (!directorio.exists()) {
-            directorio.mkdir();
+            directorio.mkdirs();
         }
     }
 }
