@@ -41,7 +41,7 @@ import jdk.nashorn.internal.runtime.ParserException;
  */
 public class FrameOpciones extends javax.swing.JFrame {
 
-    private boolean mostrarContrasena, errorConexion;
+    private boolean mostrarContrasena;
 
     private FramePopup frameCarga = null;
 
@@ -124,7 +124,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opciones");
         setMinimumSize(new java.awt.Dimension(300, 36));
-        setPreferredSize(new java.awt.Dimension(300, 300));
+        setPreferredSize(new java.awt.Dimension(1200, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(5000, 0));
 
@@ -341,14 +341,14 @@ public class FrameOpciones extends javax.swing.JFrame {
             .addGroup(panelGeneralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelConfiguracionBBDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(503, Short.MAX_VALUE))
+                .addContainerGap(467, Short.MAX_VALUE))
         );
         panelGeneralLayout.setVerticalGroup(
             panelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGeneralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelConfiguracionBBDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(217, Short.MAX_VALUE))
+                .addContainerGap(206, Short.MAX_VALUE))
         );
 
         tabbedPage.addTab("General", panelGeneral);
@@ -359,11 +359,11 @@ public class FrameOpciones extends javax.swing.JFrame {
         panelDevoluciones.setLayout(panelDevolucionesLayout);
         panelDevolucionesLayout.setHorizontalGroup(
             panelDevolucionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1036, Short.MAX_VALUE)
+            .addGap(0, 1003, Short.MAX_VALUE)
         );
         panelDevolucionesLayout.setVerticalGroup(
             panelDevolucionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
+            .addGap(0, 491, Short.MAX_VALUE)
         );
 
         tabbedPage.addTab("Devoluciones", panelDevoluciones);
@@ -374,11 +374,11 @@ public class FrameOpciones extends javax.swing.JFrame {
         panelEntregas.setLayout(panelEntregasLayout);
         panelEntregasLayout.setHorizontalGroup(
             panelEntregasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1036, Short.MAX_VALUE)
+            .addGap(0, 1003, Short.MAX_VALUE)
         );
         panelEntregasLayout.setVerticalGroup(
             panelEntregasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
+            .addGap(0, 491, Short.MAX_VALUE)
         );
 
         tabbedPage.addTab("Entregas", panelEntregas);
@@ -389,11 +389,11 @@ public class FrameOpciones extends javax.swing.JFrame {
         panelGestiones.setLayout(panelGestionesLayout);
         panelGestionesLayout.setHorizontalGroup(
             panelGestionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1036, Short.MAX_VALUE)
+            .addGap(0, 1003, Short.MAX_VALUE)
         );
         panelGestionesLayout.setVerticalGroup(
             panelGestionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
+            .addGap(0, 491, Short.MAX_VALUE)
         );
 
         tabbedPage.addTab("Gestiones", panelGestiones);
@@ -438,7 +438,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addGroup(panelImportCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelImportCursosLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(textRutaCursos, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                        .addComponent(textRutaCursos, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSeleccionCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelImportCursosLayout.createSequentialGroup()
@@ -1048,14 +1048,14 @@ public class FrameOpciones extends javax.swing.JFrame {
         if (error.equals("")) {
             try {
                 ComprobarConexion.comprobarConexion(ip, puerto, "institut", usuario, contrasena);
-                
-                new FramePopup("Error al comprobar y guardar la conexión.",
-                        new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+
+                new FramePopup("Conexión a la base de datos correcta.",
+                        new ImageIcon(getClass().getResource("/Imagenes/icons/check-black.png")),
                         "Aceptar").setVisible(true);
-                
+
                 Configuracion.guardarRed(ip, puerto, usuario, contrasena);
             } catch (Exception e) {
-                new FramePopup("Error al comprobar y guardar la conexión.",
+                new FramePopup("Error en la conexión, revise los parámetros introducidos.",
                         new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                         "Aceptar").setVisible(true);
             }
@@ -1158,9 +1158,16 @@ public class FrameOpciones extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void cargarConfiguracion() {
-        textIP.setText(Configuracion.getIp());
-        textPuerto.setText(Configuracion.getPuerto());
-        textUsuario.setText(Configuracion.getUsuario());
-        textContrasena.setText(Configuracion.getPassword());
+        try {
+            textIP.setText(Configuracion.getIp());
+            textPuerto.setText(Configuracion.getPuerto());
+            textUsuario.setText(Configuracion.getUsuario());
+            textContrasena.setText(Configuracion.getPassword());
+        } catch (Exception e) {
+            new FramePopup("Error al cargar la configuración de red.",
+                    new ImageIcon("/Imagenes/icons/alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
+
     }
 }

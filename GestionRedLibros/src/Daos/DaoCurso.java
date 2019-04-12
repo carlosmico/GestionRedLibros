@@ -113,7 +113,8 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
     public List<Curso> buscarTodos() {
         List<Curso> lista = new ArrayList<Curso>();
 
-        Query query = this.session.createQuery("from Curso where ensenanza = 3 or ensenanza = 5 and idPadre = ' '");
+        Query query = this.session.createQuery("from Curso where ensenanza = 3 or ensenanza = 5");
+        //Query query = this.session.createQuery("from Curso where ensenanza = 3 or ensenanza = 5 and idPadre = ' '");
         lista = query.list();
 
         return lista;

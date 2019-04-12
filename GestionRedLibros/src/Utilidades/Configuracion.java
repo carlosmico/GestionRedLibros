@@ -18,8 +18,10 @@
 package Utilidades;
 
 import Vistas.FramePopup;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -33,6 +35,8 @@ import javax.swing.JOptionPane;
  */
 public class Configuracion {
 
+    private static final String rutaConfiguracion = Thread.currentThread().getContextClassLoader().getResource("").getPath()
+            + "configuracion.properties";
     private static final Properties propiedades = new Properties();
 
     public static void guardarRed(String ip, int puerto, String usuario, String password) {
@@ -40,31 +44,37 @@ public class Configuracion {
         propiedades.setProperty("puerto", puerto + "");
         propiedades.setProperty("usuario", usuario);
         propiedades.setProperty("password", password);
-        
+
         try {
-            OutputStream output = new FileOutputStream("path/to/config.properties");
-            
+            OutputStream output = new FileOutputStream(rutaConfiguracion);
+
             propiedades.store(output, null);
         } catch (Exception ex) {
             ex.printStackTrace();
-            
-            JOptionPane.showMessageDialog(null, "Error al guardar la configuración", "Error", JOptionPane.ERROR_MESSAGE);
+
+            new FramePopup("Error al guardar la configuración de red.",
+                    new ImageIcon("/Imagenes/icons/alert-black.png"),
+                     "Aceptar").setVisible(true);
         }
     }
-    
-    public static String getIp(){
+
+    public static String getIp() throws FileNotFoundException, IOException {
+        propiedades.load(new FileInputStream(rutaConfiguracion));
         return propiedades.getProperty("ip");
     }
-    
-    public static String getPuerto(){
+
+    public static String getPuerto() throws FileNotFoundException, IOException {
+        propiedades.load(new FileInputStream(rutaConfiguracion));
         return propiedades.getProperty("puerto");
     }
-    
-    public static String getUsuario(){
+
+    public static String getUsuario() throws FileNotFoundException, IOException {
+        propiedades.load(new FileInputStream(rutaConfiguracion));
         return propiedades.getProperty("usuario");
     }
-    
-    public static String getPassword(){
+
+    public static String getPassword() throws FileNotFoundException, IOException {
+        propiedades.load(new FileInputStream(rutaConfiguracion));
         return propiedades.getProperty("password");
     }
 }

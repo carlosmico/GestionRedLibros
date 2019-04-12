@@ -33,6 +33,7 @@ public class Main extends javax.swing.JFrame {
     FrameLibro frameLibros;
     FrameOpciones frameOpciones;
     FramePopup frameCarga;
+    FramePopup framePopup;
     FrameAyuda frameAyuda;
 
     public static GestorSesiones gestorSesiones;
@@ -43,82 +44,34 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     public Main() throws IOException {
+        initComponents();
+
+        //Centramos la pestaña al centro de la pantalla
+        //(Es irrelevante ya que la maximizamos)
+        setLocationRelativeTo(null);
+
+        //Maximizamos la pestaña
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        //Comprobamos la conexión al servidor
+        //Configuramos la imagen de fondo de la pantalla principal
+        //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
+        String icono = "";
+        BufferedImage img = null;
+        icono = "../Imagenes/wallpaper.jpg";
+        try {
+            img = ImageIO.read(new File(icono));
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
+        ImageIcon imageIcon = new ImageIcon(image);
+        wallpaper.setIcon(imageIcon);
+        banner.setVisible(true);
+//</editor-fold>
 
         //Carga de configuración inicial
-        String ip = "10.1.1.41";
-
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-            protected Void doInBackground() throws InterruptedException {
-
-                try{
-                    ComprobarConexion.comprobarConexion(ip, 3306, "institut", "root", "");
-                    existeConexion = true;
-                }catch(Exception e){
-                    existeConexion = false;
-                }
-                
-                return null;
-            }
-
-            protected void done() {
-                if (existeConexion) {
-                    System.out.println("Conexión con el servidor correcta!");
-
-                    gestorSesiones = new GestorSesiones();
-
-                    frameCarga.dispose();
-
-                    initComponents();
-
-                    //Centramos la pestaña al centro de la pantalla
-                    //(Es irrelevante ya que la maximizamos)
-                    setLocationRelativeTo(null);
-
-                    //Maximizamos la pestaña
-                    setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-                    //Comprobamos la conexión al servidor
-                    //Configuramos la imagen de fondo de la pantalla principal
-                    //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
-                    String icono = "";
-                    BufferedImage img = null;
-                    icono = "../Imagenes/wallpaper.jpg";
-                    try {
-                        img = ImageIO.read(new File(icono));
-                    } catch (IOException ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
-                    ImageIcon imageIcon = new ImageIcon(image);
-                    wallpaper.setIcon(imageIcon);
-                    banner.setVisible(true);
-//</editor-fold>
-                } else {
-                    frameCarga.dispose();
-
-                    dispose();
-
-                    Action abrirOpciones = new AbstractAction() {
-                        public void actionPerformed(ActionEvent e) {
-                            FrameOpciones fo = new FrameOpciones();
-                            fo.setVisible(true);
-                            fo.setFocusable(true);
-                        }
-                    };
-
-                    new FramePopup("No hay conexión al servidor, revise la dirección IP",
-                            new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                            abrirOpciones
-                    ).setVisible(true);
-                }
-            }
-        };
-        worker.execute();
-        if (frameCarga == null) {
-            frameCarga = new FramePopup("Comprobando conexión con el servidor");
-        }
-        frameCarga.setVisible(true);
-
+        compruebaConexionBD(true, this);
     }
 
     /**
@@ -275,6 +228,7 @@ public class Main extends javax.swing.JFrame {
      */
     private void btnDevolucionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucionesActionPerformed
         //Acción del botón de 'Devoluciones'
+
         if (frameDevoluciones == null) {
             //Si no existe la ventana la creamos
             frameDevoluciones = new FrameDevoluciones();
@@ -291,7 +245,7 @@ public class Main extends javax.swing.JFrame {
             }
         }
         //Hacemos visible la ventana creada anteriormente
-        frameDevoluciones.setVisible(true);
+        compruebaConexionBD(false, frameDevoluciones);
     }//GEN-LAST:event_btnDevolucionesActionPerformed
 
     /**
@@ -299,18 +253,22 @@ public class Main extends javax.swing.JFrame {
      * Este botón lo utilizamos para mostrar la pestaña de Entregas
      */
     private void btnEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregaActionPerformed
-        if (frameEntrega == null) {
-            frameEntrega = new FrameEntrega();
-        } else {
-            if (!frameEntrega.isVisible()) {
-                frameEntrega.alumno = null;
-                frameEntrega = null;
+        compruebaConexionBD(false);
+
+        if (existeConexion) {
+            if (frameEntrega == null) {
                 frameEntrega = new FrameEntrega();
             } else {
-                frameEntrega = new FrameEntrega();
+                if (!frameEntrega.isVisible()) {
+                    frameEntrega.alumno = null;
+                    frameEntrega = null;
+                    frameEntrega = new FrameEntrega();
+                } else {
+                    frameEntrega = new FrameEntrega();
+                }
             }
+            frameEntrega.setVisible(true);
         }
-        frameEntrega.setVisible(true);
     }//GEN-LAST:event_btnEntregaActionPerformed
 
     /**
@@ -318,17 +276,14 @@ public class Main extends javax.swing.JFrame {
      * Este botón lo utilizamos para mostrar la pestaña de Opciones
      */
     private void btnOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionesActionPerformed
-        if (frameOpciones == null) {
-            frameOpciones = new FrameOpciones();
-        } else {
-            if (!frameOpciones.isVisible()) {
-                frameOpciones = null;
-                frameOpciones = new FrameOpciones();
-            } else {
+        compruebaConexionBD(false);
+
+        if (existeConexion) {
+            if (frameOpciones == null) {
                 frameOpciones = new FrameOpciones();
             }
+            frameOpciones.setVisible(true);
         }
-        frameOpciones.setVisible(true);
     }//GEN-LAST:event_btnOpcionesActionPerformed
 
     /**
@@ -336,17 +291,21 @@ public class Main extends javax.swing.JFrame {
      * Este botón lo utilizamos para mostrar la pestaña de Libros
      */
     private void btnLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibrosActionPerformed
-        if (frameLibros == null) {
-            frameLibros = new FrameLibro();
-        } else {
-            if (!frameLibros.isVisible()) {
-                frameLibros = null;
+        compruebaConexionBD(false);
+
+        if (existeConexion) {
+            if (frameLibros == null) {
                 frameLibros = new FrameLibro();
             } else {
-                frameLibros = new FrameLibro();
+                if (!frameLibros.isVisible()) {
+                    frameLibros = null;
+                    frameLibros = new FrameLibro();
+                } else {
+                    frameLibros = new FrameLibro();
+                }
             }
+            frameLibros.setVisible(true);
         }
-        frameLibros.setVisible(true);
     }//GEN-LAST:event_btnLibrosActionPerformed
 
     /**
@@ -354,6 +313,8 @@ public class Main extends javax.swing.JFrame {
      * Este botón lo utilizamos para mostrar la pestaña de Ayuda
      */
     private void btnAyduaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyduaActionPerformed
+        //compruebaConexionBD();
+
         if (frameAyuda == null) {
             frameAyuda = new FrameAyuda();
         } else {
@@ -404,6 +365,67 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         });
+    }
+
+    private void compruebaConexionBD(boolean main, JFrame frame) {
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+            protected Void doInBackground() throws InterruptedException {
+
+                try {
+                    ComprobarConexion.comprobarConexion(
+                            Configuracion.getIp(),
+                            Integer.parseInt(Configuracion.getPuerto()),
+                            "institut",
+                            Configuracion.getUsuario(),
+                            Configuracion.getPassword());
+                    existeConexion = true;
+                } catch (Exception e) {
+                    existeConexion = false;
+                }
+
+                return null;
+            }
+
+            protected void done() {
+                if (existeConexion) {
+                    System.out.println("Conexión con el servidor correcta!");
+
+                    gestorSesiones = new GestorSesiones();
+
+                    frameCarga.dispose();
+
+                    if (!main) {
+                        frame.setVisible(true);
+                    }
+
+                } else {
+                    frameCarga.dispose();
+
+                    Action abrirOpciones = new AbstractAction() {
+                        public void actionPerformed(ActionEvent e) {
+                            if (frameOpciones == null) {
+                                frameOpciones = new FrameOpciones();
+                            }
+
+                            frameOpciones.setVisible(true);
+                            frameOpciones.setFocusable(true);
+                        }
+                    };
+
+                    framePopup = new FramePopup("No hay conexión al servidor, revise la configuración de red.",
+                            new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                            abrirOpciones
+                    );
+                    framePopup.setVisible(true);
+
+                }
+            }
+        };
+        worker.execute();
+        if (frameCarga == null) {
+            frameCarga = new FramePopup("Comprobando conexión con el servidor");
+        }
+        frameCarga.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
