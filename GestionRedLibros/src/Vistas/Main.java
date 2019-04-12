@@ -253,8 +253,6 @@ public class Main extends javax.swing.JFrame {
      * Este botón lo utilizamos para mostrar la pestaña de Entregas
      */
     private void btnEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregaActionPerformed
-        compruebaConexionBD(false);
-
         if (existeConexion) {
             if (frameEntrega == null) {
                 frameEntrega = new FrameEntrega();
@@ -269,6 +267,8 @@ public class Main extends javax.swing.JFrame {
             }
             frameEntrega.setVisible(true);
         }
+        
+        compruebaConexionBD(false, frameEntrega);
     }//GEN-LAST:event_btnEntregaActionPerformed
 
     /**
@@ -276,8 +276,6 @@ public class Main extends javax.swing.JFrame {
      * Este botón lo utilizamos para mostrar la pestaña de Opciones
      */
     private void btnOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionesActionPerformed
-        compruebaConexionBD(false);
-
         if (existeConexion) {
             if (frameOpciones == null) {
                 frameOpciones = new FrameOpciones();
@@ -291,8 +289,6 @@ public class Main extends javax.swing.JFrame {
      * Este botón lo utilizamos para mostrar la pestaña de Libros
      */
     private void btnLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibrosActionPerformed
-        compruebaConexionBD(false);
-
         if (existeConexion) {
             if (frameLibros == null) {
                 frameLibros = new FrameLibro();
@@ -306,6 +302,8 @@ public class Main extends javax.swing.JFrame {
             }
             frameLibros.setVisible(true);
         }
+        
+        compruebaConexionBD(false, frameLibros);
     }//GEN-LAST:event_btnLibrosActionPerformed
 
     /**
