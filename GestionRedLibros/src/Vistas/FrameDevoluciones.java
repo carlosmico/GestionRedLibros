@@ -55,6 +55,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Devoluciones");
         setMinimumSize(new java.awt.Dimension(600, 36));
+        setPreferredSize(new java.awt.Dimension(1200, 600));
 
         jPanel1.setBackground(new java.awt.Color(58, 39, 35));
         jPanel1.setLayout(new java.awt.GridLayout(2, 1));

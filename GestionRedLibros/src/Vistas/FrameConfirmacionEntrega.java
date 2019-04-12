@@ -18,6 +18,7 @@
 package Vistas;
 
 import Daos.DaoCurso;
+import Daos.DaoEjemplar;
 import Daos.DaoHistorial;
 import Pojos.Curso;
 import Pojos.Ejemplar;
@@ -30,13 +31,10 @@ import Utilidades.ConfirmacionEntrega;
 import Utilidades.Estado;
 import static Vistas.FrameEntrega.alumno;
 import java.awt.Color;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
+import javax.persistence.PersistenceException;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
@@ -50,6 +48,7 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
 
     private DaoCurso daoCurso;
     private DaoHistorial daoHistorial;
+    private DaoEjemplar daoEjemplar;
 
     private List<Curso> listaCurso;
     private List<Ejemplar> listaEjemplares;
@@ -72,6 +71,7 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
 
         daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
         daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
+        daoEjemplar = new DaoEjemplar(Main.gestorSesiones.getSession());
 
         //daoLibro.buscarPorContenido(null);
         List<Libro> listaLibros = this.matricula.getContenido().getLibros();
@@ -424,6 +424,7 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
         textAsignatura.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         textAsignatura.setForeground(Colores.accent);
         textAsignatura.setText("Matematicas");
+        textAsignatura.setToolTipText("");
         textAsignatura.setMaximumSize(new java.awt.Dimension(195, 24));
 
         javax.swing.GroupLayout panelAsignaturaLayout = new javax.swing.GroupLayout(panelAsignatura);
@@ -1256,7 +1257,15 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
     private void guardarEntrega(Historial historial) {
         SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
             protected Void doInBackground() throws InterruptedException {
-                daoHistorial.grabar(historial);
+                try {
+                    daoHistorial.grabar(historial);
+                    ejemplar.setPrestado(true);
+                    daoEjemplar.actualizar(ejemplar);
+                } catch (PersistenceException e) {
+                    new FramePopup("Fallo al realizar la entrega.",
+                            new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                            "Aceptar");
+                }
                 return null;
             }
 

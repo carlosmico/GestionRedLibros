@@ -19,9 +19,11 @@ package Vistas;
 
 import Daos.DaoCurso;
 import Daos.DaoLibro;
+import Pojos.Alumno;
 import Pojos.Contenido;
 import Pojos.Curso;
 import Pojos.Ejemplar;
+import Pojos.Historial;
 import Pojos.Libro;
 import Renders.comboBoxRender;
 import Utilidades.CodigoBarras;
@@ -30,10 +32,13 @@ import Utilidades.Estado;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.PersistenceException;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -41,6 +46,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.SwingWorker;
 
 /**
@@ -53,10 +59,13 @@ public class FrameLibro extends javax.swing.JFrame {
 
     public int contadorEjemplar;
 
-    String placeHolderCodigo = "Introduce o escanea codigo…",
+    private String placeHolderCodigo = "Introduce o escanea codigo…",
             placeHolderNombre = "Introduce nombre…";
 
-    private FramePopup frameCarga = null;
+    private FramePopup frameCarga = null,
+            popupConfirmacion = null;
+
+    private Boolean accionRealizada = false;
 
     DaoLibro daoLibro;
     DaoCurso daoCurso;
@@ -1551,20 +1560,66 @@ public class FrameLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOpcionesMouseReleased
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        vaciarCursosYContenidos();
+        Action confirmacion = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                    protected Void doInBackground() throws InterruptedException {
+                        //Cargamos los datos de los libros y ejemplares
+                        try {
+                            daoLibro.borrar(libro);
+                            accionRealizada = true;
+                        } catch (PersistenceException e) {
+                            new FramePopup("El libro no se ha podido eliminar.",
+                                    new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                                    "Aceptar");
+                        }
+                        return null;
+                    }
+
+                    protected void done() {
+                        if (accionRealizada) {
+                            vaciarCursosYContenidos();
+                            popupConfirmacion.dispose();
+
+                            libro = null;
+
+                            rellenarCamposLibro();
+
+                            cargarDatos();
+
+                            new FramePopup("El libro se ha eliminado correctamente!",
+                                    null,
+                                    "Aceptar");
+
+                            frameCarga.dispose();
+                        }
+                    }
+                };
+                worker.execute();
+                frameCarga = new FramePopup("Eliminando libro, espere...");
+            }
+        };
+
+        Action cancelar = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                popupConfirmacion.dispose();
+            }
+        };
 
         if (libro != null) {
-            daoLibro.borrar(libro);
-
-            JOptionPane.showMessageDialog(this, "Libro eliminado correctamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
-
-            libro = null;
-
-            rellenarCamposLibro();
-
-            cargarDatos();
+            popupConfirmacion = new FramePopup("<html>"
+                    + "<font size=+2>Eliminar libro definitivamente?</font>"
+                    + "<p>Esta opción no se puede deshacer</p></html>",
+                    new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                    "Eliminar",
+                    "Cancelar",
+                    confirmacion,
+                    cancelar);
+            popupConfirmacion.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Selecciona un libro para poder eliminarlo.", "Eliminar", JOptionPane.ERROR_MESSAGE);
+            new FramePopup("Selecciona un libro para poder eliminarlo.",
+                    new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                    cancelar);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -2247,7 +2302,26 @@ public class FrameLibro extends javax.swing.JFrame {
 
         //panel del alumno
         if (panelPrestado.isVisible()) {
+            List<Historial> listaHistoriales = ejemplarActual.getHistoriales();
+            Alumno alumnoActual = null;
+            for (int i = 0; i < listaHistoriales.size(); i++) {
+                if (listaHistoriales.get(i).getEjemplar().getCodigo().equals(ejemplarActual.getCodigo())) {
+                    alumnoActual = listaHistoriales.get(i).getAlumno();
+                    break;
+                }
+            }
 
+            if (alumnoActual != null) {
+                textNombreAlumno.setText(alumnoActual.getNombre() + " "
+                        + alumnoActual.getApellido1() + " "
+                        + alumnoActual.getApellido2());
+
+                textNIAAlumno.setText(alumnoActual.getNia());
+                textTelefonoAlumno.setText(alumnoActual.getTelefono1());
+                textEmailAlumno.setText(alumnoActual.getEmail1());
+            } else {
+
+            }
         }
 
         //Panel del estado

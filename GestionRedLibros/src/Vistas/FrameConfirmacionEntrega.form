@@ -625,6 +625,7 @@
                           <Connection code="Colores.accent" type="code"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Matematicas"/>
+                        <Property name="toolTipText" type="java.lang.String" value=""/>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[195, 24]"/>
                         </Property>
