@@ -57,6 +57,8 @@ public class FrameOpciones extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         cargarConfiguracion();
+        
+        textContrasena.setEchoChar((char)63);
     }
 
     /**
@@ -262,6 +264,11 @@ public class FrameOpciones extends javax.swing.JFrame {
         btnMostrarContrasena.setBackground(Colores.buttons);
         btnMostrarContrasena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/mostrarContrasena.png"))); // NOI18N
         btnMostrarContrasena.setCornerRound(10);
+        btnMostrarContrasena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarContrasenaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelPasswordLayout = new javax.swing.GroupLayout(panelPassword);
         panelPassword.setLayout(panelPasswordLayout);
@@ -1065,6 +1072,17 @@ public class FrameOpciones extends javax.swing.JFrame {
                     "Aceptar").setVisible(true);
         }
     }//GEN-LAST:event_btnComprobarActionPerformed
+
+    private void btnMostrarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarContrasenaActionPerformed
+        // TODO add your handling code here:
+        if (mostrarContrasena) {
+            textContrasena.setEchoChar((char)63);
+        }else{
+            textContrasena.setEchoChar((char)0);
+        }
+        
+        mostrarContrasena = !mostrarContrasena;
+    }//GEN-LAST:event_btnMostrarContrasenaActionPerformed
 
     /**
      * @param args the command line arguments

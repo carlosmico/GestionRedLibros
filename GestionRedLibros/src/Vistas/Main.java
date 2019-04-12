@@ -267,7 +267,7 @@ public class Main extends javax.swing.JFrame {
             }
             frameEntrega.setVisible(true);
         }
-        
+
         compruebaConexionBD(false, frameEntrega);
     }//GEN-LAST:event_btnEntregaActionPerformed
 
@@ -279,6 +279,11 @@ public class Main extends javax.swing.JFrame {
         if (existeConexion) {
             if (frameOpciones == null) {
                 frameOpciones = new FrameOpciones();
+            } else {
+                if (!frameOpciones.isVisible()) {
+                    frameOpciones = null;
+                    frameOpciones = new FrameOpciones();
+                }
             }
             frameOpciones.setVisible(true);
         }
@@ -302,7 +307,7 @@ public class Main extends javax.swing.JFrame {
             }
             frameLibros.setVisible(true);
         }
-        
+
         compruebaConexionBD(false, frameLibros);
     }//GEN-LAST:event_btnLibrosActionPerformed
 
@@ -366,64 +371,75 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void compruebaConexionBD(boolean main, JFrame frame) {
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-            protected Void doInBackground() throws InterruptedException {
+        if (framePopup == null) {
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                protected Void doInBackground() throws InterruptedException {
 
-                try {
-                    ComprobarConexion.comprobarConexion(
-                            Configuracion.getIp(),
-                            Integer.parseInt(Configuracion.getPuerto()),
-                            "institut",
-                            Configuracion.getUsuario(),
-                            Configuracion.getPassword());
-                    existeConexion = true;
-                } catch (Exception e) {
-                    existeConexion = false;
-                }
-
-                return null;
-            }
-
-            protected void done() {
-                if (existeConexion) {
-                    System.out.println("Conexión con el servidor correcta!");
-
-                    gestorSesiones = new GestorSesiones();
-
-                    frameCarga.dispose();
-
-                    if (!main) {
-                        frame.setVisible(true);
+                    try {
+                        ComprobarConexion.comprobarConexion(
+                                Configuracion.getIp(),
+                                Integer.parseInt(Configuracion.getPuerto()),
+                                "institut",
+                                Configuracion.getUsuario(),
+                                Configuracion.getPassword());
+                        existeConexion = true;
+                    } catch (Exception e) {
+                        existeConexion = false;
                     }
 
-                } else {
-                    frameCarga.dispose();
-
-                    Action abrirOpciones = new AbstractAction() {
-                        public void actionPerformed(ActionEvent e) {
-                            if (frameOpciones == null) {
-                                frameOpciones = new FrameOpciones();
-                            }
-
-                            frameOpciones.setVisible(true);
-                            frameOpciones.setFocusable(true);
-                        }
-                    };
-
-                    framePopup = new FramePopup("No hay conexión al servidor, revise la configuración de red.",
-                            new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                            abrirOpciones
-                    );
-                    framePopup.setVisible(true);
-
+                    return null;
                 }
+
+                protected void done() {
+                    if (existeConexion) {
+                        System.out.println("Conexión con el servidor correcta!");
+
+                        gestorSesiones = new GestorSesiones();
+
+                        frameCarga.dispose();
+
+                        if (!main) {
+                            frame.setVisible(true);
+                        }
+
+                    } else {
+                        frameCarga.dispose();
+
+                        Action abrirOpciones = new AbstractAction() {
+                            public void actionPerformed(ActionEvent e) {
+                                if (frameOpciones == null) {
+                                    frameOpciones = new FrameOpciones();
+                                } else {
+                                    if (!frameOpciones.isVisible()) {
+                                        frameOpciones = null;
+                                        frameOpciones = new FrameOpciones();
+                                    }
+                                }
+
+                                frameOpciones.setVisible(true);
+                                frameOpciones.setFocusable(true);
+
+                                framePopup = null;
+                            }
+                        };
+
+                        if (framePopup == null) {
+                            framePopup = new FramePopup("No hay conexión al servidor, revise la configuración de red.",
+                                    new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                                    abrirOpciones
+                            );
+
+                            framePopup.setVisible(true);
+                        }
+                    }
+                }
+            };
+            worker.execute();
+            if (frameCarga == null) {
+                frameCarga = new FramePopup("Comprobando conexión con el servidor");
             }
-        };
-        worker.execute();
-        if (frameCarga == null) {
-            frameCarga = new FramePopup("Comprobando conexión con el servidor");
+            frameCarga.setVisible(true);
         }
-        frameCarga.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
