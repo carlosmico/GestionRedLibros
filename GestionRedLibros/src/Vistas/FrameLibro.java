@@ -21,6 +21,7 @@ import Daos.*;
 import Pojos.*;
 import Renders.comboBoxRender;
 import Utilidades.*;
+import excepciones.BusinessException;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -61,7 +62,6 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private List<Libro> listaLibros;
     private List<Curso> listaCursos;
-    private List<Contenido> listaContenido;
     private List<Ejemplar> listaEjemplares;
 
     /**
@@ -388,7 +388,6 @@ public class FrameLibro extends javax.swing.JFrame {
         });
 
         cbCursoBuscar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        cbCursoBuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecciona curso" }));
         cbCursoBuscar.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbCursoBuscarItemStateChanged(evt);
@@ -668,7 +667,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addGroup(panelISBNLibroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelISBNLibroLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(textISBNLibro, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE))
+                        .addComponent(textISBNLibro, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE))
                     .addGroup(panelISBNLibroLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -711,7 +710,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addGroup(panelCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCursoLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(cbCursoLibro, 0, 472, Short.MAX_VALUE))
+                        .addComponent(cbCursoLibro, 0, 445, Short.MAX_VALUE))
                     .addGroup(panelCursoLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -749,7 +748,7 @@ public class FrameLibro extends javax.swing.JFrame {
                         .addComponent(cbAsignatura, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelAsignaturaLayout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addGap(0, 377, Short.MAX_VALUE)))
+                        .addGap(0, 350, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelAsignaturaLayout.setVerticalGroup(
@@ -789,7 +788,7 @@ public class FrameLibro extends javax.swing.JFrame {
                         .addComponent(textUnidadesLibro))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addGap(0, 225, Short.MAX_VALUE)))
+                        .addGap(0, 208, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -831,7 +830,7 @@ public class FrameLibro extends javax.swing.JFrame {
                         .addComponent(textPrecioLibro))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addGap(0, 251, Short.MAX_VALUE)))
+                        .addGap(0, 234, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -870,7 +869,7 @@ public class FrameLibro extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(chkObsoletoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -963,7 +962,7 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeneralDerechoSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelGeneralDerechoSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelCuerpo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
+                    .addComponent(panelCuerpo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 935, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeneralDerechoSuperiorLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(panelBotoneraEdicion, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1543,11 +1542,11 @@ public class FrameLibro extends javax.swing.JFrame {
         panelInferiorDerecho.setLayout(panelInferiorDerechoLayout);
         panelInferiorDerechoLayout.setHorizontalGroup(
             panelInferiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 947, Short.MAX_VALUE)
         );
         panelInferiorDerechoLayout.setVerticalGroup(
             panelInferiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
         );
 
         jSplitPane2.setBottomComponent(panelInferiorDerecho);
@@ -1699,7 +1698,7 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private void cbCursoBuscarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoBuscarItemStateChanged
         // TODO add your handling code here:
-        filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoBuscar.getSelectedItem().toString());
+        filtroListaLibro(textNombreLibroBusqueda.getText(), (Curso) cbCursoBuscar.getSelectedItem());
     }//GEN-LAST:event_cbCursoBuscarItemStateChanged
 
     private void textNombreLibroBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroBusquedaKeyReleased
@@ -1711,7 +1710,7 @@ public class FrameLibro extends javax.swing.JFrame {
             textNombreLibroBusqueda.setForeground(new Color(102, 102, 102));
         }
 
-        filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoBuscar.getSelectedItem().toString());
+        filtroListaLibro(textNombreLibroBusqueda.getText(), (Curso) cbCursoBuscar.getSelectedItem());
     }//GEN-LAST:event_textNombreLibroBusquedaKeyReleased
 
     private void textNombreLibroBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroBusquedaKeyPressed
@@ -1788,8 +1787,10 @@ public class FrameLibro extends javax.swing.JFrame {
         try {
             //Matar thread
             boolAnimacion = false;
-            animacion.join();
 
+            if (animacion != null) {
+                animacion.join();
+            }
         } catch (InterruptedException ex) {
             Logger.getLogger(FrameLibro.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -1900,13 +1901,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 libro.setObsoleto(chkObsoletoLibro.isSelected());
                 libro.setPrecio(Double.parseDouble(textPrecioLibro.getText()));
                 libro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
-
-                for (int i = 0; i < listaContenido.size(); i++) {
-                    if (listaContenido.get(i).getNombre_cas().equals(cbAsignatura.getSelectedItem().toString())) {
-                        libro.setContenido(listaContenido.get(i));
-                        break;
-                    }
-                }
+                libro.setContenido((Contenido) cbAsignatura.getSelectedItem());
 
                 try {
                     daoLibro.actualizar(unidadesOld, libro);
@@ -2218,9 +2213,9 @@ public class FrameLibro extends javax.swing.JFrame {
 
             protected void done() {
                 //Aplicamos el filtro
-                filtroListaLibro(textNombreLibro.getText(), cbCursoBuscar.getSelectedItem().toString());
-
                 rellenaCursosBusqueda();
+
+                filtroListaLibro(textNombreLibro.getText(), (Curso) cbCursoBuscar.getSelectedItem());
 
                 showEjemplarPanel(libro != null);
 
@@ -2237,7 +2232,7 @@ public class FrameLibro extends javax.swing.JFrame {
     /**
      * Metodo para filtrar la lista de Libros (Panel Izquierdo)
      */
-    private void filtroListaLibro(String textoNombre, String textoCurso) {
+    private void filtroListaLibro(String textoNombre, Curso curso) {
         //Creamos una lista temporal de los libros para realizar la busqueda
         List<Libro> listaFiltroLibros = listaLibros;
 
@@ -2252,13 +2247,17 @@ public class FrameLibro extends javax.swing.JFrame {
             n = "1";
         }
 
-        if (cbCursoBuscar.getSelectedItem().toString().equals("Selecciona curso")) {
+        Curso cursoSeleccionado = (Curso) cbCursoBuscar.getSelectedItem();
+
+        if (cursoSeleccionado.getCodigo().equals("Todos") || cursoSeleccionado == null) {
             c = "0";
         } else {
             c = "1";
         }
 
         resFiltro = n + c;
+        
+        System.out.println("ResFiltro" + resFiltro);
         //</editor-fold>
 
         //Si tenemos mas de 0 libros:
@@ -2272,7 +2271,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
                 case "01":
                     //Se muestran los libros del curso seleccionado
-                    listaFiltroLibros = listaLibros.stream().filter(libro -> (libro.getContenido().getCurso().getAbreviatura().toUpperCase() + " - " + libro.getContenido().getCurso().getNombre_cas().toUpperCase()).equals(textoCurso.toUpperCase())).collect(Collectors.toList());
+                    listaFiltroLibros = listaLibros.stream().filter(libro -> (libro.getContenido().getCurso().getId().equals(cursoSeleccionado.getId()))).collect(Collectors.toList());
                     break;
 
                 case "10":
@@ -2283,7 +2282,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 case "11":
                     //se seleccionan los libros del curso seleccionado con el nombre escrito
                     listaFiltroLibros = listaLibros.stream().filter(libro -> libro.getNombre().toUpperCase().contains(textoNombre.toUpperCase())).collect(Collectors.toList());
-                    listaFiltroLibros = listaFiltroLibros.stream().filter(libro -> (libro.getContenido().getCurso().getAbreviatura().toUpperCase() + " - " + libro.getContenido().getCurso().getNombre_cas().toUpperCase()).equals(textoCurso.toUpperCase())).collect(Collectors.toList());
+                    listaFiltroLibros = listaFiltroLibros.stream().filter(libro -> (libro.getContenido().getCurso().getId().equals(cursoSeleccionado.getId()))).collect(Collectors.toList());
                     break;
             }
 
@@ -2399,7 +2398,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 }
             }
 
-            cbAsignatura.addItem(libro.getContenido().getNombre_cas());
+            cbAsignatura.addItem(libro.getContenido());
             textUnidadesLibro.setText(libro.getUnidades() + "");
             textPrecioLibro.setText(libro.getPrecio() + "");
             chkObsoletoLibro.setSelected(libro.getObsoleto());
@@ -2462,9 +2461,11 @@ public class FrameLibro extends javax.swing.JFrame {
      * Metodo para rellenar el ComboBox de los Cursos en pestaña Busqueda
      */
     private void rellenaCursosBusqueda() {
+        cbCursoBuscar.addItem(new Curso("Todos", "Todos", "Todos", "Todos", "Todos", " "));
+
         if (listaCursos.size() > 0) {
             for (int i = 0; i < listaCursos.size(); i++) {
-                cbCursoBuscar.addItem(listaCursos.get(i).getAbreviatura() + " - " + listaCursos.get(i).getNombre_cas());
+                cbCursoBuscar.addItem(listaCursos.get(i));
             }
         } else {
             JOptionPane.showMessageDialog(FrameLibro.this,

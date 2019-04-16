@@ -33,12 +33,13 @@ import org.hibernate.query.Query;
 public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDaoGenerico<Curso, String> {
 
     /**
-     *  Variable de sesion para cualquier acción con la BD
+     * Variable de sesion para cualquier acción con la BD
      */
     public Session session;
 
     /**
-     *  Constructor del DaoCurso que recibe una sesion
+     * Constructor del DaoCurso que recibe una sesion
+     *
      * @param s
      */
     public DaoCurso(Session s) {
@@ -46,7 +47,50 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
     }
 
     /**
-     *  Metodo para actualizar una lista de Cursos en la BD
+     * Metodo para actualizar una lista de Cursos en la BD
+     *
+     * @param cursos
+     * @throws Exception
+     */
+    public void actualizarCurso(Curso c) throws Exception {
+        Curso curso = buscar(c.getCodigo());
+
+        try {
+            this.session.beginTransaction();
+
+            if (curso == null) {
+                curso = new Curso(
+                        c.getCodigo(),
+                        c.getEnsenanza(),
+                        c.getAbreviatura(),
+                        c.getNombre_cas(),
+                        c.getNombre_val(),
+                        c.getIdPadre()
+                );
+            } else {
+                curso.setEnsenanza(c.getEnsenanza());
+                curso.setAbreviatura(c.getAbreviatura());
+                curso.setNombre_cas(c.getNombre_cas());
+                curso.setNombre_val(c.getNombre_val());
+                curso.setIdPadre(c.getIdPadre());
+            }
+
+            this.session.saveOrUpdate(curso);
+
+            this.session.getTransaction().commit();
+
+        } catch (Exception e) {
+            this.session.getTransaction().commit();
+            e.printStackTrace();
+            System.out.println("Error DaoCurso-actualizar(): " + e.getMessage());
+            throw new Exception();
+        }
+
+    }
+
+    /**
+     * Metodo para actualizar una lista de Cursos en la BD
+     *
      * @param cursos
      * @throws Exception
      */
@@ -89,7 +133,8 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
     }
 
     /**
-     *  Metodo para buscar un Curso mediante su Codigo en la BD
+     * Metodo para buscar un Curso mediante su Codigo en la BD
+     *
      * @param codigo
      * @return
      * @throws PersistenceException
@@ -108,20 +153,20 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
     }
 
     /**
-     *  Metodo para obtener una lista de todos los Cursos de la BD
+     * Metodo para obtener una lista de todos los Cursos de la BD
      */
     public List<Curso> buscarTodos() {
         List<Curso> lista = new ArrayList<Curso>();
 
         Query query = this.session.createQuery("from Curso where codigo_curso not"
-                + " in(select idPadre FROM Curso) and (ensenanza = 3 or ensenanza = 5)");
+                + " in(select idPadre FROM Curso) and (ensenanza = 3 or ensenanza = 5) ORDER BY ensenanza, abreviatura");
         lista = query.list();
 
         return lista;
     }
 
     /**
-     *  Metodo para desconectar la sesion del DAO
+     * Metodo para desconectar la sesion del DAO
      */
     @Override
     public void desconectar() {
