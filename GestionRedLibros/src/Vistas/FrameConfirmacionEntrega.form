@@ -1302,7 +1302,7 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="btnCancel" max="32767" attributes="0"/>
-                      <Component id="btnAceptar" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnAceptar" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -1331,7 +1331,7 @@
               <Connection code="Colores.buttons" type="code"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Imagenes/icons/check.png"/>
+              <Image iconType="3" name="/Imagenes/icons/check-white.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Aceptar"/>
             <Property name="cornerRound" type="int" value="10"/>

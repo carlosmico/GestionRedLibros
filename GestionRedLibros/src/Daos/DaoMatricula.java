@@ -179,8 +179,7 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
      * @param curso_escolar
      * @return
      */
-    public List<Matricula> buscarPendientes(Alumno alumno, int curso_escolar, 
-            Curso curso, Contenido contenido) {
+    public List<Matricula> buscarPendientes(Alumno alumno, int curso_escolar) {
         List<Matricula> lista = new ArrayList<Matricula>();
 
         Query query = this.session.createQuery("from Matricula where alumno=" + 
@@ -198,7 +197,7 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                 Historial h = historiales.get(j);
                 
                 if (m.getCurso_escolar() == h.getCurso_escolar() && m.getContenido().getId() == h.getEjemplar().getLibro().getContenido().getId()) {
-                    lista.remove(i);
+                    lista.remove(m);
                 }
             }
         }
