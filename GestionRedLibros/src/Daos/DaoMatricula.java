@@ -18,7 +18,11 @@
 package Daos;
 
 import Pojos.Alumno;
+import Pojos.Contenido;
+import Pojos.Curso;
+import Pojos.Historial;
 import Pojos.Matricula;
+import Vistas.Main;
 import dao.DaoGenerico;
 import dao.InterfaceDaoGenerico;
 import java.util.ArrayList;
@@ -164,6 +168,42 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
 
         Query query = this.session.createQuery("from Matricula where curso_escolar=" + curso_escolar);
         lista = query.list();
+
+        return lista;
+    }
+    
+    /**
+     * Metodo para obtener una lista de Matriculas filtrando por el alumno,
+     * cursoescolar, curso, contenido. (Pendientes de asignar libros).
+     *
+     * @param curso_escolar
+     * @return
+     */
+    public List<Matricula> buscarPendientes(Alumno alumno, int curso_escolar, 
+            Curso curso, Contenido contenido) {
+        List<Matricula> lista = new ArrayList<Matricula>();
+
+        Query query = this.session.createQuery("from Matricula where alumno=" + 
+                alumno.getNia() + " and curso_escolar=" + curso_escolar);
+        lista = query.list();
+        
+        DaoHistorial daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
+        
+        List<Historial> historiales = daoHistorial.buscarPorAlumno(alumno);
+        
+        for (int i = 0; i < lista.size(); i++) {
+            Matricula m = lista.get(i);
+            
+            for (int j = 0; j < historiales.size(); j++) {
+                Historial h = historiales.get(j);
+                
+                if (m.getCurso_escolar() == h.getCurso_escolar() && m.getContenido().getId() == h.getEjemplar().getLibro().getContenido().getId()) {
+                    lista.remove(i);
+                }
+            }
+        }
+        
+        daoHistorial.desconectar();
 
         return lista;
     }

@@ -45,12 +45,26 @@ public class PruebaHibernate {
             SessionFactory factory = UtilesHibernate.getSessionFactory();
             Session session = factory.openSession();
             
-            DaoLibro dao = new DaoLibro(session);
+            DaoCurso dao = new DaoCurso(session);
             
-            System.out.println(dao.buscarTodos().size());
+            
+            
+            List<Curso> cursos = dao.buscarTodos();
+            
+            System.out.println(cursos.size());
+            
+            for (int i = 0; i < cursos.size(); i++) {
+                curso = cursos.get(i);
+                
+                Curso cursoPadre = dao.buscar(curso.getIdPadre());
+                
+                if (cursoPadre != null) {
+                    System.out.println("Curso: " + curso.getAbreviatura() + " - " + cursoPadre.getNombre_cas());
+                }else{
+                    System.out.println("Curso: " + curso.getAbreviatura() + " - " + curso.getNombre_cas());
+                }
+            }
            
-
-
             //DaoContenido daoc = new DaoContenido();
 
             //System.out.println(daoc.buscarTodos().get(0).getLibros().size());
