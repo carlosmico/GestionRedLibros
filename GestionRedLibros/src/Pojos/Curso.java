@@ -17,6 +17,8 @@
  */
 package Pojos;
 
+import Daos.DaoCurso;
+import Vistas.Main;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -35,36 +37,40 @@ import javax.persistence.Table;
  *
  * @author Carlos Micó
  */
-
 @Entity
 @Table(name = "cursos")
-public class Curso implements Serializable{
-    
+public class Curso implements Serializable {
+
     private String id;
-    
+
     @Id
-    @Column (name = "codigo")
+    @Column(name = "codigo")
     private String codigo_curso;
-    
+
     private String ensenanza;
     private String abreviatura;
     private String nombre_cas;
     private String nombre_val;
     private String idPadre;
-    
-    @OneToMany (mappedBy = "curso_contenido", fetch=FetchType.LAZY)
+
+    @OneToMany(mappedBy = "curso_contenido", fetch = FetchType.LAZY)
     private List<Contenido> contenidos;
-    
-    @OneToMany (mappedBy = "curso_alumno", fetch=FetchType.LAZY)
+
+    @OneToMany(mappedBy = "curso_alumno", fetch = FetchType.LAZY)
     private List<Alumno> alumnos;
+
+    public Curso() {
+
+    }
     
-    public Curso(){
-        
+    public Curso(String codigo) {
+        this.codigo_curso = codigo;
+        this.nombre_cas = codigo;
     }
 
     public Curso(String codigo, String ensenanza, String abreviatura, String nombre_cas, String nombre_val, String idPadre) {
         this.codigo_curso = codigo;
-        this.id=codigo_curso;
+        this.id = codigo_curso;
         this.ensenanza = ensenanza;
         this.abreviatura = abreviatura;
         this.nombre_cas = nombre_cas;
@@ -87,8 +93,6 @@ public class Curso implements Serializable{
     public void setCodigo_curso(String codigo_curso) {
         this.codigo_curso = codigo_curso;
     }
-    
-    
 
     public String getCodigo() {
         return codigo_curso;
@@ -96,7 +100,7 @@ public class Curso implements Serializable{
 
     public void setCodigo(String codigo) {
         this.codigo_curso = codigo;
-        this.id=codigo_curso;
+        this.id = codigo_curso;
     }
 
     public String getEnsenanza() {
@@ -182,8 +186,14 @@ public class Curso implements Serializable{
 
     @Override
     public String toString() {
-        return abreviatura + " - " + nombre_cas;
+        DaoCurso daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
+        Curso cursoPadre = daoCurso.buscar(idPadre);
+
+        if (cursoPadre != null) {
+            return abreviatura + " - " + cursoPadre.getNombre_cas();
+        } else {
+            return abreviatura + " - " + nombre_cas;
+        }
     }
-    
-    
+
 }
