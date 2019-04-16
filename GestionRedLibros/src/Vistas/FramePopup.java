@@ -172,7 +172,7 @@ public class FramePopup extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(66, 47, 44));
 
         text.setBackground(new java.awt.Color(239, 235, 233));
-        text.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        text.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         text.setForeground(new java.awt.Color(51, 51, 51));
         text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         text.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/load.gif"))); // NOI18N

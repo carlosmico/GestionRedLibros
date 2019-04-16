@@ -54,7 +54,7 @@ public class CodigoBarras {
      * @param codigo
      * @return
      */
-    public Barcode39 generarCodigoIndividual(String codigo) {
+    public Barcode39 generarCodigoIndividual(String codigo) throws Exception{
         Barcode39 barcode = new Barcode39();
 
         barcode.setCode(codigo);

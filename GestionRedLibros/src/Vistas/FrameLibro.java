@@ -54,7 +54,8 @@ public class FrameLibro extends javax.swing.JFrame {
     private DaoLibro daoLibro;
     private DaoCurso daoCurso;
 
-    private Thread animacion = null;
+    public Thread animacion = null;
+    private boolean boolAnimacion = false;
 
     private Libro libro, oldLibro;
 
@@ -1736,6 +1737,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
             showEjemplarPanel(libro != null);
 
+            boolAnimacion = true;
             animacion = new Thread(new Runnable() {
 
                 int intFrase = 0;
@@ -1750,7 +1752,7 @@ public class FrameLibro extends javax.swing.JFrame {
                         "Creando nuevo libro.. ",
                         "Creando nuevo libro.  "};
 
-                    while (true) {
+                    while (boolAnimacion) {
                         intFrase++;
 
                         if (intFrase == not.length * 2) {
@@ -1784,6 +1786,8 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
+            //Matar thread
+            boolAnimacion = false;
             animacion.join();
 
         } catch (InterruptedException ex) {
@@ -1840,7 +1844,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
                 Libro newLibro = new Libro();
 
-                newLibro.setCodigo(textCodigoLibro.getText());
+                newLibro.setCodigo(textCodigoLibro.getText().toUpperCase());
                 newLibro.setISBN(textISBNLibro.getText());
                 newLibro.setNombre(textNombreLibro.getText());
                 newLibro.setObsoleto(chkObsoletoLibro.isSelected());
@@ -1851,14 +1855,20 @@ public class FrameLibro extends javax.swing.JFrame {
                 try {
                     daoLibro.grabar(newLibro);
 
-                    JOptionPane.showMessageDialog(this, "Libro añadido correctamente.",
-                            "Información", JOptionPane.INFORMATION_MESSAGE);
+                    new FramePopup("Libro añadido correctamente.",
+                            Imagenes.getImagen(this, "check-black.png"),
+                            "Aceptar").setVisible(true);
 
                     cargarDatos();
 
                     setEditMode(false);
 
                     libro = newLibro;
+
+                    showEjemplarPanel(libro != null);
+                    contadorEjemplar = 1;
+                    rellenarCamposEjemplares();
+
                 } catch (PersistenceException e) {
                     JOptionPane.showMessageDialog(this,
                             "El libro ya existe en la Base de Datos.", "Error",
@@ -1937,6 +1947,14 @@ public class FrameLibro extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         libro = oldLibro;
 
+        try {
+            boolAnimacion = false;
+            animacion.join();
+            showEjemplarPanel(false);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(FrameLibro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         setEditMode(false);
 
         vaciarCursosYContenidos();
@@ -1945,12 +1963,6 @@ public class FrameLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnImprimirEtiquetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetasActionPerformed
-        try {
-            // TODO add your handling code here:
-            animacion.join();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(FrameLibro.class.getName()).log(Level.SEVERE, null, ex);
-        }
         CodigoBarras cb = new CodigoBarras();
         List<String> listaCodigoEjemplares = new ArrayList<>();
 
@@ -2405,12 +2417,18 @@ public class FrameLibro extends javax.swing.JFrame {
         );
 
         //Panel del codigo
-        CodigoBarras cb = new CodigoBarras();
         Ejemplar ejemplarActual = listaEjemplares.get(contadorEjemplar - 1);
-        ImageIcon icon = cb.getImage(cb.generarCodigoIndividual(ejemplarActual.getCodigo()), 320, 120);
-        imgCodigo.setIcon(icon);
         textCodigo.setText(ejemplarActual.getCodigo());
         textTituloLibro.setText(ejemplarActual.getLibro().getNombre());
+        try {
+            CodigoBarras cb = new CodigoBarras();
+            ImageIcon icon = cb.getImage(cb.generarCodigoIndividual(ejemplarActual.getCodigo()), 320, 120);
+            imgCodigo.setIcon(icon);
+        } catch (Exception e) {
+            new FramePopup("Error al conseguir el codigo de barras de los ejemplares",
+                    new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                    "Aceptar");
+        }
 
         //panel del alumno
         if (panelPrestado.isVisible()) {
@@ -2596,5 +2614,9 @@ public class FrameLibro extends javax.swing.JFrame {
     private void showEjemplarPanel(boolean b) {
         panelEjemplarNoSeleccionado.setVisible(!b);
         panelEjemplarPrestado.setVisible(b);
+
+        if (!b) {
+            textEjemplarNotificacion.setText("Selecciona un libro para ver sus ejemplares");
+        }
     }
 }
