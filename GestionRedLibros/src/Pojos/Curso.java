@@ -184,6 +184,7 @@ public class Curso implements Serializable {
         return true;
     }
 
+    /*
     @Override
     public String toString() {
         DaoCurso daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
@@ -193,6 +194,15 @@ public class Curso implements Serializable {
             return abreviatura + " - " + cursoPadre.getNombre_cas();
         } else {
             return abreviatura + " - " + nombre_cas;
+        }
+    }*/
+
+    @Override
+    public String toString() {
+        if (idPadre.equals(" ")) {
+            return abreviatura + " - " + nombre_cas;
+        }else{
+            return abreviatura + " - " + idPadre;
         }
     }
 
