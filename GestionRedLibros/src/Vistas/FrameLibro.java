@@ -1983,6 +1983,7 @@ public class FrameLibro extends javax.swing.JFrame {
         try {
             cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares));
         } catch (Exception e) {
+            e.printStackTrace();
             new FramePopup("<html>"
                     + "<p>No se han podido general los códigos de barras</p>"
                     + "</html>",

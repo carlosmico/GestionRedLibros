@@ -24,7 +24,10 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.Barcode39;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -54,7 +57,7 @@ public class CodigoBarras {
      * @param codigo
      * @return
      */
-    public Barcode39 generarCodigoIndividual(String codigo) throws Exception{
+    public Barcode39 generarCodigoIndividual(String codigo) throws Exception {
         Barcode39 barcode = new Barcode39();
 
         barcode.setCode(codigo);
@@ -154,23 +157,49 @@ public class CodigoBarras {
 
         doc.addTitle("CÓDIGOS EJEMPLARES - " + libro.getNombre());
 
-        int contador = 8;
+        int contador = 32, contadorCeldas = 1;
+
+        PdfPTable table = new PdfPTable(2);
+        
+        PdfPCell cell;
 
         for (int i = 0; i < barcodes.size(); i++) {
             if (contador == 0) {
-                contador = 8;
+                contador = 32;
                 doc.newPage();
             }
-            
-            doc.add(new Paragraph(libro.getContenido().getNombre_cas()));
 
-            Image codeImg = barcodes.get(i).createImageWithBarcode(pdf.getDirectContent(), BaseColor.BLACK, BaseColor.BLACK);
+            if (contadorCeldas <= 2) {
+                cell = new PdfPCell(new Phrase(libro.getContenido().getNombre_cas()));
+                
+                cell.setBorder(0);
+                
+                table.addCell(cell);
 
-            doc.add(codeImg);
+                if (contadorCeldas == 2) {
+                    table.completeRow();
+                }
+            } else if (contadorCeldas <= 4) {
+                Image codeImg = barcodes.get(i).createImageWithBarcode(pdf.getDirectContent(), BaseColor.BLACK, BaseColor.BLACK);
+                
+                cell = new PdfPCell(codeImg);
+                
+                cell.setBorder(0);
+                
+                table.addCell(cell);
 
-            doc.add(new Paragraph(""));
+                if (contadorCeldas == 4) {
+                    table.completeRow();
+
+                    doc.add(table);
+                    table = new PdfPTable(2);
+
+                    contadorCeldas = 0;
+                }
+            }
 
             contador--;
+            contadorCeldas++;
         }
 
         doc.close();
