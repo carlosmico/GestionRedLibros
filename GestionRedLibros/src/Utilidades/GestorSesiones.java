@@ -17,7 +17,9 @@
  */
 package Utilidades;
 
+import com.fasterxml.classmate.AnnotationConfiguration;
 import hibernate.UtilesHibernate;
+import java.util.Properties;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -35,6 +37,7 @@ public class GestorSesiones {
      * Hibernate
      */
     public GestorSesiones() {
+        /*
         try {
             Configuration configuration = new Configuration().configure();
 
@@ -42,9 +45,20 @@ public class GestorSesiones {
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed " + ex);
             throw new ExceptionInInitializerError(ex);
-        }
+        }*/
     }
 
+    public void configurarPropiedades(String ip, int puerto, String usuario, String password) {
+        Configuration config = new Configuration();
+        
+        config.configure("hibernate.cfg.xml");
+        config.setProperty("hibernate.connection.url", "jdbc:mysql://" + ip + ":" + puerto + "/institut?useSSL=false");
+        config.setProperty("hibernate.connection.username", usuario);
+        config.setProperty("hibernate.connection.password", password);
+        config.setProperty("hibernate.connection.autoReconnect", "true");
+        
+        sessionFactory = config.buildSessionFactory();
+    }
 
     /**
      * Metodo que devuelve un objeto Session
