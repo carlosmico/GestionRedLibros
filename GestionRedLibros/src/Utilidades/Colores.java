@@ -27,4 +27,5 @@ public class Colores {
     public static Color fondo = new Color(239, 235, 233);
     public static Color accent = new Color(58,39,35);
     public static Color buttons = new Color(66,47,44);
+    public static Color tableCell = new Color(219,211,207);
 }

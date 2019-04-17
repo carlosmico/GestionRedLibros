@@ -147,7 +147,7 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
         panelCodigoEjemplar = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         imgCodigo = new javax.swing.JLabel();
-        flatButton3 = new com.mommoo.flat.button.FlatButton();
+        btnImprimirEtiqueta = new com.mommoo.flat.button.FlatButton();
         textCodigo = new javax.swing.JLabel();
         textTituloLibro = new javax.swing.JLabel();
         panelListaEjemplres = new javax.swing.JPanel();
@@ -642,10 +642,15 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
         imgCodigo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         imgCodigo.setToolTipText("");
 
-        flatButton3.setBackground(Colores.buttons);
-        flatButton3.setText("Imprimir etiqueta");
-        flatButton3.setCornerRound(10);
-        flatButton3.setPreferredSize(new java.awt.Dimension(169, 32));
+        btnImprimirEtiqueta.setBackground(Colores.buttons);
+        btnImprimirEtiqueta.setText("Imprimir etiqueta");
+        btnImprimirEtiqueta.setCornerRound(10);
+        btnImprimirEtiqueta.setPreferredSize(new java.awt.Dimension(169, 32));
+        btnImprimirEtiqueta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnImprimirEtiquetaMouseClicked(evt);
+            }
+        });
 
         textCodigo.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         textCodigo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -663,7 +668,7 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
                 .addGroup(panelCodigoEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCodigoEjemplarLayout.createSequentialGroup()
                         .addGap(0, 381, Short.MAX_VALUE)
-                        .addComponent(flatButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnImprimirEtiqueta, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelCodigoEjemplarLayout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -687,7 +692,7 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(flatButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnImprimirEtiqueta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -997,6 +1002,16 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_textObservacionesKeyReleased
 
+    private void btnImprimirEtiquetaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetaMouseClicked
+        // TODO add your handling code here:
+        CodigoBarras cb = new CodigoBarras();
+        try {
+            cb.imprimirIndividual(ejemplar, cb.generarCodigoIndividual(ejemplar.getCodigo()));
+        } catch (Exception e) {
+            new FramePopup("No se ha podido imprimir el codigo").setVisible(true);
+        }
+    }//GEN-LAST:event_btnImprimirEtiquetaMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1037,8 +1052,8 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
     private javax.swing.JLabel btnBadStatus;
     private com.mommoo.flat.button.FlatButton btnCancel;
     private javax.swing.JLabel btnGoodStatus;
+    private com.mommoo.flat.button.FlatButton btnImprimirEtiqueta;
     private javax.swing.JLabel btnRegularStatus;
-    private com.mommoo.flat.button.FlatButton flatButton3;
     private javax.swing.JLabel imgCodigo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

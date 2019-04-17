@@ -21,22 +21,19 @@ import Daos.DaoAlumno;
 import Daos.DaoMatricula;
 import Pojos.Alumno;
 import Pojos.Matricula;
+import Renders.tableRender;
 import Utilidades.ButtonColumn;
 import Utilidades.Colores;
 import Utilidades.Imagenes;
+import Utilidades.tableEditor;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JTable;
-import javax.swing.SwingWorker;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -299,8 +296,13 @@ public class FrameEntrega extends javax.swing.JFrame {
         jLabel5.setText("Listado Asignaturas:");
 
         panelTablas.setBackground(Colores.fondo);
-        panelTablas.setLayout(new java.awt.GridLayout(1, 2));
+        panelTablas.setLayout(new java.awt.GridLayout(1, 2, 5, 0));
 
+        jScrollPane2.setBackground(Colores.fondo);
+        jScrollPane2.setForeground(Colores.fondo);
+        jScrollPane2.setOpaque(false);
+
+        tablaPendientes.setAutoCreateRowSorter(true);
         tablaPendientes.setBackground(Colores.fondo);
         tablaPendientes.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         tablaPendientes.setForeground(Colores.accent);
@@ -315,7 +317,6 @@ public class FrameEntrega extends javax.swing.JFrame {
                 "Asignatura", "Curso", "Idioma", "Gestión"
             }
         ));
-        tablaPendientes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tablaPendientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tablaPendientes.setRowHeight(32);
         tablaPendientes.setRowSelectionAllowed(false);
@@ -324,6 +325,10 @@ public class FrameEntrega extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tablaPendientes);
 
         panelTablas.add(jScrollPane2);
+
+        jScrollPane3.setBackground(Colores.fondo);
+        jScrollPane3.setForeground(Colores.fondo);
+        jScrollPane3.setOpaque(false);
 
         tableEntregados.setBackground(Colores.fondo);
         tableEntregados.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -590,11 +595,17 @@ public class FrameEntrega extends javax.swing.JFrame {
     private javax.swing.JLabel textNombreAlumno;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Metodo que utilizamos para rellenar la tabla de los libros pendientes de
+     * entrega
+     *
+     * @param listaMatriculas Es la lista de matriculas que debemos recuperar
+     * del archivo xml previamente importado
+     */
     private void rellenarTablaPendiente(List<Matricula> listaMatriculas) {
-        DefaultTableModel tableModel = (DefaultTableModel) tablaPendientes.getModel();
+        //DefaultTableModel tableModel = (DefaultTableModel) tablaPendientes.getModel();
 
-        tableModel.setRowCount(0);
-
+        //tableModel.setRowCount(0);
         Object[][] contenidoTabla = new Object[listaMatriculas.size()][4];
 
         for (int i = 0; i < listaMatriculas.size(); i++) {
@@ -609,11 +620,6 @@ public class FrameEntrega extends javax.swing.JFrame {
             contenidoTabla[i][3] = "";
         }
 
-        tableModel.setDataVector(
-                contenidoTabla,
-                new Object[]{"Asignaturas", "Curso", "Idioma", "Gestión"}
-        );
-
         Action entrega = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 JTable table = (JTable) e.getSource();
@@ -624,10 +630,28 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
         };
 
-        ButtonColumn buttonColumn = new ButtonColumn(tablaPendientes, entrega, tableModel.getColumnCount() - 1);
-        tablaPendientes.setModel(tableModel);
+        DefaultTableModel tableModel = new DefaultTableModel(contenidoTabla,
+                new Object[]{"Asignaturas", "Curso", "Idioma", "Gestión"});
+        
+        TableColumn agregarColumna;
+        agregarColumna = tablaPendientes.getColumnModel().getColumn(0);
+        agregarColumna.setCellEditor(new tableEditor(tablaPendientes));
+        agregarColumna.setCellRenderer(new tableRender(entrega));
+        
+        
+        /*tableModel.setDataVector(
+         contenidoTabla,
+         new Object[]{"Asignaturas", "Curso", "Idioma", ""}
+         );*/ //ButtonColumn buttonColumn = new ButtonColumn(tablaPendientes, entrega, tableModel.getColumnCount() - 1);
+        //tablaPendientes.setModel(tableModel);
     }
 
+    /**
+     * Cuando realizamos una entrega, este es el encargado de cambiar el libro
+     * de tabla y pintarlo en la tabla de entregados
+     *
+     * @param matricula
+     */
     public void anadirMatriculaEntregada(Matricula matricula) {
         DefaultTableModel tableModel = (DefaultTableModel) tableEntregados.getModel();
 
@@ -677,7 +701,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                     textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
 
                     textCursoEscolar.setText(getFecha() + "-" + (getFecha() + 1));
-                    
+
                     textCurso.setText(listaMatriculas.get(0).getContenido().getCurso().getAbreviatura());
 
                     rellenarTablaPendiente(listaMatriculas);
@@ -713,6 +737,11 @@ public class FrameEntrega extends javax.swing.JFrame {
         framePopup.setVisible(true);
     }
 
+    /**
+     * Este metodo se utiliza para conseguir la fecha del curso escolar
+     *
+     * @return Devuelve un 'int' con la año actual
+     */
     private int getFecha() {
         LocalDate localDate = LocalDate.now();
         String date = DateTimeFormatter.ofPattern("yyyy").format(localDate);
