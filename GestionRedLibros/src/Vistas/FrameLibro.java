@@ -1584,6 +1584,8 @@ public class FrameLibro extends javax.swing.JFrame {
         //Mostramos el menu de opciones en el libro
         if (libro != null) {
             menuOpcionesLibro.show(evt.getComponent(), -157, 53);
+        } else {
+            new FramePopup("Selecciona un libro para poder gestionarlo.", Imagenes.getImagen(this, "alert-black.png"), "Aceptar").setVisible(true);
         }
     }//GEN-LAST:event_btnOpcionesMouseReleased
 
@@ -1596,7 +1598,7 @@ public class FrameLibro extends javax.swing.JFrame {
                         try {
                             daoLibro.borrar(libro);
                             accionRealizada = true;
-                        } catch (PersistenceException e) {
+                        } catch (Exception e) {
                             new FramePopup("El libro no se ha podido eliminar.",
                                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                                     "Aceptar");
@@ -1698,6 +1700,10 @@ public class FrameLibro extends javax.swing.JFrame {
     private void cbCursoBuscarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoBuscarItemStateChanged
         // TODO add your handling code here:
         filtroListaLibro(textNombreLibroBusqueda.getText(), (Curso) cbCursoBuscar.getSelectedItem());
+
+        libro = null;
+
+        rellenarCamposLibro();
     }//GEN-LAST:event_cbCursoBuscarItemStateChanged
 
     private void textNombreLibroBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroBusquedaKeyReleased
@@ -1797,6 +1803,12 @@ public class FrameLibro extends javax.swing.JFrame {
 
         String errores = "";
 
+        if (textCodigoLibro.getText().equals("")) {
+            errores += "\n- El código del libro no puede estar vacío.";
+        } else if (textCodigoLibro.getText().length() > 50) {
+            errores += "\n- El código del libro no puede contener más a 50 carácteres.";
+        }
+
         if (textNombreLibro.getText().equals("")) {
             errores += "\n- El nombre no puede estar vacío.";
         }
@@ -1825,10 +1837,6 @@ public class FrameLibro extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             errores += "\n- El precio debe ser un valor numérico.";
-        }
-
-        if (textCodigoLibro.getText().equals("")) {
-            errores += "\n- El código del libro no puede estar vacío.";
         }
 
         if (cbAsignatura.getSelectedItem() == null) {
@@ -2212,6 +2220,8 @@ public class FrameLibro extends javax.swing.JFrame {
 
             protected void done() {
                 //Aplicamos el filtro
+                sustituirPadresCursos();
+
                 rellenaCursosBusqueda();
 
                 filtroListaLibro(textNombreLibro.getText(), (Curso) cbCursoBuscar.getSelectedItem());
@@ -2360,6 +2370,21 @@ public class FrameLibro extends javax.swing.JFrame {
     }
 
     /**
+     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
+     * por el nombre del Padre
+     */
+    private void sustituirPadresCursos() {
+        for (int i = 0; i < listaCursos.size(); i++) {
+            Curso curso = listaCursos.get(i);
+            Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
+
+            if (cursoPadre != null) {
+                curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
+            }
+        }
+    }
+
+    /**
      * Metodo para rellenar el campos con los datos de un Libro
      */
     private void rellenarCamposLibro() {
@@ -2370,6 +2395,11 @@ public class FrameLibro extends javax.swing.JFrame {
             textUnidadesLibro.setText("");
             textPrecioLibro.setText("");
             chkObsoletoLibro.setSelected(false);
+
+            cbCursoLibro.removeAllItems();
+            cbAsignatura.removeAllItems();
+
+            showEjemplarPanel(false);
         } else {
             //Rellenamos los datos
             textCodigoLibro.setText(libro.getCodigo());
@@ -2403,7 +2433,10 @@ public class FrameLibro extends javax.swing.JFrame {
             chkObsoletoLibro.setSelected(libro.getObsoleto());
 
             contadorEjemplar = 1;
+
             rellenarCamposEjemplares();
+
+            showEjemplarPanel(true);
         }
     }
 
@@ -2460,6 +2493,8 @@ public class FrameLibro extends javax.swing.JFrame {
      * Metodo para rellenar el ComboBox de los Cursos en pestaña Busqueda
      */
     private void rellenaCursosBusqueda() {
+        cbCursoBuscar.removeAllItems();
+
         cbCursoBuscar.addItem(new Curso("Todos", "Todos", "Todos", "Todos", "Todos", " "));
 
         if (listaCursos.size() > 0) {
@@ -2612,6 +2647,9 @@ public class FrameLibro extends javax.swing.JFrame {
     }
 
     private void showEjemplarPanel(boolean b) {
+        textTotalEjemplares.setVisible(b);
+        btnSiguiente.setVisible(b);
+        btnAnterior.setVisible(b);
         panelEjemplarNoSeleccionado.setVisible(!b);
         panelEjemplarPrestado.setVisible(b);
 
