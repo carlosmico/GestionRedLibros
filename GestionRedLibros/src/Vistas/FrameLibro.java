@@ -1700,7 +1700,7 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private void cbCursoBuscarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoBuscarItemStateChanged
         // TODO add your handling code here:
-        filtroListaLibro(textNombreLibroBusqueda.getText(), (Curso) cbCursoBuscar.getSelectedItem());
+        filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoBuscar.getSelectedIndex());
 
         rellenarCamposLibro();
     }//GEN-LAST:event_cbCursoBuscarItemStateChanged
@@ -1714,7 +1714,7 @@ public class FrameLibro extends javax.swing.JFrame {
             textNombreLibroBusqueda.setForeground(new Color(102, 102, 102));
         }
 
-        filtroListaLibro(textNombreLibroBusqueda.getText(), (Curso) cbCursoBuscar.getSelectedItem());
+        filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoBuscar.getSelectedIndex());
     }//GEN-LAST:event_textNombreLibroBusquedaKeyReleased
 
     private void textNombreLibroBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroBusquedaKeyPressed
@@ -2229,17 +2229,17 @@ public class FrameLibro extends javax.swing.JFrame {
 
             protected void done() {
                 //Aplicamos el filtro
-                if(libro == null);
-                
+                if (libro == null);
+
                 sustituirPadresCursos();
 
                 if (primeraEjecucion) {
                     rellenaCursosBusqueda();
-                    
+
                     primeraEjecucion = false;
                 }
 
-                filtroListaLibro(textNombreLibro.getText(), (Curso) cbCursoBuscar.getSelectedItem());
+                filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoBuscar.getSelectedIndex());
 
                 showEjemplarPanel(libro != null);
 
@@ -2256,7 +2256,7 @@ public class FrameLibro extends javax.swing.JFrame {
     /**
      * Metodo para filtrar la lista de Libros (Panel Izquierdo)
      */
-    private void filtroListaLibro(String textoNombre, Curso curso) {
+    private void filtroListaLibro(String textoNombre, int indexCurso) {
         //Creamos una lista temporal de los libros para realizar la busqueda
         List<Libro> listaFiltroLibros = listaLibros;
 
@@ -2271,11 +2271,11 @@ public class FrameLibro extends javax.swing.JFrame {
             n = "1";
         }
 
-        if (cbAsignatura.getItemCount() > 0) {
-            cursoSeleccionado = (Curso) cbCursoBuscar.getSelectedItem();
+        if (indexCurso != 0) {
+            cursoSeleccionado = listaCursos.get(indexCurso - 1);
         }
 
-        if (cursoSeleccionado == null || cursoSeleccionado.getCodigo().equals("Todos")) {
+        if (indexCurso == 0) {
             c = "0";
         } else {
             c = "1";
@@ -2283,7 +2283,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         resFiltro = n + c;
 
-        System.out.println("ResFiltro" + resFiltro);
+        System.out.println("ResFiltro: " + resFiltro);
         //</editor-fold>
 
         //Si tenemos mas de 0 libros:
