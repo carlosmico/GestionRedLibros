@@ -21,7 +21,6 @@ import Daos.*;
 import Pojos.*;
 import Renders.comboBoxRender;
 import Utilidades.*;
-import excepciones.BusinessException;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -2256,7 +2255,7 @@ public class FrameLibro extends javax.swing.JFrame {
         }
 
         resFiltro = n + c;
-        
+
         System.out.println("ResFiltro" + resFiltro);
         //</editor-fold>
 

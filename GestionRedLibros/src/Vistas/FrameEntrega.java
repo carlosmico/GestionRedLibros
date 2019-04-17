@@ -75,12 +75,6 @@ public class FrameEntrega extends javax.swing.JFrame {
     public FrameEntrega() {
         initComponents();
 
-        //Centramos la pestaña al centro de la pantalla
-        this.setLocationRelativeTo(null);
-
-        //Maximizamos la pestaña
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
         //Inicializamos el DaoAlumno
         daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
         daoMatricula = new DaoMatricula(Main.gestorSesiones.getSession());
@@ -91,6 +85,12 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         //Inicializamos la lista de las matriculas entregadas
         listaMatriculasEntregadas = new ArrayList<>();
+
+        //Centramos la pestaña al centro de la pantalla
+        this.setLocationRelativeTo(null);
+
+        //Maximizamos la pestaña
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -115,6 +115,9 @@ public class FrameEntrega extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         textNIAAlumno = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        textNombreAlumno = new javax.swing.JLabel();
+        textCurso = new javax.swing.JLabel();
         panelGestionAsignaturas = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         panelTablas = new javax.swing.JPanel();
@@ -205,6 +208,8 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         panelInfoGeneral.setBackground(Colores.fondo);
         panelInfoGeneral.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        panelInfoGeneral.setMaximumSize(new java.awt.Dimension(300, 32767));
+        panelInfoGeneral.setPreferredSize(new java.awt.Dimension(227, 170));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
@@ -216,7 +221,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel4.setText("NIA del Alumno:");
+        jLabel4.setText("Curso:");
 
         textNIAAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         textNIAAlumno.setForeground(new java.awt.Color(51, 51, 51));
@@ -226,6 +231,18 @@ public class FrameEntrega extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
         jLabel9.setText("Detalles Matrícula:");
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel7.setText("Alumno:");
+
+        textNombreAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textNombreAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textNombreAlumno.setText("Nombre");
+
+        textCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textCurso.setForeground(new java.awt.Color(51, 51, 51));
+        textCurso.setText("jLabel10");
+
         javax.swing.GroupLayout panelInfoGeneralLayout = new javax.swing.GroupLayout(panelInfoGeneral);
         panelInfoGeneral.setLayout(panelInfoGeneralLayout);
         panelInfoGeneralLayout.setHorizontalGroup(
@@ -233,24 +250,35 @@ public class FrameEntrega extends javax.swing.JFrame {
             .addGroup(panelInfoGeneralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textNIAAlumno))
                     .addComponent(jLabel9)
                     .addGroup(panelInfoGeneralLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelInfoGeneralLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textCursoEscolar))
+                            .addComponent(textNombreAlumno)
                             .addGroup(panelInfoGeneralLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textNIAAlumno)))))
-                .addContainerGap(36, Short.MAX_VALUE))
+                                .addComponent(textCurso))
+                            .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textCursoEscolar)))))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         panelInfoGeneralLayout.setVerticalGroup(
             panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInfoGeneralLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(textNIAAlumno))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textNombreAlumno)
+                .addGap(48, 48, 48)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -259,7 +287,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(textNIAAlumno))
+                    .addComponent(textCurso))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -345,8 +373,8 @@ public class FrameEntrega extends javax.swing.JFrame {
                         .addGroup(panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
-                                .addGap(0, 825, Short.MAX_VALUE))
-                            .addComponent(panelTablas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(panelTablas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1071, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         panelGestionAsignaturasLayout.setVerticalGroup(
@@ -366,13 +394,13 @@ public class FrameEntrega extends javax.swing.JFrame {
         panelSiAlumnoLayout.setHorizontalGroup(
             panelSiAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelSiAlumnoLayout.createSequentialGroup()
-                .addComponent(panelInfoGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelSiAlumnoLayout.setVerticalGroup(
             panelSiAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
             .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -481,9 +509,15 @@ public class FrameEntrega extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowActivated
 
+    /**
+     * Controlamos cuando cerrmaos
+     *
+     * @param evt
+     */
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
         daoAlumno.desconectar();
+        daoMatricula.desconectar();
     }//GEN-LAST:event_formWindowClosed
 
     /**
@@ -535,6 +569,7 @@ public class FrameEntrega extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
@@ -549,8 +584,10 @@ public class FrameEntrega extends javax.swing.JFrame {
     private javax.swing.JPanel panelTitulo;
     public static javax.swing.JTable tablaPendientes;
     public static javax.swing.JTable tableEntregados;
+    private javax.swing.JLabel textCurso;
     private javax.swing.JLabel textCursoEscolar;
     private javax.swing.JLabel textNIAAlumno;
+    private javax.swing.JLabel textNombreAlumno;
     // End of variables declaration//GEN-END:variables
 
     private void rellenarTablaPendiente(List<Matricula> listaMatriculas) {
@@ -633,11 +670,15 @@ public class FrameEntrega extends javax.swing.JFrame {
 
                 listaMatriculas = daoMatricula.buscarPendientes(alumno, getFecha());
 
-                textNIAAlumno.setText(alumno.getNia());
-
                 if (listaMatriculas.size() > 0) {
 
-                    textCursoEscolar.setText(getFecha() + "");
+                    textNIAAlumno.setText(alumno.getNia());
+                    textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
+                    textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
+
+                    textCursoEscolar.setText(getFecha() + "-" + (getFecha() + 1));
+                    
+                    textCurso.setText(listaMatriculas.get(0).getContenido().getCurso().getAbreviatura());
 
                     rellenarTablaPendiente(listaMatriculas);
 
