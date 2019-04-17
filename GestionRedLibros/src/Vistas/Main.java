@@ -374,16 +374,29 @@ public class Main extends javax.swing.JFrame {
         if (framePopup == null) {
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
                 protected Void doInBackground() throws InterruptedException {
-
+                    String ip, usuario, password;
+                    int puerto;
+                    
                     try {
+                        ip = Configuracion.getIp();
+                        puerto = Integer.parseInt(Configuracion.getPuerto());
+                        usuario = Configuracion.getUsuario();
+                        password = Configuracion.getPassword();
+                        
                         ComprobarConexion.comprobarConexion(
-                                Configuracion.getIp(),
-                                Integer.parseInt(Configuracion.getPuerto()),
+                                ip,
+                                puerto,
                                 "institut",
-                                Configuracion.getUsuario(),
-                                Configuracion.getPassword());
+                                usuario,
+                                password);
+                        
+                        gestorSesiones = new GestorSesiones();
+                        
+                        gestorSesiones.configurarPropiedades(ip, puerto, usuario, password);
+                        
                         existeConexion = true;
                     } catch (Exception e) {
+                        e.printStackTrace();
                         existeConexion = false;
                     }
 
@@ -393,8 +406,6 @@ public class Main extends javax.swing.JFrame {
                 protected void done() {
                     if (existeConexion) {
                         System.out.println("Conexión con el servidor correcta!");
-
-                        gestorSesiones = new GestorSesiones();
 
                         frameCarga.dispose();
 

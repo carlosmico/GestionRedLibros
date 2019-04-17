@@ -40,8 +40,11 @@ import javax.swing.*;
 public class FrameLibro extends javax.swing.JFrame {
 
     boolean modoEdicion = false;
+    boolean primeraEjecucion = true;
 
     public int contadorEjemplar;
+
+    private Curso cursoSeleccionado = null;
 
     private String placeHolderCodigo = "Introduce o escanea codigo…",
             placeHolderNombre = "Introduce nombre…";
@@ -57,7 +60,7 @@ public class FrameLibro extends javax.swing.JFrame {
     public Thread animacion = null;
     private boolean boolAnimacion = false;
 
-    private Libro libro, oldLibro;
+    private Libro libro;
 
     private List<Libro> listaLibros;
     private List<Curso> listaCursos;
@@ -1657,8 +1660,6 @@ public class FrameLibro extends javax.swing.JFrame {
      * Activamos los campos del Libro para poder editarlo.
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        rellenarCamposLibro();
-
         setEditMode(true);
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -1701,8 +1702,6 @@ public class FrameLibro extends javax.swing.JFrame {
         // TODO add your handling code here:
         filtroListaLibro(textNombreLibroBusqueda.getText(), (Curso) cbCursoBuscar.getSelectedItem());
 
-        libro = null;
-
         rellenarCamposLibro();
     }//GEN-LAST:event_cbCursoBuscarItemStateChanged
 
@@ -1736,7 +1735,7 @@ public class FrameLibro extends javax.swing.JFrame {
         if (!modoEdicion) {
 
             jlistLibros.clearSelection();
-            oldLibro = libro;
+
             libro = null;
 
             showEjemplarPanel(libro != null);
@@ -1850,33 +1849,33 @@ public class FrameLibro extends javax.swing.JFrame {
 
             if (errores.equals("")) {
                 //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
-                Libro newLibro = new Libro();
-
-                newLibro.setCodigo(textCodigoLibro.getText().toUpperCase());
-                newLibro.setISBN(textISBNLibro.getText());
-                newLibro.setNombre(textNombreLibro.getText());
-                newLibro.setObsoleto(chkObsoletoLibro.isSelected());
-                newLibro.setPrecio(Double.parseDouble(textPrecioLibro.getText()));
-                newLibro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
-                newLibro.setContenido((Contenido) cbAsignatura.getSelectedItem());
 
                 try {
-                    daoLibro.grabar(newLibro);
+                    libro = new Libro();
 
-                    new FramePopup("Libro añadido correctamente.",
-                            Imagenes.getImagen(this, "check-black.png"),
-                            "Aceptar").setVisible(true);
+                    libro.setCodigo(textCodigoLibro.getText().toUpperCase());
+                    libro.setISBN(textISBNLibro.getText());
+                    libro.setNombre(textNombreLibro.getText());
+                    libro.setObsoleto(chkObsoletoLibro.isSelected());
+                    libro.setPrecio(Double.parseDouble(textPrecioLibro.getText()));
+                    libro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
+                    libro.setContenido((Contenido) cbAsignatura.getSelectedItem());
+
+                    daoLibro.grabar(libro);
 
                     cargarDatos();
 
                     setEditMode(false);
 
-                    libro = newLibro;
+                    rellenarCamposLibro();
 
-                    showEjemplarPanel(libro != null);
+                    showEjemplarPanel(true);
                     contadorEjemplar = 1;
                     rellenarCamposEjemplares();
 
+                    new FramePopup("Libro añadido correctamente.",
+                            Imagenes.getImagen(this, "check-black.png"),
+                            "Aceptar").setVisible(true);
                 } catch (PersistenceException e) {
                     JOptionPane.showMessageDialog(this,
                             "El libro ya existe en la Base de Datos.", "Error",
@@ -1893,31 +1892,39 @@ public class FrameLibro extends javax.swing.JFrame {
                         "Revise los siguientes errores: \n" + errores, "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
-
         } else {
             //Modificacion de un libro existente
 
             if (errores.equals("")) {
                 //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
-
-                int unidadesOld = libro.getUnidades();
-
-                libro.setCodigo(textCodigoLibro.getText());
-                libro.setISBN(textISBNLibro.getText());
-                libro.setNombre(textNombreLibro.getText());
-                libro.setObsoleto(chkObsoletoLibro.isSelected());
-                libro.setPrecio(Double.parseDouble(textPrecioLibro.getText()));
-                libro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
-                libro.setContenido((Contenido) cbAsignatura.getSelectedItem());
-
                 try {
+                    int unidadesOld = libro.getUnidades();
+
+                    libro.setCodigo(textCodigoLibro.getText());
+                    libro.setISBN(textISBNLibro.getText());
+                    libro.setNombre(textNombreLibro.getText());
+                    libro.setObsoleto(chkObsoletoLibro.isSelected());
+                    libro.setPrecio(Double.parseDouble(textPrecioLibro.getText()));
+                    libro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
+                    libro.setContenido((Contenido) cbAsignatura.getSelectedItem());
+
                     daoLibro.actualizar(unidadesOld, libro);
 
+                    cargarDatos();
+
+                    setEditMode(false);
+
+                    rellenarCamposLibro();
+
+                    contadorEjemplar = 1;
+                    rellenarCamposEjemplares();
+
+                    showEjemplarPanel(true);
+
+                    //seleccionaLibro();
                     JOptionPane.showMessageDialog(this,
                             "Libro actualizado correctamente.", "Información",
                             JOptionPane.INFORMATION_MESSAGE);
-
-                    setEditMode(false);
                 } catch (PersistenceException e) {
                     JOptionPane.showMessageDialog(this,
                             "El libro ya existe en la Base de Datos.", "Error",
@@ -1947,11 +1954,12 @@ public class FrameLibro extends javax.swing.JFrame {
      * vaciamos los campos
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        libro = oldLibro;
 
         try {
             boolAnimacion = false;
-            animacion.join();
+            if (animacion != null) {
+                animacion.join();
+            }
             showEjemplarPanel(false);
         } catch (InterruptedException ex) {
             Logger.getLogger(FrameLibro.class.getName()).log(Level.SEVERE, null, ex);
@@ -2220,9 +2228,15 @@ public class FrameLibro extends javax.swing.JFrame {
 
             protected void done() {
                 //Aplicamos el filtro
+                if(libro == null);
+                
                 sustituirPadresCursos();
 
-                rellenaCursosBusqueda();
+                if (primeraEjecucion) {
+                    rellenaCursosBusqueda();
+                    
+                    primeraEjecucion = false;
+                }
 
                 filtroListaLibro(textNombreLibro.getText(), (Curso) cbCursoBuscar.getSelectedItem());
 
@@ -2256,9 +2270,11 @@ public class FrameLibro extends javax.swing.JFrame {
             n = "1";
         }
 
-        Curso cursoSeleccionado = (Curso) cbCursoBuscar.getSelectedItem();
+        if (cbAsignatura.getItemCount() > 0) {
+            cursoSeleccionado = (Curso) cbCursoBuscar.getSelectedItem();
+        }
 
-        if (cursoSeleccionado.getCodigo().equals("Todos") || cursoSeleccionado == null) {
+        if (cursoSeleccionado == null || cursoSeleccionado.getCodigo().equals("Todos")) {
             c = "0";
         } else {
             c = "1";
@@ -2358,10 +2374,6 @@ public class FrameLibro extends javax.swing.JFrame {
             frameCarga.setVisible(true);
         } else {
             //No se ha insertado ningun valor en el campo de texto
-
-            libro = null;
-
-            rellenarCamposLibro();
 
             JOptionPane.showMessageDialog(FrameLibro.this,
                     "El código no puede ser un campo vacío.",
@@ -2655,6 +2667,15 @@ public class FrameLibro extends javax.swing.JFrame {
 
         if (!b) {
             textEjemplarNotificacion.setText("Selecciona un libro para ver sus ejemplares");
+        }
+    }
+
+    /**
+     * Metodo para seleccionar el libro actual en la lista lateral izquierda
+     */
+    private void seleccionaLibro() {
+        if (libro != null) {
+            jlistLibros.setSelectedValue(libro, true);
         }
     }
 }
