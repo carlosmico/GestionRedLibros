@@ -25,13 +25,14 @@ import javax.swing.ImageIcon;
  *
  * @author Jose Sanchis
  */
-public class FramePopup extends javax.swing.JFrame {
+public class FramePopup extends javax.swing.JDialog {
 
     /**
      * Crea el nuevo formulario FramePopup. (No se cierra por si solo)
      */
     public FramePopup() {
         initComponents();
+        setModal(true);
         panelButton.setVisible(false);
         pack();
         this.setLocationRelativeTo(null);
@@ -45,6 +46,7 @@ public class FramePopup extends javax.swing.JFrame {
      */
     public FramePopup(String mensaje) {
         initComponents();
+        setModal(true);
         text.setText(mensaje);
         panelButton.setVisible(false);
         pack();
@@ -60,6 +62,7 @@ public class FramePopup extends javax.swing.JFrame {
      */
     public FramePopup(String mensaje, ImageIcon icon) {
         initComponents();
+        setModal(true);
         text.setText(mensaje);
         text.setIcon(icon);
         panelButton.setVisible(false);
@@ -78,6 +81,7 @@ public class FramePopup extends javax.swing.JFrame {
      */
     public FramePopup(String mensaje, ImageIcon icon, String buttonText) {
         initComponents();
+        setModal(true);
         text.setText(mensaje);
         text.setIcon(icon);
         btnButton2.setText(buttonText);
@@ -98,6 +102,7 @@ public class FramePopup extends javax.swing.JFrame {
      */
     public FramePopup(String mensaje, ImageIcon icon, String buttonText, Action action) {
         initComponents();
+        setModal(true);
         text.setText(mensaje);
         text.setIcon(icon);
         btnButton2.setText(buttonText);
@@ -117,6 +122,7 @@ public class FramePopup extends javax.swing.JFrame {
      */
     public FramePopup(String mensaje, ImageIcon icon, Action action) {
         initComponents();
+        setModal(true);
         text.setText(mensaje);
         text.setIcon(icon);
         btnButton2.addActionListener(action);
@@ -124,7 +130,7 @@ public class FramePopup extends javax.swing.JFrame {
         pack();
         this.setLocationRelativeTo(null);
     }
-    
+
     /**
      * Crea el nuevo formulario FramePopup con texto, icono y botón
      * personalizado. (Si puede cerrarse desde el mismo formulario)
@@ -138,6 +144,7 @@ public class FramePopup extends javax.swing.JFrame {
      */
     public FramePopup(String mensaje, ImageIcon icon, String button1, String button2, Action actionButton1, Action actionButton2) {
         initComponents();
+        setModal(true);
         text.setText(mensaje);
         text.setIcon(icon);
         btnButton1.setText(button1);

@@ -27,7 +27,7 @@ import javax.swing.SwingWorker;
  *
  * @author Jose Sanchis
  */
-public class FrameInputAlumno extends javax.swing.JFrame {
+public class FrameInputAlumno extends javax.swing.JDialog {
 
     public boolean isLoading = false;
 
@@ -42,6 +42,8 @@ public class FrameInputAlumno extends javax.swing.JFrame {
      */
     public FrameInputAlumno() {
         initComponents();
+        
+        setModal(true);
 
         //Limpiamos el texto de error
         textErrorBusqueda.setText("");
