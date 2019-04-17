@@ -2049,7 +2049,7 @@ public class FrameLibro extends javax.swing.JFrame {
         try {
             cb.imprimirIndividual(ejemplarActual, cb.generarCodigoIndividual(ejemplarActual.getCodigo()));
         } catch (Exception e) {
-            new FramePopup("chupala puta").setVisible(true);
+            new FramePopup("No se ha podido imprimir el codigo").setVisible(true);
         }
     }//GEN-LAST:event_btnImprimirEtiquetaEjemplarActionPerformed
 

@@ -39,6 +39,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.SwingWorker;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -876,7 +877,7 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
         });
 
         btnAceptar.setBackground(Colores.buttons);
-        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/check.png"))); // NOI18N
+        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/check-white.png"))); // NOI18N
         btnAceptar.setText("Aceptar");
         btnAceptar.setCornerRound(10);
         btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -902,7 +903,7 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelBotoneraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1209,10 +1210,17 @@ public class FrameConfirmacionEntrega extends javax.swing.JFrame {
 
     private void rellenarEjemplar() {
         CodigoBarras cb = new CodigoBarras();
-        ImageIcon icon = cb.getImage(cb.generarCodigoIndividual(ejemplar.getCodigo()), 400, 120);
-        imgCodigo.setIcon(icon);
         textCodigo.setText(ejemplar.getCodigo());
         textTituloLibro.setText(ejemplar.getLibro().getNombre());
+        try {
+            ImageIcon icon = cb.getImage(cb.generarCodigoIndividual(ejemplar.getCodigo()), 400, 120);
+            imgCodigo.setIcon(icon);
+        } catch (Exception e) {
+            new FramePopup("Error al conseguir el codigo de barras de los ejemplares",
+                    new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                    "Aceptar");
+        }
+
         setEstado(ejemplar.getEstado());
     }
 
