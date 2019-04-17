@@ -21,11 +21,11 @@ import Daos.DaoAlumno;
 import Daos.DaoMatricula;
 import Pojos.Alumno;
 import Pojos.Matricula;
-import Renders.tableRender;
+import Renders.RemarcarCeldas;
 import Utilidades.ButtonColumn;
 import Utilidades.Colores;
 import Utilidades.Imagenes;
-import Utilidades.tableEditor;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -78,7 +78,9 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         //Deshabilitamos la edicion de las celdas en las tablas
         tablaPendientes.setDefaultEditor(Object.class, null);
+        tablaPendientes.getTableHeader().setReorderingAllowed(false);
         tableEntregados.setDefaultEditor(Object.class, null);
+        tableEntregados.getTableHeader().setReorderingAllowed(false);
 
         //Inicializamos la lista de las matriculas entregadas
         listaMatriculasEntregadas = new ArrayList<>();
@@ -606,19 +608,21 @@ public class FrameEntrega extends javax.swing.JFrame {
         //DefaultTableModel tableModel = (DefaultTableModel) tablaPendientes.getModel();
 
         //tableModel.setRowCount(0);
+        //<editor-fold defaultstate="collapsed" desc="Rellenamos la lista que servirá para colorear los cursos a repetir">
         Object[][] contenidoTabla = new Object[listaMatriculas.size()][4];
 
         for (int i = 0; i < listaMatriculas.size(); i++) {
-            contenidoTabla[i][0] = listaMatriculas.get(i).getContenido().getNombre_cas();
-            contenidoTabla[i][1] = listaMatriculas.get(i).getContenido().getCurso().getAbreviatura();
-
-            if (listaMatriculas.get(i).getIdioma().equals(" ")) {
-                contenidoTabla[i][2] = "Por defecto";
-            } else {
-                contenidoTabla[i][2] = listaMatriculas.get(i).getIdioma();
-            }
+            contenidoTabla[i][0] = listaMatriculas.get(i);
+            contenidoTabla[i][1] = listaMatriculas.get(i);
+            contenidoTabla[i][2] = listaMatriculas.get(i);
             contenidoTabla[i][3] = "";
         }
+//</editor-fold>
+
+        DefaultTableModel tableModel = new DefaultTableModel(contenidoTabla,
+                new Object[]{"Asignaturas", "Curso", "Idioma", "Gestión"});
+
+        tablaPendientes.setModel(tableModel);
 
         Action entrega = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
@@ -630,20 +634,21 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
         };
 
-        DefaultTableModel tableModel = new DefaultTableModel(contenidoTabla,
-                new Object[]{"Asignaturas", "Curso", "Idioma", "Gestión"});
-        
-        TableColumn agregarColumna;
-        agregarColumna = tablaPendientes.getColumnModel().getColumn(0);
-        agregarColumna.setCellEditor(new tableEditor(tablaPendientes));
-        agregarColumna.setCellRenderer(new tableRender(entrega));
-        
-        
-        /*tableModel.setDataVector(
-         contenidoTabla,
-         new Object[]{"Asignaturas", "Curso", "Idioma", ""}
-         );*/ //ButtonColumn buttonColumn = new ButtonColumn(tablaPendientes, entrega, tableModel.getColumnCount() - 1);
-        //tablaPendientes.setModel(tableModel);
+        //<editor-fold defaultstate="collapsed" desc="Edicion visual de la tabla">
+        TableColumnModel tcm = tablaPendientes.getColumnModel();
+        tcm.getColumn(0).setPreferredWidth(300);
+        tcm.getColumn(0).setMaxWidth(300);
+
+        tcm.getColumn(3).setMaxWidth(75);
+        tcm.getColumn(3).setMinWidth(75);
+//</editor-fold>
+
+        RemarcarCeldas remarcarCeldas = new RemarcarCeldas();
+
+        for (int i = 0; i < tableModel.getColumnCount() - 1; i++) {
+            tcm.getColumn(i).setCellRenderer(remarcarCeldas);
+        }
+        ButtonColumn buttonColumn = new ButtonColumn(tablaPendientes, entrega, tableModel.getColumnCount() - 1);
     }
 
     /**

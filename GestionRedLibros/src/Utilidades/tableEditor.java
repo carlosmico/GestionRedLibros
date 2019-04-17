@@ -17,11 +17,14 @@
  */
 package Utilidades;
 
+import Pojos.Matricula;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.AbstractCellEditor;
+import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
@@ -37,11 +40,13 @@ public class tableEditor extends AbstractCellEditor implements TableCellEditor, 
     protected static final String EDIT = "edit";
     private JTable jTable1;
 
-    public tableEditor(JTable jTable1) {
+    public tableEditor(JTable jTable1, Action action) {
         button = new JButton();
+        button.setAction(action);
         button.setActionCommand(EDIT);
         button.addActionListener(this);
         button.setBorderPainted(false);
+        
         this.jTable1 = jTable1;
     }
 
