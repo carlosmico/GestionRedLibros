@@ -160,32 +160,79 @@ public class CodigoBarras {
         int contador = 32, contadorCeldas = 1;
 
         PdfPTable table = new PdfPTable(2);
-        
+
         PdfPCell cell;
 
-        for (int i = 0; i < barcodes.size(); i++) {
+        int iteracion = (barcodes.size() * 2) + 4;
+
+        for (int i = 0; i < iteracion; i++) {
+            int nEjemplar;
+
+            if (i % 2 == 0) {
+                nEjemplar = (i / 2) - 1;
+            } else {
+                nEjemplar = (i / 2);
+            }
+
             if (contador == 0) {
                 contador = 32;
                 doc.newPage();
             }
 
             if (contadorCeldas <= 2) {
-                cell = new PdfPCell(new Phrase(libro.getContenido().getNombre_cas()));
-                
+                if ((iteracion - 5) == i) {
+                    cell = new PdfPCell(new Phrase(" "));
+                } else {
+                    cell = new PdfPCell(new Phrase(libro.getContenido().getNombre_cas()));
+                }
+
                 cell.setBorder(0);
-                
+
                 table.addCell(cell);
 
                 if (contadorCeldas == 2) {
                     table.completeRow();
                 }
+
             } else if (contadorCeldas <= 4) {
-                Image codeImg = barcodes.get(i).createImageWithBarcode(pdf.getDirectContent(), BaseColor.BLACK, BaseColor.BLACK);
-                
+                if (nEjemplar >= barcodes.size()) {
+                    if (nEjemplar % 2 != 0) {
+                        if ((iteracion - 3) == i) {
+                            cell = new PdfPCell(new Phrase(" "));
+                        } else {
+                            Image codeImg = barcodes.get(nEjemplar - 1).createImageWithBarcode(pdf.getDirectContent(), BaseColor.BLACK, BaseColor.BLACK);
+
+                            cell = new PdfPCell(codeImg);
+                        }
+
+                        cell.setBorder(0);
+
+                        table.addCell(cell);
+
+                        if (contadorCeldas == 4) {
+                            table.completeRow();
+
+                            doc.add(table);
+                            table = new PdfPTable(2);
+
+                            contadorCeldas = 0;
+                        }
+                    }
+                    
+                    doc.close();
+
+                    os.close();
+
+                    Desktop.getDesktop().open(new File(rutapdf));
+                    return;
+                }
+
+                Image codeImg = barcodes.get(nEjemplar).createImageWithBarcode(pdf.getDirectContent(), BaseColor.BLACK, BaseColor.BLACK);
+
                 cell = new PdfPCell(codeImg);
-                
+
                 cell.setBorder(0);
-                
+
                 table.addCell(cell);
 
                 if (contadorCeldas == 4) {
@@ -202,11 +249,6 @@ public class CodigoBarras {
             contadorCeldas++;
         }
 
-        doc.close();
-
-        os.close();
-
-        Desktop.getDesktop().open(new File(rutapdf));
     }
 
     /**
