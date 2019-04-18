@@ -1884,18 +1884,18 @@ public class FrameLibro extends javax.swing.JFrame {
                             "Aceptar").setVisible(true);
                 } catch (PersistenceException e) {
                     new FramePopup("El libro ya existe en la Base de Datos.",
-                            Imagenes.getImagen(this, "alert-black.png"),
+                            Imagenes.getImagen("alert-black.png"),
                             "Aceptar").setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                     new FramePopup("Error al crear el libro.",
-                            Imagenes.getImagen(this, "alert-black.png"),
+                            Imagenes.getImagen("alert-black.png"),
                             "Aceptar").setVisible(true);
                 }
             } else {
                 new FramePopup("<html>Revise los siguientes errores: <br>"
                         + errores + "</html>",
-                        Imagenes.getImagen(this, "alert-black.png"),
+                        Imagenes.getImagen("alert-black.png"),
                         "Aceptar").setVisible(true);
             }
         } else {
@@ -1928,21 +1928,21 @@ public class FrameLibro extends javax.swing.JFrame {
                     showEjemplarPanel(true);
 
                     new FramePopup("Libro actualizado correctamente.",
-                            Imagenes.getImagen(this, "check-black.png"),
+                            Imagenes.getImagen("check-black.png"),
                             "Aceptar").setVisible(true);
                 } catch (PersistenceException e) {
                     new FramePopup("El libro ya existe en la Base de Datos.",
-                            Imagenes.getImagen(this, "alert-black.png"),
+                            Imagenes.getImagen("alert-black.png"),
                             "Aceptar").setVisible(true);
                 } catch (Exception e) {
                     new FramePopup("Error al actualizar el libro.",
-                            Imagenes.getImagen(this, "alert-black.png"),
+                            Imagenes.getImagen("alert-black.png"),
                             "Aceptar").setVisible(true);
                 }
             } else {
                 new FramePopup("<html>Revise los siguientes errores: <br>"
                         + errores + "</html>",
-                        Imagenes.getImagen(this, "alert-black.png"),
+                        Imagenes.getImagen("alert-black.png"),
                         "Aceptar").setVisible(true);
             }
         }
@@ -2383,7 +2383,7 @@ public class FrameLibro extends javax.swing.JFrame {
             //No se ha insertado ningun valor en el campo de texto
 
             new FramePopup("El código no puede ser un campo vacío.",
-                    Imagenes.getImagen(this, "alert-black.png"),
+                    Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
     }
@@ -2522,7 +2522,7 @@ public class FrameLibro extends javax.swing.JFrame {
             }
         } else {
             new FramePopup("No hay cursos en la base de datos.",
-                    Imagenes.getImagen(this, "alert-black.png"),
+                    Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
     }
@@ -2542,7 +2542,7 @@ public class FrameLibro extends javax.swing.JFrame {
             rellenarContenidosLibro();
         } else {
             new FramePopup("No hay cursos en la base de datos.",
-                    Imagenes.getImagen(this, "alert-black.png"),
+                    Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
     }
