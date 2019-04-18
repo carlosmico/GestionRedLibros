@@ -31,24 +31,26 @@ import org.hibernate.Session;
  *
  * @author Carlos
  */
-public class DaoEjemplar extends DaoGenerico<Ejemplar, Integer> implements InterfaceDaoGenerico<Ejemplar, Integer>{
+public class DaoEjemplar extends DaoGenerico<Ejemplar, Integer> implements InterfaceDaoGenerico<Ejemplar, Integer> {
 
     /**
-     *  Variable de sesion para cualquier acción con la BD
+     * Variable de sesion para cualquier acción con la BD
      */
     public Session session;
-    
+
     /**
-     *  Constructor del DaoEjemplar que recibe una sesion
+     * Constructor del DaoEjemplar que recibe una sesion
+     *
      * @param s
      */
-    public DaoEjemplar(Session s){
+    public DaoEjemplar(Session s) {
         this.session = s;
     }
-    
+
     /**
-     *  Metodo para actualizar un Ejemplar en la BD
-     *  @param e
+     * Metodo para actualizar un Ejemplar en la BD
+     *
+     * @param e
      */
     @Override
     public void actualizar(Ejemplar e) throws PersistenceException {
@@ -60,18 +62,19 @@ public class DaoEjemplar extends DaoGenerico<Ejemplar, Integer> implements Inter
             ejemplar.setPrestado(e.isPrestado());
 
             this.session.beginTransaction();
-            
+
             this.session.saveOrUpdate(ejemplar);
 
             this.session.getTransaction().commit();
         } catch (PersistenceException ex) {
             this.session.getTransaction().commit();
-            throw new PersistenceException();
+            throw ex;
         }
     }
-    
+
     /**
-     *  Metodo para obtener un Ejemplar mediante su Codigo en la BD
+     * Metodo para obtener un Ejemplar mediante su Codigo en la BD
+     *
      * @param codigo
      * @return
      * @throws PersistenceException
@@ -79,38 +82,34 @@ public class DaoEjemplar extends DaoGenerico<Ejemplar, Integer> implements Inter
     public Ejemplar buscar(String codigo) throws PersistenceException {
         Ejemplar ejemplar;
 
-        try {
-            ejemplar = (Ejemplar) this.session.get(Ejemplar.class, codigo);
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-            throw new PersistenceException();
-        }
-        
+        ejemplar = (Ejemplar) this.session.get(Ejemplar.class, codigo);
+
         return ejemplar;
     }
-    
+
     /**
-     *  Metodo para obtener una lista de todos los Ejemplares de la BD
+     * Metodo para obtener una lista de todos los Ejemplares de la BD
      */
-    public List<Ejemplar> buscarTodos(){
+    public List<Ejemplar> buscarTodos() {
         List<Ejemplar> lista = new ArrayList<Ejemplar>();
-        
+
         Query query = this.session.createQuery("from Ejemplar");
         lista = query.list();
-        
+
         return lista;
     }
-    
+
     /**
-     *  Metodo para desconectar la sesion del DAO
+     * Metodo para desconectar la sesion del DAO
      */
     @Override
-    public void desconectar(){
-        if(this.session != null){
-            try{
+    public void desconectar() {
+        if (this.session != null) {
+            try {
                 this.session.close();
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Error DaoEjemplar-desconectar()");
+                throw e;
             }
         }
     }

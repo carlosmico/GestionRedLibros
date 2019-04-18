@@ -94,7 +94,7 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
 
                 ex.printStackTrace();
                 System.out.println("Error DaoMatricula-actualizar(): " + ex.getMessage());
-                throw new Exception();
+                throw ex;
             }
         }
     }
@@ -171,7 +171,7 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
 
         return lista;
     }
-    
+
     /**
      * Metodo para obtener una lista de Matriculas filtrando por el alumno,
      * cursoescolar, curso, contenido. (Pendientes de asignar libros).
@@ -182,26 +182,26 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
     public List<Matricula> buscarPendientes(Alumno alumno, int curso_escolar) {
         List<Matricula> lista = new ArrayList<Matricula>();
 
-        Query query = this.session.createQuery("from Matricula where alumno=" + 
-                alumno.getNia() + " and curso_escolar=" + curso_escolar);
+        Query query = this.session.createQuery("from Matricula where alumno="
+                + alumno.getNia() + " and curso_escolar=" + curso_escolar);
         lista = query.list();
-        
+
         DaoHistorial daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
-        
+
         List<Historial> historiales = daoHistorial.buscarPorAlumno(alumno);
-        
+
         for (int i = 0; i < lista.size(); i++) {
             Matricula m = lista.get(i);
-            
+
             for (int j = 0; j < historiales.size(); j++) {
                 Historial h = historiales.get(j);
-                
+
                 if (m.getCurso_escolar() == h.getCurso_escolar() && m.getContenido().getId() == h.getEjemplar().getLibro().getContenido().getId()) {
                     lista.remove(m);
                 }
             }
         }
-        
+
         daoHistorial.desconectar();
 
         return lista;
@@ -229,6 +229,7 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                 this.session.close();
             } catch (Exception e) {
                 System.out.println("Error DaoMatriucla-desconectar()");
+                throw e;
             }
         }
     }

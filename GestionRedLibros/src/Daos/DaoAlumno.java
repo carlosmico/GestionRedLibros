@@ -31,22 +31,24 @@ import org.hibernate.Session;
  * @author Carlos
  */
 public class DaoAlumno extends DaoGenerico<Alumno, String> implements InterfaceDaoGenerico<Alumno, String> {
-    
+
     /**
-     *  Variable de sesion utilizada para cualquier accion con la BD
+     * Variable de sesion utilizada para cualquier accion con la BD
      */
     public Session session;
-    
+
     /**
-     *  Constructor del DaoAlumno que recibe una sesion
+     * Constructor del DaoAlumno que recibe una sesion
+     *
      * @param s
      */
-    public DaoAlumno(Session s){
+    public DaoAlumno(Session s) {
         this.session = s;
     }
-    
+
     /**
-     *  Metodo para actualizar una lista de Alumnos en la BD
+     * Metodo para actualizar una lista de Alumnos en la BD
+     *
      * @param alumnos
      * @throws Exception
      */
@@ -96,13 +98,14 @@ public class DaoAlumno extends DaoGenerico<Alumno, String> implements InterfaceD
 
                 e.printStackTrace();
                 System.out.println("Error DaoAlumno-actualizar(): " + e.getMessage());
-                throw new Exception();
+                throw e;
             }
         }
     }
 
     /**
      * Metodo para buscar un Alumno mediante su NIA en la BD
+     *
      * @param nia
      * @return
      * @throws PersistenceException
@@ -110,43 +113,33 @@ public class DaoAlumno extends DaoGenerico<Alumno, String> implements InterfaceD
     public Alumno buscar(String nia) throws PersistenceException {
         Alumno alumno = null;
 
-        try {
-            alumno = (Alumno) this.session.get(Alumno.class, nia);
+        alumno = (Alumno) this.session.get(Alumno.class, nia);
 
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-            throw new PersistenceException();
-        }
-        
         return alumno;
     }
-    
+
     /**
-     *  Metodo para obtener una lista de todos los Alumnos de la BD
+     * Metodo para obtener una lista de todos los Alumnos de la BD
      */
     public List<Alumno> buscarTodos() {
         List<Alumno> lista = new ArrayList<Alumno>();
 
-        try {
-            Query query = this.session.createQuery("from Alumno");
-            lista = query.list();
-
-        } catch (Exception ex) {
-            System.out.println("Error DaoAlumno-buscarTodos(): " + ex.getMessage());
-        }
+        Query query = this.session.createQuery("from Alumno");
+        lista = query.list();
 
         return lista;
     }
-    
+
     /**
-     *  Metodo para desconectar la sesion del DAO
+     * Metodo para desconectar la sesion del DAO
      */
-    public void desconectar(){
-        if(this.session != null){
-            try{
+    public void desconectar() {
+        if (this.session != null) {
+            try {
                 this.session.close();
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Error DaoAlumno-desconectar()");
+                throw e;
             }
         }
     }

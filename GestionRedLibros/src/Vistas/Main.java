@@ -30,7 +30,7 @@ public class Main extends javax.swing.JFrame {
 
     FrameDevoluciones frameDevoluciones;
     FrameEntrega frameEntrega;
-    FrameLibro frameLibros;
+    FrameLibro frameLibro;
     FrameOpciones frameOpciones;
     FramePopup frameCarga;
     FramePopup framePopup;
@@ -71,7 +71,7 @@ public class Main extends javax.swing.JFrame {
 //</editor-fold>
 
         //Carga de configuración inicial
-        compruebaConexionBD(true, this);
+        compruebaConexionBD(true, "Main");
     }
 
     /**
@@ -229,23 +229,26 @@ public class Main extends javax.swing.JFrame {
     private void btnDevolucionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucionesActionPerformed
         //Acción del botón de 'Devoluciones'
 
-        if (frameDevoluciones == null) {
-            //Si no existe la ventana la creamos
-            frameDevoluciones = new FrameDevoluciones();
-        } else {
-            if (!frameDevoluciones.isVisible()) {
-                //Si existe la ventana, y la hemos cerrado
-                //limpiamos la variable y creamos una ventana nueva
-                frameDevoluciones = null;
+        if (existeConexion) {
+            if (frameDevoluciones == null) {
+                //Si no existe la ventana la creamos
                 frameDevoluciones = new FrameDevoluciones();
             } else {
-                //Si la ventana esta abierta y queremos abrir otra
-                //creamos una nueva ventana
-                frameDevoluciones = new FrameDevoluciones();
+                if (!frameDevoluciones.isVisible()) {
+                    //Si existe la ventana, y la hemos cerrado
+                    //limpiamos la variable y creamos una ventana nueva
+                    frameDevoluciones = null;
+                    frameDevoluciones = new FrameDevoluciones();
+                } else {
+                    //Si la ventana esta abierta y queremos abrir otra
+                    //creamos una nueva ventana
+                    frameDevoluciones = new FrameDevoluciones();
+                }
             }
         }
+
         //Hacemos visible la ventana creada anteriormente
-        compruebaConexionBD(false, frameDevoluciones);
+        compruebaConexionBD(false, "FrameDevoluciones");
     }//GEN-LAST:event_btnDevolucionesActionPerformed
 
     /**
@@ -268,7 +271,7 @@ public class Main extends javax.swing.JFrame {
             frameEntrega.setVisible(true);
         }
 
-        compruebaConexionBD(false, frameEntrega);
+        compruebaConexionBD(false, "FrameEntrega");
     }//GEN-LAST:event_btnEntregaActionPerformed
 
     /**
@@ -295,20 +298,20 @@ public class Main extends javax.swing.JFrame {
      */
     private void btnLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibrosActionPerformed
         if (existeConexion) {
-            if (frameLibros == null) {
-                frameLibros = new FrameLibro();
+            if (frameLibro == null) {
+                frameLibro = new FrameLibro();
             } else {
-                if (!frameLibros.isVisible()) {
-                    frameLibros = null;
-                    frameLibros = new FrameLibro();
+                if (!frameLibro.isVisible()) {
+                    frameLibro = null;
+                    frameLibro = new FrameLibro();
                 } else {
-                    frameLibros = new FrameLibro();
+                    frameLibro = new FrameLibro();
                 }
             }
-            frameLibros.setVisible(true);
+            frameLibro.setVisible(true);
         }
 
-        compruebaConexionBD(false, frameLibros);
+        compruebaConexionBD(false, "FrameLibro");
     }//GEN-LAST:event_btnLibrosActionPerformed
 
     /**
@@ -317,7 +320,6 @@ public class Main extends javax.swing.JFrame {
      */
     private void btnAyduaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyduaActionPerformed
         //compruebaConexionBD();
-
         if (frameAyuda == null) {
             frameAyuda = new FrameAyuda();
         } else {
@@ -370,30 +372,30 @@ public class Main extends javax.swing.JFrame {
         });
     }
 
-    private void compruebaConexionBD(boolean main, JFrame frame) {
+    private void compruebaConexionBD(boolean main, String nombreFrame) {
         if (framePopup == null) {
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
                 protected Void doInBackground() throws InterruptedException {
                     String ip, usuario, password;
                     int puerto;
-                    
+
                     try {
                         ip = Configuracion.getIp();
                         puerto = Integer.parseInt(Configuracion.getPuerto());
                         usuario = Configuracion.getUsuario();
                         password = Configuracion.getPassword();
-                        
+
                         ComprobarConexion.comprobarConexion(
                                 ip,
                                 puerto,
                                 "institut",
                                 usuario,
                                 password);
-                        
+
                         gestorSesiones = new GestorSesiones();
-                        
+
                         gestorSesiones.configurarPropiedades(ip, puerto, usuario, password);
-                        
+
                         existeConexion = true;
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -409,7 +411,29 @@ public class Main extends javax.swing.JFrame {
 
                         frameCarga.dispose();
 
+                        JFrame frame = null;
+
                         if (!main) {
+                            switch (nombreFrame) {
+                                case "FrameLibro":
+                                    if (frameLibro == null) {
+                                        frame = new FrameLibro();
+                                    }
+                                    break;
+
+                                case "FrameEntrega":
+                                    if (frameEntrega == null) {
+                                        frame = new FrameEntrega();
+                                    }
+                                    break;
+
+                                case "FrameDevoluciones":
+                                    if (frameDevoluciones == null) {
+                                        frame = new FrameDevoluciones();
+                                    }
+                                    break;
+                            }
+
                             frame.setVisible(true);
                         }
 
@@ -429,6 +453,7 @@ public class Main extends javax.swing.JFrame {
 
                                 frameOpciones.setVisible(true);
                                 frameOpciones.setFocusable(true);
+                                frameOpciones.setAlwaysOnTop(true);
 
                                 framePopup = null;
                             }

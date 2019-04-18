@@ -34,12 +34,13 @@ import org.hibernate.query.Query;
 public class DaoContenido extends DaoGenerico<Contenido, Integer> implements InterfaceDaoGenerico<Contenido, Integer> {
 
     /**
-     *  Variable de sesion para cualquier accion con la BD
+     * Variable de sesion para cualquier accion con la BD
      */
     public Session session;
 
     /**
-     *  Constructor el DaoContenido que recibe una sesion
+     * Constructor el DaoContenido que recibe una sesion
+     *
      * @param s
      */
     public DaoContenido(Session s) {
@@ -47,7 +48,8 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
     }
 
     /**
-     *  Metodo para actualizar una lista de Contenidos en la BD
+     * Metodo para actualizar una lista de Contenidos en la BD
+     *
      * @param contenidos
      * @throws Exception
      */
@@ -59,7 +61,7 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
 
             try {
                 this.session.beginTransaction();
-                
+
                 if (contenido == null) {
                     contenido = new Contenido(c.getCurso(),
                             c.getCodigo(), c.getEnsenanza(), c.getNombre_cas(),
@@ -69,11 +71,11 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
                     contenido.setEnsenanza(c.getEnsenanza());
                     contenido.setNombre_cas(c.getNombre_cas());
                     contenido.setNombre_val(c.getNombre_val());
-                    
+
                 }
 
                 this.session.saveOrUpdate(contenido);
-                
+
                 this.session.getTransaction().commit();
 
             } catch (Exception e) {
@@ -81,13 +83,14 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
 
                 e.printStackTrace();
                 System.out.println("Error DaoContenido-actualizar(): " + e.getMessage());
-                throw new Exception();
+                throw e;
             }
         }
     }
 
     /**
-     *  Metodo para buscar un Contenido a través de su ID en la BD
+     * Metodo para buscar un Contenido a través de su ID en la BD
+     *
      * @param id
      * @return
      * @throws PersistenceException
@@ -95,18 +98,14 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
     public Contenido buscar(int id) throws PersistenceException {
         Contenido contenido;
 
-        try {
-            contenido = (Contenido) this.session.get(Contenido.class, id);
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-            throw new PersistenceException();
-        }
+        contenido = (Contenido) this.session.get(Contenido.class, id);
 
         return contenido;
     }
-    
+
     /**
-     *  Metodo para buscar un Contenido a través de su Codigo en la BD
+     * Metodo para buscar un Contenido a través de su Codigo en la BD
+     *
      * @param codigo
      * @return
      */
@@ -125,7 +124,8 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
     }
 
     /**
-     *  Metodo para buscar un Contenido a través de un objeto Contenido en la BD
+     * Metodo para buscar un Contenido a través de un objeto Contenido en la BD
+     *
      * @param c
      * @return
      */
@@ -145,7 +145,7 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
     }
 
     /**
-     *  Metodo para obtener una lista de todos los Contenidos de la BD
+     * Metodo para obtener una lista de todos los Contenidos de la BD
      */
     public List<Contenido> buscarTodos() {
         List<Contenido> lista = new ArrayList<Contenido>();
@@ -157,7 +157,7 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
     }
 
     /**
-     *  Metodo para desconectar la sesion del DAO
+     * Metodo para desconectar la sesion del DAO
      */
     @Override
     public void desconectar() {
@@ -166,6 +166,7 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
                 this.session.close();
             } catch (Exception e) {
                 System.out.println("Error DaoContenido-desconectar()");
+                throw e;
             }
         }
     }
