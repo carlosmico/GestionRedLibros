@@ -83,7 +83,7 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
             this.session.getTransaction().commit();
             e.printStackTrace();
             System.out.println("Error DaoCurso-actualizar(): " + e.getMessage());
-            throw new Exception();
+            throw e;
         }
 
     }
@@ -127,7 +127,7 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
                 this.session.getTransaction().commit();
                 e.printStackTrace();
                 System.out.println("Error DaoCurso-actualizar(): " + e.getMessage());
-                throw new Exception();
+                throw e;
             }
         }
     }
@@ -141,13 +141,8 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
      */
     public Curso buscar(String codigo) throws PersistenceException {
         Curso curso;
-
-        try {
-            curso = (Curso) this.session.get(Curso.class, codigo);
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-            throw new PersistenceException();
-        }
+        
+        curso = (Curso) this.session.get(Curso.class, codigo);
 
         return curso;
     }
@@ -175,6 +170,7 @@ public class DaoCurso extends DaoGenerico<Curso, String> implements InterfaceDao
                 this.session.close();
             } catch (Exception e) {
                 System.out.println("Error DaoCurso-desconectar()");
+                throw e;
             }
         }
     }

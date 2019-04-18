@@ -20,6 +20,7 @@ package Vistas;
 import Utilidades.Colores;
 import Utilidades.ComprobarConexion;
 import Utilidades.Configuracion;
+import Utilidades.Imagenes;
 import Utilidades.ImportarAlumnosXML;
 import Utilidades.ImportarContenidoXML;
 import Utilidades.ImportarCursoXML;
@@ -30,7 +31,6 @@ import java.text.ParseException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import jdk.nashorn.internal.runtime.ParserException;
@@ -57,8 +57,8 @@ public class FrameOpciones extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         cargarConfiguracion();
-        
-        textContrasena.setEchoChar((char)63);
+
+        textContrasena.setEchoChar((char) 63);
     }
 
     /**
@@ -822,13 +822,20 @@ public class FrameOpciones extends javax.swing.JFrame {
             try {
                 new ImportarMatriculasXML(textRutaMatriculas.getText());
 
-                JOptionPane.showMessageDialog(this, "Matrículas importadas correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+                new FramePopup("Matrículas importadas correctamente!",
+                        Imagenes.getImagen(this, "check-black.png"), "Aceptar")
+                        .setVisible(true);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "No se han podido importar las matrículas.\n-Revise el archivo XML.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                new FramePopup("<html>No se han podido importar las matriculas."
+                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage() + "</html>",
+                        Imagenes.getImagen(this, "alert-black.png"), "Aceptar")
+                        .setVisible(true);
                 ex.printStackTrace();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Debes seleccionar un archivo para poder importar las matrículas.", "Error", JOptionPane.ERROR_MESSAGE);
+            new FramePopup("Debes seleccionar un archivo para poder importar "
+                    + "las matrículas.", Imagenes.getImagen(this, "alert-black.png"),
+                    "Aceptar").setVisible(true);
         }
     }//GEN-LAST:event_btnImportarMatriculasActionPerformed
 
@@ -863,13 +870,21 @@ public class FrameOpciones extends javax.swing.JFrame {
             try {
                 new ImportarCursoXML(textRutaCursos.getText());
 
-                JOptionPane.showMessageDialog(this, "Cursos importados correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+                new FramePopup("Cursos importados correctamente!",
+                        Imagenes.getImagen(this, "check-black.png"), "Aceptar")
+                        .setVisible(true);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "No se han podido importar los cursos.\n-Revise el archivo XML.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                new FramePopup("<html>No se han podido importar los cursos."
+                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage() + "</html>",
+                        Imagenes.getImagen(this, "alert-black.png"), "Aceptar")
+                        .setVisible(true);
+
                 ex.printStackTrace();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Debes seleccionar un archivo para poder importar los cursos.", "Error", JOptionPane.ERROR_MESSAGE);
+            new FramePopup("Debes seleccionar un archivo para poder importar los cursos.",
+                    Imagenes.getImagen(this, "alert-black.png"), "Aceptar")
+                    .setVisible(true);
         }
     }//GEN-LAST:event_btnImportarCursosActionPerformed
 
@@ -925,13 +940,20 @@ public class FrameOpciones extends javax.swing.JFrame {
             try {
                 new ImportarGruposXML(textRutaGrupos.getText());
 
-                JOptionPane.showMessageDialog(this, "Grupos importados correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+                new FramePopup("Grupos importados correctamente!",
+                        Imagenes.getImagen(this, "check-black.png"), "Aceptar")
+                        .setVisible(true);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "No se han podido importar los grupos.\n-Revise el archivo XML.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                new FramePopup("<html>No se han podido importar los grupos."
+                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage() + "</html>",
+                        Imagenes.getImagen(this, "alert-black.png"), "Aceptar")
+                        .setVisible(true);
                 ex.printStackTrace();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Debes seleccionar un archivo para poder importar los grupos.", "Error", JOptionPane.ERROR_MESSAGE);
+            new FramePopup("Debes seleccionar un archivo para poder importar los grupos",
+                    Imagenes.getImagen(this, "alert-black.png"), "Aceptar")
+                    .setVisible(true);
         }
     }//GEN-LAST:event_btnImportarGruposActionPerformed
 
@@ -966,13 +988,20 @@ public class FrameOpciones extends javax.swing.JFrame {
             try {
                 new ImportarContenidoXML(textRutaContenidos.getText());
 
-                JOptionPane.showMessageDialog(this, "Asignaturas importadas correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+                new FramePopup("Asignaturas importadas correctamente!",
+                        Imagenes.getImagen(this, "check-black.png"), "Aceptar")
+                        .setVisible(true);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "No se han podido importar las asignaturas.\n-Revise el archivo XML.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                new FramePopup("<html>No se han podido importar las asignaturas."
+                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage() + "</html>",
+                        Imagenes.getImagen(this, "alert-black.png"), "Aceptar")
+                        .setVisible(true);                
                 ex.printStackTrace();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Debes seleccionar un archivo para poder importar las asignaturas.", "Error", JOptionPane.ERROR_MESSAGE);
+            new FramePopup("Debes seleccionar un archivo para poder importar las asignaturas.", 
+                        Imagenes.getImagen(this, "alert-black.png"),"Aceptar")
+                        .setVisible(true);
         }
     }//GEN-LAST:event_btnImportarAsignaturasActionPerformed
 
@@ -1007,13 +1036,20 @@ public class FrameOpciones extends javax.swing.JFrame {
             try {
                 new ImportarAlumnosXML(textRutaAlumnos.getText());
 
-                JOptionPane.showMessageDialog(this, "Alumnos importados correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+                new FramePopup("Alumnos importados correctamente!", 
+                        Imagenes.getImagen(this, "check-black.png"),"Aceptar")
+                        .setVisible(true);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "No se han podido importar los alumnos.\n-Revise el archivo XML.\nError: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                new FramePopup("<html>No se han podido importar los alumnos."
+                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage() + "</html>", 
+                        Imagenes.getImagen(this, "alert-black.png"),"Aceptar")
+                        .setVisible(true);
                 ex.printStackTrace();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Debes seleccionar un archivo para poder importar los alumnos.", "Error", JOptionPane.ERROR_MESSAGE);
+            new FramePopup("Debes seleccionar un archivo para poder importar los alumnos.", 
+                        Imagenes.getImagen(this, "alert-black.png"),"Aceptar")
+                        .setVisible(true);
         }
     }//GEN-LAST:event_btnImportarAlumnosActionPerformed
 
@@ -1029,23 +1065,23 @@ public class FrameOpciones extends javax.swing.JFrame {
         int puerto = -1;
 
         if (textIP.getText().equals("")) {
-            error += "\n- La IP no puede estar vacía.";
+            error += "<br>- La IP no puede estar vacía.";
         } else {
             ip = textIP.getText();
         }
 
         if (textPuerto.getText().equals("")) {
-            error += "\n- El puerto no puede estar vacío.";
+            error += "<br>- El puerto no puede estar vacío.";
         } else {
             try {
                 puerto = Integer.parseInt(textPuerto.getText());
             } catch (Exception e) {
-                error += "\n- El puerto debe ser un valor númerico.";
+                error += "<br>- El puerto debe ser un valor númerico.";
             }
         }
 
         if (textUsuario.getText().equals("")) {
-            error += "\n- El usuario no puede estar vacío.";
+            error += "<br>- El usuario no puede estar vacío.";
         } else {
             usuario = textUsuario.getText();
         }
@@ -1067,7 +1103,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                         "Aceptar").setVisible(true);
             }
         } else {
-            new FramePopup("Revise los siguientes errores:" + error,
+            new FramePopup("<html>Revise los siguientes errores:" + error + "</html>",
                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                     "Aceptar").setVisible(true);
         }
@@ -1076,11 +1112,11 @@ public class FrameOpciones extends javax.swing.JFrame {
     private void btnMostrarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarContrasenaActionPerformed
         // TODO add your handling code here:
         if (mostrarContrasena) {
-            textContrasena.setEchoChar((char)63);
-        }else{
-            textContrasena.setEchoChar((char)0);
+            textContrasena.setEchoChar((char) 63);
+        } else {
+            textContrasena.setEchoChar((char) 0);
         }
-        
+
         mostrarContrasena = !mostrarContrasena;
     }//GEN-LAST:event_btnMostrarContrasenaActionPerformed
 

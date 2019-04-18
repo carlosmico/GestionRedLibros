@@ -97,7 +97,7 @@ public class DaoGrupo extends DaoGenerico<Grupo, String> implements InterfaceDao
 
                 e.printStackTrace();
                 System.out.println("Error DaoGrupo-actualizar(): " + e.getMessage());
-                throw new Exception();
+                throw e;
             }
         }
     }
@@ -112,12 +112,7 @@ public class DaoGrupo extends DaoGenerico<Grupo, String> implements InterfaceDao
     public Grupo buscar(String codigo) throws PersistenceException {
         Grupo grupo;
 
-        try {
-            grupo = (Grupo) this.session.get(Grupo.class, codigo);
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-            throw new PersistenceException();
-        }
+        grupo = (Grupo) this.session.get(Grupo.class, codigo);
 
         return grupo;
     }
@@ -135,7 +130,7 @@ public class DaoGrupo extends DaoGenerico<Grupo, String> implements InterfaceDao
     }
 
     /**
-     *  Metodo para desconectar la sesion del DAO
+     * Metodo para desconectar la sesion del DAO
      */
     @Override
     public void desconectar() {
@@ -144,6 +139,7 @@ public class DaoGrupo extends DaoGenerico<Grupo, String> implements InterfaceDao
                 this.session.close();
             } catch (Exception e) {
                 System.out.println("Error DaoGrupo-desconectar()");
+                throw e;
             }
         }
     }

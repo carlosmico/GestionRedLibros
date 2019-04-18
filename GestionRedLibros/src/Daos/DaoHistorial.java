@@ -61,7 +61,7 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         } catch (PersistenceException ex) {
             this.session.getTransaction().commit();
             System.out.println("Error DaoHistorial-grabar(): " + ex.getMessage());
-            throw new PersistenceException();
+            throw ex;
         }
     }
 
@@ -94,7 +94,7 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         } catch (PersistenceException ex) {
             this.session.getTransaction().commit();
             System.out.println("Error DaoHistorial-actualizar(): " + ex.getMessage());
-            throw new PersistenceException();
+            throw ex;
         }
     }
 
@@ -112,7 +112,7 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         } catch (PersistenceException e) {
             System.out.println("Error DaoHistorial-buscarId(): " + e.getMessage());
             e.printStackTrace();
-            throw new PersistenceException();
+            throw e;
         }
 
         return historial;
@@ -168,6 +168,7 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
                 this.session.close();
             } catch (Exception e) {
                 System.out.println("Error DaoEjemplar-desconectar()");
+                throw e;
             }
         }
     }

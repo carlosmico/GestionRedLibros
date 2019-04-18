@@ -68,7 +68,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
             this.session.getTransaction().commit();
 
             e.printStackTrace();
-            throw new PersistenceException();
+            throw e;
         }
     }
 
@@ -92,7 +92,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
             this.session.getTransaction().commit();
         } catch (PersistenceException e) {
             this.session.getTransaction().commit();
-            throw new PersistenceException();
+            throw e;
         }
     }
 
@@ -109,7 +109,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
             this.session.getTransaction().commit();
         } catch (PersistenceException e) {
             this.session.getTransaction().commit();
-            throw new PersistenceException();
+            throw e;
         }
     }
 
@@ -127,7 +127,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
             libro = (Libro) this.session.get(Libro.class, codigo);
         } catch (PersistenceException e) {
             e.printStackTrace();
-            throw new PersistenceException();
+            throw e;
         }
 
         return libro;
@@ -246,6 +246,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
                 this.session.close();
             } catch (Exception e) {
                 System.out.println("Error DaoLibro-desconectar()");
+                throw e;
             }
         }
     }
