@@ -863,7 +863,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         } else {
             new FramePopup("No hay cursos en la base de datos.",
                     Imagenes.getImagen("alert-black.png"),
-                    "Aceptar");
+                    "Aceptar").setVisible(true);
         }
         rellenarLista((Curso) cbCurso.getSelectedItem());
         //cbCurso.setSelectedIndex(0);
@@ -892,7 +892,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
             new FramePopup("El alumno no esta matriculado en este curso escolar",
                     Imagenes.getImagen("alert-black.png"),
-                    "Aceptar");
+                    "Aceptar").setVisible(true);
         }
     }
 
@@ -916,7 +916,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
             new FramePopup("No se ha podido conseguir el curso escolar",
                     Imagenes.getImagen("/Imagenes/icons/alert-black.png"),
-                    "Aceptar", aceptar);
+                    "Aceptar", aceptar).setVisible(true);
         }
         return fecha = 2018;
     }
@@ -929,13 +929,46 @@ public class FrameEntrega extends javax.swing.JFrame {
     public void buscarAlumno(String nia) {
         if (!nia.equals("") || nia.equals(defaultText)) {
             //Se ha insertado un codigo
-            alumno = listaAlumnos.stream().filter(a -> a.getNia().equals(nia)).collect(Collectors.toList()).get(0);
-            cargarDatosAlumno();
+
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+
+                RemarcarCeldas remarcarCeldas = new RemarcarCeldas();
+
+                protected Void doInBackground() throws InterruptedException {
+                    alumno = daoAlumno.buscar(nia);
+                    return null;
+                }
+
+                protected void done() {
+                    framePopup.dispose();
+                    
+                    if (alumno != null) {
+                        cargarDatosAlumno();
+
+                        for (int i = 0; i < jlistAlumnos.getModel().getSize(); i++) {
+                            Alumno alumnot = (Alumno) jlistAlumnos.getModel().getElementAt(i);
+                            if (alumnot.getNia().equals(nia)) {
+                                jlistAlumnos.setSelectedIndex(i);
+                            }
+                        }
+                    } else {
+                        new FramePopup("No existe ningún alumno con el NIA introducido.",
+                                Imagenes.getImagen("alert-black.png"),
+                                "Aceptar").setVisible(true);
+                    }
+
+                    
+                }
+            };
+            worker.execute();
+            framePopup = new FramePopup("Cargando datos...");
+            framePopup.setVisible(true);
+            //alumno = listaAlumnos.stream().filter(a -> a.getNia().equals(nia)).collect(Collectors.toList()).get(0);
         } else {
             //No se ha insertado ningun valor en el campo de texto
             new FramePopup("El NIA no puede ser un campo vacío.",
                     Imagenes.getImagen("alert-black.png"),
-                    "Aceptar");
+                    "Aceptar").setVisible(true);
         }
 
     }
