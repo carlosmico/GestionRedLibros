@@ -242,7 +242,4 @@ public class Matricula implements Serializable {
     public String toString() {
         return "Matricula{" + "id=" + id + ", curso_escolar=" + curso_escolar + ", ensenanza=" + ensenanza + ", curso=" + curso + ", contenido=" + contenido + ", idioma=" + idioma + ", tipo_basico=" + tipo_basico + ", tipo_predom=" + tipo_predom + ", acis=" + acis + ", fec_ini_acis=" + fec_ini_acis + ", fec_fin_acis=" + fec_fin_acis + ", cur_ref_acis=" + cur_ref_acis + ", curso_pendiente=" + curso_pendiente + '}';
     }
-
-    
-
 }
