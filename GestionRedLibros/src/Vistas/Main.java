@@ -244,10 +244,9 @@ public class Main extends javax.swing.JFrame {
                     frameDevoluciones = new FrameDevoluciones();
                 }
             }
+        }else{
+            compruebaConexionBD(false, "FrameDevoluciones");
         }
-
-        //Hacemos visible la ventana creada anteriormente
-        compruebaConexionBD(false, "FrameDevoluciones");
     }//GEN-LAST:event_btnDevolucionesActionPerformed
 
     /**
@@ -308,9 +307,9 @@ public class Main extends javax.swing.JFrame {
                 }
             }
             frameLibro.setVisible(true);
+        }else{
+            compruebaConexionBD(false, "FrameLibro");
         }
-
-        compruebaConexionBD(false, "FrameLibro");
     }//GEN-LAST:event_btnLibrosActionPerformed
 
     /**

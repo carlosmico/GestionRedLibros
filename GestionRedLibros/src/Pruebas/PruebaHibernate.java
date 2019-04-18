@@ -17,7 +17,7 @@ import Pojos.Libro;
 import Pojos.Matricula;
 import Vistas.FramePopup;
 import Vistas.FrameEjemplares;
-import Vistas.FrameLibroOld;
+import VistasOld.FrameLibroOld;
 import java.util.Scanner;
 
 import org.hibernate.Session;

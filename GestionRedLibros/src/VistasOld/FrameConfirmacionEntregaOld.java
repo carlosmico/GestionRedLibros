@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package Vistas;
+package VistasOld;
 
 import Daos.DaoCurso;
 import Daos.DaoEjemplar;
@@ -29,6 +29,9 @@ import Utilidades.CodigoBarras;
 import Utilidades.Colores;
 import Utilidades.ConfirmacionEntrega;
 import Utilidades.Estado;
+import Vistas.FrameEntrega;
+import Vistas.FramePopup;
+import Vistas.Main;
 import static Vistas.FrameEntrega.alumno;
 import java.awt.Color;
 import java.util.Date;
