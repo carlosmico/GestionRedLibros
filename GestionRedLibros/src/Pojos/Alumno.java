@@ -31,7 +31,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.criteria.Fetch;
 
-
 /**
  *
  * @author Carlos Micó
@@ -43,7 +42,7 @@ public class Alumno implements Serializable {
     private static final long serialVersionUID = -5514760464301220827L;
 
     private String id;
-    
+
     @Id
     private String nia;
     private String nombre;
@@ -55,21 +54,21 @@ public class Alumno implements Serializable {
     private String telefono1;
     private String sexo;
     private String email1;
-    
+
     @ManyToOne
-    @JoinColumn (name = "curso")
+    @JoinColumn(name = "curso")
     private Curso curso_alumno;
-    
+
     @ManyToOne
-    @JoinColumn (name = "grupo")
+    @JoinColumn(name = "grupo")
     private Grupo grupo;
 
-    @OneToMany(mappedBy = "alumno", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "alumno", fetch = FetchType.LAZY)
     private List<Matricula> matriculas;
 
-    @OneToMany(mappedBy = "alumno", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "alumno", fetch = FetchType.LAZY)
     private List<Historial> historiales;
-    
+
     public Alumno() {
 
     }
@@ -89,8 +88,6 @@ public class Alumno implements Serializable {
         this.curso_alumno = curso_alumno;
         this.grupo = grupo;
     }
-
-    
 
     public String getTelefono1() {
         return telefono1;
@@ -205,7 +202,6 @@ public class Alumno implements Serializable {
         this.historiales = historiales;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -272,6 +268,6 @@ public class Alumno implements Serializable {
 
     @Override
     public String toString() {
-        return "Alumno{" + "id=" + id + ", nia=" + nia + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", fecha_nac=" + fecha_nac + ", municipio_nac=" + municipio_nac + ", documento=" + documento + ", telefono1=" + telefono1 + ", sexo=" + sexo + ", email1=" + email1 + ", curso_alumno=" + curso_alumno + ", grupo=" + grupo + "}";
+        return nombre + " " + apellido1 + " " + apellido2;
     }
 }

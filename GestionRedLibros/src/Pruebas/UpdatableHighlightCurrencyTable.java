@@ -3,7 +3,7 @@
  * Core SWING Advanced Programming By Kim Topley ISBN: 0 13 083292 8 Publisher:
  * Prentice Hall
  */
-
+import Utilidades.Colores;
 import Utilidades.Imagenes;
 import java.awt.Color;
 import java.awt.Component;
@@ -56,9 +56,6 @@ public class UpdatableHighlightCurrencyTable {
         tbl.setDefaultRenderer(java.lang.Number.class,
                 new FractionCellRenderer(10, 3, SwingConstants.RIGHT));
 
-        
-        
-        
         TableColumnModel tcm = tbl.getColumnModel();
         tcm.getColumn(0).setPreferredWidth(150);
         tcm.getColumn(0).setMinWidth(150);
@@ -67,17 +64,23 @@ public class UpdatableHighlightCurrencyTable {
         tbl.setShowHorizontalLines(false);
         tbl.setIntercellSpacing(new Dimension(1, 0));
 
-        // Add the stripe renderer in the leftmost four columns.
-        StripedTableCellRenderer.installInColumn(tbl, 0, Color.lightGray,
-                Color.white, null, null);
-        StripedTableCellRenderer.installInColumn(tbl, 1, Color.lightGray,
-                Color.white, null, null);
-        StripedTableCellRenderer.installInColumn(tbl, 2, Color.lightGray,
-                Color.white, null, null);
-        StripedTableCellRenderer.installInColumn(tbl, 3, Color.lightGray,
-                Color.white, null, null);
-
-    // Add the highlight renderer to the difference column.
+        for (int i = 0; i < tbl.getColumnCount(); i++) {
+            tbl.setFont(new Font("Dialog", Font.BOLD, 18));
+            tbl.setBackground(Colores.fondo);
+            tbl.setForeground(Colores.accent);
+        }
+        /*
+         // Add the stripe renderer in the leftmost four columns.
+         StripedTableCellRenderer.installInColumn(tbl, 0, Colores.fondo,
+         Colores.accent, null, null);
+         StripedTableCellRenderer.installInColumn(tbl, 1, Colores.fondo,
+         Colores.accent, null, null);
+         StripedTableCellRenderer.installInColumn(tbl, 2, Colores.fondo,
+         Colores.accent, null, null);
+         StripedTableCellRenderer.installInColumn(tbl, 3, Colores.fondo,
+         Colores.accent, null, null);
+         */
+        // Add the highlight renderer to the difference column.
         // The following comparator makes it highlight
         // cells with negative numeric values.
         Comparator cmp = new Comparator() {
@@ -91,11 +94,10 @@ public class UpdatableHighlightCurrencyTable {
             }
         };
         tcm.getColumn(3).setCellRenderer(
-                new HighlightRenderer(cmp, null, Color.pink, Color.black,
-                        Color.red, Color.white));
+                new HighlightRenderer(cmp, null, Colores.fondo, Colores.accent,
+                        Colores.tableCell, Colores.accent));
 
         // Install a button renderer in the last column
-        
         //###CREAMOS LOS BOTONES####//
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         buttonRenderer.setForeground(Color.blue);
@@ -456,7 +458,7 @@ class BasicCellEditor implements CellEditor, PropertyChangeListener {
         return editingEvent;
     }
 
-  // Method invoked when the editor is installed in the table.
+    // Method invoked when the editor is installed in the table.
     // Overridden in derived classes to take any convenient
     // action.
     public void editingStarted(EventObject event) {

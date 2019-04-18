@@ -17,9 +17,11 @@
  */
 package Renders;
 
+import Daos.DaoCurso;
+import Pojos.Curso;
 import Pojos.Matricula;
 import Utilidades.Colores;
-import java.awt.Color;
+import Vistas.Main;
 import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JLabel;
@@ -32,7 +34,10 @@ import javax.swing.table.*;
  */
 public class RemarcarCeldas extends JLabel implements TableCellRenderer {
 
+    public DaoCurso daoCurso;
+
     public RemarcarCeldas() {
+        daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
     }
 
     public Component getTableCellRendererComponent(JTable tbl, Object value,
@@ -45,13 +50,17 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
         if (value instanceof Matricula) {
             Matricula matricula = (Matricula) value;
 
+            Curso c = null;
+
             switch (column) {
                 case 0:
                     setText(matricula.getContenido().getNombre_cas());
                     break;
 
                 case 1:
-                    setText(matricula.getContenido().getCurso().getAbreviatura());
+                    c = sustituirPadresCursos(matricula);
+                    setText(c.getAbreviatura() + " - " + c.getIdPadre());
+                    setToolTipText(c.getAbreviatura() + " - " + c.getIdPadre());
                     break;
 
                 case 2:
@@ -61,10 +70,22 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
                         setText(matricula.getIdioma());
                     }
                     break;
+                case 3:
+                    if (!matricula.getCurso_pendiente().equals(" ")) {
+                        c = cursosPendientes(matricula);
+                        setText(c.getAbreviatura() + " - " + c.getIdPadre());
+                    } else {
+                        setText("");
+                    }
+                    break;
             }
             getColor(this, matricula);
         }
         return this;
+    }
+
+    public void desconectarDao() {
+        daoCurso.desconectar();
     }
 
     public void getColor(JLabel label, Matricula matricula) {
@@ -75,5 +96,27 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
             label.setForeground(Colores.accent);
             label.setBackground(Colores.tableCell);
         }
+    }
+
+    private Curso sustituirPadresCursos(Matricula m) {
+
+        Curso curso = daoCurso.buscar(m.getCurso());
+        Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
+
+        if (cursoPadre != null) {
+            curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
+        }
+        return curso;
+    }
+
+    private Curso cursosPendientes(Matricula m) {
+
+        Curso curso = daoCurso.buscar(m.getCurso_pendiente());
+        Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
+
+        if (cursoPadre != null) {
+            curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
+        }
+        return curso;
     }
 }

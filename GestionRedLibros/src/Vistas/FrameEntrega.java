@@ -18,19 +18,25 @@
 package Vistas;
 
 import Daos.DaoAlumno;
+import Daos.DaoCurso;
 import Daos.DaoMatricula;
 import Pojos.Alumno;
+import Pojos.Curso;
 import Pojos.Matricula;
 import Renders.RemarcarCeldas;
+import Renders.comboBoxRender;
 import Utilidades.ButtonColumn;
 import Utilidades.Colores;
 import Utilidades.Imagenes;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -41,30 +47,27 @@ import javax.swing.table.TableColumnModel;
  */
 public class FrameEntrega extends javax.swing.JFrame {
 
-    //Creamos el la pestaña InputAlumno
-    private FrameInputAlumno frameInputAlumno;
-
     //Cremaos el frame de Cargar
     private FramePopup framePopup;
 
     //Creamos el DAO del Alumno y Matricula
     private DaoAlumno daoAlumno;
     private DaoMatricula daoMatricula;
+    private DaoCurso daoCurso;
 
     //Creamos el Alumno
-    public static Alumno alumno, alumnoOld;
+    public Alumno alumno;
 
     //Matricula temporal
     public Matricula matriculaEntregada = null;
     public List<Matricula> listaMatriculasEntregadas = null;
 
-    //Variable para controlar la carga de los datos
-    public static boolean isLoad = false;
-
-    public static int isConfirmationReady = 0;
-
-    //Lista de matriculas pendientes
+    //Listas
+    public List<Alumno> listaAlumnos;
     public List<Matricula> listaMatriculas;
+    public List<Curso> listaCursos;
+
+    private String defaultText = "Escribe NIA...";
 
     /**
      * Creates new form FrameDevoluciones
@@ -72,15 +75,36 @@ public class FrameEntrega extends javax.swing.JFrame {
     public FrameEntrega() {
         initComponents();
 
-        //Inicializamos el DaoAlumno
+        //<editor-fold defaultstate="collapsed" desc="Configuración combobox">
+        cbCurso.setEditable(false);
+        cbCurso.setUI(new comboBoxRender());
+        cbCurso.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList list, Object value, int index,
+                    boolean isSelected, boolean hasFocus) {
+                JLabel l = (JLabel) super.getListCellRendererComponent(
+                        list, value, index, isSelected, hasFocus);
+                if (isSelected) {
+                    l.setForeground(Colores.fondo);
+                    l.setBackground(Colores.buttons);
+                } else {
+                    l.setForeground(Colores.buttons);
+                    l.setBackground(Colores.fondo);
+                }
+                return l;
+            }
+        });
+//</editor-fold>
+
+        //Inicializamos los DAO
         daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
         daoMatricula = new DaoMatricula(Main.gestorSesiones.getSession());
+        daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
 
         //Deshabilitamos la edicion de las celdas en las tablas
         tablaPendientes.setDefaultEditor(Object.class, null);
         tablaPendientes.getTableHeader().setReorderingAllowed(false);
-        tableEntregados.setDefaultEditor(Object.class, null);
-        tableEntregados.getTableHeader().setReorderingAllowed(false);
 
         //Inicializamos la lista de las matriculas entregadas
         listaMatriculasEntregadas = new ArrayList<>();
@@ -90,6 +114,8 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         //Maximizamos la pestaña
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        cargarDatos();
     }
 
     /**
@@ -103,37 +129,39 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         panelTitulo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnBuscarAlumno = new com.mommoo.flat.button.FlatButton();
         panelCuerpo = new javax.swing.JPanel();
-        panelNoAlumno = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        panelSiAlumno = new javax.swing.JPanel();
+        panelLista = new javax.swing.JPanel();
+        panelBusquedaNIA = new javax.swing.JPanel();
+        textBusquedaNIA = new javax.swing.JTextField();
+        btnBusquedaNIA = new com.mommoo.flat.button.FlatButton();
+        panelBusquedaLista = new javax.swing.JPanel();
+        cbCurso = new javax.swing.JComboBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jlistAlumnos = new javax.swing.JList();
+        jLabel8 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        panelInformacion = new javax.swing.JPanel();
         panelInfoGeneral = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        textNIAAlumno = new javax.swing.JLabel();
+        textNombreAlumno = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         textCursoEscolar = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        textNIAAlumno = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        textNombreAlumno = new javax.swing.JLabel();
-        textCurso = new javax.swing.JLabel();
         panelGestionAsignaturas = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        panelTablas = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaPendientes = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tableEntregados = new javax.swing.JTable();
-        panelInfoTablas = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Entregas");
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
-            }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
@@ -146,69 +174,214 @@ public class FrameEntrega extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Entregas");
 
-        btnBuscarAlumno.setBackground(Colores.buttons);
-        btnBuscarAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/account-search.png"))); // NOI18N
-        btnBuscarAlumno.setCornerRound(10);
-        btnBuscarAlumno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarAlumnoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelTituloLayout = new javax.swing.GroupLayout(panelTitulo);
         panelTitulo.setLayout(panelTituloLayout);
         panelTituloLayout.setHorizontalGroup(
             panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTituloLayout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelTituloLayout.setVerticalGroup(
             panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelTituloLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnBuscarAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
         );
 
         panelCuerpo.setBackground(Colores.fondo);
 
-        panelNoAlumno.setBackground(Colores.fondo);
-        panelNoAlumno.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        panelLista.setBackground(Colores.fondo);
+        panelLista.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        panelLista.setMaximumSize(new java.awt.Dimension(450, 32767));
 
-        jLabel3.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel3.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Busca un alumno para realizar una nueva entrega");
+        panelBusquedaNIA.setBackground(Colores.fondo);
 
-        javax.swing.GroupLayout panelNoAlumnoLayout = new javax.swing.GroupLayout(panelNoAlumno);
-        panelNoAlumno.setLayout(panelNoAlumnoLayout);
-        panelNoAlumnoLayout.setHorizontalGroup(
-            panelNoAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelNoAlumnoLayout.createSequentialGroup()
+        textBusquedaNIA.setBackground(Colores.fondo);
+        textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textBusquedaNIA.setForeground(Colores.accent);
+        textBusquedaNIA.setText("Codigo NIA");
+        textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textBusquedaNIAFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textBusquedaNIAFocusLost(evt);
+            }
+        });
+        textBusquedaNIA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textBusquedaNIAKeyPressed(evt);
+            }
+        });
+
+        btnBusquedaNIA.setBackground(Colores.buttons);
+        btnBusquedaNIA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
+        btnBusquedaNIA.setCornerRound(10);
+
+        javax.swing.GroupLayout panelBusquedaNIALayout = new javax.swing.GroupLayout(panelBusquedaNIA);
+        panelBusquedaNIA.setLayout(panelBusquedaNIALayout);
+        panelBusquedaNIALayout.setHorizontalGroup(
+            panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBusquedaNIALayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(textBusquedaNIA)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBusquedaNIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        panelNoAlumnoLayout.setVerticalGroup(
-            panelNoAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelNoAlumnoLayout.createSequentialGroup()
+        panelBusquedaNIALayout.setVerticalGroup(
+            panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBusquedaNIALayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBusquedaNIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textBusquedaNIA))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelSiAlumno.setBackground(Colores.fondo);
+        panelBusquedaLista.setBackground(Colores.fondo);
+
+        cbCurso.setBackground(Colores.accent);
+        cbCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbCurso.setPreferredSize(new java.awt.Dimension(374, 34));
+        cbCurso.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbCursoItemStateChanged(evt);
+            }
+        });
+
+        jlistAlumnos.setBackground(Colores.fondo);
+        jlistAlumnos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jlistAlumnos.setForeground(Colores.accent);
+        jlistAlumnos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jlistAlumnosValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jlistAlumnos);
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel8.setText("Listado de alumnos:");
+
+        javax.swing.GroupLayout panelBusquedaListaLayout = new javax.swing.GroupLayout(panelBusquedaLista);
+        panelBusquedaLista.setLayout(panelBusquedaListaLayout);
+        panelBusquedaListaLayout.setHorizontalGroup(
+            panelBusquedaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBusquedaListaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelBusquedaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(panelBusquedaListaLayout.createSequentialGroup()
+                        .addGroup(panelBusquedaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(cbCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panelBusquedaListaLayout.setVerticalGroup(
+            panelBusquedaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBusquedaListaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+
+        jLabel8.getAccessibleContext().setAccessibleName("L");
+
+        javax.swing.GroupLayout panelListaLayout = new javax.swing.GroupLayout(panelLista);
+        panelLista.setLayout(panelListaLayout);
+        panelListaLayout.setHorizontalGroup(
+            panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelListaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelBusquedaLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelBusquedaNIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addComponent(jSeparator2)
+        );
+        panelListaLayout.setVerticalGroup(
+            panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelBusquedaNIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelBusquedaLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        panelInformacion.setBackground(Colores.fondo);
+        panelInformacion.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         panelInfoGeneral.setBackground(Colores.fondo);
-        panelInfoGeneral.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         panelInfoGeneral.setMaximumSize(new java.awt.Dimension(300, 32767));
         panelInfoGeneral.setPreferredSize(new java.awt.Dimension(227, 170));
+
+        jLabel3.setBackground(Colores.accent);
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setText("Información");
+
+        jPanel3.setBackground(Colores.fondo);
+        jPanel3.setLayout(new java.awt.GridLayout(1, 2));
+
+        jPanel1.setBackground(Colores.fondo);
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel7.setText("NIA:");
+
+        textNIAAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textNIAAlumno.setForeground(new java.awt.Color(51, 51, 51));
+
+        textNombreAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textNombreAlumno.setForeground(new java.awt.Color(51, 51, 51));
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel4.setText("Nombre:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textNIAAlumno))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textNombreAlumno)))
+                .addContainerGap(596, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(textNIAAlumno))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(textNombreAlumno))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel3.add(jPanel1);
+
+        jPanel2.setBackground(Colores.fondo);
+
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel9.setText("Detalles Matrícula:");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
@@ -216,31 +389,35 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         textCursoEscolar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         textCursoEscolar.setForeground(new java.awt.Color(51, 51, 51));
-        textCursoEscolar.setText("2019");
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel4.setText("Curso:");
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textCursoEscolar))
+                    .addComponent(jLabel9))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(textCursoEscolar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        textNIAAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textNIAAlumno.setForeground(new java.awt.Color(51, 51, 51));
-        textNIAAlumno.setText("null");
-
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel9.setText("Detalles Matrícula:");
-
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel7.setText("Alumno:");
-
-        textNombreAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textNombreAlumno.setForeground(new java.awt.Color(51, 51, 51));
-        textNombreAlumno.setText("Nombre");
-
-        textCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textCurso.setForeground(new java.awt.Color(51, 51, 51));
-        textCurso.setText("jLabel10");
+        jPanel3.add(jPanel2);
 
         javax.swing.GroupLayout panelInfoGeneralLayout = new javax.swing.GroupLayout(panelInfoGeneral);
         panelInfoGeneral.setLayout(panelInfoGeneralLayout);
@@ -250,55 +427,27 @@ public class FrameEntrega extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelInfoGeneralLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textNIAAlumno))
-                    .addComponent(jLabel9)
-                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textNombreAlumno)
-                            .addGroup(panelInfoGeneralLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textCurso))
-                            .addGroup(panelInfoGeneralLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textCursoEscolar)))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panelInfoGeneralLayout.setVerticalGroup(
             panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoGeneralLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(textNIAAlumno))
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textNombreAlumno)
-                .addGap(48, 48, 48)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(textCursoEscolar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(textCurso))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         panelGestionAsignaturas.setBackground(Colores.fondo);
-        panelGestionAsignaturas.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         jLabel5.setText("Listado Asignaturas:");
-
-        panelTablas.setBackground(Colores.fondo);
-        panelTablas.setLayout(new java.awt.GridLayout(1, 2, 5, 0));
 
         jScrollPane2.setBackground(Colores.fondo);
         jScrollPane2.setForeground(Colores.fondo);
@@ -316,7 +465,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Asignatura", "Curso", "Idioma", "Gestión"
+                "Asignatura", "Curso", "Idioma", "Curso pendiente"
             }
         ));
         tablaPendientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -326,46 +475,6 @@ public class FrameEntrega extends javax.swing.JFrame {
         tablaPendientes.setSelectionForeground(Colores.fondo);
         jScrollPane2.setViewportView(tablaPendientes);
 
-        panelTablas.add(jScrollPane2);
-
-        jScrollPane3.setBackground(Colores.fondo);
-        jScrollPane3.setForeground(Colores.fondo);
-        jScrollPane3.setOpaque(false);
-
-        tableEntregados.setBackground(Colores.fondo);
-        tableEntregados.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        tableEntregados.setForeground(Colores.accent);
-        tableEntregados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Asignatura", "Curso", "Idioma", "Gestión"
-            }
-        ));
-        tableEntregados.setRowHeight(32);
-        tableEntregados.setSelectionBackground(Colores.accent);
-        tableEntregados.setSelectionForeground(Colores.fondo);
-        jScrollPane3.setViewportView(tableEntregados);
-
-        panelTablas.add(jScrollPane3);
-
-        panelInfoTablas.setBackground(Colores.fondo);
-        panelInfoTablas.setLayout(new java.awt.GridLayout(1, 0));
-
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel6.setText("Pendiente de entrega");
-        panelInfoTablas.add(jLabel6);
-
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel8.setText("Entregados");
-        panelInfoTablas.add(jLabel8);
-
         javax.swing.GroupLayout panelGestionAsignaturasLayout = new javax.swing.GroupLayout(panelGestionAsignaturas);
         panelGestionAsignaturas.setLayout(panelGestionAsignaturasLayout);
         panelGestionAsignaturasLayout.setHorizontalGroup(
@@ -373,16 +482,11 @@ public class FrameEntrega extends javax.swing.JFrame {
             .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
                     .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(panelInfoTablas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
-                        .addGroup(panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(panelTablas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1071, Short.MAX_VALUE))
-                        .addContainerGap())))
+                        .addComponent(jLabel5)
+                        .addGap(0, 1191, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         panelGestionAsignaturasLayout.setVerticalGroup(
             panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -390,25 +494,32 @@ public class FrameEntrega extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelInfoTablas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelTablas, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout panelSiAlumnoLayout = new javax.swing.GroupLayout(panelSiAlumno);
-        panelSiAlumno.setLayout(panelSiAlumnoLayout);
-        panelSiAlumnoLayout.setHorizontalGroup(
-            panelSiAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelSiAlumnoLayout.createSequentialGroup()
-                .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout panelInformacionLayout = new javax.swing.GroupLayout(panelInformacion);
+        panelInformacion.setLayout(panelInformacionLayout);
+        panelInformacionLayout.setHorizontalGroup(
+            panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInformacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 1383, Short.MAX_VALUE)
+                    .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1))
+                .addContainerGap())
         );
-        panelSiAlumnoLayout.setVerticalGroup(
-            panelSiAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
-            .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        panelInformacionLayout.setVerticalGroup(
+            panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInformacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelInfoGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panelCuerpoLayout = new javax.swing.GroupLayout(panelCuerpo);
@@ -417,18 +528,18 @@ public class FrameEntrega extends javax.swing.JFrame {
             panelCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCuerpoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelNoAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelSiAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelInformacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelCuerpoLayout.setVerticalGroup(
             panelCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCuerpoLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCuerpoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelNoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelSiAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelInformacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -436,8 +547,8 @@ public class FrameEntrega extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelCuerpo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelCuerpo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -451,72 +562,6 @@ public class FrameEntrega extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Mostramos el formulario de busqueda para el alumno.
-     */
-    private void btnBuscarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarAlumnoActionPerformed
-        alumnoOld = alumno;
-        alumno = null;
-        //<editor-fold defaultstate="collapsed" desc="Paneles">
-        panelNoAlumno.setVisible(alumno == null);
-        panelSiAlumno.setVisible(alumno != null);
-//</editor-fold>
-
-        //Acción del botón de 'Devoluciones'
-        if (frameInputAlumno == null) {
-            //Si no existe la ventana la creamos
-            frameInputAlumno = new FrameInputAlumno();
-        } else {
-            if (!frameInputAlumno.isVisible()) {
-                //Si existe la ventana, y la hemos cerrado
-                //limpiamos la variable y creamos una ventana nueva
-                frameInputAlumno = null;
-                frameInputAlumno = new FrameInputAlumno();
-            }
-        }
-        //Hacemos visible la ventana creada anteriormente
-        frameInputAlumno.setVisible(true);
-    }//GEN-LAST:event_btnBuscarAlumnoActionPerformed
-
-    /**
-     * Controlamos el objeto de vuelta cuando se activa esta ventana.
-     */
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        //<editor-fold defaultstate="collapsed" desc="Paneles">
-        panelNoAlumno.setVisible(alumno == null);
-        panelSiAlumno.setVisible(alumno != null);
-//</editor-fold>
-
-        if (alumno != null) {
-            //Buscamos el alumno con el nia que hemos encontrado
-            //(Tenemos que volverlo a buscar por las relaciones (matriculas, historial))
-            if (!isLoad) {
-                cargarDatos();
-            }
-
-            //Cuando hayamos realizado la confirmacion de la entrega
-            switch (isConfirmationReady) {
-                case 0:
-                    System.out.println("Todavia no se ha realizado la confirmacion de la entrega");
-                    break;
-                case 1:
-                    System.out.println("Se ha realizado la confirmacion de la entrega 1");
-                    isConfirmationReady = 0; //Se resetea la variable
-
-                    if (matriculaEntregada != null) {
-                        anadirMatriculaEntregada(matriculaEntregada);
-                    }
-
-                    cargarDatos();
-                    break;
-                case 2:
-                    System.out.println("Se ha cancelado la entrega");
-                    isConfirmationReady = 0; //Se resetea la variable
-                    break;
-            }
-        }
-    }//GEN-LAST:event_formWindowActivated
-
-    /**
      * Controlamos cuando cerrmaos
      *
      * @param evt
@@ -526,6 +571,45 @@ public class FrameEntrega extends javax.swing.JFrame {
         daoAlumno.desconectar();
         daoMatricula.desconectar();
     }//GEN-LAST:event_formWindowClosed
+
+    /**
+     * Metodo que utilizamos para controlar cuando pulsamos la tecla intro desde
+     * el TextField de busqueda NIA
+     *
+     * @param evt
+     */
+    private void textBusquedaNIAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaNIAKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscarAlumno(textBusquedaNIA.getText());
+            //cbCurso.setSelectedIndex(0);
+            //jlistAlumnos.removeAll();
+        }
+
+    }//GEN-LAST:event_textBusquedaNIAKeyPressed
+
+    private void cbCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoItemStateChanged
+        // TODO add your handling code here:
+        rellenarLista((Curso) cbCurso.getSelectedItem());
+    }//GEN-LAST:event_cbCursoItemStateChanged
+
+    private void jlistAlumnosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jlistAlumnosValueChanged
+        // TODO add your handling code here:
+        alumno = (Alumno) jlistAlumnos.getSelectedValue();
+        cargarDatosAlumno();
+    }//GEN-LAST:event_jlistAlumnosValueChanged
+
+    private void textBusquedaNIAFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusGained
+        // TODO add your handling code here:
+        textBusquedaNIA.setText("");
+        textBusquedaNIA.setForeground(Colores.accent);
+    }//GEN-LAST:event_textBusquedaNIAFocusGained
+
+    private void textBusquedaNIAFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusLost
+        // TODO add your handling code here:
+        textBusquedaNIA.setText(defaultText);
+        textBusquedaNIA.setForeground(new Color(102, 102, 102));
+    }//GEN-LAST:event_textBusquedaNIAFocusLost
 
     /**
      * @param args the command line arguments
@@ -569,29 +653,34 @@ public class FrameEntrega extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.mommoo.flat.button.FlatButton btnBuscarAlumno;
+    private com.mommoo.flat.button.FlatButton btnBusquedaNIA;
+    private javax.swing.JComboBox cbCurso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JList jlistAlumnos;
+    private javax.swing.JPanel panelBusquedaLista;
+    private javax.swing.JPanel panelBusquedaNIA;
     private javax.swing.JPanel panelCuerpo;
     private javax.swing.JPanel panelGestionAsignaturas;
     private javax.swing.JPanel panelInfoGeneral;
-    private javax.swing.JPanel panelInfoTablas;
-    private javax.swing.JPanel panelNoAlumno;
-    private javax.swing.JPanel panelSiAlumno;
-    private javax.swing.JPanel panelTablas;
+    private javax.swing.JPanel panelInformacion;
+    private javax.swing.JPanel panelLista;
     private javax.swing.JPanel panelTitulo;
     public static javax.swing.JTable tablaPendientes;
-    public static javax.swing.JTable tableEntregados;
-    private javax.swing.JLabel textCurso;
+    private javax.swing.JTextField textBusquedaNIA;
     private javax.swing.JLabel textCursoEscolar;
     private javax.swing.JLabel textNIAAlumno;
     private javax.swing.JLabel textNombreAlumno;
@@ -605,141 +694,138 @@ public class FrameEntrega extends javax.swing.JFrame {
      * del archivo xml previamente importado
      */
     private void rellenarTablaPendiente(List<Matricula> listaMatriculas) {
-        //DefaultTableModel tableModel = (DefaultTableModel) tablaPendientes.getModel();
 
-        //tableModel.setRowCount(0);
-        //<editor-fold defaultstate="collapsed" desc="Rellenamos la lista que servirá para colorear los cursos a repetir">
         Object[][] contenidoTabla = new Object[listaMatriculas.size()][4];
 
         for (int i = 0; i < listaMatriculas.size(); i++) {
             contenidoTabla[i][0] = listaMatriculas.get(i);
             contenidoTabla[i][1] = listaMatriculas.get(i);
             contenidoTabla[i][2] = listaMatriculas.get(i);
-            contenidoTabla[i][3] = "";
+            contenidoTabla[i][3] = listaMatriculas.get(i);
         }
-//</editor-fold>
 
         DefaultTableModel tableModel = new DefaultTableModel(contenidoTabla,
                 new Object[]{"Asignaturas", "Curso", "Idioma", "Gestión"});
 
         tablaPendientes.setModel(tableModel);
 
-        Action entrega = new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                JTable table = (JTable) e.getSource();
-                int modelRow = Integer.valueOf(e.getActionCommand());
-                //((DefaultTableModel) table.getModel()).removeRow(modelRow);
-                matriculaEntregada = listaMatriculas.get(modelRow);
-                new FrameConfirmacionEntrega(listaMatriculas.get(modelRow)).setVisible(true);
-            }
-        };
-
+        /*Action entrega = new AbstractAction() {
+         public void actionPerformed(ActionEvent e) {
+         JTable table = (JTable) e.getSource();
+         int modelRow = Integer.valueOf(e.getActionCommand());
+         //((DefaultTableModel) table.getModel()).removeRow(modelRow);
+         matriculaEntregada = listaMatriculas.get(modelRow);
+         new FrameConfirmacionEntregaOld(listaMatriculas.get(modelRow)).setVisible(true);
+         }
+         };*/
         //<editor-fold defaultstate="collapsed" desc="Edicion visual de la tabla">
         TableColumnModel tcm = tablaPendientes.getColumnModel();
         tcm.getColumn(0).setPreferredWidth(300);
         tcm.getColumn(0).setMaxWidth(300);
-
-        tcm.getColumn(3).setMaxWidth(75);
-        tcm.getColumn(3).setMinWidth(75);
 //</editor-fold>
 
-        RemarcarCeldas remarcarCeldas = new RemarcarCeldas();
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
 
-        for (int i = 0; i < tableModel.getColumnCount() - 1; i++) {
-            tcm.getColumn(i).setCellRenderer(remarcarCeldas);
+            RemarcarCeldas remarcarCeldas = new RemarcarCeldas();
+
+            protected Void doInBackground() throws InterruptedException {
+                for (int i = 0; i < tableModel.getColumnCount(); i++) {
+                    tcm.getColumn(i).setCellRenderer(remarcarCeldas);
+                }
+                return null;
+            }
+
+            protected void done() {
+
+                remarcarCeldas.desconectarDao();
+
+                framePopup.dispose();
+            }
+        };
+        worker.execute();
+        if (framePopup == null) {
+            framePopup = new FramePopup("Cargando datos...");
         }
-        ButtonColumn buttonColumn = new ButtonColumn(tablaPendientes, entrega, tableModel.getColumnCount() - 1);
+        framePopup.setVisible(true);
+
+        //Asignamos los botones a la ultima columna de la tabla
+        //new ButtonColumn(tablaPendientes, entrega, tableModel.getColumnCount() - 1);
     }
 
     /**
-     * Cuando realizamos una entrega, este es el encargado de cambiar el libro
-     * de tabla y pintarlo en la tabla de entregados
-     *
-     * @param matricula
+     * Cargamos los datos iniciales, como los alumnos o los cursos
      */
-    public void anadirMatriculaEntregada(Matricula matricula) {
-        DefaultTableModel tableModel = (DefaultTableModel) tableEntregados.getModel();
+    public void cargarDatos() {
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
 
-        //tableModel.setRowCount(0);
-        listaMatriculasEntregadas.add(matricula);
-
-        Object[][] contenidoTabla = new Object[listaMatriculasEntregadas.size()][3];
-
-        for (int i = 0; i < listaMatriculasEntregadas.size(); i++) {
-            contenidoTabla[i][0] = listaMatriculasEntregadas.get(i).getContenido().getNombre_cas();
-            contenidoTabla[i][1] = listaMatriculasEntregadas.get(i).getContenido().getCurso().getAbreviatura();
-
-            if (listaMatriculasEntregadas.get(i).getIdioma().equals(" ")) {
-                contenidoTabla[i][2] = "Por defecto";
-            } else {
-                contenidoTabla[i][2] = listaMatriculasEntregadas.get(i).getIdioma();
+            protected Void doInBackground() throws InterruptedException {
+                listaAlumnos = daoAlumno.buscarTodos();
+                listaCursos = daoCurso.buscarTodos();
+                return null;
             }
-        }
 
-        tableModel.setDataVector(
-                contenidoTabla,
-                new Object[]{"Asignaturas", "Curso", "Idioma"}
-        );
-        tableEntregados.setModel(tableModel);
+            protected void done() {
+
+                sustituirPadresCursos();
+                rellenarCursos();
+
+                framePopup.dispose();
+            }
+        };
+        worker.execute();
+        if (framePopup == null) {
+            framePopup = new FramePopup();
+        }
+        framePopup.setVisible(true);
+    }
+
+    /**
+     * Metodo para rellenar los cursos del combobox
+     */
+    public void rellenarCursos() {
+
+        cbCurso.removeAllItems();
+
+        //cbCurso.addItem(new Curso("Seleccione curso", "Seleccione curso", "Seleccione curso", "Seleccione curso", "Seleccione curso", " "));
+        //Rellenamos los cursos
+        if (listaCursos.size() > 0) {
+            for (int i = 0; i < listaCursos.size(); i++) {
+                cbCurso.addItem(listaCursos.get(i));
+            }
+        } else {
+            new FramePopup("No hay cursos en la base de datos.",
+                    Imagenes.getImagen("alert-black.png"),
+                    "Aceptar");
+        }
+        rellenarLista((Curso) cbCurso.getSelectedItem());
+        //cbCurso.setSelectedIndex(0);
     }
 
     /**
      * Este metodo se utiliza para cargar los datos de el alumno encontrado
      * anteriormente.
      */
-    private void cargarDatos() {
+    private void cargarDatosAlumno() {
+        listaMatriculas = daoMatricula.buscarPendientes(alumno, getFecha());
 
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-            protected Void doInBackground() throws InterruptedException {
-                alumno = daoAlumno.buscar(alumno.getNia());
-                return null;
-            }
+        if (listaMatriculas.size() > 0) {
 
-            protected void done() {
+            textNIAAlumno.setText(alumno.getNia());
+            textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
+            textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
 
-                listaMatriculas = daoMatricula.buscarPendientes(alumno, getFecha());
+            textCursoEscolar.setText(getFecha() + "-" + (getFecha() + 1));
 
-                if (listaMatriculas.size() > 0) {
+            //textCurso.setText(listaMatriculas.get(0).getContenido().getCurso().getAbreviatura());
+            rellenarTablaPendiente(listaMatriculas);
 
-                    textNIAAlumno.setText(alumno.getNia());
-                    textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
-                    textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
+        } else {
+            setEnabled(false);
 
-                    textCursoEscolar.setText(getFecha() + "-" + (getFecha() + 1));
-
-                    textCurso.setText(listaMatriculas.get(0).getContenido().getCurso().getAbreviatura());
-
-                    rellenarTablaPendiente(listaMatriculas);
-
-                } else {
-                    setEnabled(false);
-
-                    showFramePopup("Este alumno no esta matriculado en este curso escolar.");
-                }
-                isLoad = true;
-                framePopup.dispose();
-            }
-
-            private void showFramePopup(String texto) {
-                Action cerrarVentana = new AbstractAction() {
-                    public void actionPerformed(ActionEvent e) {
-                        dispose();
-                    }
-                };
-
-                new FramePopup(texto,
-                        new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                        cerrarVentana
-                ).setVisible(true);
-            }
-
-        };
-        worker.execute();
-        //Mostramos la ventana de carga tan solo si 'isLoad == true'
-        if ((framePopup == null) && (!isLoad)) {
-            framePopup = new FramePopup();
+            new FramePopup("El alumno no esta matriculado en este curso escolar",
+                    Imagenes.getImagen("alert-black.png"),
+                    "Aceptar");
         }
-        framePopup.setVisible(true);
     }
 
     /**
@@ -761,9 +847,58 @@ public class FrameEntrega extends javax.swing.JFrame {
             };
 
             new FramePopup("No se ha podido conseguir el curso escolar",
-                    Imagenes.getImagen(this, "/Imagenes/icons/alert-black.png"),
+                    Imagenes.getImagen("/Imagenes/icons/alert-black.png"),
                     "Aceptar", aceptar);
         }
         return fecha = 2018;
+    }
+
+    /**
+     * Metodo que utilizamos para buscar un alumno en la base de datos
+     *
+     * @param nia Deberemos pasarle el NIA del alumno
+     */
+    public void buscarAlumno(String nia) {
+        if (!nia.equals("") || nia.equals(defaultText)) {
+            //Se ha insertado un codigo
+            alumno = listaAlumnos.stream().filter(a -> a.getNia().equals(nia)).collect(Collectors.toList()).get(0);
+            cargarDatosAlumno();
+        } else {
+            //No se ha insertado ningun valor en el campo de texto
+            new FramePopup("El NIA no puede ser un campo vacío.",
+                    Imagenes.getImagen("alert-black.png"),
+                    "Aceptar");
+        }
+
+    }
+
+    /**
+     * Metodo que utilizamos para rellenar la lista de alumnos dependiendo del
+     * curso seleccionado
+     *
+     * @param curso Curso seleccionado en el comboBox
+     */
+    private void rellenarLista(Curso curso) {
+        List<Alumno> listaAlumnosCurso = listaAlumnos.stream().filter(a -> a.getCurso().equals(curso)).collect(Collectors.toList());
+        DefaultListModel listModel = new DefaultListModel();
+        for (int i = 0; i < listaAlumnosCurso.size(); i++) {
+            listModel.addElement(listaAlumnosCurso.get(i));
+        }
+        jlistAlumnos.setModel(listModel);
+    }
+
+    /**
+     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
+     * por el nombre del Padre
+     */
+    private void sustituirPadresCursos() {
+        for (int i = 0; i < listaCursos.size(); i++) {
+            Curso curso = listaCursos.get(i);
+            Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
+
+            if (cursoPadre != null) {
+                curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
+            }
+        }
     }
 }

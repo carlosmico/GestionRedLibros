@@ -26,8 +26,8 @@ import javax.swing.JFrame;
  */
 public class Imagenes {
 
-    public static ImageIcon getImagen(JFrame frame, String nombre) {
-        return new ImageIcon(frame.getClass().getResource("/Imagenes/icons/" + nombre));
+    public static ImageIcon getImagen(String nombre) {
+        return new ImageIcon(new JFrame().getClass().getResource("/Imagenes/icons/" + nombre));
     }
 
 }

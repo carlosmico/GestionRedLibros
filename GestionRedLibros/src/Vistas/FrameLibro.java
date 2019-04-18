@@ -187,6 +187,7 @@ public class FrameLibro extends javax.swing.JFrame {
         jlistLibros = new javax.swing.JList();
         panelTitulo1 = new javax.swing.JPanel();
         textTitulo1 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
         panelDerecho = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         panelSuperiorDerecho = new javax.swing.JPanel();
@@ -436,7 +437,7 @@ public class FrameLibro extends javax.swing.JFrame {
                     .addComponent(cbCursoBuscar)
                     .addComponent(textNombreLibroBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -468,22 +469,25 @@ public class FrameLibro extends javax.swing.JFrame {
         panelGeneralIzquierdo.setLayout(panelGeneralIzquierdoLayout);
         panelGeneralIzquierdoLayout.setHorizontalGroup(
             panelGeneralIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelTitulo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelGeneralIzquierdoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelGeneralIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(panelTitulo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator2)
         );
         panelGeneralIzquierdoLayout.setVerticalGroup(
             panelGeneralIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeneralIzquierdoLayout.createSequentialGroup()
                 .addComponent(panelTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1588,7 +1592,9 @@ public class FrameLibro extends javax.swing.JFrame {
         if (libro != null) {
             menuOpcionesLibro.show(evt.getComponent(), -157, 53);
         } else {
-            new FramePopup("Selecciona un libro para poder gestionarlo.", Imagenes.getImagen(this, "alert-black.png"), "Aceptar").setVisible(true);
+            new FramePopup("Selecciona un libro para poder gestionarlo.",
+                    Imagenes.getImagen("alert-black.png"),
+                    "Aceptar").setVisible(true);
         }
     }//GEN-LAST:event_btnOpcionesMouseReleased
 
@@ -1874,7 +1880,7 @@ public class FrameLibro extends javax.swing.JFrame {
                     rellenarCamposEjemplares();
 
                     new FramePopup("Libro añadido correctamente.",
-                            Imagenes.getImagen(this, "check-black.png"),
+                            Imagenes.getImagen("check-black.png"),
                             "Aceptar").setVisible(true);
                 } catch (PersistenceException e) {
                     JOptionPane.showMessageDialog(this,
@@ -2161,6 +2167,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JList jlistLibros;
