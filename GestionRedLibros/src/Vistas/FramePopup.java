@@ -193,6 +193,7 @@ public class FramePopup extends javax.swing.JDialog {
         btnButton2.setForeground(Colores.fondo);
         btnButton2.setText("Aceptar");
         btnButton2.setCornerRound(10);
+        btnButton2.setRequestFocusEnabled(false);
         btnButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnButton2ActionPerformed(evt);
