@@ -85,6 +85,7 @@ public class FramePopup extends javax.swing.JDialog {
         text.setText(mensaje);
         text.setIcon(icon);
         btnButton2.setText(buttonText);
+        btnButton2.requestFocusInWindow(); 
         btnButton1.setVisible(false);
         pack();
         this.setLocationRelativeTo(null);
