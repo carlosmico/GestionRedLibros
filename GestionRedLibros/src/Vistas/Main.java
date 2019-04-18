@@ -268,9 +268,11 @@ public class Main extends javax.swing.JFrame {
                 }
             }
             frameEntrega.setVisible(true);
+        } else {
+            compruebaConexionBD(false, "FrameEntrega");
         }
 
-        compruebaConexionBD(false, "FrameEntrega");
+
     }//GEN-LAST:event_btnEntregaActionPerformed
 
     /**
@@ -435,7 +437,6 @@ public class Main extends javax.swing.JFrame {
 
                             frame.setVisible(true);
                         }
-
                     } else {
                         frameCarga.dispose();
 
