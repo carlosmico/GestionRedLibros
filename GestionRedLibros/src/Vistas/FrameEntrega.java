@@ -25,7 +25,6 @@ import Pojos.Curso;
 import Pojos.Matricula;
 import Renders.RemarcarCeldas;
 import Renders.comboBoxRender;
-import Utilidades.ButtonColumn;
 import Utilidades.Colores;
 import Utilidades.Imagenes;
 import java.awt.Color;
@@ -155,8 +154,16 @@ public class FrameEntrega extends javax.swing.JFrame {
         textCursoEscolar = new javax.swing.JLabel();
         panelGestionAsignaturas = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaPendientes = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        flatButton1 = new com.mommoo.flat.button.FlatButton();
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -428,7 +435,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                 .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelInfoGeneralLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1371, Short.MAX_VALUE))
                     .addGroup(panelInfoGeneralLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -448,6 +455,8 @@ public class FrameEntrega extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         jLabel5.setText("Listado Asignaturas:");
+
+        jPanel4.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
 
         jScrollPane2.setBackground(Colores.fondo);
         jScrollPane2.setForeground(Colores.fondo);
@@ -475,6 +484,37 @@ public class FrameEntrega extends javax.swing.JFrame {
         tablaPendientes.setSelectionForeground(Colores.fondo);
         jScrollPane2.setViewportView(tablaPendientes);
 
+        jPanel4.add(jScrollPane2);
+
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(jList1);
+
+        jPanel4.add(jScrollPane3);
+
+        jPanel5.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel6.setForeground(Colores.accent);
+        jLabel6.setText("Pendientes de entrega:");
+        jPanel5.add(jLabel6);
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel10.setForeground(Colores.accent);
+        jLabel10.setText("Entregados:");
+        jPanel5.add(jLabel10);
+
+        jTextField1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jTextField1.setText("Inserte código...");
+        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+
+        flatButton1.setBackground(Colores.buttons);
+        flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up.png"))); // NOI18N
+        flatButton1.setCornerRound(10);
+
         javax.swing.GroupLayout panelGestionAsignaturasLayout = new javax.swing.GroupLayout(panelGestionAsignaturas);
         panelGestionAsignaturas.setLayout(panelGestionAsignaturasLayout);
         panelGestionAsignaturasLayout.setHorizontalGroup(
@@ -482,20 +522,30 @@ public class FrameEntrega extends javax.swing.JFrame {
             .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addGap(0, 1191, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(flatButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         panelGestionAsignaturasLayout.setVerticalGroup(
             panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5)
+                .addGroup(panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(flatButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panelInformacionLayout = new javax.swing.GroupLayout(panelInformacion);
@@ -655,21 +705,29 @@ public class FrameEntrega extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.mommoo.flat.button.FlatButton btnBusquedaNIA;
     private javax.swing.JComboBox cbCurso;
+    private com.mommoo.flat.button.FlatButton flatButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JList jlistAlumnos;
     private javax.swing.JPanel panelBusquedaLista;
     private javax.swing.JPanel panelBusquedaNIA;
@@ -743,9 +801,8 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
         };
         worker.execute();
-        if (framePopup == null) {
-            framePopup = new FramePopup("Cargando datos...");
-        }
+        
+        framePopup = new FramePopup("Cargando datos...");
         framePopup.setVisible(true);
 
         //Asignamos los botones a la ultima columna de la tabla

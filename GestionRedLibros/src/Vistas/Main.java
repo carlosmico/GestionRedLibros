@@ -271,8 +271,6 @@ public class Main extends javax.swing.JFrame {
         } else {
             compruebaConexionBD(false, "FrameEntrega");
         }
-
-
     }//GEN-LAST:event_btnEntregaActionPerformed
 
     /**
