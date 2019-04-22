@@ -176,10 +176,10 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
         });
 
-        panelTitulo.setBackground(new java.awt.Color(58, 39, 35));
+        panelTitulo.setBackground(Colores.accent);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setForeground(Colores.fondo);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Entregas");
 

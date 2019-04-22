@@ -133,7 +133,7 @@ public class DaoAlumno extends DaoGenerico<Alumno, String> implements InterfaceD
     /**
      * Metodo para desconectar la sesion del DAO
      */
-    public void desconectar() {
+    public void desconectar(){
         if (this.session != null) {
             try {
                 this.session.close();

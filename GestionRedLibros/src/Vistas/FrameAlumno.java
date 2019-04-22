@@ -227,11 +227,16 @@ public class FrameAlumno extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Libros");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
-        jPanel1.setBackground(new java.awt.Color(58, 39, 35));
+        jPanel1.setBackground(Colores.accent);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setForeground(Colores.fondo);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Alumno");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -249,9 +254,9 @@ public class FrameAlumno extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(239, 235, 233));
+        jPanel3.setBackground(Colores.fondo);
 
-        panelLibro.setBackground(new java.awt.Color(255, 255, 255));
+        panelLibro.setBackground(Colores.fondo);
         panelLibro.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         imgLibro.setForeground(new java.awt.Color(51, 51, 51));
@@ -276,14 +281,14 @@ public class FrameAlumno extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(239, 235, 233));
+        jPanel2.setBackground(Colores.fondo);
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel9.setForeground(Colores.accent);
         jLabel9.setText("Ejemplares:");
 
-        tablaHistorial.setBackground(new java.awt.Color(239, 235, 233));
-        tablaHistorial.setForeground(new java.awt.Color(51, 51, 51));
+        tablaHistorial.setBackground(Colores.fondo);
+        tablaHistorial.setForeground(Colores.accent);
         tablaHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -311,12 +316,11 @@ public class FrameAlumno extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,22 +332,22 @@ public class FrameAlumno extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panelGeneralSuperior.setBackground(new java.awt.Color(239, 235, 233));
+        panelGeneralSuperior.setBackground(Colores.fondo);
         panelGeneralSuperior.setLayout(new java.awt.GridLayout(2, 1));
 
-        panelSuperior.setBackground(new java.awt.Color(239, 235, 233));
+        panelSuperior.setBackground(Colores.fondo);
         panelSuperior.setPreferredSize(new java.awt.Dimension(820, 77));
 
-        panelNIA.setBackground(new java.awt.Color(239, 235, 233));
+        panelNIA.setBackground(Colores.fondo);
         panelNIA.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel2.setBackground(new java.awt.Color(241, 241, 241));
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setForeground(Colores.accent);
         jLabel2.setText("NIA:");
 
         textNIAAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textNIAAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textNIAAlumno.setForeground(Colores.accent);
         textNIAAlumno.setText("10429497");
 
         javax.swing.GroupLayout panelNIALayout = new javax.swing.GroupLayout(panelNIA);
@@ -369,16 +373,16 @@ public class FrameAlumno extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panelNombreYApellidos.setBackground(new java.awt.Color(239, 235, 233));
+        panelNombreYApellidos.setBackground(Colores.fondo);
         panelNombreYApellidos.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel3.setBackground(new java.awt.Color(241, 241, 241));
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel3.setForeground(Colores.accent);
         jLabel3.setText("Nombre y Apellidos:");
 
         textNombreAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textNombreAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textNombreAlumno.setForeground(Colores.accent);
         textNombreAlumno.setText("Jose Sanchis Belda");
 
         javax.swing.GroupLayout panelNombreYApellidosLayout = new javax.swing.GroupLayout(panelNombreYApellidos);
@@ -406,16 +410,16 @@ public class FrameAlumno extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panelTelefono.setBackground(new java.awt.Color(239, 235, 233));
+        panelTelefono.setBackground(Colores.fondo);
         panelTelefono.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel7.setBackground(new java.awt.Color(241, 241, 241));
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel7.setForeground(Colores.accent);
         jLabel7.setText("Telefono:");
 
         textTelefonoAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textTelefonoAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textTelefonoAlumno.setForeground(Colores.accent);
         textTelefonoAlumno.setText("684092823");
 
         javax.swing.GroupLayout panelTelefonoLayout = new javax.swing.GroupLayout(panelTelefono);
@@ -469,19 +473,19 @@ public class FrameAlumno extends javax.swing.JFrame {
 
         panelGeneralSuperior.add(panelSuperior);
 
-        panelMedio.setBackground(new java.awt.Color(239, 235, 233));
+        panelMedio.setBackground(Colores.fondo);
         panelMedio.setPreferredSize(new java.awt.Dimension(820, 77));
 
-        panelAsignatura.setBackground(new java.awt.Color(239, 235, 233));
+        panelAsignatura.setBackground(Colores.fondo);
         panelAsignatura.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel5.setBackground(new java.awt.Color(241, 241, 241));
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel5.setForeground(Colores.accent);
         jLabel5.setText("Correo electrónico:");
 
         textEmailAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textEmailAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textEmailAlumno.setForeground(Colores.accent);
         textEmailAlumno.setText("sanchisbeldajose@gmail.com");
 
         btnEmail.setBackground(Colores.buttons);
@@ -520,16 +524,16 @@ public class FrameAlumno extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panelTelefono1.setBackground(new java.awt.Color(239, 235, 233));
+        panelTelefono1.setBackground(Colores.fondo);
         panelTelefono1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel8.setBackground(new java.awt.Color(241, 241, 241));
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel8.setForeground(Colores.accent);
         jLabel8.setText("Curso:");
 
         textCursoAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textCursoAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textCursoAlumno.setForeground(Colores.accent);
         textCursoAlumno.setText("DAM");
 
         javax.swing.GroupLayout panelTelefono1Layout = new javax.swing.GroupLayout(panelTelefono1);
@@ -641,6 +645,10 @@ public class FrameAlumno extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btnEmailActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        daoAlumno.desconectar();
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

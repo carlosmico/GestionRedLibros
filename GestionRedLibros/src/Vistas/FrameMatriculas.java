@@ -123,14 +123,8 @@ public class FrameMatriculas extends javax.swing.JFrame {
         setTitle("Matrículas");
         setMinimumSize(new java.awt.Dimension(600, 36));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
-            }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
-            }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
             }
         });
 
@@ -253,14 +247,6 @@ public class FrameMatriculas extends javax.swing.JFrame {
         // TODO add your handling code here:
         daoMatricula.desconectar();
     }//GEN-LAST:event_formWindowClosed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowOpened
-
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments

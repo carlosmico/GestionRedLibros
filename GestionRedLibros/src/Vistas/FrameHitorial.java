@@ -17,21 +17,23 @@
  */
 package Vistas;
 
-import javax.swing.JFrame;
 import Utilidades.Colores;
 
 /**
  *
  * @author Jose Sanchis
  */
-public class FrameDevoluciones extends javax.swing.JFrame {
+public class FrameHitorial extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameDevoluciones
      */
-    public FrameDevoluciones() {
+    public FrameHitorial() {
         initComponents();
-        
+        //<editor-fold defaultstate="collapsed" desc="Configuracion Tabbed PAne">
+        //tabbedPage.setIconAt(1, new ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-down-outline.png")));
+                //</editor-fold>
+
         this.setLocationRelativeTo(null);
     }
 
@@ -44,73 +46,63 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        glossPainter1 = new org.jdesktop.swingx.painter.GlossPainter();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        flatButton2 = new com.mommoo.flat.button.FlatButton();
-        flatButton1 = new com.mommoo.flat.button.FlatButton();
         jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Devoluciones");
+        setTitle("Opciones");
         setMinimumSize(new java.awt.Dimension(600, 36));
-        setPreferredSize(new java.awt.Dimension(1200, 600));
 
         jPanel1.setBackground(Colores.accent);
-        jPanel1.setLayout(new java.awt.GridLayout(2, 1));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1137, 75));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setForeground(Colores.fondo);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Devoluciones");
-        jPanel1.add(jLabel1);
+        jLabel1.setText("Historial");
+        jLabel1.setPreferredSize(new java.awt.Dimension(122, 75));
 
-        jPanel2.setBackground(Colores.accent);
-        jPanel2.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
-        flatButton2.setBackground(Colores.buttons);
-        flatButton2.setForeground(new java.awt.Color(204, 204, 204));
-        flatButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png"))); // NOI18N
-        flatButton2.setText("  Nueva devolución");
-        flatButton2.setCornerRound(10);
-        flatButton2.setMaximumSize(new java.awt.Dimension(268, 36));
-        flatButton2.setMinimumSize(new java.awt.Dimension(268, 36));
-        jPanel2.add(flatButton2);
-
-        flatButton1.setBackground(Colores.buttons);
-        flatButton1.setForeground(new java.awt.Color(204, 204, 204));
-        flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
-        flatButton1.setText("  Consultar devolución");
-        flatButton1.setCornerRound(10);
-        jPanel2.add(flatButton1);
-
-        jPanel1.add(jPanel2);
-
-        jPanel3.setBackground(Colores.fondo);
+        jPanel3.setBackground(Colores.accent);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1199, Short.MAX_VALUE)
+            .addGap(0, 1072, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+            .addGap(0, 536, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1199, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1072, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -134,30 +126,28 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameDevoluciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameHitorial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameDevoluciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameHitorial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameDevoluciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameHitorial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameDevoluciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameHitorial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameDevoluciones().setVisible(true);
+                new FrameHitorial().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.mommoo.flat.button.FlatButton flatButton1;
-    private com.mommoo.flat.button.FlatButton flatButton2;
+    private org.jdesktop.swingx.painter.GlossPainter glossPainter1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }

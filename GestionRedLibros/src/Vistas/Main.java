@@ -33,7 +33,7 @@ public class Main extends javax.swing.JFrame {
     FrameOpciones frameOpciones;
     FramePopup frameCarga;
     FramePopup framePopup;
-    FrameAyuda frameAyuda;
+    FrameHitorial frameAyuda;
 
     public static GestorSesiones gestorSesiones;
 
@@ -319,13 +319,13 @@ public class Main extends javax.swing.JFrame {
     private void btnAyduaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyduaActionPerformed
         //compruebaConexionBD();
         if (frameAyuda == null) {
-            frameAyuda = new FrameAyuda();
+            frameAyuda = new FrameHitorial();
         } else {
             if (!frameAyuda.isVisible()) {
                 frameAyuda = null;
-                frameAyuda = new FrameAyuda();
+                frameAyuda = new FrameHitorial();
             } else {
-                frameAyuda = new FrameAyuda();
+                frameAyuda = new FrameHitorial();
             }
         }
         frameAyuda.setVisible(true);
