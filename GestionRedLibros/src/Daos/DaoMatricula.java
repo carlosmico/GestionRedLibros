@@ -90,8 +90,6 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                 this.session.saveOrUpdate(matricula);
 
             } catch (PersistenceException ex) {
-                this.session.getTransaction().commit();
-
                 ex.printStackTrace();
                 System.out.println("Error DaoMatricula-actualizar(): " + ex.getMessage());
                 throw ex;

@@ -44,8 +44,8 @@ public class Historial implements Serializable {
     private static final long serialVersionUID = -5514760462301220827L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "id_ejemplar")
@@ -56,8 +56,8 @@ public class Historial implements Serializable {
     private Alumno alumno;
 
     private int curso_escolar;
-    private int estado_inicial;
-    private int estado_final;
+    private Integer estado_inicial;
+    private Integer estado_final;
     private Date fecha_inicial;
     private Date fecha_final;
     private String observaciones;
@@ -66,7 +66,7 @@ public class Historial implements Serializable {
 
     }
 
-    public Historial(Ejemplar ejemplar, Alumno alumno, int curso_escolar, int estado_inicial, int estado_final, Date fecha_inicial, Date fecha_final, String observaciones) {
+    public Historial(Ejemplar ejemplar, Alumno alumno, int curso_escolar, Integer estado_inicial, Integer estado_final, Date fecha_inicial, Date fecha_final, String observaciones) {
         this.ejemplar = ejemplar;
         this.alumno = alumno;
         this.curso_escolar = curso_escolar;
@@ -77,7 +77,7 @@ public class Historial implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public Historial(int id, Ejemplar ejemplar, Alumno alumno, int curso_escolar, int estado_inicial, int estado_final, Date fecha_inicial, Date fecha_final, String observaciones) {
+    public Historial(Integer id, Ejemplar ejemplar, Alumno alumno, int curso_escolar, Integer estado_inicial, Integer estado_final, Date fecha_inicial, Date fecha_final, String observaciones) {
         this.id = id;
         this.ejemplar = ejemplar;
         this.alumno = alumno;
@@ -163,6 +163,6 @@ public class Historial implements Serializable {
 
     @Override
     public String toString() {
-        return "Historial{" + "id=" + id + ", ejemplar=" + ejemplar + ", alumno=" + alumno + ", curso_escolar=" + curso_escolar + ", estado_inicial=" + estado_inicial + ", estado_final=" + estado_final + ", fecha_incial=" + fecha_inicial + ", fecha_final=" + fecha_final + ", observaciones=" + observaciones + '}';
+        return ejemplar.getCodigo() + " - " + ejemplar.getLibro().getNombre() + " - " + ejemplar.getLibro().getContenido().getNombre_cas();
     }
 }

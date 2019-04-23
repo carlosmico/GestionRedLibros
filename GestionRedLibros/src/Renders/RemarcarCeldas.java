@@ -39,8 +39,8 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
 
     public DaoCurso daoCurso;
 
-    public RemarcarCeldas() {
-        daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
+    public RemarcarCeldas(DaoCurso dao) {
+        daoCurso = dao;
     }
 
     public Component getTableCellRendererComponent(JTable tbl, Object value,
