@@ -17,8 +17,35 @@
  */
 package Vistas;
 
-import javax.swing.JFrame;
+import Daos.DaoAlumno;
+import Daos.DaoCurso;
+import Daos.DaoEjemplar;
+import Daos.DaoHistorial;
+import Daos.DaoMatricula;
+import Pojos.Alumno;
+import Pojos.Curso;
+import Pojos.Ejemplar;
+import Pojos.Historial;
+import Pojos.Matricula;
+import Renders.RemarcarCeldas;
+import Renders.comboBoxRender;
 import Utilidades.Colores;
+import Utilidades.ConfirmacionDevolucion;
+import Utilidades.Imagenes;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -26,13 +53,76 @@ import Utilidades.Colores;
  */
 public class FrameDevoluciones extends javax.swing.JFrame {
 
+    public static int isConfirmationReady;
+    public static Historial historialConfirmado;
+
+    //Cremaos el frame de Cargar
+    private FramePopup framePopup;
+
+    //Creamos el DAO del Alumno y Matricula
+    private DaoAlumno daoAlumno;
+    private DaoCurso daoCurso;
+    private DaoEjemplar daoEjemplar;
+    private DaoHistorial daoHistorial;
+
+    public Alumno alumno;
+    public Ejemplar ejemplar;
+
+    public List<Historial> listaEjemplaresPendientes = null;
+    public List<Ejemplar> listaEjemplaresDevueltos = null;
+
+    //Listas
+    public List<Alumno> listaAlumnos;
+    public List<Curso> listaCursos;
+
+    private String defaultText = "Escribe NIA...";
+
     /**
      * Creates new form FrameDevoluciones
      */
     public FrameDevoluciones() {
         initComponents();
-        
+
+        //<editor-fold defaultstate="collapsed" desc="Configuración combobox">
+        cbCurso.setEditable(false);
+        cbCurso.setUI(new comboBoxRender());
+        cbCurso.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList list, Object value, int index,
+                    boolean isSelected, boolean hasFocus) {
+                JLabel l = (JLabel) super.getListCellRendererComponent(
+                        list, value, index, isSelected, hasFocus);
+                if (isSelected) {
+                    l.setForeground(Colores.fondo);
+                    l.setBackground(Colores.buttons);
+                } else {
+                    l.setForeground(Colores.buttons);
+                    l.setBackground(Colores.fondo);
+                }
+                return l;
+            }
+        });
+//</editor-fold>
+
+        //Inicializamos los DAO
+        daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
+        daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
+        daoEjemplar = new DaoEjemplar(Main.gestorSesiones.getSession());
+        daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
+
+        //Inicializamos la lista de las matriculas entregadas
+        listaEjemplaresDevueltos = new ArrayList<>();
+
+        //Centramos la pestaña al centro de la pantalla
         this.setLocationRelativeTo(null);
+
+        //Maximizamos la pestaña
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        modoEdicion(false);
+
+        cargarDatos();
     }
 
     /**
@@ -44,78 +134,635 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelTitulo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        flatButton2 = new com.mommoo.flat.button.FlatButton();
-        flatButton1 = new com.mommoo.flat.button.FlatButton();
+        panelCuerpo = new javax.swing.JPanel();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        panelLista = new javax.swing.JPanel();
+        panelBusquedaNIA = new javax.swing.JPanel();
+        textBusquedaNIA = new javax.swing.JTextField();
+        btnBusquedaNIA = new com.mommoo.flat.button.FlatButton();
+        panelBusquedaLista = new javax.swing.JPanel();
+        cbCurso = new javax.swing.JComboBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jlistAlumnos = new javax.swing.JList();
+        jLabel8 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        panelInformacion = new javax.swing.JPanel();
+        panelInfoGeneral = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        textNIAAlumno = new javax.swing.JLabel();
+        textNombreAlumno = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        textCursoEscolar = new javax.swing.JLabel();
+        panelGestionAsignaturas = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jlistEjemplaresPendientes = new javax.swing.JList();
+        panelEjemplaresEntregados = new javax.swing.JPanel();
+        panelCodigo = new javax.swing.JPanel();
+        textCodigoEjemplar = new javax.swing.JTextField();
+        btCodigoEjemplar = new com.mommoo.flat.button.FlatButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jlistEjemplaresDevueltos = new javax.swing.JList();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Devoluciones");
-        setMinimumSize(new java.awt.Dimension(600, 36));
-        setPreferredSize(new java.awt.Dimension(1200, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
-        jPanel1.setBackground(Colores.accent);
-        jPanel1.setLayout(new java.awt.GridLayout(2, 1));
+        panelTitulo.setBackground(Colores.accent);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setForeground(Colores.fondo);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Devoluciones");
-        jPanel1.add(jLabel1);
 
-        jPanel2.setBackground(Colores.accent);
-        jPanel2.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
+        javax.swing.GroupLayout panelTituloLayout = new javax.swing.GroupLayout(panelTitulo);
+        panelTitulo.setLayout(panelTituloLayout);
+        panelTituloLayout.setHorizontalGroup(
+            panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        panelTituloLayout.setVerticalGroup(
+            panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+        );
 
-        flatButton2.setBackground(Colores.buttons);
-        flatButton2.setForeground(new java.awt.Color(204, 204, 204));
-        flatButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png"))); // NOI18N
-        flatButton2.setText("  Nueva devolución");
-        flatButton2.setCornerRound(10);
-        flatButton2.setMaximumSize(new java.awt.Dimension(268, 36));
-        flatButton2.setMinimumSize(new java.awt.Dimension(268, 36));
-        jPanel2.add(flatButton2);
+        panelCuerpo.setBackground(Colores.fondo);
 
-        flatButton1.setBackground(Colores.buttons);
-        flatButton1.setForeground(new java.awt.Color(204, 204, 204));
-        flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
-        flatButton1.setText("  Consultar devolución");
-        flatButton1.setCornerRound(10);
-        jPanel2.add(flatButton1);
+        panelLista.setBackground(Colores.fondo);
+        panelLista.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        panelLista.setMaximumSize(new java.awt.Dimension(450, 32767));
+        panelLista.setMinimumSize(new java.awt.Dimension(400, 0));
 
-        jPanel1.add(jPanel2);
+        panelBusquedaNIA.setBackground(Colores.fondo);
+
+        textBusquedaNIA.setBackground(Colores.fondo);
+        textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textBusquedaNIA.setForeground(Colores.accent);
+        textBusquedaNIA.setText("Codigo NIA");
+        textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textBusquedaNIAFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textBusquedaNIAFocusLost(evt);
+            }
+        });
+        textBusquedaNIA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textBusquedaNIAKeyPressed(evt);
+            }
+        });
+
+        btnBusquedaNIA.setBackground(Colores.buttons);
+        btnBusquedaNIA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
+        btnBusquedaNIA.setCornerRound(10);
+        btnBusquedaNIA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBusquedaNIAActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelBusquedaNIALayout = new javax.swing.GroupLayout(panelBusquedaNIA);
+        panelBusquedaNIA.setLayout(panelBusquedaNIALayout);
+        panelBusquedaNIALayout.setHorizontalGroup(
+            panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBusquedaNIALayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(textBusquedaNIA)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBusquedaNIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelBusquedaNIALayout.setVerticalGroup(
+            panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBusquedaNIALayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBusquedaNIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textBusquedaNIA))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panelBusquedaLista.setBackground(Colores.fondo);
+
+        cbCurso.setBackground(Colores.accent);
+        cbCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbCurso.setPreferredSize(new java.awt.Dimension(374, 34));
+        cbCurso.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbCursoItemStateChanged(evt);
+            }
+        });
+        cbCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCursoActionPerformed(evt);
+            }
+        });
+
+        jlistAlumnos.setBackground(Colores.fondo);
+        jlistAlumnos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jlistAlumnos.setForeground(Colores.accent);
+        jlistAlumnos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jlistAlumnosValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jlistAlumnos);
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel8.setText("Listado de alumnos");
+
+        javax.swing.GroupLayout panelBusquedaListaLayout = new javax.swing.GroupLayout(panelBusquedaLista);
+        panelBusquedaLista.setLayout(panelBusquedaListaLayout);
+        panelBusquedaListaLayout.setHorizontalGroup(
+            panelBusquedaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBusquedaListaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelBusquedaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(panelBusquedaListaLayout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(42, 42, 42))
+                    .addComponent(cbCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panelBusquedaListaLayout.setVerticalGroup(
+            panelBusquedaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBusquedaListaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jLabel8.getAccessibleContext().setAccessibleName("L");
+
+        javax.swing.GroupLayout panelListaLayout = new javax.swing.GroupLayout(panelLista);
+        panelLista.setLayout(panelListaLayout);
+        panelListaLayout.setHorizontalGroup(
+            panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelListaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelBusquedaLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelBusquedaNIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addComponent(jSeparator2)
+        );
+        panelListaLayout.setVerticalGroup(
+            panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelBusquedaNIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelBusquedaLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jSplitPane1.setLeftComponent(panelLista);
+
+        jScrollPane4.setBorder(null);
+        jScrollPane4.setMinimumSize(new java.awt.Dimension(250, 18));
+
+        panelInformacion.setBackground(Colores.fondo);
+        panelInformacion.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        panelInformacion.setMinimumSize(new java.awt.Dimension(720, 0));
+        panelInformacion.setPreferredSize(new java.awt.Dimension(720, 642));
+
+        panelInfoGeneral.setBackground(Colores.fondo);
+        panelInfoGeneral.setMaximumSize(new java.awt.Dimension(300, 32767));
+        panelInfoGeneral.setPreferredSize(new java.awt.Dimension(922, 170));
+
+        jLabel3.setBackground(Colores.accent);
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setText("Información");
 
         jPanel3.setBackground(Colores.fondo);
+        jPanel3.setLayout(new java.awt.GridLayout(1, 2));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1199, Short.MAX_VALUE)
+        jPanel1.setBackground(Colores.fondo);
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel7.setText("NIA:");
+
+        textNIAAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textNIAAlumno.setForeground(new java.awt.Color(51, 51, 51));
+
+        textNombreAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textNombreAlumno.setForeground(new java.awt.Color(51, 51, 51));
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel4.setText("Nombre:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textNIAAlumno))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textNombreAlumno)))
+                .addContainerGap(505, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(textNIAAlumno))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(textNombreAlumno))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel3.add(jPanel1);
+
+        jPanel2.setBackground(Colores.fondo);
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setText("Curso escolar:");
+
+        textCursoEscolar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textCursoEscolar.setForeground(new java.awt.Color(51, 51, 51));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textCursoEscolar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(288, 288, 288))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(textCursoEscolar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGap(34, 34, 34))
+        );
+
+        jPanel3.add(jPanel2);
+
+        javax.swing.GroupLayout panelInfoGeneralLayout = new javax.swing.GroupLayout(panelInfoGeneral);
+        panelInfoGeneral.setLayout(panelInfoGeneralLayout);
+        panelInfoGeneralLayout.setHorizontalGroup(
+            panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panelInfoGeneralLayout.setVerticalGroup(
+            panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoGeneralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        panelGestionAsignaturas.setBackground(Colores.fondo);
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel5.setText("Asignaturas");
+
+        jPanel4.setBackground(Colores.fondo);
+        jPanel4.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
+
+        jPanel6.setBackground(Colores.fondo);
+
+        jlistEjemplaresPendientes.setBackground(Colores.fondo);
+        jlistEjemplaresPendientes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jScrollPane5.setViewportView(jlistEjemplaresPendientes);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5)
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
+        );
+
+        jPanel4.add(jPanel6);
+
+        panelEjemplaresEntregados.setBackground(Colores.fondo);
+
+        panelCodigo.setBackground(Colores.fondo);
+
+        textCodigoEjemplar.setBackground(Colores.fondo);
+        textCodigoEjemplar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textCodigoEjemplar.setForeground(Colores.accent);
+        textCodigoEjemplar.setText("Escanee código ejemplar...");
+        textCodigoEjemplar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        textCodigoEjemplar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textCodigoEjemplarFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textCodigoEjemplarFocusLost(evt);
+            }
+        });
+        textCodigoEjemplar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textCodigoEjemplarKeyPressed(evt);
+            }
+        });
+
+        btCodigoEjemplar.setBackground(Colores.buttons);
+        btCodigoEjemplar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up.png"))); // NOI18N
+        btCodigoEjemplar.setCornerRound(10);
+
+        javax.swing.GroupLayout panelCodigoLayout = new javax.swing.GroupLayout(panelCodigo);
+        panelCodigo.setLayout(panelCodigoLayout);
+        panelCodigoLayout.setHorizontalGroup(
+            panelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCodigoLayout.createSequentialGroup()
+                .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelCodigoLayout.setVerticalGroup(
+            panelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        jlistEjemplaresDevueltos.setBackground(Colores.fondo);
+        jlistEjemplaresDevueltos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jScrollPane3.setViewportView(jlistEjemplaresDevueltos);
+
+        javax.swing.GroupLayout panelEjemplaresEntregadosLayout = new javax.swing.GroupLayout(panelEjemplaresEntregados);
+        panelEjemplaresEntregados.setLayout(panelEjemplaresEntregadosLayout);
+        panelEjemplaresEntregadosLayout.setHorizontalGroup(
+            panelEjemplaresEntregadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+        panelEjemplaresEntregadosLayout.setVerticalGroup(
+            panelEjemplaresEntregadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEjemplaresEntregadosLayout.createSequentialGroup()
+                .addComponent(panelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel4.add(panelEjemplaresEntregados);
+
+        jPanel5.setBackground(Colores.fondo);
+        jPanel5.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel6.setForeground(Colores.accent);
+        jLabel6.setText("Pendientes de devolver:");
+        jPanel5.add(jLabel6);
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel10.setForeground(Colores.accent);
+        jLabel10.setText("Ejemplares devueltos:");
+        jPanel5.add(jLabel10);
+
+        javax.swing.GroupLayout panelGestionAsignaturasLayout = new javax.swing.GroupLayout(panelGestionAsignaturas);
+        panelGestionAsignaturas.setLayout(panelGestionAsignaturasLayout);
+        panelGestionAsignaturasLayout.setHorizontalGroup(
+            panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        panelGestionAsignaturasLayout.setVerticalGroup(
+            panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addGap(24, 24, 24)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jSeparator1.setPreferredSize(new java.awt.Dimension(922, 2));
+
+        javax.swing.GroupLayout panelInformacionLayout = new javax.swing.GroupLayout(panelInformacion);
+        panelInformacion.setLayout(panelInformacionLayout);
+        panelInformacionLayout.setHorizontalGroup(
+            panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInformacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panelInformacionLayout.setVerticalGroup(
+            panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInformacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelInfoGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jScrollPane4.setViewportView(panelInformacion);
+
+        jSplitPane1.setRightComponent(jScrollPane4);
+
+        javax.swing.GroupLayout panelCuerpoLayout = new javax.swing.GroupLayout(panelCuerpo);
+        panelCuerpo.setLayout(panelCuerpoLayout);
+        panelCuerpoLayout.setHorizontalGroup(
+            panelCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCuerpoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1626, Short.MAX_VALUE))
+        );
+        panelCuerpoLayout.setVerticalGroup(
+            panelCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCuerpoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSplitPane1)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1199, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelCuerpo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(panelCuerpo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * Controlamos cuando cerrmaos
+     *
+     * @param evt
+     */
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        daoAlumno.desconectar();
+        daoCurso.desconectar();
+        daoEjemplar.desconectar();
+        daoHistorial.desconectar();
+    }//GEN-LAST:event_formWindowClosed
+
+    /**
+     * Metodo que utilizamos para controlar cuando pulsamos la tecla intro desde
+     * el TextField de busqueda NIA
+     *
+     * @param evt
+     */
+    private void textBusquedaNIAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaNIAKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscarAlumno(textBusquedaNIA.getText());
+        }
+    }//GEN-LAST:event_textBusquedaNIAKeyPressed
+
+    private void cbCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoItemStateChanged
+        // TODO add your handling code here:
+        rellenarLista((Curso) cbCurso.getSelectedItem());
+    }//GEN-LAST:event_cbCursoItemStateChanged
+
+    private void jlistAlumnosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jlistAlumnosValueChanged
+        // TODO add your handling code here:
+        alumno = (Alumno) jlistAlumnos.getSelectedValue();
+
+        cargarDatosAlumno();
+    }//GEN-LAST:event_jlistAlumnosValueChanged
+
+    private void textBusquedaNIAFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusGained
+        // TODO add your handling code here:
+        textBusquedaNIA.setText("");
+        textBusquedaNIA.setForeground(Colores.accent);
+    }//GEN-LAST:event_textBusquedaNIAFocusGained
+
+    private void textBusquedaNIAFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusLost
+        // TODO add your handling code here:
+        textBusquedaNIA.setText(defaultText);
+        textBusquedaNIA.setForeground(new Color(102, 102, 102));
+    }//GEN-LAST:event_textBusquedaNIAFocusLost
+
+    private void btnBusquedaNIAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaNIAActionPerformed
+        // TODO add your handling code here:
+        buscarAlumno(textBusquedaNIA.getText());
+
+    }//GEN-LAST:event_btnBusquedaNIAActionPerformed
+
+    private void textCodigoEjemplarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCodigoEjemplarKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscarEjemplar(textCodigoEjemplar.getText());
+        }
+    }//GEN-LAST:event_textCodigoEjemplarKeyPressed
+
+    private void textCodigoEjemplarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCodigoEjemplarFocusGained
+        // TODO add your handling code here:
+        textCodigoEjemplar.setText("");
+        textBusquedaNIA.setForeground(Colores.accent);
+    }//GEN-LAST:event_textCodigoEjemplarFocusGained
+
+    private void textCodigoEjemplarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCodigoEjemplarFocusLost
+        // TODO add your handling code here:
+        textCodigoEjemplar.setText("Escanee código ejemplar...");
+        textBusquedaNIA.setForeground(new Color(102, 102, 102));
+    }//GEN-LAST:event_textCodigoEjemplarFocusLost
+
+    private void cbCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCursoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCursoActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        if (isConfirmationReady == ConfirmacionDevolucion.REALIZADA) {
+            listaEjemplaresDevueltos.add(historialConfirmado.getEjemplar());
+
+            DefaultListModel model = new DefaultListModel();
+
+            for (int i = 0; i < listaEjemplaresDevueltos.size(); i++) {
+                model.add(i, listaEjemplaresDevueltos.get(i));
+            }
+
+            jlistEjemplaresDevueltos.setModel(model);
+        } else {
+            System.out.println("Error al realizar la devolución.");
+        }
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -131,17 +778,25 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameDevoluciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameDevoluciones.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameDevoluciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameDevoluciones.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameDevoluciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameDevoluciones.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameDevoluciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameDevoluciones.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -153,11 +808,338 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.mommoo.flat.button.FlatButton flatButton1;
-    private com.mommoo.flat.button.FlatButton flatButton2;
+    private com.mommoo.flat.button.FlatButton btCodigoEjemplar;
+    private com.mommoo.flat.button.FlatButton btnBusquedaNIA;
+    private javax.swing.JComboBox cbCurso;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JList jlistAlumnos;
+    private javax.swing.JList jlistEjemplaresDevueltos;
+    private javax.swing.JList jlistEjemplaresPendientes;
+    private javax.swing.JPanel panelBusquedaLista;
+    private javax.swing.JPanel panelBusquedaNIA;
+    private javax.swing.JPanel panelCodigo;
+    private javax.swing.JPanel panelCuerpo;
+    private javax.swing.JPanel panelEjemplaresEntregados;
+    private javax.swing.JPanel panelGestionAsignaturas;
+    private javax.swing.JPanel panelInfoGeneral;
+    private javax.swing.JPanel panelInformacion;
+    private javax.swing.JPanel panelLista;
+    private javax.swing.JPanel panelTitulo;
+    private javax.swing.JTextField textBusquedaNIA;
+    private javax.swing.JTextField textCodigoEjemplar;
+    private javax.swing.JLabel textCursoEscolar;
+    private javax.swing.JLabel textNIAAlumno;
+    private javax.swing.JLabel textNombreAlumno;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * Cargamos los datos iniciales, como los alumnos o los cursos
+     */
+    public void cargarDatos() {
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+
+            protected Void doInBackground() throws InterruptedException {
+                listaAlumnos = daoAlumno.buscarTodos();
+                listaCursos = daoCurso.buscarTodos();
+                return null;
+            }
+
+            protected void done() {
+
+                sustituirPadresCursos();
+                rellenarCursos();
+
+                framePopup.dispose();
+            }
+        };
+        worker.execute();
+        if (framePopup == null) {
+            framePopup = new FramePopup();
+        }
+        framePopup.setVisible(true);
+    }
+
+    /**
+     * Metodo para rellenar los cursos del combobox
+     */
+    public void rellenarCursos() {
+
+        cbCurso.removeAllItems();
+
+        //cbCurso.addItem(new Curso("Seleccione curso", "Seleccione curso", "Seleccione curso", "Seleccione curso", "Seleccione curso", " "));
+        //Rellenamos los cursos
+        if (listaCursos.size() > 0) {
+            for (int i = 0; i < listaCursos.size(); i++) {
+                cbCurso.addItem(listaCursos.get(i));
+            }
+        } else {
+            new FramePopup("No hay cursos en la base de datos.",
+                    Imagenes.getImagen("alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
+        rellenarLista((Curso) cbCurso.getSelectedItem());
+        //cbCurso.setSelectedIndex(0);
+    }
+
+    private void rellenarListaPendientes(List<Historial> historialesPendientes) {
+        DefaultListModel listModel = new DefaultListModel();
+
+        for (int i = 0; i < historialesPendientes.size(); i++) {
+            listModel.add(i, historialesPendientes.get(i));
+        }
+
+        jlistEjemplaresPendientes.setModel(listModel);
+    }
+
+    /**
+     * Este metodo se utiliza para cargar los datos de el alumno encontrado
+     * anteriormente.
+     */
+    private void cargarDatosAlumno() {
+        vaciarCampos();
+
+        if (alumno == null) {
+            modoEdicion(false);
+        } else {
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                protected Void doInBackground() throws InterruptedException {
+                    listaEjemplaresPendientes = daoHistorial.buscarPorAlumnoPendientes(alumno);
+                    return null;
+                }
+
+                protected void done() {
+                    listaEjemplaresDevueltos = new ArrayList<Ejemplar>();
+
+                    if (listaEjemplaresPendientes.size() > 0) {
+                        textNIAAlumno.setText(alumno.getNia());
+                        textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
+                        textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
+
+                        textCursoEscolar.setText(getFecha() + "-" + (getFecha() + 1));
+
+                        rellenarListaPendientes(listaEjemplaresPendientes);
+
+                        modoEdicion(true);
+
+                    } else {
+                        new FramePopup("El alumno no tiene pendiente ninguna entrega.",
+                                Imagenes.getImagen("alert-black.png"),
+                                "Aceptar").setVisible(true);
+                    }
+                    framePopup.dispose();
+                }
+            };
+            worker.execute();
+            if (framePopup == null) {
+                framePopup = new FramePopup();
+            }
+            framePopup.setVisible(true);
+        }
+    }
+
+    private void vaciarCampos() {
+        textNIAAlumno.setText("");
+        textNombreAlumno.setText("");
+        textNombreAlumno.setToolTipText("");
+        textCursoEscolar.setText("");
+
+        DefaultListModel listModel = new DefaultListModel();
+        jlistEjemplaresPendientes.setModel(listModel);
+        jlistEjemplaresDevueltos.setModel(listModel);
+
+        listaEjemplaresPendientes = new ArrayList<Historial>();
+        listaEjemplaresDevueltos = new ArrayList<Ejemplar>();
+    }
+
+    /**
+     * Este metodo se utiliza para conseguir la fecha del curso escolar
+     *
+     * @return Devuelve un 'int' con la año actual
+     */
+    private int getFecha() {
+        LocalDate localDate = LocalDate.now();
+        String date = DateTimeFormatter.ofPattern("yyyy").format(localDate);
+        int fecha = 0;
+        try {
+            fecha = Integer.parseInt(date);
+        } catch (NumberFormatException e) {
+            Action aceptar = new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    FrameDevoluciones.this.dispose();
+                }
+            };
+
+            new FramePopup("No se ha podido conseguir el curso escolar",
+                    Imagenes.getImagen("/Imagenes/icons/alert-black.png"),
+                    "Aceptar", aceptar).setVisible(true);
+        }
+        return fecha;
+    }
+
+    /**
+     * Metodo que utilizamos para buscar un alumno en la base de datos
+     *
+     * @param nia Deberemos pasarle el NIA del alumno
+     */
+    public void buscarAlumno(String nia) {
+        if (!nia.equals("") || nia.equals(defaultText)) {
+            //Se ha insertado un codigo
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                protected Void doInBackground() throws InterruptedException {
+                    alumno = daoAlumno.buscar(nia);
+                    return null;
+                }
+
+                protected void done() {
+                    framePopup.dispose();
+
+                    if (alumno != null) {
+                        cargarDatosAlumno();
+
+                        //Seleccionamos el curso del alumno en el ComboBox de cursos
+                        for (int i = 0; i < cbCurso.getItemCount(); i++) {
+                            Curso c = (Curso) cbCurso.getItemAt(i);
+
+                            if (c.getCodigo().equals(alumno.getCurso().getCodigo())) {
+                                cbCurso.setSelectedIndex(i);
+                                cbCurso.setSelectedItem(c);
+                            }
+                        }
+
+                        //Seleccionamos el alumno en la lista lateral izquierda
+                        for (int i = 0; i < jlistAlumnos.getModel().getSize(); i++) {
+                            Alumno alumnot = (Alumno) jlistAlumnos.getModel().getElementAt(i);
+                            if (alumnot.getNia().equals(nia)) {
+                                jlistAlumnos.setSelectedIndex(i);
+                            }
+                        }
+                    } else {
+                        new FramePopup("No existe ningún alumno con el NIA introducido.",
+                                Imagenes.getImagen("alert-black.png"),
+                                "Aceptar").setVisible(true);
+
+                        vaciarCampos();
+                    }
+
+                }
+            };
+            worker.execute();
+            framePopup = new FramePopup("Cargando datos...");
+            framePopup.setVisible(true);
+
+        } else {
+            //No se ha insertado ningun valor en el campo de texto
+            new FramePopup("El NIA no puede ser un campo vacío.",
+                    Imagenes.getImagen("alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
+
+    }
+
+    /**
+     * Metodo que busca el Ejemplar en la BD y realiza la gestión de la entrega
+     * del mismo.
+     *
+     * @param codigo
+     */
+    public void buscarEjemplar(String codigo) {
+        if (!codigo.equals("")) {
+            //Se ha insertado un codigo
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                protected Void doInBackground() throws InterruptedException {
+                    ejemplar = daoEjemplar.buscar(codigo);
+                    return null;
+                }
+
+                protected void done() {
+                    framePopup.dispose();
+
+                    if (ejemplar != null) {
+                        if (!ejemplar.isPrestado()) {
+                            new FramePopup("El ejemplar con código "
+                                    + ejemplar.getCodigo() + " no está prestado actualmente.",
+                                    Imagenes.getImagen("alert-black.png"),
+                                    "Aceptar").setVisible(true);
+                        } else {
+                            //Buscar historial a partir de ejemplar
+                            FrameConfirmacionDevolucion frameConfirmacion
+                                    = new FrameConfirmacionDevolucion(daoHistorial.buscarPorEjemplarPendiente(ejemplar));
+                            frameConfirmacion.setVisible(true);
+                        }
+                    } else {
+                        new FramePopup("No existe ningún ejemplar con el código introducido.",
+                                Imagenes.getImagen("alert-black.png"),
+                                "Aceptar").setVisible(true);
+                    }
+
+                }
+            };
+            worker.execute();
+            framePopup = new FramePopup("Cargando datos...");
+            framePopup.setVisible(true);
+
+        } else {
+            //No se ha insertado ningun valor en el campo de texto
+            new FramePopup("El código no puede ser un campo vacío.",
+                    Imagenes.getImagen("alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
+
+    }
+
+    /**
+     * Metodo que utilizamos para rellenar la lista de alumnos dependiendo del
+     * curso seleccionado
+     *
+     * @param curso Curso seleccionado en el comboBox
+     */
+    private void rellenarLista(Curso curso) {
+        List<Alumno> listaAlumnosCurso = listaAlumnos.stream().filter(a -> a.getCurso().equals(curso)).collect(Collectors.toList());
+        DefaultListModel listModel = new DefaultListModel();
+        for (int i = 0; i < listaAlumnosCurso.size(); i++) {
+            listModel.addElement(listaAlumnosCurso.get(i));
+        }
+        jlistAlumnos.setModel(listModel);
+    }
+
+    /**
+     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
+     * por el nombre del Padre
+     */
+    private void sustituirPadresCursos() {
+        for (int i = 0; i < listaCursos.size(); i++) {
+            Curso curso = listaCursos.get(i);
+            Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
+
+            if (cursoPadre != null) {
+                curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
+            }
+        }
+    }
+
+    private void modoEdicion(boolean b) {
+        textCodigoEjemplar.setEnabled(b);
+        jlistEjemplaresDevueltos.setEnabled(b);
+    }
 }

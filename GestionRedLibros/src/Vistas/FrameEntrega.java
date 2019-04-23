@@ -59,6 +59,7 @@ public class FrameEntrega extends javax.swing.JFrame {
     private DaoAlumno daoAlumno;
     private DaoMatricula daoMatricula;
     private DaoCurso daoCurso;
+    private DaoCurso daoCursoTabla;
     private DaoEjemplar daoEjemplar;
     private DaoHistorial daoHistorial;
 
@@ -110,6 +111,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
         daoEjemplar = new DaoEjemplar(Main.gestorSesiones.getSession());
         daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
+        daoCursoTabla = new DaoCurso(Main.gestorSesiones.getSession());
 
         //Deshabilitamos la edicion de las celdas en las tablas
         tablaPendientes.setDefaultEditor(Object.class, null);
@@ -123,7 +125,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         //Maximizamos la pestaña
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+
         modoEdicion(false);
 
         cargarDatos();
@@ -704,6 +706,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         daoAlumno.desconectar();
         daoMatricula.desconectar();
         daoCurso.desconectar();
+        daoCursoTabla.desconectar();
         daoEjemplar.desconectar();
         daoHistorial.desconectar();
     }//GEN-LAST:event_formWindowClosed
@@ -898,10 +901,8 @@ public class FrameEntrega extends javax.swing.JFrame {
         tcm.getColumn(0).setPreferredWidth(300);
         tcm.getColumn(0).setMaxWidth(300);
 //</editor-fold>
-
         SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-
-            RemarcarCeldas remarcarCeldas = new RemarcarCeldas();
+            RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCursoTabla);
 
             protected Void doInBackground() throws InterruptedException {
                 for (int i = 0; i < tableModel.getColumnCount(); i++) {
@@ -978,29 +979,43 @@ public class FrameEntrega extends javax.swing.JFrame {
      */
     private void cargarDatosAlumno() {
         vaciarCampos();
-        
+
         if (alumno == null) {
             modoEdicion(false);
         } else {
-            listaMatriculas = daoMatricula.buscarPendientes(alumno, getFecha());
-            listaEjemplaresEntregados = new ArrayList<Ejemplar>();
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                protected Void doInBackground() throws InterruptedException {
+                    listaMatriculas = daoMatricula.buscarPendientes(alumno, getFecha());
+                    return null;
+                }
 
-            if (listaMatriculas.size() > 0) {
-                textNIAAlumno.setText(alumno.getNia());
-                textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
-                textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
+                protected void done() {
+                    listaEjemplaresEntregados = new ArrayList<Ejemplar>();
 
-                textCursoEscolar.setText(getFecha() + "-" + (getFecha() + 1));
+                    if (listaMatriculas.size() > 0) {
+                        textNIAAlumno.setText(alumno.getNia());
+                        textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
+                        textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
 
-                //textCurso.setText(listaMatriculas.get(0).getContenido().getCurso().getAbreviatura());
-                rellenarTablaPendiente(listaMatriculas);
-                
-                modoEdicion(true);
-            } else {
-                new FramePopup("El alumno no está matriculado en este curso escolar",
-                        Imagenes.getImagen("alert-black.png"),
-                        "Aceptar").setVisible(true);
+                        textCursoEscolar.setText(getFecha() + "-" + (getFecha() + 1));
+
+                        //textCurso.setText(listaMatriculas.get(0).getContenido().getCurso().getAbreviatura());
+                        rellenarTablaPendiente(listaMatriculas);
+
+                        modoEdicion(true);
+                    } else {
+                        new FramePopup("El alumno no está matriculado en este curso escolar",
+                                Imagenes.getImagen("alert-black.png"),
+                                "Aceptar").setVisible(true);
+                    }
+                    framePopup.dispose();
+                }
+            };
+            worker.execute();
+            if (framePopup == null) {
+                framePopup = new FramePopup();
             }
+            framePopup.setVisible(true);
         }
     }
 
@@ -1009,13 +1024,13 @@ public class FrameEntrega extends javax.swing.JFrame {
         textNombreAlumno.setText("");
         textNombreAlumno.setToolTipText("");
         textCursoEscolar.setText("");
-        
+
         DefaultTableModel model = new DefaultTableModel(null, new Object[]{"Asignatura", "Curso", "Idioma", "Curso Pendiente"});
         tablaPendientes.setModel(model);
-        
+
         DefaultListModel listModel = new DefaultListModel();
         jlistEjemplares.setModel(listModel);
-        
+
         listaEjemplaresEntregados = new ArrayList<Ejemplar>();
     }
 
@@ -1054,7 +1069,7 @@ public class FrameEntrega extends javax.swing.JFrame {
             //Se ha insertado un codigo
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
 
-                RemarcarCeldas remarcarCeldas = new RemarcarCeldas();
+                RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCursoTabla);
 
                 protected Void doInBackground() throws InterruptedException {
                     alumno = daoAlumno.buscar(nia);
@@ -1088,7 +1103,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                         new FramePopup("No existe ningún alumno con el NIA introducido.",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
-                        
+
                         vaciarCampos();
                     }
 
@@ -1110,8 +1125,8 @@ public class FrameEntrega extends javax.swing.JFrame {
     /**
      * Metodo que busca el Ejemplar en la BD y realiza la gestión de la entrega
      * del mismo.
-     * 
-     * @param codigo 
+     *
+     * @param codigo
      */
     public void buscarEjemplar(String codigo) {
         if (!codigo.equals("")) {
@@ -1127,7 +1142,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
                     if (ejemplar != null) {
                         if (ejemplar.isPrestado()) {
-                            new FramePopup("El ejemplar con código " 
+                            new FramePopup("El ejemplar con código "
                                     + ejemplar.getCodigo() + " ya está prestado.",
                                     Imagenes.getImagen("alert-black.png"),
                                     "Aceptar").setVisible(true);
@@ -1145,7 +1160,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                                 );
 
                                 daoHistorial.grabar(historial);
-                                
+
                                 //Actualizamos el ejemplar para que esté prestado.
                                 ejemplar.setPrestado(true);
 
@@ -1160,12 +1175,12 @@ public class FrameEntrega extends javax.swing.JFrame {
                                 }
 
                                 jlistEjemplares.setModel(model);
-                                
+
                                 DefaultTableModel modeloTabla = (DefaultTableModel) tablaPendientes.getModel();
-                                
+
                                 for (int i = 0; i < modeloTabla.getRowCount(); i++) {
                                     Matricula m = (Matricula) modeloTabla.getValueAt(i, 0);
-                                    
+
                                     if (m.getContenido().getCodigo().equals(ejemplar.getLibro().getContenido().getCodigo())) {
                                         modeloTabla.removeRow(i);
                                     }
@@ -1229,8 +1244,8 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
         }
     }
-    
-    private void modoEdicion(boolean b){
+
+    private void modoEdicion(boolean b) {
         textCodigoEjemplar.setEnabled(b);
         jlistEjemplares.setEnabled(b);
     }

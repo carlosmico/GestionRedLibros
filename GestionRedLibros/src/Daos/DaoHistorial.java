@@ -132,6 +132,22 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
 
         return lista;
     }
+    
+    /**
+     *  Metodo para obtener una lista de Historiales pendientes de cerrar
+     *  filtrando por el Alumno recibido
+     * @param alum
+     * @return
+     */
+    public List<Historial> buscarPorAlumnoPendientes(Alumno alum) {
+        List<Historial> lista = new ArrayList<Historial>();
+
+        Query query = this.session.createQuery("from Historial where alumno LIKE "
+                + "'" + alum.getNia() + "' AND fecha_final IS NULL");
+        lista = query.list();
+
+        return lista;
+    }
 
     /**
      *  Metodo para obtener una lista de Historiales filtrando por el Ejemplar recibido
@@ -145,6 +161,21 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         lista = query.list();
 
         return lista;
+    }
+    
+    /**
+     *  Metodo para obtener una lista de Historiales filtrando por el Ejemplar pendiente recibido
+     * @param ejemplar
+     * @return
+     */
+    public Historial buscarPorEjemplarPendiente(Ejemplar ejemplar) {
+        List<Historial> lista = new ArrayList<Historial>();
+
+        Query query = this.session.createQuery("from Historial where ejemplar LIKE '"
+                + ejemplar.getCodigo() + "' AND fecha_final IS NULL");
+        lista = query.list();
+
+        return lista.get(0);
     }
 
     /**

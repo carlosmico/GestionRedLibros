@@ -236,6 +236,7 @@ public class Main extends javax.swing.JFrame {
                 if (!frameDevoluciones.isVisible()) {
                     //Si existe la ventana, y la hemos cerrado
                     //limpiamos la variable y creamos una ventana nueva
+                    frameDevoluciones.alumno = null;
                     frameDevoluciones = null;
                     frameDevoluciones = new FrameDevoluciones();
                 } else {
@@ -244,6 +245,7 @@ public class Main extends javax.swing.JFrame {
                     frameDevoluciones = new FrameDevoluciones();
                 }
             }
+            frameDevoluciones.setVisible(true);
         }else{
             compruebaConexionBD(false, "FrameDevoluciones");
         }

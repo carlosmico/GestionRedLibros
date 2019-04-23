@@ -163,6 +163,6 @@ public class Historial implements Serializable {
 
     @Override
     public String toString() {
-        return "Historial{" + "id=" + id + ", ejemplar=" + ejemplar + ", alumno=" + alumno + ", curso_escolar=" + curso_escolar + ", estado_inicial=" + estado_inicial + ", estado_final=" + estado_final + ", fecha_incial=" + fecha_inicial + ", fecha_final=" + fecha_final + ", observaciones=" + observaciones + '}';
+        return ejemplar.getCodigo() + " - " + ejemplar.getLibro().getNombre() + " - " + ejemplar.getLibro().getContenido().getNombre_cas();
     }
 }
