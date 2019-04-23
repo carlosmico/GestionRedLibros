@@ -136,6 +136,6 @@ public class Ejemplar implements Serializable {
 
     @Override
     public String toString() {
-        return codigo_ejemplar;
+        return codigo_ejemplar + " - " + libro.getNombre() + " - " + libro.getContenido().getNombre_cas();
     }
 }
