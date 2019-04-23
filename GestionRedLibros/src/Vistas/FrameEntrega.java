@@ -488,7 +488,6 @@ public class FrameEntrega extends javax.swing.JFrame {
         ));
         tablaPendientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tablaPendientes.setRowHeight(32);
-        tablaPendientes.setRowSelectionAllowed(false);
         tablaPendientes.setSelectionBackground(Colores.accent);
         tablaPendientes.setSelectionForeground(Colores.fondo);
         jScrollPane2.setViewportView(tablaPendientes);
