@@ -337,6 +337,11 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
                 btnAceptarMouseClicked(evt);
             }
         });
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelBotoneraLayout = new javax.swing.GroupLayout(panelBotonera);
         panelBotonera.setLayout(panelBotoneraLayout);
@@ -444,6 +449,10 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
             new FramePopup("No se ha podido imprimir el codigo").setVisible(true);
         }
     }//GEN-LAST:event_btnImprimirEtiquetaMouseClicked
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -589,7 +598,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
             protected Void doInBackground() throws InterruptedException {
                 try {
-                    daoHistorial.grabar(historial);
+                    daoHistorial.actualizar(historial);
                 } catch (PersistenceException e) {
                     e.printStackTrace();
                     new FramePopup("Fallo al realizar la devolución.",
