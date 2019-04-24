@@ -103,11 +103,11 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
      * @param m
      * @return
      */
-    public Matricula buscarMatricula(Matricula m) {
+    public Matricula buscarMatricula(Matricula matricula) {
         List<Matricula> lista = new ArrayList<Matricula>();
 
-        String query = "from Matricula m where m.alumno = '" + m.getAlumno().getNia() + "' and m.curso_escolar = " + m.getCurso_escolar()
-                + " and m.contenido = " + m.getContenido().getId() + " and m.curso = " + m.getCurso();
+        String query = "from Matricula m where m.alumno LIKE '" + matricula.getAlumno().getNia() + "' and m.curso_escolar = " + matricula.getCurso_escolar()
+                + " and m.contenido = " + matricula.getContenido().getId() + " and m.curso = " + matricula.getCurso();
 
         lista = this.session.createQuery(query).list();
 
@@ -179,9 +179,10 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
      */
     public List<Matricula> buscarPendientes(Alumno alumno, int curso_escolar) {
         List<Matricula> lista = new ArrayList<Matricula>();
+        List<Matricula> entregadas = new ArrayList<>();
 
-        Query query = this.session.createQuery("from Matricula where alumno="
-                + alumno.getNia() + " and curso_escolar=" + curso_escolar);
+        Query query = this.session.createQuery("from Matricula where alumno LIKE '"
+                + alumno.getNia() + "' and curso_escolar=" + curso_escolar);
         lista = query.list();
 
         DaoHistorial daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
@@ -195,9 +196,17 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                 Historial h = historiales.get(j);
 
                 if (m.getCurso_escolar() == h.getCurso_escolar() && m.getContenido().getId() == h.getEjemplar().getLibro().getContenido().getId()) {
-                    lista.remove(m);
+                    entregadas.add(m);
                 }
             }
+        }
+        
+        /** Eliminamos aquí las matriculas ya entregadas porque sino la lista perdería
+        *   la iteración debido a que hemos alterado su tamaño.
+        **/
+        
+        for (int i = 0; i < entregadas.size(); i++) {
+            lista.remove(entregadas.get(i));
         }
 
         daoHistorial.desconectar();

@@ -505,6 +505,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         ));
         tablaPendientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tablaPendientes.setRowHeight(32);
+        tablaPendientes.setRowSelectionAllowed(false);
         tablaPendientes.setSelectionBackground(Colores.accent);
         tablaPendientes.setSelectionForeground(Colores.fondo);
         jScrollPane2.setViewportView(tablaPendientes);
@@ -886,6 +887,16 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         tablaPendientes.setModel(tableModel);
 
+        RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCursoTabla);
+
+        TableColumnModel tcm = tablaPendientes.getColumnModel();
+        tcm.getColumn(0).setPreferredWidth(300);
+        tcm.getColumn(0).setMaxWidth(300);
+        
+        for (int i = 0; i < tableModel.getColumnCount(); i++) {
+            tcm.getColumn(i).setCellRenderer(remarcarCeldas);
+        }
+
         /*Action entrega = new AbstractAction() {
          public void actionPerformed(ActionEvent e) {
          JTable table = (JTable) e.getSource();
@@ -894,7 +905,7 @@ public class FrameEntrega extends javax.swing.JFrame {
          matriculaEntregada = listaMatriculas.get(modelRow);
          new FrameConfirmacionEntregaOld(listaMatriculas.get(modelRow)).setVisible(true);
          }
-         };*/
+         };
         //<editor-fold defaultstate="collapsed" desc="Edicion visual de la tabla">
         TableColumnModel tcm = tablaPendientes.getColumnModel();
         tcm.getColumn(0).setPreferredWidth(300);
@@ -918,7 +929,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         framePopup = new FramePopup("Cargando datos...");
         framePopup.setVisible(true);
-
+*/
         //Asignamos los botones a la ultima columna de la tabla
         //new ButtonColumn(tablaPendientes, entrega, tableModel.getColumnCount() - 1);
     }
@@ -936,7 +947,6 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
 
             protected void done() {
-
                 sustituirPadresCursos();
                 rellenarCursos();
 
