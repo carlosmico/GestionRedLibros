@@ -1808,47 +1808,47 @@ public class FrameLibro extends javax.swing.JFrame {
         String errores = "";
 
         if (textCodigoLibro.getText().equals("")) {
-            errores += "<br>- El código del libro no puede estar vacío.";
+            errores += "- El código del libro no puede estar vacío.<br>";
         } else if (textCodigoLibro.getText().length() > 13) {
-            errores += "<br>- El código del libro no puede contener más de 13 carácteres.";
+            errores += "- El código del libro no puede contener más de 13 carácteres.<br>";
         }
 
         if (textNombreLibro.getText().equals("")) {
-            errores += "<br>- El nombre no puede estar vacío.";
+            errores += "- El nombre no puede estar vacío.<br>";
         }
 
         if (textISBNLibro.getText().equals("")) {
-            errores += "<br>- El ISBN no puede estar vacío.";
+            errores += "- El ISBN no puede estar vacío.<br>";
         }
 
         if (textUnidadesLibro.getText().equals("")) {
-            errores += "<br>- El campo de las unidades no puede estar vacío.";
+            errores += "- El campo de las unidades no puede estar vacío.<br>";
         } else if (textUnidadesLibro.getText().length() > 3) {
-            errores += "<br>- El campo de las unidades no puede contener más de 3 carácteres.";
+            errores += "- El campo de las unidades no puede contener más de 3 carácteres.<br>";
         }
 
         try {
             int un = Integer.parseInt(textUnidadesLibro.getText());
             if (un <= 0) {
-                errores += "<br>- El valor de las unidades debe ser un valor positivo.";
+                errores += "- El valor de las unidades debe ser un valor positivo.<br>";
             }
         } catch (Exception e) {
-            errores += "<br>- El valor de las unidades debe ser un valor numérico.";
+            errores += "- El valor de las unidades debe ser un valor numérico.<br>";
         }
 
         try {
             double pre = Double.parseDouble(textPrecioLibro.getText());
             if (pre <= 0) {
-                errores += "<br>- El precio debe ser un valor positivo.";
+                errores += "- El precio debe ser un valor positivo.<br>";
             }
         } catch (Exception e) {
-            errores += "<br>- El precio debe ser un valor numérico.";
+            errores += "- El precio debe ser un valor numérico.<br>";
         }
 
         if (cbAsignatura.getSelectedItem() == null) {
-            errores += "<br>- Debe seleccionar una asignatura válida.";
+            errores += "- Debe seleccionar una asignatura válida.<br>";
         } else if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
-            errores += "<br>- Debe seleccionar una asignatura válida.";
+            errores += "- Debe seleccionar una asignatura válida.<br>";
         }
 
         if (libro == null) {
@@ -1905,9 +1905,6 @@ public class FrameLibro extends javax.swing.JFrame {
                     }
                 };
                 worker.execute();
-                if (frameCarga == null) {
-                    frameCarga = new FramePopup();
-                }
                 frameCarga.setVisible(true);
 //</editor-fold>
             } else {
