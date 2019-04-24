@@ -783,7 +783,7 @@ public class FrameHistorial extends javax.swing.JFrame {
 
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
 
-                RemarcarCeldas remarcarCeldas = new RemarcarCeldas();
+                RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCurso);
 
                 protected Void doInBackground() throws InterruptedException {
                     alumno = daoAlumno.buscar(nia);
@@ -1031,7 +1031,7 @@ public class FrameHistorial extends javax.swing.JFrame {
             //<editor-fold defaultstate="collapsed" desc="Mostrar texto en las celdas de las tablas">
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
 
-                RemarcarCeldas remarcarCeldas = new RemarcarCeldas();
+                RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCurso);
 
                 protected Void doInBackground() throws InterruptedException {
                     for (int i = 0; i < tableModel.getColumnCount(); i++) {
@@ -1061,10 +1061,6 @@ public class FrameHistorial extends javax.swing.JFrame {
 
     public void showFrameInfo(Historial historial) {
         //Mostrar la vista del click 
-
-        new FramePopup("Se ha pulsado la fila",
-                Imagenes.getImagen("alert-black.png"),
-                "Aceptar").setVisible(true);
-
+        new FrameDetallesEjemplar(historial.getEjemplar()).setVisible(true);
     }
 }

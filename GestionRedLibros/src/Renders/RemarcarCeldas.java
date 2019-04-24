@@ -23,8 +23,6 @@ import Pojos.Ejemplar;
 import Pojos.Historial;
 import Pojos.Matricula;
 import Utilidades.Colores;
-import Vistas.FrameHistorial;
-import Vistas.Main;
 import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JLabel;
