@@ -93,8 +93,6 @@ public class DaoGrupo extends DaoGenerico<Grupo, String> implements InterfaceDao
                 this.session.getTransaction().commit();
 
             } catch (Exception e) {
-                this.session.getTransaction().commit();
-
                 e.printStackTrace();
                 System.out.println("Error DaoGrupo-actualizar(): " + e.getMessage());
                 throw e;

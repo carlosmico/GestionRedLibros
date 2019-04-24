@@ -18,7 +18,6 @@
 package Daos;
 
 import Pojos.Contenido;
-import Pojos.Matricula;
 import dao.DaoGenerico;
 import dao.InterfaceDaoGenerico;
 import java.util.ArrayList;
@@ -79,8 +78,6 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
                 this.session.getTransaction().commit();
 
             } catch (Exception e) {
-                this.session.getTransaction().commit();
-
                 e.printStackTrace();
                 System.out.println("Error DaoContenido-actualizar(): " + e.getMessage());
                 throw e;
