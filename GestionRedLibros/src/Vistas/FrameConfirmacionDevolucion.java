@@ -29,6 +29,7 @@ import Utilidades.CodigoBarras;
 import Utilidades.Colores;
 import Utilidades.ConfirmacionDevolucion;
 import Utilidades.Estado;
+import Utilidades.Imagenes;
 import Vistas.FrameEntrega;
 import Vistas.FramePopup;
 import Vistas.Main;
@@ -159,14 +160,29 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
 
         btnBadStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnBadStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
+        btnBadStatus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBadStatusMouseClicked(evt);
+            }
+        });
         panelEstado15.add(btnBadStatus);
 
         btnRegularStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnRegularStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
+        btnRegularStatus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegularStatusMouseClicked(evt);
+            }
+        });
         panelEstado15.add(btnRegularStatus);
 
         btnGoodStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnGoodStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
+        btnGoodStatus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGoodStatusMouseClicked(evt);
+            }
+        });
         panelEstado15.add(btnGoodStatus);
 
         javax.swing.GroupLayout panelEstadoParent15Layout = new javax.swing.GroupLayout(panelEstadoParent15);
@@ -337,11 +353,6 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
                 btnAceptarMouseClicked(evt);
             }
         });
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout panelBotoneraLayout = new javax.swing.GroupLayout(panelBotonera);
         panelBotonera.setLayout(panelBotoneraLayout);
@@ -411,15 +422,16 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
         // TODO add your handling code here:
-        FrameDevoluciones.isConfirmationReady = ConfirmacionDevolucion.REALIZADA;
-        FrameDevoluciones.historialConfirmado = historial;
-
         String observaciones = textObservaciones.getText();
 
-        historial.setEstado_final(Estado.usado);
+        //El estado se actualiza al cambiar el estado visual en el metodo setEstado()
+        historial.setFecha_final(new Date());
         historial.setObservaciones(observaciones);
 
         guardarDevolución(historial);
+        
+        FrameDevoluciones.isConfirmationReady = ConfirmacionDevolucion.REALIZADA;
+        FrameDevoluciones.historialConfirmado = historial;
     }//GEN-LAST:event_btnAceptarMouseClicked
 
     private void textObservacionesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textObservacionesKeyPressed
@@ -446,13 +458,24 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         try {
             cb.imprimirIndividual(historial.getEjemplar(), cb.generarCodigoIndividual(historial.getEjemplar().getCodigo()));
         } catch (Exception e) {
-            new FramePopup("No se ha podido imprimir el codigo").setVisible(true);
+            new FramePopup("No se ha podido imprimir el codigo", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
         }
     }//GEN-LAST:event_btnImprimirEtiquetaMouseClicked
 
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+    private void btnBadStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBadStatusMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAceptarActionPerformed
+        setEstado(Estado.deteriorado);
+    }//GEN-LAST:event_btnBadStatusMouseClicked
+
+    private void btnRegularStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegularStatusMouseClicked
+        // TODO add your handling code here:
+        setEstado(Estado.usado);
+    }//GEN-LAST:event_btnRegularStatusMouseClicked
+
+    private void btnGoodStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGoodStatusMouseClicked
+        // TODO add your handling code here:
+        setEstado(Estado.nuevo);
+    }//GEN-LAST:event_btnGoodStatusMouseClicked
 
     /**
      * @param args the command line arguments
@@ -557,7 +580,8 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
     }
 
     public void setEstado(int estado) {
-
+        historial.setEstado_final(estado);
+        
         switch (estado) {
             case Estado.deteriorado:
                 //El libro se encuentra en mal estado
@@ -598,12 +622,15 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
             protected Void doInBackground() throws InterruptedException {
                 try {
+                    historial.getEjemplar().setPrestado(false);
+                    historial.getEjemplar().setEstado(historial.getEstado_final());
                     daoHistorial.actualizar(historial);
                 } catch (PersistenceException e) {
                     e.printStackTrace();
                     new FramePopup("Fallo al realizar la devolución.",
                             new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                             "Aceptar");
+                    
                 }
                 return null;
             }

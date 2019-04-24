@@ -264,6 +264,9 @@
                               <Image iconType="3" name="/Imagenes/bad_disabled.png"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnBadStatusMouseClicked"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="btnRegularStatus">
                           <Properties>
@@ -272,6 +275,9 @@
                               <Image iconType="3" name="/Imagenes/regular_disabled.png"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnRegularStatusMouseClicked"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="btnGoodStatus">
                           <Properties>
@@ -280,6 +286,9 @@
                               <Image iconType="3" name="/Imagenes/good.png"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnGoodStatusMouseClicked"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -493,7 +502,6 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAceptarMouseClicked"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAceptarActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
