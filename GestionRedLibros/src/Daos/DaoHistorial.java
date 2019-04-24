@@ -35,12 +35,13 @@ import org.hibernate.Session;
 public class DaoHistorial extends DaoGenerico<Historial, Integer> implements InterfaceDaoGenerico<Historial, Integer> {
 
     /**
-     *  Variable de sesion para cualquier acción con la BD
+     * Variable de sesion para cualquier acción con la BD
      */
     public Session session;
 
     /**
-     *  Constructor del DaoHistorial que recibe una sesion
+     * Constructor del DaoHistorial que recibe una sesion
+     *
      * @param s
      */
     public DaoHistorial(Session s) {
@@ -48,18 +49,17 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
     }
 
     /**
-     *  Metodo para crear un nuevo Historial en la BD
+     * Metodo para crear un nuevo Historial en la BD
      */
     @Override
     public void grabar(Historial h) throws PersistenceException {
         try {
             this.session.beginTransaction();
-            
+
             this.session.save(h);
 
             this.session.getTransaction().commit();
         } catch (PersistenceException ex) {
-            //this.session.getTransaction().commit();
             ex.printStackTrace();
             System.out.println("Error DaoHistorial-grabar(): " + ex.getMessage());
             throw ex;
@@ -67,7 +67,7 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
     }
 
     /**
-     *  Metodo para actualizar un Historial en la BD
+     * Metodo para actualizar un Historial en la BD
      */
     @Override
     public void actualizar(Historial h) throws PersistenceException {
@@ -76,7 +76,7 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
 
             if (historial == null) {
                 historial = new Historial();
-                
+
                 historial.setEjemplar(h.getEjemplar());
                 historial.setAlumno(h.getAlumno());
                 historial.setCurso_escolar(h.getCurso_escolar());
@@ -86,21 +86,21 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
                 historial.setFecha_final(h.getFecha_final());
                 historial.setObservaciones(h.getObservaciones());
             }
-            
+
             this.session.beginTransaction();
-            
+
             this.session.saveOrUpdate(historial);
 
             this.session.getTransaction().commit();
         } catch (PersistenceException ex) {
-            this.session.getTransaction().commit();
             System.out.println("Error DaoHistorial-actualizar(): " + ex.getMessage());
             throw ex;
         }
     }
 
     /**
-     *  Metodo para buscar un Historial mediante su Id en la BD
+     * Metodo para buscar un Historial mediante su Id en la BD
+     *
      * @param id
      * @return
      * @throws PersistenceException
@@ -120,7 +120,9 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
     }
 
     /**
-     *  Metodo para obtener una lista de Historiales filtrando por el Alumno recibido
+     * Metodo para obtener una lista de Historiales filtrando por el Alumno
+     * recibido
+     *
      * @param alum
      * @return
      */
@@ -132,10 +134,11 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
 
         return lista;
     }
-    
+
     /**
-     *  Metodo para obtener una lista de Historiales pendientes de cerrar
-     *  filtrando por el Alumno recibido
+     * Metodo para obtener una lista de Historiales pendientes de cerrar
+     * filtrando por el Alumno recibido
+     *
      * @param alum
      * @return
      */
@@ -150,7 +153,9 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
     }
 
     /**
-     *  Metodo para obtener una lista de Historiales filtrando por el Ejemplar recibido
+     * Metodo para obtener una lista de Historiales filtrando por el Ejemplar
+     * recibido
+     *
      * @param ejemplar
      * @return
      */
@@ -162,9 +167,11 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
 
         return lista;
     }
-    
+
     /**
-     *  Metodo para obtener una lista de Historiales filtrando por el Ejemplar pendiente recibido
+     * Metodo para obtener una lista de Historiales filtrando por el Ejemplar
+     * pendiente recibido
+     *
      * @param ejemplar
      * @return
      */
@@ -179,7 +186,7 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
     }
 
     /**
-     *  Metodo para obtener una lista de todos los Historiales de la BD
+     * Metodo para obtener una lista de todos los Historiales de la BD
      */
     public List<Historial> buscarTodos() {
         List<Historial> lista = new ArrayList<Historial>();
@@ -191,7 +198,7 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
     }
 
     /**
-     *  Metodo para desconectar la sesion del DAO
+     * Metodo para desconectar la sesion del DAO
      */
     @Override
     public void desconectar() {

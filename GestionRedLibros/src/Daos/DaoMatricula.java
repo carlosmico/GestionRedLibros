@@ -18,8 +18,6 @@
 package Daos;
 
 import Pojos.Alumno;
-import Pojos.Contenido;
-import Pojos.Curso;
 import Pojos.Historial;
 import Pojos.Matricula;
 import Vistas.Main;
@@ -200,11 +198,12 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                 }
             }
         }
-        
-        /** Eliminamos aquí las matriculas ya entregadas porque sino la lista perdería
-        *   la iteración debido a que hemos alterado su tamaño.
-        **/
-        
+
+        /**
+         * Eliminamos aquí las matriculas ya entregadas porque sino la lista
+         * perdería la iteración debido a que hemos alterado su tamaño.
+        *
+         */
         for (int i = 0; i < entregadas.size(); i++) {
             lista.remove(entregadas.get(i));
         }

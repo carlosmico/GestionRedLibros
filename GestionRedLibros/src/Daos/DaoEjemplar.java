@@ -18,7 +18,6 @@
 package Daos;
 
 import Pojos.Ejemplar;
-import Pojos.Libro;
 import dao.DaoGenerico;
 import dao.InterfaceDaoGenerico;
 import java.util.ArrayList;
@@ -67,7 +66,6 @@ public class DaoEjemplar extends DaoGenerico<Ejemplar, Integer> implements Inter
 
             this.session.getTransaction().commit();
         } catch (PersistenceException ex) {
-            this.session.getTransaction().commit();
             throw ex;
         }
     }

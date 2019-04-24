@@ -94,8 +94,6 @@ public class DaoAlumno extends DaoGenerico<Alumno, String> implements InterfaceD
                 this.session.getTransaction().commit();
 
             } catch (Exception e) {
-                this.session.getTransaction().commit();
-
                 e.printStackTrace();
                 System.out.println("Error DaoAlumno-actualizar(): " + e.getMessage());
                 throw e;
