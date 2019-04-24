@@ -61,15 +61,15 @@ public class Ejemplar implements Serializable {
     }
 
     public Ejemplar(String codigo, Libro libro, int estado, boolean prestado) {
-        this.codigo_ejemplar = codigo;
-        this.id = codigo;
+        this.codigo_ejemplar = codigo.toUpperCase();
+        this.id = codigo.toUpperCase();
         this.libro = libro;
         this.estado = estado;
         this.prestado = prestado;
     }
 
     public String getCodigo() {
-        return codigo_ejemplar;
+        return codigo_ejemplar.toUpperCase();
     }
 
     public void setCodigo(String codigo) {
@@ -136,6 +136,6 @@ public class Ejemplar implements Serializable {
 
     @Override
     public String toString() {
-        return codigo_ejemplar + " - " + libro.getNombre() + " - " + libro.getContenido().getNombre_cas();
+        return codigo_ejemplar.toUpperCase() + " - " + libro.getNombre() + " - " + libro.getContenido().getNombre_cas();
     }
 }

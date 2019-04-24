@@ -55,6 +55,7 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
 
             switch (column) {
                 case 0:
+                    System.out.println("RemarcarCeldas: Contenido de Matricula: " + matricula.toString());
                     setText(matricula.getContenido().getNombre_cas());
                     break;
 

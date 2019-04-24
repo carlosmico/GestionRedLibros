@@ -56,6 +56,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private DaoLibro daoLibro;
     private DaoCurso daoCurso;
+    private DaoHistorial daoHistorial;
 
     public Thread animacion = null;
     private boolean boolAnimacion = false;
@@ -88,6 +89,7 @@ public class FrameLibro extends javax.swing.JFrame {
         //Inicializamos los Daos
         daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
         daoLibro = new DaoLibro(Main.gestorSesiones.getSession());
+        daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
 
         //Configuramos la parte visual de los ComboBox
         //<editor-fold defaultstate="collapsed" desc="Configuración Combobox">
@@ -2522,16 +2524,11 @@ public class FrameLibro extends javax.swing.JFrame {
 
         //panel del alumno
         if (panelPrestado.isVisible()) {
-            List<Historial> listaHistoriales = ejemplarActual.getHistoriales();
-            Alumno alumnoActual = null;
-            for (int i = 0; i < listaHistoriales.size(); i++) {
-                if (listaHistoriales.get(i).getEjemplar().getCodigo().equals(ejemplarActual.getCodigo())) {
-                    alumnoActual = listaHistoriales.get(i).getAlumno();
-                    break;
-                }
-            }
+            Historial historialEjemplar = daoHistorial.buscarEjemplarPrestadoA(ejemplarActual);
 
-            if (alumnoActual != null) {
+            if (historialEjemplar != null) {
+                Alumno alumnoActual = historialEjemplar.getAlumno();
+                
                 textNombreAlumno.setText(alumnoActual.getNombre() + " "
                         + alumnoActual.getApellido1() + " "
                         + alumnoActual.getApellido2());
@@ -2539,8 +2536,9 @@ public class FrameLibro extends javax.swing.JFrame {
                 textNIAAlumno.setText(alumnoActual.getNia());
                 textTelefonoAlumno.setText(alumnoActual.getTelefono1());
                 textEmailAlumno.setText(alumnoActual.getEmail1());
+                System.out.println("Ejemplar prestado a: " + historialEjemplar.getAlumno().toString());
             } else {
-
+                System.out.println("Ejemplar no prestado");
             }
         }
 

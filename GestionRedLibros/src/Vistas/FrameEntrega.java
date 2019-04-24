@@ -751,7 +751,6 @@ public class FrameEntrega extends javax.swing.JFrame {
     private void btnBusquedaNIAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaNIAActionPerformed
         // TODO add your handling code here:
         buscarAlumno(textBusquedaNIA.getText());
-
     }//GEN-LAST:event_btnBusquedaNIAActionPerformed
 
     private void textCodigoEjemplarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCodigoEjemplarKeyPressed
@@ -887,51 +886,15 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         tablaPendientes.setModel(tableModel);
 
-        RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCursoTabla);
-
         TableColumnModel tcm = tablaPendientes.getColumnModel();
         tcm.getColumn(0).setPreferredWidth(300);
         tcm.getColumn(0).setMaxWidth(300);
-        
+
+        RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCursoTabla);
+
         for (int i = 0; i < tableModel.getColumnCount(); i++) {
             tcm.getColumn(i).setCellRenderer(remarcarCeldas);
         }
-
-        /*Action entrega = new AbstractAction() {
-         public void actionPerformed(ActionEvent e) {
-         JTable table = (JTable) e.getSource();
-         int modelRow = Integer.valueOf(e.getActionCommand());
-         //((DefaultTableModel) table.getModel()).removeRow(modelRow);
-         matriculaEntregada = listaMatriculas.get(modelRow);
-         new FrameConfirmacionEntregaOld(listaMatriculas.get(modelRow)).setVisible(true);
-         }
-         };
-        //<editor-fold defaultstate="collapsed" desc="Edicion visual de la tabla">
-        TableColumnModel tcm = tablaPendientes.getColumnModel();
-        tcm.getColumn(0).setPreferredWidth(300);
-        tcm.getColumn(0).setMaxWidth(300);
-//</editor-fold>
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-            RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCursoTabla);
-
-            protected Void doInBackground() throws InterruptedException {
-                for (int i = 0; i < tableModel.getColumnCount(); i++) {
-                    tcm.getColumn(i).setCellRenderer(remarcarCeldas);
-                }
-                return null;
-            }
-
-            protected void done() {
-                framePopup.dispose();
-            }
-        };
-        worker.execute();
-
-        framePopup = new FramePopup("Cargando datos...");
-        framePopup.setVisible(true);
-*/
-        //Asignamos los botones a la ultima columna de la tabla
-        //new ButtonColumn(tablaPendientes, entrega, tableModel.getColumnCount() - 1);
     }
 
     /**
@@ -1017,6 +980,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
                     }
+
                     framePopup.dispose();
                 }
             };
@@ -1089,7 +1053,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                     framePopup.dispose();
 
                     if (alumno != null) {
-                        cargarDatosAlumno();
+                        //cargarDatosAlumno();
 
                         //Seleccionamos el curso del alumno en el ComboBox de cursos
                         for (int i = 0; i < cbCurso.getItemCount(); i++) {
@@ -1153,6 +1117,11 @@ public class FrameEntrega extends javax.swing.JFrame {
                         if (ejemplar.isPrestado()) {
                             new FramePopup("El ejemplar con código "
                                     + ejemplar.getCodigo() + " ya está prestado.",
+                                    Imagenes.getImagen("alert-black.png"),
+                                    "Aceptar").setVisible(true);
+                        } else if (ejemplar.getLibro().getObsoleto()) {
+                            new FramePopup("El ejemplar con código "
+                                    + ejemplar.getCodigo() + " corresponde a un libro obsoleto.",
                                     Imagenes.getImagen("alert-black.png"),
                                     "Aceptar").setVisible(true);
                         } else {

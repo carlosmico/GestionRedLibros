@@ -60,7 +60,7 @@ public class CodigoBarras {
     public Barcode39 generarCodigoIndividual(String codigo) throws Exception {
         Barcode39 barcode = new Barcode39();
 
-        barcode.setCode(codigo);
+        barcode.setCode(codigo.toUpperCase());
 
         barcode.setBarHeight(60);
 
@@ -81,7 +81,7 @@ public class CodigoBarras {
         for (int i = 0; i < codigos.size(); i++) {
             Barcode39 barcode = new Barcode39();
 
-            barcode.setCode(codigos.get(i));
+            barcode.setCode(codigos.get(i).toUpperCase());
 
             barcode.setBarHeight(60);
 
