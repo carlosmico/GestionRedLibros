@@ -65,8 +65,8 @@ public class Libro implements Serializable{
     }
 
     public Libro(String codigo, Contenido contenido, String nombre, String ISBN, int unidades, boolean obsoleto, double precio) {
-        this.codigo_libro = codigo;
-        this.id = codigo;
+        this.codigo_libro = codigo.toUpperCase();
+        this.id = codigo.toUpperCase();
         this.contenido_libro = contenido;
         this.nombre = nombre;
         this.ISBN = ISBN;

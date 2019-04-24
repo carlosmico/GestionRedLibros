@@ -83,6 +83,8 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     public FrameDevoluciones() {
         initComponents();
 
+        vaciarCampos();
+
         //<editor-fold defaultstate="collapsed" desc="Configuración combobox">
         cbCurso.setEditable(false);
         cbCurso.setUI(new comboBoxRender());
@@ -759,22 +761,27 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             }
 
             jlistEjemplaresDevueltos.setModel(model);
-            
-            model = (DefaultListModel) jlistEjemplaresPendientes.getModel();
-            
-            for (int i = 0; i < model.getSize(); i++) {
-                Historial h = (Historial) model.getElementAt(i);
+
+            model = new DefaultListModel();
+
+            for (int i = 0; i < listaEjemplaresPendientes.size(); i++) {
+                Historial h = listaEjemplaresPendientes.get(i);
                 if (historialConfirmado.getId() == h.getId()) {
-                    model.removeElementAt(i);
+                    listaEjemplaresPendientes.remove(i);
                 }
             }
-            
+
+            for (int i = 0; i < listaEjemplaresPendientes.size(); i++) {
+                model.add(i, listaEjemplaresPendientes.get(i));
+            }
+
             jlistEjemplaresPendientes.setModel(model);
-            
+
+            isConfirmationReady = ConfirmacionDevolucion.CANCELADA;
         } else {
             new FramePopup("Error al realizar la devolución.",
-                            new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                            "Aceptar");
+                    new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                    "Aceptar");
         }
     }//GEN-LAST:event_formWindowActivated
 
@@ -1029,8 +1036,6 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                     framePopup.dispose();
 
                     if (alumno != null) {
-                        cargarDatosAlumno();
-
                         //Seleccionamos el curso del alumno en el ComboBox de cursos
                         for (int i = 0; i < cbCurso.getItemCount(); i++) {
                             Curso c = (Curso) cbCurso.getItemAt(i);
@@ -1082,7 +1087,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             //Se ha insertado un codigo
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
                 protected Void doInBackground() throws InterruptedException {
-                    ejemplar = daoEjemplar.buscar(codigo);
+                    ejemplar = daoEjemplar.buscar(codigo.toUpperCase());
                     return null;
                 }
 
@@ -1095,6 +1100,15 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                                     + ejemplar.getCodigo() + " no está prestado actualmente.",
                                     Imagenes.getImagen("alert-black.png"),
                                     "Aceptar").setVisible(true);
+                        } else if (!daoHistorial.buscarEjemplarPrestadoA(ejemplar).getAlumno().getNia().equals(alumno.getNia())) {
+                            new FramePopup(
+                                    "El ejemplar con código "
+                                    + ejemplar.getCodigo()
+                                    + " no está prestado al alumno "
+                                    + alumno.getNombre()
+                                    + " " + alumno.getApellido1()
+                                    + ".", Imagenes.getImagen("alert-black.png"),
+                                     "Aceptar").setVisible(true);
                         } else {
                             //Buscar historial a partir de ejemplar
                             FrameConfirmacionDevolucion frameConfirmacion
