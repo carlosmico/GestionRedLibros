@@ -759,6 +759,17 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             }
 
             jlistEjemplaresDevueltos.setModel(model);
+            
+            model = (DefaultListModel) jlistEjemplaresPendientes.getModel();
+            
+            for (int i = 0; i < model.getSize(); i++) {
+                Historial h = (Historial) model.getElementAt(i);
+                if (historialConfirmado.getId() == h.getId()) {
+                    model.removeElementAt(i);
+                }
+            }
+            
+            jlistEjemplaresPendientes.setModel(model);
         } else {
             System.out.println("Error al realizar la devolución.");
         }

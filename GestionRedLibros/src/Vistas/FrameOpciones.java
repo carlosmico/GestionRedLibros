@@ -177,6 +177,9 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         panelGeneral.setBackground(new java.awt.Color(239, 235, 233));
 
+        panelConfiguracionBBDD.setBackground(Colores.fondo);
+        panelConfiguracionBBDD.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
         labelConfiguracion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         labelConfiguracion.setText("Configuración Base de Datos");
 
@@ -348,14 +351,14 @@ public class FrameOpciones extends javax.swing.JFrame {
             .addGroup(panelGeneralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelConfiguracionBBDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(467, Short.MAX_VALUE))
+                .addContainerGap(465, Short.MAX_VALUE))
         );
         panelGeneralLayout.setVerticalGroup(
             panelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGeneralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelConfiguracionBBDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addContainerGap(204, Short.MAX_VALUE))
         );
 
         tabbedPage.addTab("General", panelGeneral);

@@ -1810,8 +1810,8 @@ public class FrameLibro extends javax.swing.JFrame {
 
         if (textCodigoLibro.getText().equals("")) {
             errores += "\n- El código del libro no puede estar vacío.";
-        } else if (textCodigoLibro.getText().length() > 50) {
-            errores += "\n- El código del libro no puede contener más a 50 carácteres.";
+        } else if (textCodigoLibro.getText().length() > 13) {
+            errores += "\n- El código del libro no puede contener más de 13 carácteres.";
         }
 
         if (textNombreLibro.getText().equals("")) {
