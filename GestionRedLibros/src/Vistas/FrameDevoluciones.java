@@ -770,8 +770,11 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             }
             
             jlistEjemplaresPendientes.setModel(model);
+            
         } else {
-            System.out.println("Error al realizar la devolución.");
+            new FramePopup("Error al realizar la devolución.",
+                            new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                            "Aceptar");
         }
     }//GEN-LAST:event_formWindowActivated
 
