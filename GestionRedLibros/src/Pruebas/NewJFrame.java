@@ -19,6 +19,8 @@ package Pruebas;
 
 import Utilidades.ButtonColumn;
 import Utilidades.Colores;
+import Utilidades.Imagenes;
+import Vistas.FramePopup;
 import com.mommoo.flat.button.FlatButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -40,14 +42,14 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
-        
+
         DefaultTableModel tableModel = (DefaultTableModel) tabla.getModel();
 
         tableModel.setRowCount(0);
 
         Object[][] contenidoTabla = {
-            {"Jose", ""}, 
-            {"Carlos", ""}, 
+            {"Jose", ""},
+            {"Carlos", ""},
             {"Blas", ""}
         };
 
@@ -58,10 +60,15 @@ public class NewJFrame extends javax.swing.JFrame {
                 JTable table = (JTable) e.getSource();
                 int modelRow = Integer.valueOf(e.getActionCommand());
                 ((DefaultTableModel) table.getModel()).removeRow(modelRow);
+                new FramePopup("<html><p>Esto es una prueba muy larga de la cual vamos <br>"
+                        + "a aprender visualmente que la ventana se puede redimensionar y <br>"
+                        + "funciona perfectamente sin dar problema alguno</p></html>",
+                        Imagenes.getImagen("alert-black.png"),
+                        "Aceptar").setVisible(true);
             }
         };
 
-        ButtonColumn buttonColumn = new ButtonColumn(tabla, delete, tableModel.getColumnCount()-1);
+        ButtonColumn buttonColumn = new ButtonColumn(tabla, delete, tableModel.getColumnCount() - 1);
         buttonColumn.setMnemonic(KeyEvent.VK_D);
     }
 

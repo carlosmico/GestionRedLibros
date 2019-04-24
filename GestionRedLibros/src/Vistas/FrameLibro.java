@@ -1629,9 +1629,8 @@ public class FrameLibro extends javax.swing.JFrame {
                             new FramePopup("El libro se ha eliminado correctamente!",
                                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                                     "Aceptar").setVisible(true);
-
-                            frameCarga.dispose();
                         }
+                        frameCarga.dispose();
                     }
                 };
                 worker.execute();
@@ -1809,45 +1808,47 @@ public class FrameLibro extends javax.swing.JFrame {
         String errores = "";
 
         if (textCodigoLibro.getText().equals("")) {
-            errores += "\n- El código del libro no puede estar vacío.";
+            errores += "<br>- El código del libro no puede estar vacío.";
         } else if (textCodigoLibro.getText().length() > 13) {
-            errores += "\n- El código del libro no puede contener más de 13 carácteres.";
+            errores += "<br>- El código del libro no puede contener más de 13 carácteres.";
         }
 
         if (textNombreLibro.getText().equals("")) {
-            errores += "\n- El nombre no puede estar vacío.";
+            errores += "<br>- El nombre no puede estar vacío.";
         }
 
         if (textISBNLibro.getText().equals("")) {
-            errores += "\n- El ISBN no puede estar vacío.";
+            errores += "<br>- El ISBN no puede estar vacío.";
         }
 
         if (textUnidadesLibro.getText().equals("")) {
-            errores += "\n- El campo de las unidades no puede estar vacío.";
+            errores += "<br>- El campo de las unidades no puede estar vacío.";
+        } else if (textUnidadesLibro.getText().length() > 3) {
+            errores += "<br>- El campo de las unidades no puede contener más de 3 carácteres.";
         }
 
         try {
             int un = Integer.parseInt(textUnidadesLibro.getText());
             if (un <= 0) {
-                errores += "\n- El valor de las unidades debe ser un valor positivo.";
+                errores += "<br>- El valor de las unidades debe ser un valor positivo.";
             }
         } catch (Exception e) {
-            errores += "\n- El valor de las unidades debe ser un valor numérico.";
+            errores += "<br>- El valor de las unidades debe ser un valor numérico.";
         }
 
         try {
             double pre = Double.parseDouble(textPrecioLibro.getText());
             if (pre <= 0) {
-                errores += "\n- El precio debe ser un valor positivo.";
+                errores += "<br>- El precio debe ser un valor positivo.";
             }
         } catch (Exception e) {
-            errores += "\n- El precio debe ser un valor numérico.";
+            errores += "<br>- El precio debe ser un valor numérico.";
         }
 
         if (cbAsignatura.getSelectedItem() == null) {
-            errores += "\n- Debe seleccionar una asignatura válida.";
+            errores += "<br>- Debe seleccionar una asignatura válida.";
         } else if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
-            errores += "\n- Debe seleccionar una asignatura válida.";
+            errores += "<br>- Debe seleccionar una asignatura válida.";
         }
 
         if (libro == null) {
@@ -1856,42 +1857,59 @@ public class FrameLibro extends javax.swing.JFrame {
             if (errores.equals("")) {
                 //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
 
-                try {
-                    libro = new Libro();
+                libro = new Libro();
 
-                    libro.setCodigo(textCodigoLibro.getText().toUpperCase());
-                    libro.setISBN(textISBNLibro.getText());
-                    libro.setNombre(textNombreLibro.getText());
-                    libro.setObsoleto(chkObsoletoLibro.isSelected());
-                    libro.setPrecio(Double.parseDouble(textPrecioLibro.getText()));
-                    libro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
-                    libro.setContenido((Contenido) cbAsignatura.getSelectedItem());
+                libro.setCodigo(textCodigoLibro.getText().toUpperCase());
+                libro.setISBN(textISBNLibro.getText());
+                libro.setNombre(textNombreLibro.getText());
+                libro.setObsoleto(chkObsoletoLibro.isSelected());
+                libro.setPrecio(Double.parseDouble(textPrecioLibro.getText()));
+                libro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
+                libro.setContenido((Contenido) cbAsignatura.getSelectedItem());
 
-                    daoLibro.grabar(libro);
+                //<editor-fold defaultstate="collapsed" desc="Guardar libro">
+                SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                    protected Void doInBackground() throws InterruptedException {
+                        daoLibro.grabar(libro);
+                        return null;
+                    }
 
-                    cargarDatos();
+                    protected void done() {
 
-                    setEditMode(false);
+                        try {
+                            cargarDatos();
 
-                    rellenarCamposLibro();
+                            setEditMode(false);
 
-                    showEjemplarPanel(true);
-                    contadorEjemplar = 1;
-                    rellenarCamposEjemplares();
+                            rellenarCamposLibro();
 
-                    new FramePopup("Libro añadido correctamente.",
-                            Imagenes.getImagen("check-black.png"),
-                            "Aceptar").setVisible(true);
-                } catch (PersistenceException e) {
-                    new FramePopup("El libro ya existe en la Base de Datos.",
-                            Imagenes.getImagen("alert-black.png"),
-                            "Aceptar").setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    new FramePopup("Error al crear el libro.",
-                            Imagenes.getImagen("alert-black.png"),
-                            "Aceptar").setVisible(true);
+                            showEjemplarPanel(true);
+                            contadorEjemplar = 1;
+                            rellenarCamposEjemplares();
+
+                            new FramePopup("Libro añadido correctamente.",
+                                    Imagenes.getImagen("check-black.png"),
+                                    "Aceptar").setVisible(true);
+                        } catch (PersistenceException e) {
+                            new FramePopup("El libro ya existe en la Base de Datos.",
+                                    Imagenes.getImagen("alert-black.png"),
+                                    "Aceptar").setVisible(true);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            new FramePopup("Error al crear el libro.",
+                                    Imagenes.getImagen("alert-black.png"),
+                                    "Aceptar").setVisible(true);
+                        }
+
+                        frameCarga.dispose();
+                    }
+                };
+                worker.execute();
+                if (frameCarga == null) {
+                    frameCarga = new FramePopup();
                 }
+                frameCarga.setVisible(true);
+//</editor-fold>
             } else {
                 new FramePopup("<html>Revise los siguientes errores: <br>"
                         + errores + "</html>",
@@ -1903,42 +1921,65 @@ public class FrameLibro extends javax.swing.JFrame {
 
             if (errores.equals("")) {
                 //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
-                try {
-                    int unidadesOld = libro.getUnidades();
 
-                    libro.setCodigo(textCodigoLibro.getText());
-                    libro.setISBN(textISBNLibro.getText());
-                    libro.setNombre(textNombreLibro.getText());
-                    libro.setObsoleto(chkObsoletoLibro.isSelected());
-                    libro.setPrecio(Double.parseDouble(textPrecioLibro.getText()));
-                    libro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
-                    libro.setContenido((Contenido) cbAsignatura.getSelectedItem());
+                int unidadesOld = libro.getUnidades();
 
-                    daoLibro.actualizar(unidadesOld, libro);
+                libro.setCodigo(textCodigoLibro.getText());
+                libro.setISBN(textISBNLibro.getText());
+                libro.setNombre(textNombreLibro.getText());
+                libro.setObsoleto(chkObsoletoLibro.isSelected());
+                libro.setPrecio(Double.parseDouble(textPrecioLibro.getText()));
+                libro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
+                libro.setContenido((Contenido) cbAsignatura.getSelectedItem());
 
-                    cargarDatos();
+                SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                    protected Void doInBackground() throws InterruptedException {
+                        try {
+                            daoLibro.actualizar(unidadesOld, libro);
+                        } catch (PersistenceException e) {
+                            new FramePopup("Error al actualizar el libro",
+                                    Imagenes.getImagen("alert-black.png"),
+                                    "Aceptar");
+                        }
+                        return null;
+                    }
 
-                    setEditMode(false);
+                    protected void done() {
+                        try {
+                            cargarDatos();
 
-                    rellenarCamposLibro();
+                            setEditMode(false);
 
-                    contadorEjemplar = 1;
-                    rellenarCamposEjemplares();
+                            rellenarCamposLibro();
 
-                    showEjemplarPanel(true);
+                            contadorEjemplar = 1;
+                            rellenarCamposEjemplares();
 
-                    new FramePopup("Libro actualizado correctamente.",
-                            Imagenes.getImagen("check-black.png"),
-                            "Aceptar").setVisible(true);
-                } catch (PersistenceException e) {
-                    new FramePopup("El libro ya existe en la Base de Datos.",
-                            Imagenes.getImagen("alert-black.png"),
-                            "Aceptar").setVisible(true);
-                } catch (Exception e) {
-                    new FramePopup("Error al actualizar el libro.",
-                            Imagenes.getImagen("alert-black.png"),
-                            "Aceptar").setVisible(true);
+                            showEjemplarPanel(true);
+
+                            new FramePopup("Libro actualizado correctamente.",
+                                    Imagenes.getImagen("check-black.png"),
+                                    "Aceptar").setVisible(true);
+                        } catch (PersistenceException e) {
+                            new FramePopup("El libro ya existe en la Base de Datos.",
+                                    Imagenes.getImagen("alert-black.png"),
+                                    "Aceptar").setVisible(true);
+                        } catch (Exception e) {
+                            new FramePopup("Error al actualizar el libro.",
+                                    Imagenes.getImagen("alert-black.png"),
+                                    "Aceptar").setVisible(true);
+
+                        }
+
+                        frameCarga.dispose();
+                    }
+                };
+                worker.execute();
+                if (frameCarga == null) {
+                    frameCarga = new FramePopup();
                 }
+                frameCarga.setVisible(true);
+
             } else {
                 new FramePopup("<html>Revise los siguientes errores: <br>"
                         + errores + "</html>",
@@ -1967,8 +2008,10 @@ public class FrameLibro extends javax.swing.JFrame {
                 animacion.join();
             }
             showEjemplarPanel(false);
+
         } catch (InterruptedException ex) {
-            Logger.getLogger(FrameLibro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrameLibro.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
         setEditMode(false);

@@ -20,19 +20,19 @@ package Vistas;
 import Utilidades.Colores;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 
 /**
  *
  * @author Jose Sanchis
  */
-public class FramePopup extends javax.swing.JDialog {
+public class FramePopup extends javax.swing.JFrame {
 
     /**
      * Crea el nuevo formulario FramePopup. (No se cierra por si solo)
      */
     public FramePopup() {
         initComponents();
-        setModal(true);
         panelButton.setVisible(false);
         pack();
         this.setLocationRelativeTo(null);
@@ -46,7 +46,6 @@ public class FramePopup extends javax.swing.JDialog {
      */
     public FramePopup(String mensaje) {
         initComponents();
-        setModal(true);
         text.setText(mensaje);
         panelButton.setVisible(false);
         pack();
@@ -62,7 +61,6 @@ public class FramePopup extends javax.swing.JDialog {
      */
     public FramePopup(String mensaje, ImageIcon icon) {
         initComponents();
-        setModal(true);
         text.setText(mensaje);
         text.setIcon(icon);
         panelButton.setVisible(false);
@@ -81,11 +79,10 @@ public class FramePopup extends javax.swing.JDialog {
      */
     public FramePopup(String mensaje, ImageIcon icon, String buttonText) {
         initComponents();
-        setModal(true);
         text.setText(mensaje);
         text.setIcon(icon);
         btnButton2.setText(buttonText);
-        btnButton2.requestFocusInWindow(); 
+        btnButton2.requestFocusInWindow();
         btnButton1.setVisible(false);
         pack();
         this.setLocationRelativeTo(null);
@@ -103,7 +100,6 @@ public class FramePopup extends javax.swing.JDialog {
      */
     public FramePopup(String mensaje, ImageIcon icon, String buttonText, Action action) {
         initComponents();
-        setModal(true);
         text.setText(mensaje);
         text.setIcon(icon);
         btnButton2.setText(buttonText);
@@ -123,7 +119,6 @@ public class FramePopup extends javax.swing.JDialog {
      */
     public FramePopup(String mensaje, ImageIcon icon, Action action) {
         initComponents();
-        setModal(true);
         text.setText(mensaje);
         text.setIcon(icon);
         btnButton2.addActionListener(action);
@@ -145,7 +140,6 @@ public class FramePopup extends javax.swing.JDialog {
      */
     public FramePopup(String mensaje, ImageIcon icon, String button1, String button2, Action actionButton1, Action actionButton2) {
         initComponents();
-        setModal(true);
         text.setText(mensaje);
         text.setIcon(icon);
         btnButton1.setText(button1);
@@ -174,7 +168,6 @@ public class FramePopup extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
         setUndecorated(true);
-        setResizable(false);
         setType(java.awt.Window.Type.POPUP);
 
         jPanel2.setBackground(new java.awt.Color(66, 47, 44));
@@ -186,6 +179,7 @@ public class FramePopup extends javax.swing.JDialog {
         text.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/load.gif"))); // NOI18N
         text.setText("Recuperando datos en la base de datos");
         text.setToolTipText("");
+        text.setMaximumSize(new java.awt.Dimension(5000, 5000));
         text.setOpaque(true);
 
         panelButton.setBackground(new java.awt.Color(239, 235, 233));
@@ -243,8 +237,8 @@ public class FramePopup extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(text, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
         );
