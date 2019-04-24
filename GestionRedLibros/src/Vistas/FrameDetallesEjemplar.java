@@ -17,33 +17,18 @@
  */
 package Vistas;
 
-import VistasOld.*;
-import Daos.DaoCurso;
-import Daos.DaoEjemplar;
-import Daos.DaoHistorial;
-import Pojos.Curso;
+import Pojos.Alumno;
 import Pojos.Ejemplar;
 import Pojos.Historial;
-import Pojos.Libro;
-import Pojos.Matricula;
-import Utilidades.CodigoBarras;
 import Utilidades.Colores;
-import Utilidades.ConfirmacionEntrega;
 import Utilidades.Estado;
-import Vistas.FrameEntrega;
+import Utilidades.Imagenes;
 import Vistas.FramePopup;
-import Vistas.Main;
-import static Vistas.FrameEntrega.alumno;
-import java.awt.Color;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.persistence.PersistenceException;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
-import javax.swing.SwingWorker;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -51,45 +36,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FrameDetallesEjemplar extends javax.swing.JFrame {
 
-    private DaoCurso daoCurso;
-    private DaoHistorial daoHistorial;
-    private DaoEjemplar daoEjemplar;
-
-    private List<Curso> listaCurso;
-    private List<Ejemplar> listaEjemplares;
-
-    private FramePopup framePopup;
-
-    private Matricula matricula;
-    private Libro libro;
     private Ejemplar ejemplar;
-
-    private String placeHolderObservaciones = "Observaciones…";
 
     /**
      * Creates new form FrameConfirmacionEntrega
      */
-    public FrameDetallesEjemplar(Matricula idMatricula) {
+    public FrameDetallesEjemplar(Ejemplar ejemplar) {
         initComponents();
 
-        this.matricula = idMatricula;
-
-        daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
-        daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
-        daoEjemplar = new DaoEjemplar(Main.gestorSesiones.getSession());
-
-        //daoLibro.buscarPorContenido(null);
-        List<Libro> listaLibros = this.matricula.getContenido().getLibros();
-        for (int i = 0; i < listaLibros.size(); i++) {
-            if (listaLibros.get(i).getContenido().getId() == this.matricula.getContenido().getId()) {
-                libro = listaLibros.get(i);
-                break;
-            }
-        }
-
-        cargarDatos();
+        this.ejemplar = ejemplar;
 
         this.setLocationRelativeTo(null);
+
+        rellenarDatosMatricula();
     }
 
     /**
@@ -109,48 +68,48 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        textCodigoEjemplar = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        textNombreEjemplar = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        textAsignaturaEjemplar = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        textCursoEjemplar = new javax.swing.JLabel();
         panelEjemplares = new javax.swing.JPanel();
         panelCuerpoEjemplares = new javax.swing.JPanel();
-        panelEstadoParent15 = new javax.swing.JPanel();
-        jLabel29 = new javax.swing.JLabel();
-        panelEstado15 = new javax.swing.JPanel();
-        btnBadStatus = new javax.swing.JLabel();
-        btnRegularStatus = new javax.swing.JLabel();
-        btnGoodStatus = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listEjemplares = new javax.swing.JList();
-        panelEstadoParent16 = new javax.swing.JPanel();
+        listAlumnos = new javax.swing.JList();
+        jPanel1 = new javax.swing.JPanel();
+        panelEstadoInicialParent = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
+        panelEstadoInicial = new javax.swing.JPanel();
+        btnBadStatusInicial = new javax.swing.JLabel();
+        btnRegularStatusInicial = new javax.swing.JLabel();
+        btnGoodStatusInicial = new javax.swing.JLabel();
+        panelEstadoFinalParent = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
-        panelEstado16 = new javax.swing.JPanel();
-        btnBadStatus1 = new javax.swing.JLabel();
-        btnRegularStatus1 = new javax.swing.JLabel();
-        btnGoodStatus1 = new javax.swing.JLabel();
+        panelEstadoFinal = new javax.swing.JPanel();
+        btnBadStatusFinal = new javax.swing.JLabel();
+        btnRegularStatusFinal = new javax.swing.JLabel();
+        btnGoodStatusFinal = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        textNombrePropietario = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
+        textFechaEntregaEjemplar = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
+        textEstadoInicialEjemplar = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         textObservaciones = new javax.swing.JTextArea();
         panelBotonera = new javax.swing.JPanel();
-        btnCancel = new com.mommoo.flat.button.FlatButton();
         btnAceptar = new com.mommoo.flat.button.FlatButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -189,11 +148,15 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         jLabel5.setForeground(Colores.accent);
         jLabel5.setText("Información General:");
 
+        jPanel2.setBackground(Colores.fondo);
+
         jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel4.setForeground(Colores.accent);
         jLabel4.setText("Código de ejemplar:");
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel6.setText("1000001");
+        textCodigoEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textCodigoEjemplar.setForeground(Colores.accent);
+        textCodigoEjemplar.setText("1000001");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -204,7 +167,7 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -216,15 +179,19 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
+                .addComponent(textCodigoEjemplar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel3.setBackground(Colores.fondo);
+
         jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel7.setForeground(Colores.accent);
         jLabel7.setText("Nombre del ejemplar:");
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setText("El are no es lo mateix que la de ta' tia");
+        textNombreEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textNombreEjemplar.setForeground(Colores.accent);
+        textNombreEjemplar.setText("El are no es lo mateix que la de ta' tia");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -235,7 +202,7 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel2))
+                        .addComponent(textNombreEjemplar))
                     .addComponent(jLabel7))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -245,15 +212,19 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(textNombreEjemplar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel4.setBackground(Colores.fondo);
+
         jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel8.setForeground(Colores.accent);
         jLabel8.setText("Asignatura:");
 
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel9.setText("La calle es mi gimnasio");
+        textAsignaturaEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textAsignaturaEjemplar.setForeground(Colores.accent);
+        textAsignaturaEjemplar.setText("La calle es mi gimnasio");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -264,7 +235,7 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE))
+                        .addComponent(textAsignaturaEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -276,15 +247,19 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
+                .addComponent(textAsignaturaEjemplar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel5.setBackground(Colores.fondo);
+
         jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel10.setForeground(Colores.accent);
         jLabel10.setText("Curso:");
 
-        jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel11.setText("4 manzanas");
+        textCursoEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textCursoEjemplar.setForeground(Colores.accent);
+        textCursoEjemplar.setText("4 manzanas");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -295,7 +270,7 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel11))
+                        .addComponent(textCursoEjemplar))
                     .addComponent(jLabel10))
                 .addGap(0, 35, Short.MAX_VALUE))
         );
@@ -305,7 +280,7 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11)
+                .addComponent(textCursoEjemplar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -316,16 +291,18 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
             .addGroup(panelDatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5)
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel5))
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelDatosLayout.createSequentialGroup()
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelDatosLayout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelDatosLayout.setVerticalGroup(
@@ -349,117 +326,123 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
 
         panelCuerpoEjemplares.setBackground(Colores.fondo);
 
-        panelEstadoParent15.setBackground(new java.awt.Color(239, 235, 233));
-        panelEstadoParent15.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-
-        jLabel29.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel29.setText("Estado inicial:");
-
-        panelEstado15.setBackground(new java.awt.Color(239, 235, 233));
-        panelEstado15.setLayout(new java.awt.GridLayout(1, 0, 5, 5));
-
-        btnBadStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnBadStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
-        panelEstado15.add(btnBadStatus);
-
-        btnRegularStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnRegularStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
-        panelEstado15.add(btnRegularStatus);
-
-        btnGoodStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnGoodStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
-        panelEstado15.add(btnGoodStatus);
-
-        javax.swing.GroupLayout panelEstadoParent15Layout = new javax.swing.GroupLayout(panelEstadoParent15);
-        panelEstadoParent15.setLayout(panelEstadoParent15Layout);
-        panelEstadoParent15Layout.setHorizontalGroup(
-            panelEstadoParent15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelEstadoParent15Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelEstadoParent15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelEstadoParent15Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(panelEstado15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelEstadoParent15Layout.createSequentialGroup()
-                        .addComponent(jLabel29)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        panelEstadoParent15Layout.setVerticalGroup(
-            panelEstadoParent15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelEstadoParent15Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel29)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelEstado15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         jScrollPane1.setBorder(null);
 
-        listEjemplares.setBackground(Colores.fondo);
-        listEjemplares.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        listEjemplares.setForeground(Colores.accent);
-        listEjemplares.setModel(new javax.swing.AbstractListModel() {
+        listAlumnos.setBackground(Colores.fondo);
+        listAlumnos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        listAlumnos.setForeground(Colores.accent);
+        listAlumnos.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        listEjemplares.setSelectionBackground(Colores.accent);
-        listEjemplares.setSelectionForeground(Colores.fondo);
-        listEjemplares.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        listAlumnos.setSelectionBackground(Colores.accent);
+        listAlumnos.setSelectionForeground(Colores.fondo);
+        listAlumnos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                listEjemplaresValueChanged(evt);
+                listAlumnosValueChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(listEjemplares);
+        jScrollPane1.setViewportView(listAlumnos);
 
-        panelEstadoParent16.setBackground(new java.awt.Color(239, 235, 233));
-        panelEstadoParent16.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel1.setLayout(new java.awt.GridLayout());
+
+        panelEstadoInicialParent.setBackground(Colores.fondo);
+        panelEstadoInicialParent.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel29.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel29.setForeground(Colores.accent);
+        jLabel29.setText("Estado inicial:");
+
+        panelEstadoInicial.setBackground(Colores.fondo);
+        panelEstadoInicial.setLayout(new java.awt.GridLayout(1, 0, 5, 5));
+
+        btnBadStatusInicial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnBadStatusInicial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
+        panelEstadoInicial.add(btnBadStatusInicial);
+
+        btnRegularStatusInicial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnRegularStatusInicial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
+        panelEstadoInicial.add(btnRegularStatusInicial);
+
+        btnGoodStatusInicial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnGoodStatusInicial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
+        panelEstadoInicial.add(btnGoodStatusInicial);
+
+        javax.swing.GroupLayout panelEstadoInicialParentLayout = new javax.swing.GroupLayout(panelEstadoInicialParent);
+        panelEstadoInicialParent.setLayout(panelEstadoInicialParentLayout);
+        panelEstadoInicialParentLayout.setHorizontalGroup(
+            panelEstadoInicialParentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEstadoInicialParentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelEstadoInicialParentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelEstadoInicialParentLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(panelEstadoInicial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelEstadoInicialParentLayout.createSequentialGroup()
+                        .addComponent(jLabel29)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panelEstadoInicialParentLayout.setVerticalGroup(
+            panelEstadoInicialParentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEstadoInicialParentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelEstadoInicial, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel1.add(panelEstadoInicialParent);
+
+        panelEstadoFinalParent.setBackground(Colores.fondo);
+        panelEstadoFinalParent.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel30.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel30.setForeground(Colores.accent);
         jLabel30.setText("Estado final:");
 
-        panelEstado16.setBackground(new java.awt.Color(239, 235, 233));
-        panelEstado16.setLayout(new java.awt.GridLayout(1, 0, 5, 5));
+        panelEstadoFinal.setBackground(Colores.fondo);
+        panelEstadoFinal.setLayout(new java.awt.GridLayout(1, 0, 5, 5));
 
-        btnBadStatus1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnBadStatus1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
-        panelEstado16.add(btnBadStatus1);
+        btnBadStatusFinal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnBadStatusFinal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
+        panelEstadoFinal.add(btnBadStatusFinal);
 
-        btnRegularStatus1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnRegularStatus1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
-        panelEstado16.add(btnRegularStatus1);
+        btnRegularStatusFinal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnRegularStatusFinal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
+        panelEstadoFinal.add(btnRegularStatusFinal);
 
-        btnGoodStatus1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnGoodStatus1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
-        panelEstado16.add(btnGoodStatus1);
+        btnGoodStatusFinal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnGoodStatusFinal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
+        panelEstadoFinal.add(btnGoodStatusFinal);
 
-        javax.swing.GroupLayout panelEstadoParent16Layout = new javax.swing.GroupLayout(panelEstadoParent16);
-        panelEstadoParent16.setLayout(panelEstadoParent16Layout);
-        panelEstadoParent16Layout.setHorizontalGroup(
-            panelEstadoParent16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelEstadoParent16Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelEstadoFinalParentLayout = new javax.swing.GroupLayout(panelEstadoFinalParent);
+        panelEstadoFinalParent.setLayout(panelEstadoFinalParentLayout);
+        panelEstadoFinalParentLayout.setHorizontalGroup(
+            panelEstadoFinalParentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEstadoFinalParentLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelEstadoParent16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelEstadoParent16Layout.createSequentialGroup()
+                .addGroup(panelEstadoFinalParentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelEstadoFinalParentLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(panelEstado16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelEstadoParent16Layout.createSequentialGroup()
+                        .addComponent(panelEstadoFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelEstadoFinalParentLayout.createSequentialGroup()
                         .addComponent(jLabel30)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
-        panelEstadoParent16Layout.setVerticalGroup(
-            panelEstadoParent16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelEstadoParent16Layout.createSequentialGroup()
+        panelEstadoFinalParentLayout.setVerticalGroup(
+            panelEstadoFinalParentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEstadoFinalParentLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel30)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelEstado16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(panelEstadoFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        jPanel1.add(panelEstadoFinalParent);
 
         javax.swing.GroupLayout panelCuerpoEjemplaresLayout = new javax.swing.GroupLayout(panelCuerpoEjemplares);
         panelCuerpoEjemplares.setLayout(panelCuerpoEjemplaresLayout);
@@ -467,26 +450,23 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
             panelCuerpoEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCuerpoEjemplaresLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelEstadoParent15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(panelEstadoParent16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelCuerpoEjemplaresLayout.setVerticalGroup(
             panelCuerpoEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCuerpoEjemplaresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelCuerpoEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelCuerpoEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(panelEstadoParent16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(panelEstadoParent15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(241, Short.MAX_VALUE))
+                .addGap(6, 6, 6)
+                .addGroup(panelCuerpoEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel20.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel20.setForeground(Colores.accent);
         jLabel20.setText("Otros Alumnos que han usado este libro:");
 
         javax.swing.GroupLayout panelEjemplaresLayout = new javax.swing.GroupLayout(panelEjemplares);
@@ -514,16 +494,20 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel6.setBackground(Colores.fondo);
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel12.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel12.setForeground(Colores.accent);
         jLabel12.setText("Información prestamo:");
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel13.setForeground(Colores.accent);
         jLabel13.setText("Propietario actual:");
 
-        jLabel14.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel14.setText("Jose Sanchis Belda");
+        textNombrePropietario.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textNombrePropietario.setForeground(Colores.accent);
+        textNombrePropietario.setText("Jose Sanchis Belda");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -534,7 +518,7 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel14))
+                        .addComponent(textNombrePropietario))
                     .addComponent(jLabel13))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
@@ -544,15 +528,17 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14)
+                .addComponent(textNombrePropietario)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel16.setForeground(Colores.accent);
         jLabel16.setText("Fecha de entrega:");
 
-        jLabel17.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel17.setText("16-11-1997 / 11:23am");
+        textFechaEntregaEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textFechaEntregaEjemplar.setForeground(Colores.accent);
+        textFechaEntregaEjemplar.setText("16-11-1997 / 11:23am");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -563,7 +549,7 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel17))
+                        .addComponent(textFechaEntregaEjemplar))
                     .addComponent(jLabel16))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -573,15 +559,17 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel17)
+                .addComponent(textFechaEntregaEjemplar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel18.setForeground(Colores.accent);
         jLabel18.setText("Estado inicial:");
 
-        jLabel19.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel19.setText("Deteriorado");
+        textEstadoInicialEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textEstadoInicialEjemplar.setForeground(Colores.accent);
+        textEstadoInicialEjemplar.setText("Deteriorado");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -592,7 +580,7 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel19))
+                        .addComponent(textEstadoInicialEjemplar))
                     .addComponent(jLabel18))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
@@ -602,24 +590,19 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel19)
+                .addComponent(textEstadoInicialEjemplar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        textObservaciones.setEditable(false);
         textObservaciones.setBackground(Colores.fondo);
         textObservaciones.setColumns(20);
         textObservaciones.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textObservaciones.setForeground(new java.awt.Color(102, 102, 102));
+        textObservaciones.setForeground(Colores.accent);
         textObservaciones.setRows(5);
-        textObservaciones.setText("Observaciones…");
-        textObservaciones.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textObservacionesKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                textObservacionesKeyReleased(evt);
-            }
-        });
+        textObservaciones.setText("Sin observaciones");
+        textObservaciones.setSelectedTextColor(Colores.fondo);
+        textObservaciones.setSelectionColor(Colores.accent);
         jScrollPane2.setViewportView(textObservaciones);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -685,16 +668,6 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
 
         panelBotonera.setBackground(Colores.fondo);
 
-        btnCancel.setBackground(Colores.buttons);
-        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/close.png"))); // NOI18N
-        btnCancel.setText("Cancelar");
-        btnCancel.setCornerRound(10);
-        btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCancelMouseClicked(evt);
-            }
-        });
-
         btnAceptar.setBackground(Colores.buttons);
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/check-white.png"))); // NOI18N
         btnAceptar.setText("Aceptar");
@@ -712,18 +685,14 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotoneraLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panelBotoneraLayout.setVerticalGroup(
             panelBotoneraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotoneraLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelBotoneraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addGroup(panelBotoneraLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -743,7 +712,7 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(panelCuerpo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(panelBotonera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -753,57 +722,15 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelMouseClicked
-        FrameEntrega.isConfirmationReady = ConfirmacionEntrega.CANCELADA;
-        dispose();
-    }//GEN-LAST:event_btnCancelMouseClicked
-
-    private void listEjemplaresValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listEjemplaresValueChanged
+    private void listAlumnosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listAlumnosValueChanged
         // TODO add your handling code here:
-        ejemplar = (Ejemplar) listEjemplares.getSelectedValue();
-        rellenarEjemplar();
-    }//GEN-LAST:event_listEjemplaresValueChanged
+        Alumno alumno = (Alumno) listAlumnos.getSelectedValue();
+        rellenarDatosAlumnos(alumno);
+    }//GEN-LAST:event_listAlumnosValueChanged
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-        // TODO add your handling code here:
-        FrameEntrega.isConfirmationReady = ConfirmacionEntrega.REALIZADA;
-
-        String observaciones = textObservaciones.getText();
-
-        if (textObservaciones.getText().equals(placeHolderObservaciones)) {
-            observaciones = "";
-        }
-
-        Historial historial = new Historial(
-                ejemplar,
-                alumno,
-                matricula.getCurso_escolar(),
-                ejemplar.getEstado(),
-                -1,
-                new Date(),
-                null,
-                observaciones
-        );
-        guardarEntrega(historial);
+        dispose();
     }//GEN-LAST:event_btnAceptarMouseClicked
-
-    private void textObservacionesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textObservacionesKeyPressed
-        String nombreLibro = textObservaciones.getText();
-
-        if (nombreLibro.length() > 0 && nombreLibro.equals(placeHolderObservaciones)) {
-            textObservaciones.setText("");
-            textObservaciones.setForeground(Colores.accent);
-        }
-    }//GEN-LAST:event_textObservacionesKeyPressed
-
-    private void textObservacionesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textObservacionesKeyReleased
-        String nombreLibro = textObservaciones.getText();
-
-        if (nombreLibro.length() == 0) {
-            textObservaciones.setText(placeHolderObservaciones);
-            textObservaciones.setForeground(new Color(102, 102, 102));
-        }
-    }//GEN-LAST:event_textObservacionesKeyReleased
 
     /**
      * @param args the command line arguments
@@ -845,33 +772,26 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.mommoo.flat.button.FlatButton btnAceptar;
-    private javax.swing.JLabel btnBadStatus;
-    private javax.swing.JLabel btnBadStatus1;
-    private com.mommoo.flat.button.FlatButton btnCancel;
-    private javax.swing.JLabel btnGoodStatus;
-    private javax.swing.JLabel btnGoodStatus1;
-    private javax.swing.JLabel btnRegularStatus;
-    private javax.swing.JLabel btnRegularStatus1;
+    private javax.swing.JLabel btnBadStatusFinal;
+    private javax.swing.JLabel btnBadStatusInicial;
+    private javax.swing.JLabel btnGoodStatusFinal;
+    private javax.swing.JLabel btnGoodStatusInicial;
+    private javax.swing.JLabel btnRegularStatusFinal;
+    private javax.swing.JLabel btnRegularStatusInicial;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -882,93 +802,94 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList listEjemplares;
+    private javax.swing.JList listAlumnos;
     private javax.swing.JPanel panelBotonera;
     private javax.swing.JPanel panelCuerpo;
     private javax.swing.JPanel panelCuerpoEjemplares;
     private javax.swing.JPanel panelDatos;
     private javax.swing.JPanel panelEjemplares;
-    private javax.swing.JPanel panelEstado15;
-    private javax.swing.JPanel panelEstado16;
-    private javax.swing.JPanel panelEstadoParent15;
-    private javax.swing.JPanel panelEstadoParent16;
+    private javax.swing.JPanel panelEstadoFinal;
+    private javax.swing.JPanel panelEstadoFinalParent;
+    private javax.swing.JPanel panelEstadoInicial;
+    private javax.swing.JPanel panelEstadoInicialParent;
     private javax.swing.JPanel panelTitulo;
     private javax.swing.ButtonGroup rbgEstados;
+    private javax.swing.JLabel textAsignaturaEjemplar;
+    private javax.swing.JLabel textCodigoEjemplar;
+    private javax.swing.JLabel textCursoEjemplar;
+    private javax.swing.JLabel textEstadoInicialEjemplar;
+    private javax.swing.JLabel textFechaEntregaEjemplar;
+    private javax.swing.JLabel textNombreEjemplar;
+    private javax.swing.JLabel textNombrePropietario;
     private javax.swing.JTextArea textObservaciones;
     // End of variables declaration//GEN-END:variables
 
-    public void rellenarDatosMatricula() {
-        //<editor-fold defaultstate="collapsed" desc="Datos Matriculas">
-        //Curso
-        textCurso.setText(this.matricula.getCurso());
-
-        //Asignatura
-        textAsignatura.setText(this.matricula.getContenido().getNombre_cas());
-        textAsignatura.setToolTipText(this.matricula.getContenido().getNombre_cas());
-
-        //Idioma
-        if (this.matricula.getIdioma().equals(" ")) {
-            textIdioma.setText("Por defecto");
-        } else {
-            textIdioma.setText(this.matricula.getIdioma());
-        }
-
-        //Curso Pendiente
-        if (this.matricula.getCurso_pendiente().equals(" ")) {
-            panelCursoPendiente.setVisible(false);
-        } else {
-            textCursoPendiente.setText(getCursoName(this.matricula.getCurso_pendiente()).getAbreviatura());
-        }
-
-        //Acis
-        if (this.matricula.getAcis().toUpperCase().equals("N")) {
-            textAcis.setText("No");
-            panelAcisSi.setVisible(false);
-        } else {
-            textAcis.setText("Si");
-            textFechaIniAcis.setText(this.matricula.getFec_ini_acis() + "");
-            textFechaFinAcis.setText(this.matricula.getFec_fin_acis() + "");
-            textCursoAcis.setText(getCursoName(this.matricula.getCur_ref_acis()).getAbreviatura());
-        }
-
-        //Tipo básico
-        if (this.matricula.getTipo_basico().equals("N")) {
-            panelTipoBasico.setVisible(false);
-        } else {
-            textTipoBasico.setText("Pendiente");
-        }
-
-        //Tipo Predominante
-        if (this.matricula.getTipo_predom().equals("I")) {
-            textTipoPredominante.setText("Incompatible");
-        } else {
-            panelTipoPredominante.setVisible(false);
-        }
-//</editor-fold>
-        //<editor-fold defaultstate="collapsed" desc="Datos Ejemplares">
-        if (listaEjemplares != null) {
-            if (listaEjemplares.size() > 0) {
-                asignarModeloToList(listEjemplares, listaEjemplares);
-            }
-        } else {
-            System.out.println("No quedan ejemplares de esta asignatura");
-        }
-//</editor-fold>
-    }
-
     /**
-     * Filtrado de ejemplares.
+     * Metodo para rellenarLos Datos de la ventana
      */
-    private void getEjemplaresFiltrados(int estado) {
-        List<Ejemplar> listaEjemplaresTemp = listaEjemplares.
-                stream().filter(ejemplar -> ejemplar.getEstado() == estado).collect(Collectors.toList());
-        asignarModeloToList(listEjemplares, listaEjemplaresTemp);
+    public void rellenarDatosMatricula() {
+        //<editor-fold defaultstate="collapsed" desc="Información General">
+        textCodigoEjemplar.setText(ejemplar.getCodigo());
+        textNombreEjemplar.setText(ejemplar.getLibro().getNombre());
+        textAsignaturaEjemplar.setText(ejemplar.getLibro().getContenido().getNombre_cas());
+        textCursoEjemplar.setText(ejemplar.getLibro().getContenido().getCurso().getAbreviatura());
+//</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="Información prestamo">
+        Alumno alumnoActual = null;
+        Historial historialTemp = null; //Historial de este ejemplar, con el alumno encontrado
+        for (int i = 0; i < ejemplar.getHistoriales().size(); i++) {
+            if (ejemplar.getHistoriales().get(i).getEjemplar().getCodigo().equals(ejemplar.getCodigo())) {
+                alumnoActual = ejemplar.getHistoriales().get(i).getAlumno();
+                break;
+            }
+        }
+
+        for (int i = 0; i < alumnoActual.getHistoriales().size(); i++) {
+            if (alumnoActual.getHistoriales().get(i).getEjemplar().getCodigo().equals(ejemplar.getCodigo())) {
+                historialTemp = alumnoActual.getHistoriales().get(i);
+                break;
+            }
+        }
+
+        if ((alumnoActual != null) && (historialTemp != null)) {
+            textNombrePropietario.setText(alumnoActual.getNombre() + " " + alumnoActual.getApellido1() + " " + alumnoActual.getApellido2());
+            //<editor-fold defaultstate="collapsed" desc="Estado del libro">
+            switch (historialTemp.getEstado_inicial()) {
+                case 0:
+                    //Deteriorado
+                    textEstadoInicialEjemplar.setText("Deteriorado");
+                    break;
+                case 1:
+                    //Usado
+                    textEstadoInicialEjemplar.setText("Usado");
+                    break;
+                case 2:
+                    //Nuevo
+                    textEstadoInicialEjemplar.setText("Nuevo");
+                    break;
+            }
+//</editor-fold>
+            textFechaEntregaEjemplar.setText(historialTemp.getFecha_inicial().toString());
+            textObservaciones.setText(historialTemp.getObservaciones());
+        }
+//</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="Información Alumnos">
+        List<Alumno> listaAlumnos = new ArrayList<>();
+
+        for (int i = 0; i < ejemplar.getHistoriales().size(); i++) {
+            listaAlumnos.add(ejemplar.getHistoriales().get(i).getAlumno());
+        }
+
+        asignarModeloToList(listAlumnos, listaAlumnos);
+        //</editor-fold>
     }
 
     /**
      * Metodo para asignar un modelo de datos a una JList
      */
-    private void asignarModeloToList(JList jlist, List<Ejemplar> lista) {
+    private void asignarModeloToList(JList jlist, List<Alumno> lista) {
         DefaultListModel listModel = new DefaultListModel();
         for (int i = 0; i < lista.size(); i++) {
             listModel.addElement(lista.get(i));
@@ -977,113 +898,116 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         jlist.setSelectedIndex(0);
     }
 
-    private Curso getCursoName(String cursoABuscar) {
-        return listaCurso.stream().filter(curso -> curso.getCodigo().equals(cursoABuscar)).collect(Collectors.toList()).get(0);
-    }
+    /**
+     * Metodo para establecer el estado del estado del ejemplar
+     *
+     * @param tiempoEntrega El momento del cual queremos saber el estado.
+     * ('inicial', 'final')
+     * @param estado El estado del ejemplar
+     * @return Devuelve un booleano para saber si se ha asignado con exito
+     */
+    public boolean setEstado(String tiempoEntrega, int estado) {
 
-    private void cargarDatos() {
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-            protected Void doInBackground() throws InterruptedException {
-                listaCurso = daoCurso.buscarTodos();
-                return null;
+        if (tiempoEntrega.equals("inicial")) {
+            switch (estado) {
+                case Estado.deteriorado:
+                    //El libro se encuentra en mal estado
+
+                    btnBadStatusInicial.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/bad.png")));               //Bad face
+                    btnRegularStatusInicial.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/regular_disabled.png")));  //Regular face
+                    btnGoodStatusInicial.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/good_disabled.png")));     //Good face
+                    break;
+
+                case Estado.usado:
+                    //El libro se encuentra en mal estado
+
+                    btnBadStatusInicial.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                    btnRegularStatusInicial.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/regular.png")));          //Regular face
+                    btnGoodStatusInicial.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/good_disabled.png")));    //Good face
+                    break;
+
+                case Estado.nuevo:
+                    //El libro se encuentra en mal estado
+
+                    btnBadStatusInicial.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                    btnRegularStatusInicial.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/regular_disabled.png"))); //Regular face
+                    btnGoodStatusInicial.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/good.png")));             //Good face
+                    break;
             }
+        } else if (tiempoEntrega.equals("final")) {
+            switch (estado) {
+                case Estado.deteriorado:
+                    //El libro se encuentra en mal estado
 
-            protected void done() {
-                System.out.println(matricula);
-                if (libro != null) {
-                    listaEjemplares = libro.getEjemplares();
-                }
-                rellenarDatosMatricula();
-                pack();
-                framePopup.dispose();
+                    btnBadStatusFinal.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/bad.png")));               //Bad face
+                    btnRegularStatusFinal.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/regular_disabled.png")));  //Regular face
+                    btnGoodStatusFinal.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/good_disabled.png")));     //Good face
+                    break;
+
+                case Estado.usado:
+                    //El libro se encuentra en mal estado
+
+                    btnBadStatusFinal.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                    btnRegularStatusFinal.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/regular.png")));          //Regular face
+                    btnGoodStatusFinal.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/good_disabled.png")));    //Good face
+                    break;
+
+                case Estado.nuevo:
+                    //El libro se encuentra en mal estado
+
+                    btnBadStatusFinal.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                    btnRegularStatusFinal.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/regular_disabled.png"))); //Regular face
+                    btnGoodStatusFinal.setIcon(new ImageIcon(
+                            getClass().getResource("/Imagenes/good.png")));             //Good face
+                    break;
             }
-        };
-        worker.execute();
-        if (framePopup == null) {
-            framePopup = new FramePopup();
+        } else {
+            return false;
         }
-        framePopup.setVisible(true);
+        return true;
     }
 
-    private void rellenarEjemplar() {
-        CodigoBarras cb = new CodigoBarras();
-        textCodigo.setText(ejemplar.getCodigo());
-        textTituloLibro.setText(ejemplar.getLibro().getNombre());
-        try {
-            ImageIcon icon = cb.getImage(cb.generarCodigoIndividual(ejemplar.getCodigo()), 400, 120);
-            imgCodigo.setIcon(icon);
-        } catch (Exception e) {
-            new FramePopup("Error al conseguir el codigo de barras de los ejemplares",
-                    new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                    "Aceptar");
-        }
+    /**
+     * Rellenar los datos dependiendo del alumno seleccioado
+     *
+     * @param alumno Alumno seleccionado en la lista de alumnos
+     */
+    private void rellenarDatosAlumnos(Alumno alumno) {
+        Historial hist = null;
 
-        setEstado(ejemplar.getEstado());
-    }
-
-    public void setEstado(int estado) {
-
-        switch (estado) {
-            case Estado.deteriorado:
-                //El libro se encuentra en mal estado
-
-                btnBadStatus.setIcon(new ImageIcon(
-                        getClass().getResource("/Imagenes/bad.png")));               //Bad face
-                btnRegularStatus.setIcon(new ImageIcon(
-                        getClass().getResource("/Imagenes/regular_disabled.png")));  //Regular face
-                btnGoodStatus.setIcon(new ImageIcon(
-                        getClass().getResource("/Imagenes/good_disabled.png")));     //Good face
+        for (int i = 0; i < alumno.getHistoriales().size(); i++) {
+            if (alumno.getHistoriales().get(i).getAlumno().equals(alumno)) {
+                hist = alumno.getHistoriales().get(i);
                 break;
-
-            case Estado.usado:
-                //El libro se encuentra en mal estado
-
-                btnBadStatus.setIcon(new ImageIcon(
-                        getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
-                btnRegularStatus.setIcon(new ImageIcon(
-                        getClass().getResource("/Imagenes/regular.png")));          //Regular face
-                btnGoodStatus.setIcon(new ImageIcon(
-                        getClass().getResource("/Imagenes/good_disabled.png")));    //Good face
-                break;
-
-            case Estado.nuevo:
-                //El libro se encuentra en mal estado
-
-                btnBadStatus.setIcon(new ImageIcon(
-                        getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
-                btnRegularStatus.setIcon(new ImageIcon(
-                        getClass().getResource("/Imagenes/regular_disabled.png"))); //Regular face
-                btnGoodStatus.setIcon(new ImageIcon(
-                        getClass().getResource("/Imagenes/good.png")));             //Good face
-                break;
+            }
         }
-    }
+        if (hist != null) {
+            boolean estadoInicial = setEstado("inicial", hist.getEstado_inicial());
+            boolean estadoFinal = setEstado("final", hist.getEstado_final());
 
-    private void guardarEntrega(Historial historial) {
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-            protected Void doInBackground() throws InterruptedException {
-                try {
-                    daoHistorial.grabar(historial);
-                    ejemplar.setPrestado(true);
-                    daoEjemplar.actualizar(ejemplar);
-                } catch (PersistenceException e) {
-                    new FramePopup("Fallo al realizar la entrega.",
-                            new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                            "Aceptar");
-                }
-                return null;
+            if ((!estadoInicial) || (!estadoFinal)) {
+                new FramePopup("No se ha podido asignar el estado del ejemplar",
+                        Imagenes.getImagen("alert-black.png"),
+                        "Aceptar").setVisible(true);
             }
 
-            protected void done() {
-                framePopup.dispose();
-                dispose();
-            }
-        };
-        worker.execute();
-        //Mostramos la ventana de carga tan solo si 'isLoad == true'
-        if (framePopup == null) {
-            framePopup = new FramePopup("Guardando entrega.");
         }
-        framePopup.setVisible(true);
     }
 }
