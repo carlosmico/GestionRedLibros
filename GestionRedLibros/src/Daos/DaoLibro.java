@@ -166,14 +166,10 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
 
         for (int i = 1; i < libro.getUnidades() + 1; i++) {
             if (i < 10) {
-                codigo_ejemplar = libro.getCodigo() + "0000" + i;
-            } else if (i < 100) {
-                codigo_ejemplar = libro.getCodigo() + "000" + i;
-            } else if (i < 1000) {
                 codigo_ejemplar = libro.getCodigo() + "00" + i;
-            } else if (i < 10000) {
+            } else if (i < 100) {
                 codigo_ejemplar = libro.getCodigo() + "0" + i;
-            } else if (i < 100000) {
+            } else if (i < 1000) {
                 codigo_ejemplar = libro.getCodigo() + "" + i;
             } else {
                 codigo_ejemplar = libro.getCodigo() + "YOUFOUNDTHEIMPOSIBLEEASTEREGG";
@@ -211,16 +207,12 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
                 codBase++;
 
                 if (codBase < 10) {
-                    codigo_ejemplar = libro.getCodigo() + "0000" + codBase;
-                } else if (codBase < 100) {
-                    codigo_ejemplar = libro.getCodigo() + "000" + codBase;
-                } else if (codBase < 1000) {
                     codigo_ejemplar = libro.getCodigo() + "00" + codBase;
-                } else if (codBase < 10000) {
+                } else if (codBase < 100) {
                     codigo_ejemplar = libro.getCodigo() + "0" + codBase;
-                } else if (codBase < 100000) {
+                } else if (codBase < 1000) {
                     codigo_ejemplar = libro.getCodigo() + "" + codBase;
-                } else {
+                }else {
                     codigo_ejemplar = libro.getCodigo() + "YOUFOUNDTHEIMPOSIBLEEASTEREGG";
                 }
 
