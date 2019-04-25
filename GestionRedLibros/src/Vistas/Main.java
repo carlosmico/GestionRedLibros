@@ -253,18 +253,6 @@ public class Main extends javax.swing.JFrame {
             if (frameDevoluciones == null) {
                 //Si no existe la ventana la creamos
                 frameDevoluciones = new FrameDevoluciones();
-            } else {
-                if (!frameDevoluciones.isVisible()) {
-                    //Si existe la ventana, y la hemos cerrado
-                    //limpiamos la variable y creamos una ventana nueva
-                    frameDevoluciones.alumno = null;
-                    frameDevoluciones = null;
-                    frameDevoluciones = new FrameDevoluciones();
-                } else {
-                    //Si la ventana esta abierta y queremos abrir otra
-                    //creamos una nueva ventana
-                    frameDevoluciones = new FrameDevoluciones();
-                }
             }
             frameDevoluciones.setVisible(true);
         }else{
@@ -280,14 +268,6 @@ public class Main extends javax.swing.JFrame {
         if (existeConexion) {
             if (frameEntrega == null) {
                 frameEntrega = new FrameEntrega();
-            } else {
-                if (!frameEntrega.isVisible()) {
-                    frameEntrega.alumno = null;
-                    frameEntrega = null;
-                    frameEntrega = new FrameEntrega();
-                } else {
-                    frameEntrega = new FrameEntrega();
-                }
             }
             frameEntrega.setVisible(true);
         } else {
@@ -321,14 +301,7 @@ public class Main extends javax.swing.JFrame {
         if (existeConexion) {
             if (frameLibro == null) {
                 frameLibro = new FrameLibro();
-            } else {
-                if (!frameLibro.isVisible()) {
-                    frameLibro = null;
-                    frameLibro = new FrameLibro();
-                } else {
-                    frameLibro = new FrameLibro();
-                }
-            }
+            } 
             frameLibro.setVisible(true);
         }else{
             compruebaConexionBD(false, "FrameLibro");
