@@ -105,7 +105,7 @@
         <Component class="com.mommoo.flat.button.FlatButton" name="btnHelp">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="Colores.buttons" type="code"/>
+              <Connection code="Colores.botones" type="code"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Imagenes/icons/help.png"/>
@@ -121,7 +121,7 @@
     <Container class="javax.swing.JPanel" name="jPanel3">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Colores.accent" type="code"/>
+          <Connection code="Colores.accento" type="code"/>
         </Property>
       </Properties>
 
@@ -141,7 +141,7 @@
         <Container class="javax.swing.JTabbedPane" name="tabbedPage">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="Colores.accent" type="code"/>
+              <Connection code="Colores.accento" type="code"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="33" red="33" type="rgb"/>
@@ -432,7 +432,7 @@
                         <Component class="com.mommoo.flat.button.FlatButton" name="btnMostrarContrasena">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                              <Connection code="Colores.buttons" type="code"/>
+                              <Connection code="Colores.botones" type="code"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                               <Image iconType="3" name="/Imagenes/icons/mostrarContrasena.png"/>
@@ -448,7 +448,7 @@
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnComprobar">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Colores.buttons" type="code"/>
+                          <Connection code="Colores.botones" type="code"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Colores.fondo" type="code"/>
@@ -673,7 +673,7 @@
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnSeleccionCursos">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Colores.buttons" type="code"/>
+                          <Connection code="Colores.botones" type="code"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="..."/>
                         <Property name="cornerRound" type="int" value="10"/>
@@ -688,7 +688,7 @@
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnImportarCursos">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Colores.buttons" type="code"/>
+                          <Connection code="Colores.botones" type="code"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Importar"/>
                         <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -776,7 +776,7 @@
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnSeleccionGrupos">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Colores.buttons" type="code"/>
+                          <Connection code="Colores.botones" type="code"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="..."/>
                         <Property name="cornerRound" type="int" value="10"/>
@@ -791,7 +791,7 @@
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnImportarGrupos">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Colores.buttons" type="code"/>
+                          <Connection code="Colores.botones" type="code"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Importar"/>
                         <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -879,7 +879,7 @@
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnSeleccionAsignaturas">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Colores.buttons" type="code"/>
+                          <Connection code="Colores.botones" type="code"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="..."/>
                         <Property name="cornerRound" type="int" value="10"/>
@@ -894,7 +894,7 @@
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnImportarAsignaturas">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Colores.buttons" type="code"/>
+                          <Connection code="Colores.botones" type="code"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Importar"/>
                         <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -982,7 +982,7 @@
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnSeleccionAlumnos">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Colores.buttons" type="code"/>
+                          <Connection code="Colores.botones" type="code"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="..."/>
                         <Property name="cornerRound" type="int" value="10"/>
@@ -997,7 +997,7 @@
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnImportarAlumnos">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Colores.buttons" type="code"/>
+                          <Connection code="Colores.botones" type="code"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Importar"/>
                         <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -1085,7 +1085,7 @@
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnSeleccionMatriculas">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Colores.buttons" type="code"/>
+                          <Connection code="Colores.botones" type="code"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="..."/>
                         <Property name="cornerRound" type="int" value="10"/>
@@ -1100,7 +1100,7 @@
                     <Component class="com.mommoo.flat.button.FlatButton" name="btnImportarMatriculas">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="Colores.buttons" type="code"/>
+                          <Connection code="Colores.botones" type="code"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Importar"/>
                         <Property name="toolTipText" type="java.lang.String" value=""/>
