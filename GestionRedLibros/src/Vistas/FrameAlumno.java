@@ -29,16 +29,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
+import org.hibernate.Session;
 
 /**
  *
  * @author Jose Sanchis
  */
 public class FrameAlumno extends javax.swing.JFrame {
+    private Session session = Main.gestorSesiones.getSession();
 
-    /**
-     * Creates new form FrameDevoluciones
-     */
     private Alumno alumno;
 
     private FramePopup frameCarga;
@@ -59,7 +58,7 @@ public class FrameAlumno extends javax.swing.JFrame {
 
         this.setLocationRelativeTo(null);
 
-        daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
+        daoAlumno = new DaoAlumno(session);
 
         SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
             protected Void doInBackground() throws InterruptedException {

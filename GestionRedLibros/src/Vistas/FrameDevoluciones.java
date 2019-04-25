@@ -46,12 +46,14 @@ import java.util.stream.Collectors;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import org.hibernate.Session;
 
 /**
  *
  * @author Jose Sanchis
  */
 public class FrameDevoluciones extends javax.swing.JFrame {
+    private Session session = Main.gestorSesiones.getSession();
 
     public static int isConfirmationReady;
     public static Historial historialConfirmado;
@@ -108,10 +110,10 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 //</editor-fold>
 
         //Inicializamos los DAO
-        daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
-        daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
-        daoEjemplar = new DaoEjemplar(Main.gestorSesiones.getSession());
-        daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
+        daoAlumno = new DaoAlumno(session);
+        daoCurso = new DaoCurso(session);
+        daoEjemplar = new DaoEjemplar(session);
+        daoHistorial = new DaoHistorial(session);
 
         //Inicializamos la lista de las matriculas entregadas
         listaEjemplaresDevueltos = new ArrayList<>();
@@ -754,28 +756,36 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         if (isConfirmationReady == ConfirmacionDevolucion.REALIZADA) {
             listaEjemplaresDevueltos.add(historialConfirmado.getEjemplar());
 
-            DefaultListModel model = new DefaultListModel();
+            try {
+                daoHistorial.actualizar(historialConfirmado);
 
-            for (int i = 0; i < listaEjemplaresDevueltos.size(); i++) {
-                model.add(i, listaEjemplaresDevueltos.get(i));
-            }
+                DefaultListModel model = new DefaultListModel();
 
-            jlistEjemplaresDevueltos.setModel(model);
-
-            model = new DefaultListModel();
-
-            for (int i = 0; i < listaEjemplaresPendientes.size(); i++) {
-                Historial h = listaEjemplaresPendientes.get(i);
-                if (historialConfirmado.getId() == h.getId()) {
-                    listaEjemplaresPendientes.remove(i);
+                for (int i = 0; i < listaEjemplaresDevueltos.size(); i++) {
+                    model.add(i, listaEjemplaresDevueltos.get(i));
                 }
-            }
 
-            for (int i = 0; i < listaEjemplaresPendientes.size(); i++) {
-                model.add(i, listaEjemplaresPendientes.get(i));
-            }
+                jlistEjemplaresDevueltos.setModel(model);
 
-            jlistEjemplaresPendientes.setModel(model);
+                model = new DefaultListModel();
+
+                for (int i = 0; i < listaEjemplaresPendientes.size(); i++) {
+                    Historial h = listaEjemplaresPendientes.get(i);
+                    if (historialConfirmado.getId() == h.getId()) {
+                        listaEjemplaresPendientes.remove(i);
+                    }
+                }
+
+                for (int i = 0; i < listaEjemplaresPendientes.size(); i++) {
+                    model.add(i, listaEjemplaresPendientes.get(i));
+                }
+
+                jlistEjemplaresPendientes.setModel(model);
+            } catch (Exception e) {
+                new FramePopup("Error al realizar la devolución: " + e.getMessage(),
+                        new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                        "Aceptar");
+            }
 
             isConfirmationReady = ConfirmacionDevolucion.CANCELADA;
         } else {
@@ -1108,7 +1118,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                                     + alumno.getNombre()
                                     + " " + alumno.getApellido1()
                                     + ".", Imagenes.getImagen("alert-black.png"),
-                                     "Aceptar").setVisible(true);
+                                    "Aceptar").setVisible(true);
                         } else {
                             //Buscar historial a partir de ejemplar
                             FrameConfirmacionDevolucion frameConfirmacion

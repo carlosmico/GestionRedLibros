@@ -53,7 +53,7 @@ public class Ejemplar implements Serializable {
     private int estado;
     private boolean prestado;
 
-    @OneToMany(mappedBy = "ejemplar", fetch = FetchType.LAZY)
+    @OneToMany
     private List<Historial> historiales;
 
     public Ejemplar() {

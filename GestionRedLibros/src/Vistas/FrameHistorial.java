@@ -44,12 +44,15 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
+import org.hibernate.Session;
 
 /**
  *
  * @author Jose Sanchis
  */
 public class FrameHistorial extends javax.swing.JFrame {
+
+    private Session session = Main.gestorSesiones.getSession();
 
     //Cremaos el frame de Cargar
     private FramePopup framePopup;
@@ -105,9 +108,9 @@ public class FrameHistorial extends javax.swing.JFrame {
         });
 //</editor-fold>
 
-        daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
-        daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
-        daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
+        daoAlumno = new DaoAlumno(session);
+        daoCurso = new DaoCurso(session);
+        daoHistorial = new DaoHistorial(session);
 
         this.setLocationRelativeTo(null);
 
@@ -996,19 +999,19 @@ public class FrameHistorial extends javax.swing.JFrame {
 
             tableModel = new DefaultTableModel(contenidoTabla,
                     new Object[]{"Código Ejemplar", "Nombre del Ejemplar", "Curso", "Curso Escolar"}) {
-                        @Override
-                        public boolean isCellEditable(int row, int column) {
-                            return false;
-                        }
-                    };
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
         } else {
             tableModel = new DefaultTableModel(null,
                     new Object[]{"Código Ejemplar", "Nombre del Ejemplar", "Curso", "Curso Escolar"}) {
-                        @Override
-                        public boolean isCellEditable(int row, int column) {
-                            return false;
-                        }
-                    };
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
         }
 
         tablaHistoriales.setModel(tableModel);

@@ -179,37 +179,18 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         List<Matricula> lista = new ArrayList<Matricula>();
         List<Matricula> entregadas = new ArrayList<>();
 
-        Query query = this.session.createQuery("from Matricula where alumno LIKE '"
-                + alumno.getNia() + "' and curso_escolar=" + curso_escolar);
-        lista = query.list();
+        String hql = "FROM Matricula as m"
+                + " WHERE m.alumno LIKE '" + alumno.getNia() + "'"
+                + " AND m.curso_escolar = " + curso_escolar
+                + " AND m.contenido NOT IN(SELECT h.ejemplar.libro.contenido_libro "
+                + "FROM Historial h WHERE h.alumno LIKE '" + alumno.getNia() + "'AND h.curso_escolar = " + curso_escolar + " AND h.ejemplar.prestado = true)";
 
-        DaoHistorial daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
-
-        List<Historial> historiales = daoHistorial.buscarPorAlumno(alumno);
-
-        for (int i = 0; i < lista.size(); i++) {
-            Matricula m = lista.get(i);
-
-            for (int j = 0; j < historiales.size(); j++) {
-                Historial h = historiales.get(j);
-
-                if (m.getCurso_escolar() == h.getCurso_escolar() && m.getContenido().getId() == h.getEjemplar().getLibro().getContenido().getId()) {
-                    entregadas.add(m);
-                }
-            }
+        try {
+            Query query = this.session.createQuery(hql);
+            lista = query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        /**
-         * Eliminamos aquí las matriculas ya entregadas porque sino la lista
-         * perdería la iteración debido a que hemos alterado su tamaño.
-        *
-         */
-        for (int i = 0; i < entregadas.size(); i++) {
-            lista.remove(entregadas.get(i));
-        }
-
-        daoHistorial.desconectar();
-
         return lista;
     }
 
