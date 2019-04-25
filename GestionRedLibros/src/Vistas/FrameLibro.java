@@ -2591,6 +2591,7 @@ public class FrameLibro extends javax.swing.JFrame {
         Ejemplar ejemplarActual = listaEjemplares.get(contadorEjemplar - 1);
         textCodigo.setText(ejemplarActual.getCodigo());
         textTituloLibro.setText(ejemplarActual.getLibro().getNombre());
+        
         try {
             CodigoBarras cb = new CodigoBarras();
             ImageIcon icon = cb.getImage(cb.generarCodigoIndividual(ejemplarActual.getCodigo()), 320, 120);
@@ -2614,7 +2615,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 }
 
                 protected void done() {
-                    if (historialEjemplar != null) {
+                    if (ejemplarActual.isPrestado() == false && historialEjemplar != null) {
                         Alumno alumnoActual = historialEjemplar.getAlumno();
 
                         textNombreAlumno.setText(alumnoActual.getNombre() + " "
