@@ -797,6 +797,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                     framePopup.dispose();
 
                     if (alumno != null) {
+                        sustituirPadre(alumno.getCurso());
                         cargarDatosAlumno();
 
                         seleccionarAlumno();
@@ -849,7 +850,7 @@ public class FrameHistorial extends javax.swing.JFrame {
             textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
             textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
             textEmail.setText(alumno.getEmail1());
-            textCursoActual.setText(alumno.getCurso().getAbreviatura());
+            textCursoActual.setText(alumno.getCurso().getAbreviatura() + " - " + sustituirPadre(alumno.getCurso()).getIdPadre());
 
             textTelefono.setText(alumno.getTelefono1());
 
@@ -890,6 +891,8 @@ public class FrameHistorial extends javax.swing.JFrame {
             }
 
             protected void done() {
+                sustituirPadresCursos();
+
                 rellenarCursos();
 
                 framePopup.dispose();
@@ -900,6 +903,35 @@ public class FrameHistorial extends javax.swing.JFrame {
             framePopup = new FramePopup();
         }
         framePopup.setVisible(true);
+    }
+
+    /**
+     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
+     * por el nombre del Padre
+     */
+    private Curso sustituirPadre(Curso curso) {
+        Curso c = curso;
+        Curso cursoPadre = daoCurso.buscar(c.getIdPadre());
+
+        if (cursoPadre != null) {
+            c.setNombre_padre(daoCurso.buscar(c.getIdPadre()).getNombre_cas());
+        }
+        return c;
+    }
+
+    /**
+     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
+     * por el nombre del Padre
+     */
+    private void sustituirPadresCursos() {
+        for (int i = 0; i < listaCursos.size(); i++) {
+            Curso curso = listaCursos.get(i);
+            Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
+
+            if (cursoPadre != null) {
+                curso.setNombre_padre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
+            }
+        }
     }
 
     /**

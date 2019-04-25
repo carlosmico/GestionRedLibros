@@ -183,6 +183,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         labelConfiguracion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         labelConfiguracion.setText("Configuración Base de Datos");
 
+        panelIP.setBackground(Colores.fondo);
         panelIP.setPreferredSize(new java.awt.Dimension(515, 40));
 
         labelIP.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
@@ -209,6 +210,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        panelPuerto.setBackground(Colores.fondo);
         panelPuerto.setPreferredSize(new java.awt.Dimension(515, 40));
 
         labelPuerto.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
@@ -235,6 +237,8 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        panelUsuario.setBackground(Colores.fondo);
+
         labelUsuario1.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         labelUsuario1.setText("Usuario");
 
@@ -259,6 +263,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        panelPassword.setBackground(Colores.fondo);
         panelPassword.setPreferredSize(new java.awt.Dimension(263, 40));
 
         labelUsuario.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
