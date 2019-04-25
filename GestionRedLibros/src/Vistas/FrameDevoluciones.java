@@ -21,13 +21,10 @@ import Daos.DaoAlumno;
 import Daos.DaoCurso;
 import Daos.DaoEjemplar;
 import Daos.DaoHistorial;
-import Daos.DaoMatricula;
 import Pojos.Alumno;
 import Pojos.Curso;
 import Pojos.Ejemplar;
 import Pojos.Historial;
-import Pojos.Matricula;
-import Renders.RemarcarCeldas;
 import Renders.comboBoxRender;
 import Utilidades.Colores;
 import Utilidades.ConfirmacionDevolucion;
@@ -36,16 +33,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 import org.hibernate.Session;
 
 /**
@@ -448,10 +441,10 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textCursoEscolar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(288, 288, 288))
+                .addContainerGap(288, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
