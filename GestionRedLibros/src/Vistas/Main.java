@@ -253,9 +253,14 @@ public class Main extends javax.swing.JFrame {
             if (frameDevoluciones == null) {
                 //Si no existe la ventana la creamos
                 frameDevoluciones = new FrameDevoluciones();
+            } else {
+                if (!frameDevoluciones.isVisible()) {
+                    frameDevoluciones = null;
+                    frameDevoluciones = new FrameDevoluciones();
+                }
             }
             frameDevoluciones.setVisible(true);
-        }else{
+        } else {
             compruebaConexionBD(false, "FrameDevoluciones");
         }
     }//GEN-LAST:event_btnDevolucionesActionPerformed
@@ -268,6 +273,11 @@ public class Main extends javax.swing.JFrame {
         if (existeConexion) {
             if (frameEntrega == null) {
                 frameEntrega = new FrameEntrega();
+            } else {
+                if (!frameEntrega.isVisible()) {
+                    frameEntrega = null;
+                    frameEntrega = new FrameEntrega();
+                }
             }
             frameEntrega.setVisible(true);
         } else {
@@ -301,9 +311,14 @@ public class Main extends javax.swing.JFrame {
         if (existeConexion) {
             if (frameLibro == null) {
                 frameLibro = new FrameLibro();
-            } 
+            } else {
+                if (!frameLibro.isVisible()) {
+                    frameLibro = null;
+                    frameLibro = new FrameLibro();
+                }
+            }
             frameLibro.setVisible(true);
-        }else{
+        } else {
             compruebaConexionBD(false, "FrameLibro");
         }
     }//GEN-LAST:event_btnLibrosActionPerformed
@@ -319,8 +334,6 @@ public class Main extends javax.swing.JFrame {
         } else {
             if (!frameAyuda.isVisible()) {
                 frameAyuda = null;
-                frameAyuda = new FrameHistorial();
-            } else {
                 frameAyuda = new FrameHistorial();
             }
         }
