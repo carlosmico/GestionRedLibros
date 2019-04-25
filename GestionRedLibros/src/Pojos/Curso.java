@@ -32,6 +32,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -52,6 +53,10 @@ public class Curso implements Serializable {
     private String nombre_cas;
     private String nombre_val;
     private String idPadre;
+    
+    //Este atributo no persiste en la BD.
+    @Transient 
+    private String nombre_padre = "Bebesita, uuaaa!!!";
 
     @OneToMany(mappedBy = "curso_contenido", fetch = FetchType.LAZY)
     private List<Contenido> contenidos;

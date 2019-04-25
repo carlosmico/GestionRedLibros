@@ -33,10 +33,17 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
 
         if (value instanceof Matricula) {
             Matricula matricula = (Matricula) value;
-
+            
             Curso c = null;
             Curso cursoPendiente = null;
 
+            try{
+                c = daoCurso.buscar(matricula.getCurso());
+                cursoPendiente = daoCurso.buscar(matricula.getCurso_pendiente());
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            
             switch (column) {
                 case 0:
                     System.out.println("RemarcarCeldas: Contenido de Matricula: " + matricula.toString());
