@@ -109,10 +109,10 @@ public class FrameLibro extends javax.swing.JFrame {
                 JLabel l = (JLabel) super.getListCellRendererComponent(
                         list, value, index, isSelected, hasFocus);
                 if (isSelected) {
-                    l.setForeground(Colores.fondo);
-                    l.setBackground(Colores.buttons);
+                    l.setForeground(Colores.letraBotones);
+                    l.setBackground(Colores.accento);
                 } else {
-                    l.setForeground(Colores.buttons);
+                    l.setForeground(Colores.accento);
                     l.setBackground(Colores.fondo);
                 }
                 return l;
@@ -129,10 +129,10 @@ public class FrameLibro extends javax.swing.JFrame {
                 JLabel l = (JLabel) super.getListCellRendererComponent(
                         list, value, index, isSelected, hasFocus);
                 if (isSelected) {
-                    l.setForeground(Colores.fondo);
-                    l.setBackground(Colores.buttons);
+                    l.setForeground(Colores.letraBotones);
+                    l.setBackground(Colores.accento);
                 } else {
-                    l.setForeground(Colores.buttons);
+                    l.setForeground(Colores.accento);
                     l.setBackground(Colores.fondo);
                 }
                 return l;
@@ -149,10 +149,10 @@ public class FrameLibro extends javax.swing.JFrame {
                 JLabel l = (JLabel) super.getListCellRendererComponent(
                         list, value, index, isSelected, hasFocus);
                 if (isSelected) {
-                    l.setForeground(Colores.fondo);
-                    l.setBackground(Colores.buttons);
+                    l.setForeground(Colores.letraBotones);
+                    l.setBackground(Colores.accento);
                 } else {
-                    l.setForeground(Colores.buttons);
+                    l.setForeground(Colores.accento);
                     l.setBackground(Colores.fondo);
                 }
                 return l;
@@ -286,9 +286,9 @@ public class FrameLibro extends javax.swing.JFrame {
         menuOpcionesLibro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         menuOpcionesLibro.setForeground(new java.awt.Color(66, 47, 44));
 
-        btnImprimirEtiquetas.setBackground(Colores.accent);
+        btnImprimirEtiquetas.setBackground(Colores.fondo);
         btnImprimirEtiquetas.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
-        btnImprimirEtiquetas.setForeground(Colores.accent);
+        btnImprimirEtiquetas.setForeground(Colores.letraNormal);
         btnImprimirEtiquetas.setText("Imprimir Etiquetas");
         btnImprimirEtiquetas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -298,9 +298,9 @@ public class FrameLibro extends javax.swing.JFrame {
         menuOpcionesLibro.add(btnImprimirEtiquetas);
         menuOpcionesLibro.add(jSeparator1);
 
-        btnEditar.setBackground(new java.awt.Color(66, 47, 44));
+        btnEditar.setBackground(Colores.fondo);
         btnEditar.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
-        btnEditar.setForeground(new java.awt.Color(66, 47, 44));
+        btnEditar.setForeground(Colores.letraNormal);
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -309,9 +309,9 @@ public class FrameLibro extends javax.swing.JFrame {
         });
         menuOpcionesLibro.add(btnEditar);
 
-        btnEliminar.setBackground(new java.awt.Color(66, 47, 44));
+        btnEliminar.setBackground(Colores.fondo);
         btnEliminar.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(66, 47, 44));
+        btnEliminar.setForeground(Colores.letraNormal);
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -332,15 +332,15 @@ public class FrameLibro extends javax.swing.JFrame {
         panelGeneralIzquierdo.setPreferredSize(new java.awt.Dimension(450, 600));
         panelGeneralIzquierdo.setRequestFocusEnabled(false);
 
-        panelTitulo1.setBackground(Colores.accent);
+        panelTitulo1.setBackground(Colores.accento);
 
         textTitulo1.setBackground(new java.awt.Color(239, 235, 233));
         textTitulo1.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
-        textTitulo1.setForeground(Colores.fondo);
+        textTitulo1.setForeground(Colores.letraTitulo);
         textTitulo1.setText("Buscar");
 
-        btnOcultarBuscar.setBackground(Colores.buttons);
-        btnOcultarBuscar.setForeground(Colores.fondo);
+        btnOcultarBuscar.setBackground(Colores.botones);
+        btnOcultarBuscar.setForeground(Colores.letraBotones);
         btnOcultarBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/chevron-left.png"))); // NOI18N
         btnOcultarBuscar.setCornerRound(10);
         btnOcultarBuscar.setPreferredSize(new java.awt.Dimension(48, 48));
@@ -377,7 +377,8 @@ public class FrameLibro extends javax.swing.JFrame {
 
         jPanel1.setBackground(Colores.fondo);
 
-        btnBuscar.setBackground(Colores.buttons);
+        btnBuscar.setBackground(Colores.botones);
+        btnBuscar.setForeground(Colores.letraBotones);
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
         btnBuscar.setCornerRound(10);
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -388,7 +389,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         textBusquedaCodigoLibro.setBackground(Colores.fondo);
         textBusquedaCodigoLibro.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textBusquedaCodigoLibro.setForeground(Colores.accent);
+        textBusquedaCodigoLibro.setForeground(Colores.campoTextSinFocus);
         textBusquedaCodigoLibro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textBusquedaCodigoLibro.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -428,12 +429,12 @@ public class FrameLibro extends javax.swing.JFrame {
         jPanel2.setBackground(Colores.fondo);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setForeground(Colores.accent);
+        jLabel2.setForeground(Colores.letraNormal);
         jLabel2.setText("Listado de libros:");
 
         textNombreLibroBusqueda.setBackground(Colores.fondo);
         textNombreLibroBusqueda.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textNombreLibroBusqueda.setForeground(Colores.accent);
+        textNombreLibroBusqueda.setForeground(Colores.campoTextSinFocus);
         textNombreLibroBusqueda.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textNombreLibroBusqueda.setMinimumSize(new java.awt.Dimension(200, 32));
         textNombreLibroBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -446,7 +447,7 @@ public class FrameLibro extends javax.swing.JFrame {
         });
 
         cbCursoBuscar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        cbCursoBuscar.setForeground(Colores.accent);
+        cbCursoBuscar.setForeground(Colores.letraNormal);
         cbCursoBuscar.setMinimumSize(new java.awt.Dimension(0, 0));
         cbCursoBuscar.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -456,10 +457,10 @@ public class FrameLibro extends javax.swing.JFrame {
 
         jlistLibros.setBackground(Colores.fondo);
         jlistLibros.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jlistLibros.setForeground(Colores.accent);
+        jlistLibros.setForeground(Colores.letraNormal);
         jlistLibros.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jlistLibros.setSelectionBackground(Colores.accent);
-        jlistLibros.setSelectionForeground(Colores.fondo);
+        jlistLibros.setSelectionBackground(Colores.accento);
+        jlistLibros.setSelectionForeground(Colores.letraBotones);
         jlistLibros.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jlistLibrosValueChanged(evt);
@@ -563,14 +564,15 @@ public class FrameLibro extends javax.swing.JFrame {
         panelGeneralDerechoSuperior.setBackground(Colores.fondo);
         panelGeneralDerechoSuperior.setPreferredSize(new java.awt.Dimension(750, 400));
 
-        panelTituloLibro.setBackground(Colores.accent);
+        panelTituloLibro.setBackground(Colores.accento);
 
         textTitulo.setBackground(new java.awt.Color(239, 235, 233));
         textTitulo.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
-        textTitulo.setForeground(Colores.fondo);
+        textTitulo.setForeground(Colores.letraTitulo);
         textTitulo.setText("Libro");
 
-        btnOpciones.setBackground(Colores.buttons);
+        btnOpciones.setBackground(Colores.botones);
+        btnOpciones.setForeground(Colores.letraBotones);
         btnOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/dots-vertical.png"))); // NOI18N
         btnOpciones.setCornerRound(10);
         btnOpciones.setPreferredSize(new java.awt.Dimension(48, 48));
@@ -580,12 +582,13 @@ public class FrameLibro extends javax.swing.JFrame {
             }
         });
 
-        labelInfoEdicion.setBackground(Colores.accent);
+        labelInfoEdicion.setBackground(Colores.accento);
         labelInfoEdicion.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-        labelInfoEdicion.setForeground(Colores.fondo);
+        labelInfoEdicion.setForeground(Colores.letraTitulo);
         labelInfoEdicion.setText("modo edición");
 
-        btnNewLibro.setBackground(Colores.buttons);
+        btnNewLibro.setBackground(Colores.botones);
+        btnNewLibro.setForeground(Colores.letraBotones);
         btnNewLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/plus.png"))); // NOI18N
         btnNewLibro.setCornerRound(10);
         btnNewLibro.setPreferredSize(new java.awt.Dimension(48, 48));
@@ -595,8 +598,8 @@ public class FrameLibro extends javax.swing.JFrame {
             }
         });
 
-        btnMostrarBuscar.setBackground(Colores.buttons);
-        btnMostrarBuscar.setForeground(Colores.fondo);
+        btnMostrarBuscar.setBackground(Colores.botones);
+        btnMostrarBuscar.setForeground(Colores.letraBotones);
         btnMostrarBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/chevron-right.png"))); // NOI18N
         btnMostrarBuscar.setCornerRound(10);
         btnMostrarBuscar.setPreferredSize(new java.awt.Dimension(48, 48));
@@ -641,14 +644,15 @@ public class FrameLibro extends javax.swing.JFrame {
         panelCuerpo.setPreferredSize(new java.awt.Dimension(860, 500));
 
         panelCodigoLibro.setBackground(Colores.fondo);
+        panelCodigoLibro.setForeground(Colores.letraNormal);
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setForeground(Colores.accent);
+        jLabel3.setForeground(Colores.letraNormal);
         jLabel3.setText("Código del libro:");
 
         textCodigoLibro.setBackground(Colores.fondo);
         textCodigoLibro.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textCodigoLibro.setForeground(Colores.accent);
+        textCodigoLibro.setForeground(Colores.letraNormal);
         textCodigoLibro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout panelCodigoLibroLayout = new javax.swing.GroupLayout(panelCodigoLibro);
@@ -675,17 +679,19 @@ public class FrameLibro extends javax.swing.JFrame {
         );
 
         panelSuperior.setBackground(Colores.fondo);
+        panelSuperior.setForeground(Colores.letraNormal);
         panelSuperior.setLayout(new java.awt.GridLayout(1, 0));
 
         panelNombreLibro.setBackground(Colores.fondo);
+        panelNombreLibro.setForeground(Colores.letraNormal);
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel4.setForeground(Colores.accent);
+        jLabel4.setForeground(Colores.letraNormal);
         jLabel4.setText("Nombre:");
 
         textNombreLibro.setBackground(Colores.fondo);
         textNombreLibro.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textNombreLibro.setForeground(Colores.accent);
+        textNombreLibro.setForeground(Colores.letraNormal);
         textNombreLibro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout panelNombreLibroLayout = new javax.swing.GroupLayout(panelNombreLibro);
@@ -714,14 +720,15 @@ public class FrameLibro extends javax.swing.JFrame {
         panelSuperior.add(panelNombreLibro);
 
         panelISBNLibro.setBackground(Colores.fondo);
+        panelISBNLibro.setForeground(Colores.letraNormal);
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel5.setForeground(Colores.accent);
+        jLabel5.setForeground(Colores.letraNormal);
         jLabel5.setText("ISBN:");
 
         textISBNLibro.setBackground(Colores.fondo);
         textISBNLibro.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textISBNLibro.setForeground(Colores.accent);
+        textISBNLibro.setForeground(Colores.letraNormal);
         textISBNLibro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout panelISBNLibroLayout = new javax.swing.GroupLayout(panelISBNLibro);
@@ -752,17 +759,19 @@ public class FrameLibro extends javax.swing.JFrame {
         panelSuperior.add(panelISBNLibro);
 
         panelMedio.setBackground(Colores.fondo);
+        panelMedio.setForeground(Colores.letraNormal);
         panelMedio.setLayout(new java.awt.GridLayout(1, 0));
 
         panelCurso.setBackground(Colores.fondo);
+        panelCurso.setForeground(Colores.letraNormal);
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setForeground(Colores.accent);
+        jLabel6.setForeground(Colores.letraNormal);
         jLabel6.setText("Curso:");
 
         cbCursoLibro.setBackground(Colores.fondo);
         cbCursoLibro.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        cbCursoLibro.setForeground(Colores.accent);
+        cbCursoLibro.setForeground(Colores.letraNormal);
         cbCursoLibro.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbCursoLibroItemStateChanged(evt);
@@ -797,14 +806,15 @@ public class FrameLibro extends javax.swing.JFrame {
         panelMedio.add(panelCurso);
 
         panelAsignatura.setBackground(Colores.fondo);
+        panelAsignatura.setForeground(Colores.letraNormal);
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel7.setForeground(Colores.accent);
+        jLabel7.setForeground(Colores.letraNormal);
         jLabel7.setText("Asignatura:");
 
         cbAsignatura.setBackground(Colores.fondo);
         cbAsignatura.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        cbAsignatura.setForeground(Colores.accent);
+        cbAsignatura.setForeground(Colores.letraNormal);
 
         javax.swing.GroupLayout panelAsignaturaLayout = new javax.swing.GroupLayout(panelAsignatura);
         panelAsignatura.setLayout(panelAsignaturaLayout);
@@ -834,17 +844,19 @@ public class FrameLibro extends javax.swing.JFrame {
         panelMedio.add(panelAsignatura);
 
         panelInferior.setBackground(Colores.fondo);
+        panelInferior.setForeground(Colores.letraNormal);
         panelInferior.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel3.setBackground(Colores.fondo);
+        jPanel3.setForeground(Colores.letraNormal);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel8.setForeground(Colores.accent);
+        jLabel8.setForeground(Colores.letraNormal);
         jLabel8.setText("Unidades:");
 
         textUnidadesLibro.setBackground(Colores.fondo);
         textUnidadesLibro.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textUnidadesLibro.setForeground(Colores.accent);
+        textUnidadesLibro.setForeground(Colores.letraNormal);
         textUnidadesLibro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -875,14 +887,15 @@ public class FrameLibro extends javax.swing.JFrame {
         panelInferior.add(jPanel3);
 
         jPanel4.setBackground(Colores.fondo);
+        jPanel4.setForeground(Colores.letraNormal);
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel9.setForeground(Colores.accent);
+        jLabel9.setForeground(Colores.letraNormal);
         jLabel9.setText("Precio:");
 
         textPrecioLibro.setBackground(Colores.fondo);
         textPrecioLibro.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textPrecioLibro.setForeground(Colores.accent);
+        textPrecioLibro.setForeground(Colores.letraNormal);
         textPrecioLibro.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textPrecioLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -918,13 +931,14 @@ public class FrameLibro extends javax.swing.JFrame {
         panelInferior.add(jPanel4);
 
         jPanel5.setBackground(Colores.fondo);
+        jPanel5.setForeground(Colores.letraNormal);
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setForeground(Colores.accent);
+        jLabel10.setForeground(Colores.letraNormal);
         jLabel10.setText("Estado del libro:");
 
         chkObsoletoLibro.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        chkObsoletoLibro.setForeground(Colores.accent);
+        chkObsoletoLibro.setForeground(Colores.letraNormal);
         chkObsoletoLibro.setText("Obsoleto");
         chkObsoletoLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -958,9 +972,10 @@ public class FrameLibro extends javax.swing.JFrame {
         panelInferior.add(jPanel5);
 
         panelBotoneraEdicion.setBackground(Colores.fondo);
+        panelBotoneraEdicion.setForeground(Colores.letraNormal);
 
-        btnGuardar.setBackground(Colores.buttons);
-        btnGuardar.setForeground(Colores.fondo);
+        btnGuardar.setBackground(Colores.botones);
+        btnGuardar.setForeground(Colores.letraBotones);
         btnGuardar.setText("Guardar");
         btnGuardar.setCornerRound(10);
         btnGuardar.setPreferredSize(new java.awt.Dimension(128, 32));
@@ -970,8 +985,8 @@ public class FrameLibro extends javax.swing.JFrame {
             }
         });
 
-        btnCancelar.setBackground(Colores.buttons);
-        btnCancelar.setForeground(Colores.fondo);
+        btnCancelar.setBackground(Colores.botones);
+        btnCancelar.setForeground(Colores.letraBotones);
         btnCancelar.setText("Cancelar");
         btnCancelar.setCornerRound(10);
         btnCancelar.setPreferredSize(new java.awt.Dimension(128, 32));
@@ -1072,20 +1087,21 @@ public class FrameLibro extends javax.swing.JFrame {
         panelGeneralDerechoInferior.setBackground(Colores.fondo);
         panelGeneralDerechoInferior.setPreferredSize(new java.awt.Dimension(750, 400));
 
-        panelTituloEjemplar.setBackground(Colores.accent);
-        panelTituloEjemplar.setForeground(Colores.accent);
+        panelTituloEjemplar.setBackground(Colores.accento);
+        panelTituloEjemplar.setForeground(Colores.accento);
         panelTituloEjemplar.setMinimumSize(new java.awt.Dimension(0, 60));
         panelTituloEjemplar.setPreferredSize(new java.awt.Dimension(250, 60));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
-        jLabel1.setForeground(Colores.fondo);
+        jLabel1.setForeground(Colores.letraTitulo);
         jLabel1.setText("Ejemplares");
 
         textTotalEjemplares.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        textTotalEjemplares.setForeground(Colores.fondo);
+        textTotalEjemplares.setForeground(Colores.letraTitulo);
         textTotalEjemplares.setText("1 de 25");
 
-        btnSiguiente.setBackground(Colores.buttons);
+        btnSiguiente.setBackground(Colores.botones);
+        btnSiguiente.setForeground(Colores.letraBotones);
         btnSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/arrow-right.png"))); // NOI18N
         btnSiguiente.setCornerRound(10);
         btnSiguiente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1094,7 +1110,8 @@ public class FrameLibro extends javax.swing.JFrame {
             }
         });
 
-        btnAnterior.setBackground(Colores.buttons);
+        btnAnterior.setBackground(Colores.botones);
+        btnAnterior.setForeground(Colores.letraBotones);
         btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/arrow-left.png"))); // NOI18N
         btnAnterior.setCornerRound(10);
         btnAnterior.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1136,24 +1153,28 @@ public class FrameLibro extends javax.swing.JFrame {
         panelEstadoParent15.setBackground(Colores.fondo);
         panelEstadoParent15.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        jLabel29.setBackground(Colores.letraNormal);
         jLabel29.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel29.setForeground(Colores.accent);
+        jLabel29.setForeground(Colores.letraNormal);
         jLabel29.setText("Estado:");
 
         panelEstado15.setBackground(Colores.fondo);
         panelEstado15.setLayout(new java.awt.GridLayout(1, 0, 5, 5));
 
-        btnBadStatus.setBackground(Colores.fondo);
+        btnBadStatus.setBackground(Colores.letraNormal);
+        btnBadStatus.setForeground(Colores.letraNormal);
         btnBadStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnBadStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
         panelEstado15.add(btnBadStatus);
 
-        btnRegularStatus.setBackground(Colores.fondo);
+        btnRegularStatus.setBackground(Colores.letraNormal);
+        btnRegularStatus.setForeground(Colores.letraNormal);
         btnRegularStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnRegularStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
         panelEstado15.add(btnRegularStatus);
 
-        btnGoodStatus.setBackground(Colores.fondo);
+        btnGoodStatus.setBackground(Colores.letraNormal);
+        btnGoodStatus.setForeground(Colores.letraNormal);
         btnGoodStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnGoodStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
         panelEstado15.add(btnGoodStatus);
@@ -1187,11 +1208,12 @@ public class FrameLibro extends javax.swing.JFrame {
         panelPrestado.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel30.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel30.setForeground(Colores.accent);
+        jLabel30.setForeground(Colores.letraNormal);
         jLabel30.setText("Prestado a:");
 
         jPanel11.setBackground(Colores.fondo);
 
+        jLabel31.setForeground(Colores.letraNormal);
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/person-flat.png"))); // NOI18N
 
@@ -1217,11 +1239,11 @@ public class FrameLibro extends javax.swing.JFrame {
         jPanel13.setBackground(Colores.fondo);
 
         jLabel32.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel32.setForeground(Colores.accent);
+        jLabel32.setForeground(Colores.letraNormal);
         jLabel32.setText("Telefono:");
 
         textTelefonoAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textTelefonoAlumno.setForeground(Colores.accent);
+        textTelefonoAlumno.setForeground(Colores.letraNormal);
         textTelefonoAlumno.setText("+34 684 092 823");
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
@@ -1252,11 +1274,11 @@ public class FrameLibro extends javax.swing.JFrame {
         jPanel14.setBackground(Colores.fondo);
 
         jLabel33.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel33.setForeground(Colores.accent);
+        jLabel33.setForeground(Colores.letraNormal);
         jLabel33.setText("NIA:");
 
         textNIAAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textNIAAlumno.setForeground(Colores.accent);
+        textNIAAlumno.setForeground(Colores.letraNormal);
         textNIAAlumno.setText("10429497");
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
@@ -1285,11 +1307,11 @@ public class FrameLibro extends javax.swing.JFrame {
         jPanel15.setBackground(Colores.fondo);
 
         jLabel34.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel34.setForeground(Colores.accent);
+        jLabel34.setForeground(Colores.letraNormal);
         jLabel34.setText("Nombre y Apellidos:");
 
         textNombreAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textNombreAlumno.setForeground(Colores.accent);
+        textNombreAlumno.setForeground(Colores.letraNormal);
         textNombreAlumno.setText("Jose Sanchis Belda");
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
@@ -1320,11 +1342,11 @@ public class FrameLibro extends javax.swing.JFrame {
         jPanel16.setBackground(Colores.fondo);
 
         jLabel35.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel35.setForeground(Colores.accent);
+        jLabel35.setForeground(Colores.letraNormal);
         jLabel35.setText("Correo electronico:");
 
         textEmailAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textEmailAlumno.setForeground(Colores.accent);
+        textEmailAlumno.setForeground(Colores.letraNormal);
         textEmailAlumno.setText("sanchisbeldajose@gmail.com");
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
@@ -1416,13 +1438,13 @@ public class FrameLibro extends javax.swing.JFrame {
         panelNoPrestado.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel36.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel36.setForeground(Colores.accent);
+        jLabel36.setForeground(Colores.letraNormal);
         jLabel36.setText("Prestado a:");
 
         jPanel18.setBackground(Colores.fondo);
 
         textNoPrestado.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textNoPrestado.setForeground(Colores.accent);
+        textNoPrestado.setForeground(Colores.letraNormal);
         textNoPrestado.setText("Este libro no se encuentra prestado por el momento.");
 
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
@@ -1469,15 +1491,18 @@ public class FrameLibro extends javax.swing.JFrame {
         panelCodigoEjemplar.setBackground(Colores.fondo);
         panelCodigoEjemplar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel15.setBackground(Colores.accent);
+        jLabel15.setBackground(Colores.fondo);
         jLabel15.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel15.setForeground(Colores.accent);
+        jLabel15.setForeground(Colores.letraNormal);
         jLabel15.setText("Codigo del libro:");
 
+        imgCodigo.setBackground(Colores.fondo);
+        imgCodigo.setForeground(Colores.letraNormal);
         imgCodigo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         imgCodigo.setToolTipText("");
 
-        btnImprimirEtiquetaEjemplar.setBackground(Colores.buttons);
+        btnImprimirEtiquetaEjemplar.setBackground(Colores.botones);
+        btnImprimirEtiquetaEjemplar.setForeground(Colores.letraBotones);
         btnImprimirEtiquetaEjemplar.setText("Imprimir etiqueta");
         btnImprimirEtiquetaEjemplar.setCornerRound(10);
         btnImprimirEtiquetaEjemplar.setPreferredSize(new java.awt.Dimension(169, 32));
@@ -1487,10 +1512,14 @@ public class FrameLibro extends javax.swing.JFrame {
             }
         });
 
+        textCodigo.setBackground(Colores.fondo);
         textCodigo.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        textCodigo.setForeground(Colores.letraNormal);
         textCodigo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        textTituloLibro.setBackground(Colores.fondo);
         textTituloLibro.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        textTituloLibro.setForeground(Colores.letraNormal);
         textTituloLibro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout panelCodigoEjemplarLayout = new javax.swing.GroupLayout(panelCodigoEjemplar);
@@ -1636,7 +1665,7 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(panelDerechoLayout.createSequentialGroup()
                 .addComponent(panelSuperiorDerecho, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(panelInferiorDerecho, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))
+                .addComponent(panelInferiorDerecho, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE))
         );
 
         jSplitPane1.setRightComponent(panelDerecho);
@@ -1765,7 +1794,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         if (nombreLibro.length() == 0) {
             textNombreLibroBusqueda.setText(placeHolderNombre);
-            textNombreLibroBusqueda.setForeground(new Color(102, 102, 102));
+            textNombreLibroBusqueda.setForeground(Colores.campoTextSinFocus);
         }
 
         filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoBuscar.getSelectedIndex());
@@ -1777,7 +1806,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         if (nombreLibro.length() > 0 && nombreLibro.equals(placeHolderNombre)) {
             textNombreLibroBusqueda.setText("");
-            textNombreLibroBusqueda.setForeground(new Color(51, 51, 51));
+            textNombreLibroBusqueda.setForeground(Colores.letraNormal);
         }
     }//GEN-LAST:event_textNombreLibroBusquedaKeyPressed
 
@@ -1825,7 +1854,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private void textBusquedaCodigoLibroFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroFocusGained
         if (textBusquedaCodigoLibro.getText().equals(placeHolderCodigo)) {
             textBusquedaCodigoLibro.setText("");
-            textBusquedaCodigoLibro.setForeground(new Color(51, 51, 51));
+            textBusquedaCodigoLibro.setForeground(Colores.letraNormal);
         }
     }//GEN-LAST:event_textBusquedaCodigoLibroFocusGained
 
@@ -1836,7 +1865,7 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private void textBusquedaCodigoLibroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroFocusLost
         // TODO add your handling code here:
-        textBusquedaCodigoLibro.setForeground(new Color(102, 102, 102));
+        textBusquedaCodigoLibro.setForeground(Colores.campoTextSinFocus);
         textBusquedaCodigoLibro.setText(placeHolderCodigo);
     }//GEN-LAST:event_textBusquedaCodigoLibroFocusLost
 
@@ -2358,7 +2387,6 @@ public class FrameLibro extends javax.swing.JFrame {
                 if (libro == null);
 
                 //sustituirPadresCursos();
-
                 if (primeraEjecucion) {
                     rellenaCursosBusqueda();
 
@@ -2512,18 +2540,17 @@ public class FrameLibro extends javax.swing.JFrame {
      * por el nombre del Padre
      */
     /*
-    private void sustituirPadresCursos() {
-        for (int i = 0; i < listaCursos.size(); i++) {
-            Curso curso = listaCursos.get(i);
-            Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
+     private void sustituirPadresCursos() {
+     for (int i = 0; i < listaCursos.size(); i++) {
+     Curso curso = listaCursos.get(i);
+     Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
 
-            if (cursoPadre != null) {
-                curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
-            }
-        }
-    }
-    */
-
+     if (cursoPadre != null) {
+     curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
+     }
+     }
+     }
+     */
     /**
      * Metodo para rellenar el campos con los datos de un Libro
      */
