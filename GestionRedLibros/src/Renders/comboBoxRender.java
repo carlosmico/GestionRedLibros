@@ -22,35 +22,37 @@ package Renders;
  * @author Jose Sanchis
  */
 import Utilidades.Colores;
+import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
- 
+import javax.swing.JLabel;
+
 import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.plaf.ComboBoxUI;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
- 
+
 public class comboBoxRender extends BasicComboBoxUI {
- 
+
     public static ComboBoxUI createUI(JComponent c) {
         return new comboBoxRender();
     }
 
     protected JButton createArrowButton() {
-        BasicArrowButton bab = new BasicArrowButton(BasicArrowButton.SOUTH,Colores.fondo, Colores.fondo,Colores.botones, Colores.fondo);
-        
+        BasicArrowButton bab = new BasicArrowButton(BasicArrowButton.SOUTH, Colores.fondo, Colores.fondo, Colores.letraNormal, Colores.fondo);
+
         return bab;
     }
 
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         return null;
     }
-    
-    public JTextField isEnabled(JTextField text){
+
+    public JTextField isEnabled(JTextField text) {
         text.setEditable(false);
         return text;
     }
- 
 }

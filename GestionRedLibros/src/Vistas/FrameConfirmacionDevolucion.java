@@ -17,33 +17,17 @@
  */
 package Vistas;
 
-import Daos.DaoCurso;
-import Daos.DaoEjemplar;
-import Daos.DaoHistorial;
-import Pojos.Curso;
 import Pojos.Ejemplar;
 import Pojos.Historial;
-import Pojos.Libro;
-import Pojos.Matricula;
 import Utilidades.CodigoBarras;
 import Utilidades.Colores;
 import Utilidades.ConfirmacionDevolucion;
 import Utilidades.Estado;
 import Utilidades.Imagenes;
-import Vistas.FrameEntrega;
 import Vistas.FramePopup;
-import Vistas.Main;
 import java.awt.Color;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.persistence.PersistenceException;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JList;
-import javax.swing.SwingWorker;
-import javax.swing.table.DefaultTableModel;
-import org.hibernate.Session;
 
 /**
  *
@@ -111,7 +95,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Confirmación");
 
-        panelTitulo.setBackground(Colores.accent);
+        panelTitulo.setBackground(Colores.accento);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setForeground(Colores.fondo);
@@ -213,15 +197,16 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         panelCodigoEjemplar.setBackground(Colores.fondo);
         panelCodigoEjemplar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel15.setBackground(Colores.accent);
+        jLabel15.setBackground(Colores.accento);
         jLabel15.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel15.setForeground(Colores.letraNormal);
         jLabel15.setText("Código del ejemplar");
 
         imgCodigo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         imgCodigo.setToolTipText("");
 
-        btnImprimirEtiqueta.setBackground(Colores.buttons);
+        btnImprimirEtiqueta.setBackground(Colores.botones);
+        btnImprimirEtiqueta.setForeground(Colores.letraBotones);
         btnImprimirEtiqueta.setText("Imprimir etiqueta");
         btnImprimirEtiqueta.setCornerRound(10);
         btnImprimirEtiqueta.setPreferredSize(new java.awt.Dimension(169, 32));
@@ -380,7 +365,8 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
 
         panelBotonera.setBackground(Colores.fondo);
 
-        btnCancel.setBackground(Colores.buttons);
+        btnCancel.setBackground(Colores.botones);
+        btnCancel.setForeground(Colores.letraBotones);
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/close.png"))); // NOI18N
         btnCancel.setText("Cancelar");
         btnCancel.setCornerRound(10);
@@ -390,7 +376,8 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
             }
         });
 
-        btnAceptar.setBackground(Colores.buttons);
+        btnAceptar.setBackground(Colores.botones);
+        btnAceptar.setForeground(Colores.letraBotones);
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/check-white.png"))); // NOI18N
         btnAceptar.setText("Aceptar");
         btnAceptar.setCornerRound(10);
@@ -478,7 +465,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
 
         if (nombreLibro.length() > 0 && nombreLibro.equals(placeHolderObservaciones)) {
             textObservaciones.setText("");
-            textObservaciones.setForeground(Colores.accent);
+            textObservaciones.setForeground(Colores.accento);
         }
     }//GEN-LAST:event_textObservacionesKeyPressed
 
