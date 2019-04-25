@@ -861,7 +861,8 @@ public class FrameEntrega extends javax.swing.JFrame {
     private void textCodigoEjemplarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCodigoEjemplarKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            buscarEjemplar(textCodigoEjemplar.getText());
+            String codigo = textCodigoEjemplar.getText();
+            buscarEjemplar(codigo.toUpperCase());
         }
     }//GEN-LAST:event_textCodigoEjemplarKeyPressed
 
@@ -1022,7 +1023,6 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
 
             protected void done() {
-                sustituirPadresCursos();
                 rellenarCursos();
 
                 framePopup.dispose();
@@ -1042,7 +1042,6 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         cbCurso.removeAllItems();
 
-        //cbCurso.addItem(new Curso("Seleccione curso", "Seleccione curso", "Seleccione curso", "Seleccione curso", "Seleccione curso", " "));
         //Rellenamos los cursos
         if (listaCursos.size() > 0) {
             for (int i = 0; i < listaCursos.size(); i++) {
@@ -1054,7 +1053,6 @@ public class FrameEntrega extends javax.swing.JFrame {
                     "Aceptar").setVisible(true);
         }
         rellenarLista((Curso) cbCurso.getSelectedItem());
-        //cbCurso.setSelectedIndex(0);
     }
 
     /**
@@ -1074,7 +1072,8 @@ public class FrameEntrega extends javax.swing.JFrame {
                 }
 
                 protected void done() {
-
+                    listaCursos.size();
+                    
                     listaEjemplaresEntregados = new ArrayList<Ejemplar>();
 
                     if (listaMatriculas.size() > 0) {
@@ -1239,6 +1238,8 @@ public class FrameEntrega extends javax.swing.JFrame {
                                     "Aceptar").setVisible(true);
                         } else {
                             try {
+                                ejemplar.setPrestado(true);
+                                
                                 Historial historial = new Historial(
                                         ejemplar,
                                         alumno,
@@ -1321,22 +1322,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         }
         jlistAlumnos.setModel(listModel);
     }
-
-    /**
-     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
-     * por el nombre del Padre
-     */
-    private void sustituirPadresCursos() {
-        for (int i = 0; i < listaCursos.size(); i++) {
-            Curso curso = listaCursos.get(i);
-            Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
-
-            if (cursoPadre != null) {
-                curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
-            }
-        }
-    }
-
+    
     private void modoEdicion(boolean b) {
         textCodigoEjemplar.setEnabled(b);
         jlistEjemplares.setEnabled(b);
