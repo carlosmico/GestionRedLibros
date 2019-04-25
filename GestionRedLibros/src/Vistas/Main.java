@@ -82,6 +82,7 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        generalaPanel = new javax.swing.JPanel();
         banner = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -98,17 +99,20 @@ public class Main extends javax.swing.JFrame {
         setTitle("Gestión Red Libros");
         setMinimumSize(new java.awt.Dimension(960, 0));
 
-        banner.setBackground(new java.awt.Color(58, 39, 35));
+        generalaPanel.setBackground(Colores.accento);
+
+        banner.setBackground(Colores.accento);
         banner.setLayout(new java.awt.GridLayout(2, 1));
 
-        jPanel2.setBackground(Colores.accent);
+        jPanel2.setBackground(Colores.accento);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setForeground(Colores.letraBotones);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Gestión Red Libros");
 
-        flatButton1.setBackground(Colores.buttons);
+        flatButton1.setBackground(Colores.botones);
+        flatButton1.setForeground(Colores.letraBotones);
         flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/help.png"))); // NOI18N
         flatButton1.setCornerRound(10);
 
@@ -118,7 +122,7 @@ public class Main extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(150, 150, 150)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
                 .addGap(91, 91, 91)
                 .addComponent(flatButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -129,18 +133,18 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(flatButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
+                    .addComponent(flatButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         banner.add(jPanel2);
 
-        jPanel1.setBackground(new java.awt.Color(58, 39, 35));
+        jPanel1.setBackground(Colores.accento);
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 37));
         jPanel1.setLayout(new java.awt.GridLayout(1, 4, 5, 0));
 
-        btnLibros.setBackground(new java.awt.Color(66, 47, 44));
-        btnLibros.setForeground(new java.awt.Color(204, 204, 204));
+        btnLibros.setBackground(Colores.botones);
+        btnLibros.setForeground(Colores.letraBotones);
         btnLibros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/book.png"))); // NOI18N
         btnLibros.setText("Libros");
         btnLibros.setCornerRound(10);
@@ -151,8 +155,8 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel1.add(btnLibros);
 
-        btnEntrega.setBackground(new java.awt.Color(66, 47, 44));
-        btnEntrega.setForeground(new java.awt.Color(204, 204, 204));
+        btnEntrega.setBackground(Colores.botones);
+        btnEntrega.setForeground(Colores.letraBotones);
         btnEntrega.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up.png"))); // NOI18N
         btnEntrega.setText("Entregas");
         btnEntrega.setCornerRound(10);
@@ -163,9 +167,9 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel1.add(btnEntrega);
 
-        btnDevoluciones.setBackground(new java.awt.Color(66, 47, 44));
+        btnDevoluciones.setBackground(Colores.botones);
         btnDevoluciones.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(0, 0, 0)));
-        btnDevoluciones.setForeground(new java.awt.Color(204, 204, 204));
+        btnDevoluciones.setForeground(Colores.letraBotones);
         btnDevoluciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-down.png"))); // NOI18N
         btnDevoluciones.setText("Devoluciones");
         btnDevoluciones.setCornerRound(10);
@@ -176,7 +180,8 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel1.add(btnDevoluciones);
 
-        btnAydua.setBackground(new java.awt.Color(66, 47, 44));
+        btnAydua.setBackground(Colores.botones);
+        btnAydua.setForeground(Colores.letraBotones);
         btnAydua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/calendar-search.png"))); // NOI18N
         btnAydua.setText("Historial");
         btnAydua.setCornerRound(10);
@@ -187,8 +192,8 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel1.add(btnAydua);
 
-        btnOpciones.setBackground(new java.awt.Color(66, 47, 44));
-        btnOpciones.setForeground(new java.awt.Color(204, 204, 204));
+        btnOpciones.setBackground(Colores.botones);
+        btnOpciones.setForeground(Colores.letraBotones);
         btnOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/ballot.png"))); // NOI18N
         btnOpciones.setText("Opciones");
         btnOpciones.setCornerRound(10);
@@ -201,21 +206,37 @@ public class Main extends javax.swing.JFrame {
 
         banner.add(jPanel1);
 
+        wallpaper.setForeground(Colores.letraBotones);
         wallpaper.setMinimumSize(new java.awt.Dimension(1, 1));
+
+        javax.swing.GroupLayout generalaPanelLayout = new javax.swing.GroupLayout(generalaPanel);
+        generalaPanel.setLayout(generalaPanelLayout);
+        generalaPanelLayout.setHorizontalGroup(
+            generalaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(generalaPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(banner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(wallpaper, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        generalaPanelLayout.setVerticalGroup(
+            generalaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(generalaPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(banner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(wallpaper, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(wallpaper, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(banner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(generalaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(banner, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(wallpaper, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(generalaPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -485,6 +506,7 @@ public class Main extends javax.swing.JFrame {
     private com.mommoo.flat.button.FlatButton btnLibros;
     private com.mommoo.flat.button.FlatButton btnOpciones;
     private com.mommoo.flat.button.FlatButton flatButton1;
+    private javax.swing.JPanel generalaPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -52,6 +52,7 @@ import org.hibernate.Session;
  * @author Jose Sanchis
  */
 public class FrameEntrega extends javax.swing.JFrame {
+
     private Session session = Main.gestorSesiones.getSession();
 
     //Cremaos el frame de Cargar
@@ -97,9 +98,9 @@ public class FrameEntrega extends javax.swing.JFrame {
                         list, value, index, isSelected, hasFocus);
                 if (isSelected) {
                     l.setForeground(Colores.fondo);
-                    l.setBackground(Colores.buttons);
+                    l.setBackground(Colores.botones);
                 } else {
-                    l.setForeground(Colores.buttons);
+                    l.setForeground(Colores.botones);
                     l.setBackground(Colores.fondo);
                 }
                 return l;
@@ -185,7 +186,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         panelEjemplaresEntregados = new javax.swing.JPanel();
         panelCodigo = new javax.swing.JPanel();
         textCodigoEjemplar = new javax.swing.JTextField();
-        btCodigoEjemplar = new com.mommoo.flat.button.FlatButton();
+        btnCodigoEjemplar = new com.mommoo.flat.button.FlatButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jlistEjemplares = new javax.swing.JList();
         jPanel5 = new javax.swing.JPanel();
@@ -201,7 +202,7 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
         });
 
-        panelTitulo.setBackground(Colores.accent);
+        panelTitulo.setBackground(Colores.accento);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setForeground(Colores.fondo);
@@ -230,7 +231,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         textBusquedaNIA.setBackground(Colores.fondo);
         textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textBusquedaNIA.setForeground(Colores.accent);
+        textBusquedaNIA.setForeground(Colores.accento);
         textBusquedaNIA.setText("Codigo NIA");
         textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -247,7 +248,7 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
         });
 
-        btnBusquedaNIA.setBackground(Colores.buttons);
+        btnBusquedaNIA.setBackground(Colores.botones);
         btnBusquedaNIA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
         btnBusquedaNIA.setCornerRound(10);
         btnBusquedaNIA.addActionListener(new java.awt.event.ActionListener() {
@@ -279,7 +280,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         panelBusquedaLista.setBackground(Colores.fondo);
 
-        cbCurso.setBackground(Colores.accent);
+        cbCurso.setBackground(Colores.accento);
         cbCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         cbCurso.setPreferredSize(new java.awt.Dimension(374, 34));
         cbCurso.addItemListener(new java.awt.event.ItemListener() {
@@ -295,7 +296,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         jlistAlumnos.setBackground(Colores.fondo);
         jlistAlumnos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jlistAlumnos.setForeground(Colores.accent);
+        jlistAlumnos.setForeground(Colores.accento);
         jlistAlumnos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jlistAlumnosValueChanged(evt);
@@ -372,7 +373,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         panelInfoGeneral.setMaximumSize(new java.awt.Dimension(300, 32767));
         panelInfoGeneral.setPreferredSize(new java.awt.Dimension(922, 170));
 
-        jLabel3.setBackground(Colores.accent);
+        jLabel3.setBackground(Colores.accento);
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setText("Información");
 
@@ -500,7 +501,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         tablaPendientes.setAutoCreateRowSorter(true);
         tablaPendientes.setBackground(Colores.fondo);
         tablaPendientes.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        tablaPendientes.setForeground(Colores.accent);
+        tablaPendientes.setForeground(Colores.accento);
         tablaPendientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -515,18 +516,18 @@ public class FrameEntrega extends javax.swing.JFrame {
         tablaPendientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tablaPendientes.setRowHeight(32);
         tablaPendientes.setRowSelectionAllowed(false);
-        tablaPendientes.setSelectionBackground(Colores.accent);
+        tablaPendientes.setSelectionBackground(Colores.accento);
         tablaPendientes.setSelectionForeground(Colores.fondo);
         jScrollPane2.setViewportView(tablaPendientes);
 
         jPanel7.setBackground(Colores.fondo);
         jPanel7.setForeground(Colores.fondo);
-        jPanel7.setLayout(new java.awt.GridLayout());
+        jPanel7.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel8.setBackground(Colores.fondo);
         jPanel8.setForeground(Colores.fondo);
 
-        jPanel9.setBackground(Colores.tableCell);
+        jPanel9.setBackground(Colores.fondoOscuro);
         jPanel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -541,7 +542,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         );
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel9.setForeground(Colores.accent);
+        jLabel9.setForeground(Colores.accento);
         jLabel9.setText("Curso pendiente");
         jLabel9.setToolTipText("");
 
@@ -586,7 +587,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         );
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel11.setForeground(Colores.accent);
+        jLabel11.setForeground(Colores.accento);
         jLabel11.setText("Curso actual");
         jLabel11.setToolTipText("");
 
@@ -640,7 +641,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         textCodigoEjemplar.setBackground(Colores.fondo);
         textCodigoEjemplar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textCodigoEjemplar.setForeground(Colores.accent);
+        textCodigoEjemplar.setForeground(Colores.accento);
         textCodigoEjemplar.setText("Escanee código ejemplar...");
         textCodigoEjemplar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textCodigoEjemplar.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -657,9 +658,9 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
         });
 
-        btCodigoEjemplar.setBackground(Colores.buttons);
-        btCodigoEjemplar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up.png"))); // NOI18N
-        btCodigoEjemplar.setCornerRound(10);
+        btnCodigoEjemplar.setBackground(Colores.botones);
+        btnCodigoEjemplar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up.png"))); // NOI18N
+        btnCodigoEjemplar.setCornerRound(10);
 
         javax.swing.GroupLayout panelCodigoLayout = new javax.swing.GroupLayout(panelCodigo);
         panelCodigo.setLayout(panelCodigoLayout);
@@ -668,13 +669,13 @@ public class FrameEntrega extends javax.swing.JFrame {
             .addGroup(panelCodigoLayout.createSequentialGroup()
                 .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panelCodigoLayout.setVerticalGroup(
             panelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jlistEjemplares.setBackground(Colores.fondo);
@@ -703,12 +704,12 @@ public class FrameEntrega extends javax.swing.JFrame {
         jPanel5.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setForeground(Colores.accent);
+        jLabel6.setForeground(Colores.accento);
         jLabel6.setText("Pendientes de entregar:");
         jPanel5.add(jLabel6);
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setForeground(Colores.accent);
+        jLabel10.setForeground(Colores.accento);
         jLabel10.setText("Ejemplares entregados:");
         jPanel5.add(jLabel10);
 
@@ -844,7 +845,7 @@ public class FrameEntrega extends javax.swing.JFrame {
     private void textBusquedaNIAFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusGained
         // TODO add your handling code here:
         textBusquedaNIA.setText("");
-        textBusquedaNIA.setForeground(Colores.accent);
+        textBusquedaNIA.setForeground(Colores.accento);
     }//GEN-LAST:event_textBusquedaNIAFocusGained
 
     private void textBusquedaNIAFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusLost
@@ -869,7 +870,7 @@ public class FrameEntrega extends javax.swing.JFrame {
     private void textCodigoEjemplarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCodigoEjemplarFocusGained
         // TODO add your handling code here:
         textCodigoEjemplar.setText("");
-        textBusquedaNIA.setForeground(Colores.accent);
+        textBusquedaNIA.setForeground(Colores.accento);
     }//GEN-LAST:event_textCodigoEjemplarFocusGained
 
     private void textCodigoEjemplarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCodigoEjemplarFocusLost
@@ -924,8 +925,8 @@ public class FrameEntrega extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.mommoo.flat.button.FlatButton btCodigoEjemplar;
     private com.mommoo.flat.button.FlatButton btnBusquedaNIA;
+    private com.mommoo.flat.button.FlatButton btnCodigoEjemplar;
     private javax.swing.JComboBox cbCurso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1254,11 +1255,8 @@ public class FrameEntrega extends javax.swing.JFrame {
                                 daoHistorial.grabar(historial);
 
                                 //Actualizamos el ejemplar para que esté prestado.
-                               
                                 //ejemplar.setPrestado(true);
-                                
                                 //daoEjemplar.actualizar(ejemplar);
-
                                 listaEjemplaresEntregados.add(historial.getEjemplar());
 
                                 DefaultListModel model = new DefaultListModel();
