@@ -44,7 +44,6 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
                     break;
 
                 case 1:
-                    c = sustituirPadresCursos(matricula);
                     setText(c.getAbreviatura() + " - " + c.getIdPadre());
                     setToolTipText(c.getAbreviatura() + " - " + c.getIdPadre());
                     break;
@@ -58,14 +57,12 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
                     break;
                 case 3:
                     if (!matricula.getCurso_pendiente().equals(" ")) {
-                        c = cursoPendiente(matricula);
                         setText(c.getAbreviatura() + " - " + c.getIdPadre());
                     } else {
                         setText("");
                     }
                     break;
                 case 4:
-                    cursoPendiente = sustituirPadre(c);
                     setText(cursoPendiente.getAbreviatura() + " - " + cursoPendiente.getIdPadre());
                     setToolTipText(cursoPendiente.getAbreviatura() + " - " + cursoPendiente.getIdPadre());
                     break;
@@ -84,7 +81,6 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
                     setText(ejemplar.getLibro().getNombre());
                     break;
                 case 2:
-                    curso = sustituirPadre(curso);
                     setText(curso.getAbreviatura() + " - " + curso.getIdPadre());
                     break;
                 case 3:
@@ -108,57 +104,11 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
      */
     public void getColor(JLabel label, Matricula matricula) {
         if (matricula.getCurso_pendiente().equals(" ")) {
-            label.setForeground(Colores.accent);
+            label.setForeground(Colores.letraNormal);
             label.setBackground(Colores.fondo);
         } else {
-            label.setForeground(Colores.accent);
-            label.setBackground(Colores.tableCell);
+            label.setForeground(Colores.letraNormal);
+            label.setBackground(Colores.fondoOscuro);
         }
-    }
-
-    /**
-     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
-     * por el nombre del Padre a partir de la matricula
-     */
-    private Curso sustituirPadresCursos(Matricula m) {
-
-        Curso curso = daoCurso.buscar(m.getCurso());
-        Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
-
-        if (cursoPadre != null) {
-            curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
-        }
-        return curso;
-    }
-
-    /**
-     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
-     * por el nombre del Padre a partir del curso actual
-     */
-    private Curso sustituirPadre(Curso curso) {
-        Curso c = curso;
-        Curso cursoPadre = daoCurso.buscar(c.getIdPadre());
-
-        if (cursoPadre != null) {
-            c.setIdPadre(daoCurso.buscar(c.getIdPadre()).getNombre_cas());
-        }
-        return c;
-    }
-
-    /**
-     * Metodo para saber el nombre de los cursos pendientes de una matricula
-     *
-     * @param m MAtricula de la cual queremos saber los cursos pendientes
-     * @return Curso pedndiente (objeto)
-     */
-    private Curso cursoPendiente(Matricula m) {
-
-        Curso curso = daoCurso.buscar(m.getCurso_pendiente());
-        Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
-
-        if (cursoPadre != null) {
-            curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
-        }
-        return curso;
     }
 }

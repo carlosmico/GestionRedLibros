@@ -196,13 +196,14 @@ public class FramePopup extends javax.swing.JDialog {
             }
         });
 
-        jPanel1.setBackground(Colores.accent);
-        jPanel1.setForeground(Colores.accent);
+        jPanel1.setBackground(Colores.accento);
+        jPanel1.setForeground(Colores.accento);
 
         jPanel2.setBackground(Colores.fondo);
 
         jPanel3.setBackground(Colores.fondo);
 
+        text.setForeground(Colores.letraNormal);
         text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         text.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/load.gif"))); // NOI18N
         text.setText("Recuperando datos del servidor...");
@@ -232,8 +233,8 @@ public class FramePopup extends javax.swing.JDialog {
         panelButton.setBackground(Colores.fondo);
         panelButton.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
 
-        btnButton1.setBackground(Colores.accent);
-        btnButton1.setForeground(Colores.fondo);
+        btnButton1.setBackground(Colores.accento);
+        btnButton1.setForeground(Colores.letraBotones);
         btnButton1.setText("Button 1");
         btnButton1.setCornerRound(10);
         btnButton1.setMaximumSize(new java.awt.Dimension(86, 32));
@@ -241,8 +242,8 @@ public class FramePopup extends javax.swing.JDialog {
         btnButton1.setPreferredSize(new java.awt.Dimension(192, 32));
         panelButton.add(btnButton1);
 
-        btnButton2.setBackground(Colores.accent);
-        btnButton2.setForeground(Colores.fondo);
+        btnButton2.setBackground(Colores.accento);
+        btnButton2.setForeground(Colores.letraBotones);
         btnButton2.setText("Aceptar");
         btnButton2.setCornerRound(10);
         btnButton2.setFocusPainted(true);

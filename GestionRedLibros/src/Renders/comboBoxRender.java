@@ -22,17 +22,12 @@ package Renders;
  * @author Jose Sanchis
  */
 import Utilidades.Colores;
-import com.mommoo.flat.button.FlatButton;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JComponent;
  
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
 import javax.swing.plaf.ComboBoxUI;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
@@ -44,7 +39,7 @@ public class comboBoxRender extends BasicComboBoxUI {
     }
 
     protected JButton createArrowButton() {
-        BasicArrowButton bab = new BasicArrowButton(BasicArrowButton.SOUTH,Colores.fondo, Colores.fondo,Colores.buttons, Colores.fondo);
+        BasicArrowButton bab = new BasicArrowButton(BasicArrowButton.SOUTH,Colores.fondo, Colores.fondo,Colores.botones, Colores.fondo);
         
         return bab;
     }
