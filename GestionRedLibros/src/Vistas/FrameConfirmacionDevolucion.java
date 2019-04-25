@@ -43,21 +43,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
+import org.hibernate.Session;
 
 /**
  *
  * @author Jose Sanchis
  */
 public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
-
-    private DaoCurso daoCurso;
-    private DaoHistorial daoHistorial;
-    private DaoEjemplar daoEjemplar;
-
     private Historial historial;
-
-    private List<Curso> listaCurso;
-    private List<Ejemplar> listaEjemplares;
 
     private FramePopup framePopup;
 
@@ -71,12 +64,10 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
 
         this.setModal(true);
 
-        daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
-        daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
-
         this.historial = h;
 
-        cargarDatos();
+        rellenarEjemplar();
+        pack();
 
         this.setLocationRelativeTo(null);
     }
@@ -479,7 +470,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelMouseClicked
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-        
+
     }//GEN-LAST:event_btnAceptarMouseClicked
 
     private void textObservacionesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textObservacionesKeyPressed
@@ -535,7 +526,14 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         historial.setObservaciones(observaciones);
 
         try {
-            guardarDevolución(historial);
+            //Actualizamos los campos del historial y el ejemplar hijo del historial.
+            
+            Ejemplar ejemplar = historial.getEjemplar();
+
+            ejemplar.setEstado(historial.getEstado_final());
+            ejemplar.setPrestado(false);
+
+            historial.setEjemplar(ejemplar);
 
             FrameDevoluciones.isConfirmationReady = ConfirmacionDevolucion.REALIZADA;
             FrameDevoluciones.historialConfirmado = historial;
@@ -616,26 +614,6 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
     private javax.swing.JLabel textTituloLibro;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarDatos() {
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-            protected Void doInBackground() throws InterruptedException {
-                listaCurso = daoCurso.buscarTodos();
-                return null;
-            }
-
-            protected void done() {
-                rellenarEjemplar();
-                pack();
-                framePopup.dispose();
-            }
-        };
-        worker.execute();
-        if (framePopup == null) {
-            framePopup = new FramePopup();
-        }
-        framePopup.setVisible(true);
-    }
-
     private void rellenarEjemplar() {
         CodigoBarras cb = new CodigoBarras();
         textCodigo.setText(historial.getEjemplar().getCodigo());
@@ -692,28 +670,5 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
                         getClass().getResource("/Imagenes/good.png")));             //Good face
                 break;
         }
-    }
-
-    private void guardarDevolución(Historial historial) {
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-            protected Void doInBackground() throws InterruptedException {
-                historial.getEjemplar().setPrestado(false);
-                historial.getEjemplar().setEstado(historial.getEstado_final());
-                daoHistorial.actualizar(historial);
-                System.out.println("Historial actualizado!");
-                return null;
-            }
-
-            protected void done() {
-                framePopup.dispose();
-                dispose();
-            }
-        };
-        worker.execute();
-        //Mostramos la ventana de carga tan solo si 'isLoad == true'
-        if (framePopup == null) {
-            framePopup = new FramePopup("Guardando devolución...");
-        }
-        framePopup.setVisible(true);
     }
 }

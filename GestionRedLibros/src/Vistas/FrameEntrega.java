@@ -45,12 +45,14 @@ import java.util.stream.Collectors;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import org.hibernate.Session;
 
 /**
  *
  * @author Jose Sanchis
  */
 public class FrameEntrega extends javax.swing.JFrame {
+    private Session session = Main.gestorSesiones.getSession();
 
     //Cremaos el frame de Cargar
     private FramePopup framePopup;
@@ -106,12 +108,12 @@ public class FrameEntrega extends javax.swing.JFrame {
 //</editor-fold>
 
         //Inicializamos los DAO
-        daoAlumno = new DaoAlumno(Main.gestorSesiones.getSession());
-        daoMatricula = new DaoMatricula(Main.gestorSesiones.getSession());
-        daoCurso = new DaoCurso(Main.gestorSesiones.getSession());
-        daoEjemplar = new DaoEjemplar(Main.gestorSesiones.getSession());
-        daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
-        daoCursoTabla = new DaoCurso(Main.gestorSesiones.getSession());
+        daoAlumno = new DaoAlumno(session);
+        daoMatricula = new DaoMatricula(session);
+        daoCurso = new DaoCurso(session);
+        daoEjemplar = new DaoEjemplar(session);
+        daoHistorial = new DaoHistorial(session);
+        daoCursoTabla = new DaoCurso(session);
 
         //Deshabilitamos la edicion de las celdas en las tablas
         tablaPendientes.setDefaultEditor(Object.class, null);
@@ -1072,6 +1074,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                 }
 
                 protected void done() {
+
                     listaEjemplaresEntregados = new ArrayList<Ejemplar>();
 
                     if (listaMatriculas.size() > 0) {
@@ -1250,9 +1253,10 @@ public class FrameEntrega extends javax.swing.JFrame {
                                 daoHistorial.grabar(historial);
 
                                 //Actualizamos el ejemplar para que esté prestado.
-                                ejemplar.setPrestado(true);
-
-                                daoEjemplar.actualizar(ejemplar);
+                               
+                                //ejemplar.setPrestado(true);
+                                
+                                //daoEjemplar.actualizar(ejemplar);
 
                                 listaEjemplaresEntregados.add(historial.getEjemplar());
 

@@ -32,6 +32,7 @@ import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import org.hibernate.Session;
 
 /**
  *
@@ -39,10 +40,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FrameMatriculas extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrameDevoluciones
-     */
-    GestorSesiones gestorSesiones;
+    private Session session = Main.gestorSesiones.getSession();
 
     FramePopup frameCarga = null;
 
@@ -53,7 +51,7 @@ public class FrameMatriculas extends javax.swing.JFrame {
     public FrameMatriculas() {
         initComponents();
 
-        gestorSesiones = Main.gestorSesiones;
+        daoMatricula = new DaoMatricula(session);
 
         //Deshabilitamos la edición de la tabla para no crear confusión, 
         //puesto que solo es de lectura.
@@ -65,11 +63,8 @@ public class FrameMatriculas extends javax.swing.JFrame {
 
     //Refrescamos los datos de la tabla recuperados de la BD
     public void RefrescarTabla() {
-        daoMatricula = new DaoMatricula(gestorSesiones.getSession());
 
-        daoMatricula.session.beginTransaction();
         matriculas = daoMatricula.buscarTodos();
-        daoMatricula.session.getTransaction().commit();
 
         if (matriculas.size() > 0) {
             DefaultTableModel tableModel = (DefaultTableModel) tableMatriculas.getModel();
@@ -232,7 +227,7 @@ public class FrameMatriculas extends javax.swing.JFrame {
             try {
                 //new ImportarMatriculasXML(chooser.getSelectedFile().getPath());
                 new ImportarMatriculasXML(chooser.getSelectedFile().getPath());
-                
+
                 RefrescarTabla();
 
                 JOptionPane.showMessageDialog(this, "Matrículas importadas correctamente!", "Información", JOptionPane.INFORMATION_MESSAGE);

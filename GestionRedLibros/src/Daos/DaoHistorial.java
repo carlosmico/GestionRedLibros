@@ -87,6 +87,7 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
                 historial.setObservaciones(h.getObservaciones());
             }else{
                 historial.setEjemplar(h.getEjemplar());
+                System.out.println("Ejemplar a actualizar: " + h.getEjemplar().isPrestado());
                 historial.setAlumno(h.getAlumno());
                 historial.setCurso_escolar(h.getCurso_escolar());
                 historial.setEstado_inicial(h.getEstado_inicial());
