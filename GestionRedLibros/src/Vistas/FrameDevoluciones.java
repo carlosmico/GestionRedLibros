@@ -897,8 +897,6 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             }
 
             protected void done() {
-
-                sustituirPadresCursos();
                 rellenarCursos();
 
                 framePopup.dispose();
@@ -1160,22 +1158,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         }
         jlistAlumnos.setModel(listModel);
     }
-
-    /**
-     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
-     * por el nombre del Padre
-     */
-    private void sustituirPadresCursos() {
-        for (int i = 0; i < listaCursos.size(); i++) {
-            Curso curso = listaCursos.get(i);
-            Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
-
-            if (cursoPadre != null) {
-                curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
-            }
-        }
-    }
-
+    
     private void modoEdicion(boolean b) {
         textCodigoEjemplar.setEnabled(b);
         jlistEjemplaresDevueltos.setEnabled(b);

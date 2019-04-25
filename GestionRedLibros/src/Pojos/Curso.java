@@ -199,11 +199,13 @@ public class Curso implements Serializable {
 
     @Override
     public String toString() {
+        return abreviatura + " - " + idPadre;
+        /*
         if (idPadre.equals(" ")) {
             return abreviatura + " - " + nombre_cas;
         }else{
             return abreviatura + " - " + idPadre;
-        }
+        }*/
     }
 
 }

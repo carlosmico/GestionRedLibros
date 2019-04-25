@@ -177,7 +177,6 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
      */
     public List<Matricula> buscarPendientes(Alumno alumno, int curso_escolar) {
         List<Matricula> lista = new ArrayList<Matricula>();
-        List<Matricula> entregadas = new ArrayList<>();
 
         String hql = "FROM Matricula as m"
                 + " WHERE m.alumno LIKE '" + alumno.getNia() + "'"
