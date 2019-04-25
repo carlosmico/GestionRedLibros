@@ -99,9 +99,9 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                         list, value, index, isSelected, hasFocus);
                 if (isSelected) {
                     l.setForeground(Colores.fondo);
-                    l.setBackground(Colores.buttons);
+                    l.setBackground(Colores.botones);
                 } else {
-                    l.setForeground(Colores.buttons);
+                    l.setForeground(Colores.botones);
                     l.setBackground(Colores.fondo);
                 }
                 return l;
@@ -193,10 +193,10 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             }
         });
 
-        panelTitulo.setBackground(Colores.accent);
+        panelTitulo.setBackground(Colores.accento);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setForeground(Colores.fondo);
+        jLabel1.setForeground(Colores.letraNormal);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Devoluciones");
 
@@ -222,7 +222,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         textBusquedaNIA.setBackground(Colores.fondo);
         textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textBusquedaNIA.setForeground(Colores.accent);
+        textBusquedaNIA.setForeground(Colores.accento);
         textBusquedaNIA.setText("Codigo NIA");
         textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -239,7 +239,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             }
         });
 
-        btnBusquedaNIA.setBackground(Colores.buttons);
+        btnBusquedaNIA.setBackground(Colores.botones);
         btnBusquedaNIA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
         btnBusquedaNIA.setCornerRound(10);
         btnBusquedaNIA.addActionListener(new java.awt.event.ActionListener() {

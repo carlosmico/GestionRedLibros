@@ -139,7 +139,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel1.setText("Opciones");
         jLabel1.setPreferredSize(new java.awt.Dimension(122, 75));
 
-        btnHelp.setBackground(Colores.buttons);
+        btnHelp.setBackground(Colores.botones);
         btnHelp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/help.png"))); // NOI18N
         btnHelp.setCornerRound(10);
         btnHelp.addActionListener(new java.awt.event.ActionListener() {
@@ -168,9 +168,9 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel3.setBackground(Colores.accent);
+        jPanel3.setBackground(Colores.accento);
 
-        tabbedPage.setBackground(Colores.accent);
+        tabbedPage.setBackground(Colores.accento);
         tabbedPage.setForeground(new java.awt.Color(51, 51, 51));
         tabbedPage.setToolTipText("");
         tabbedPage.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -264,7 +264,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         labelUsuario.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         labelUsuario.setText("Contraseña");
 
-        btnMostrarContrasena.setBackground(Colores.buttons);
+        btnMostrarContrasena.setBackground(Colores.botones);
         btnMostrarContrasena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/mostrarContrasena.png"))); // NOI18N
         btnMostrarContrasena.setCornerRound(10);
         btnMostrarContrasena.addActionListener(new java.awt.event.ActionListener() {
@@ -299,7 +299,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btnComprobar.setBackground(Colores.buttons);
+        btnComprobar.setBackground(Colores.botones);
         btnComprobar.setForeground(Colores.fondo);
         btnComprobar.setText("Comprobar");
         btnComprobar.setCornerRound(10);
@@ -419,7 +419,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         textRutaCursos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        btnSeleccionCursos.setBackground(Colores.buttons);
+        btnSeleccionCursos.setBackground(Colores.botones);
         btnSeleccionCursos.setText("...");
         btnSeleccionCursos.setCornerRound(10);
         btnSeleccionCursos.setPreferredSize(new java.awt.Dimension(35, 35));
@@ -429,7 +429,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             }
         });
 
-        btnImportarCursos.setBackground(Colores.buttons);
+        btnImportarCursos.setBackground(Colores.botones);
         btnImportarCursos.setText("Importar");
         btnImportarCursos.setToolTipText("");
         btnImportarCursos.setCornerRound(10);
@@ -482,7 +482,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         textRutaGrupos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        btnSeleccionGrupos.setBackground(Colores.buttons);
+        btnSeleccionGrupos.setBackground(Colores.botones);
         btnSeleccionGrupos.setText("...");
         btnSeleccionGrupos.setCornerRound(10);
         btnSeleccionGrupos.setPreferredSize(new java.awt.Dimension(35, 35));
@@ -492,7 +492,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             }
         });
 
-        btnImportarGrupos.setBackground(Colores.buttons);
+        btnImportarGrupos.setBackground(Colores.botones);
         btnImportarGrupos.setText("Importar");
         btnImportarGrupos.setToolTipText("");
         btnImportarGrupos.setCornerRound(10);
@@ -545,7 +545,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         textRutaContenidos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        btnSeleccionAsignaturas.setBackground(Colores.buttons);
+        btnSeleccionAsignaturas.setBackground(Colores.botones);
         btnSeleccionAsignaturas.setText("...");
         btnSeleccionAsignaturas.setCornerRound(10);
         btnSeleccionAsignaturas.setPreferredSize(new java.awt.Dimension(35, 35));
@@ -555,7 +555,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             }
         });
 
-        btnImportarAsignaturas.setBackground(Colores.buttons);
+        btnImportarAsignaturas.setBackground(Colores.botones);
         btnImportarAsignaturas.setText("Importar");
         btnImportarAsignaturas.setToolTipText("");
         btnImportarAsignaturas.setCornerRound(10);
@@ -608,7 +608,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         textRutaAlumnos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        btnSeleccionAlumnos.setBackground(Colores.buttons);
+        btnSeleccionAlumnos.setBackground(Colores.botones);
         btnSeleccionAlumnos.setText("...");
         btnSeleccionAlumnos.setCornerRound(10);
         btnSeleccionAlumnos.setPreferredSize(new java.awt.Dimension(35, 35));
@@ -618,7 +618,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             }
         });
 
-        btnImportarAlumnos.setBackground(Colores.buttons);
+        btnImportarAlumnos.setBackground(Colores.botones);
         btnImportarAlumnos.setText("Importar");
         btnImportarAlumnos.setToolTipText("");
         btnImportarAlumnos.setCornerRound(10);
@@ -671,7 +671,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         textRutaMatriculas.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        btnSeleccionMatriculas.setBackground(Colores.buttons);
+        btnSeleccionMatriculas.setBackground(Colores.botones);
         btnSeleccionMatriculas.setText("...");
         btnSeleccionMatriculas.setCornerRound(10);
         btnSeleccionMatriculas.setPreferredSize(new java.awt.Dimension(35, 35));
@@ -681,7 +681,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             }
         });
 
-        btnImportarMatriculas.setBackground(Colores.buttons);
+        btnImportarMatriculas.setBackground(Colores.botones);
         btnImportarMatriculas.setText("Importar");
         btnImportarMatriculas.setToolTipText("");
         btnImportarMatriculas.setCornerRound(10);
