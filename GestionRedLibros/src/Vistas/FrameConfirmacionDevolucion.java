@@ -17,33 +17,17 @@
  */
 package Vistas;
 
-import Daos.DaoCurso;
-import Daos.DaoEjemplar;
-import Daos.DaoHistorial;
-import Pojos.Curso;
 import Pojos.Ejemplar;
 import Pojos.Historial;
-import Pojos.Libro;
-import Pojos.Matricula;
 import Utilidades.CodigoBarras;
 import Utilidades.Colores;
 import Utilidades.ConfirmacionDevolucion;
 import Utilidades.Estado;
 import Utilidades.Imagenes;
-import Vistas.FrameEntrega;
 import Vistas.FramePopup;
-import Vistas.Main;
 import java.awt.Color;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.persistence.PersistenceException;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JList;
-import javax.swing.SwingWorker;
-import javax.swing.table.DefaultTableModel;
-import org.hibernate.Session;
 
 /**
  *
@@ -111,7 +95,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Confirmación");
 
-        panelTitulo.setBackground(Colores.accent);
+        panelTitulo.setBackground(Colores.accento);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setForeground(Colores.fondo);
@@ -478,7 +462,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
 
         if (nombreLibro.length() > 0 && nombreLibro.equals(placeHolderObservaciones)) {
             textObservaciones.setText("");
-            textObservaciones.setForeground(Colores.accent);
+            textObservaciones.setForeground(Colores.accento);
         }
     }//GEN-LAST:event_textObservacionesKeyPressed
 

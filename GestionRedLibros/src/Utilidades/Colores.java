@@ -31,7 +31,7 @@ public class Colores {
     public static Color accento = new Color(58, 39, 35);
     public static Color botones = new Color(66, 47, 44);
     public static Color letraBotones = new Color(239, 235, 233);
-    public static Color letraNormal = new Color(58, 39, 35);
+    public static Color letraNormal = Colores.red;//new Color(58, 39, 35);
 
 
     /*
