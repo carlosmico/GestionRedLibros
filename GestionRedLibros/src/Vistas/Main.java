@@ -107,7 +107,7 @@ public class Main extends javax.swing.JFrame {
         jPanel2.setBackground(Colores.accento);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setForeground(Colores.letraBotones);
+        jLabel1.setForeground(Colores.letraTitulo);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Gestión Red Libros");
 

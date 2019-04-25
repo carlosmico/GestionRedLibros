@@ -34,17 +34,20 @@ import javax.swing.ImageIcon;
  * @author Jose Sanchis
  */
 public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
+
     private Historial historial;
 
     private FramePopup framePopup;
 
-    private String placeHolderObservaciones = "Observaciones…";
+    private String placeHolderObservaciones = "Escribe una observación…";
 
     /**
      * Creates new form FrameConfirmacionEntrega
      */
     public FrameConfirmacionDevolucion(Historial h) {
         initComponents();
+        
+        textObservaciones.setText(placeHolderObservaciones);
 
         this.setModal(true);
 
@@ -84,7 +87,6 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         textCodigo = new javax.swing.JLabel();
         textTituloLibro = new javax.swing.JLabel();
         panelObservaciones = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         textObservaciones = new javax.swing.JTextArea();
         jLabel30 = new javax.swing.JLabel();
@@ -97,8 +99,9 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
 
         panelTitulo.setBackground(Colores.accento);
 
+        jLabel1.setBackground(Colores.accento);
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setForeground(Colores.fondo);
+        jLabel1.setForeground(Colores.letraTitulo);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Confirmar Devolución");
 
@@ -130,14 +133,14 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         panelEstadoParent15.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel29.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel29.setForeground(Colores.letraNormal);
         jLabel29.setText("Estado del ejemplar");
 
         panelEstado15.setBackground(Colores.fondo);
         panelEstado15.setLayout(new java.awt.GridLayout(1, 0, 5, 5));
 
         btnBadStatus.setBackground(Colores.fondo);
-        btnBadStatus.setForeground(Colores.fondo);
+        btnBadStatus.setForeground(Colores.letraNormal);
         btnBadStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnBadStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
         btnBadStatus.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -148,7 +151,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         panelEstado15.add(btnBadStatus);
 
         btnRegularStatus.setBackground(Colores.fondo);
-        btnRegularStatus.setForeground(Colores.fondo);
+        btnRegularStatus.setForeground(Colores.letraNormal);
         btnRegularStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnRegularStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
         btnRegularStatus.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -159,7 +162,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         panelEstado15.add(btnRegularStatus);
 
         btnGoodStatus.setBackground(Colores.fondo);
-        btnGoodStatus.setForeground(Colores.fondo);
+        btnGoodStatus.setForeground(Colores.letraNormal);
         btnGoodStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnGoodStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
         btnGoodStatus.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -202,6 +205,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         jLabel15.setForeground(Colores.letraNormal);
         jLabel15.setText("Código del ejemplar");
 
+        imgCodigo.setForeground(Colores.letraNormal);
         imgCodigo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         imgCodigo.setToolTipText("");
 
@@ -217,9 +221,11 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         });
 
         textCodigo.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        textCodigo.setForeground(Colores.letraNormal);
         textCodigo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         textTituloLibro.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        textTituloLibro.setForeground(Colores.letraNormal);
         textTituloLibro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         textTituloLibro.setLabelFor(imgCodigo);
 
@@ -263,25 +269,19 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         panelObservaciones.setBackground(Colores.fondo);
         panelObservaciones.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jPanel1.setBackground(Colores.fondo);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 804, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 23, Short.MAX_VALUE)
-        );
-
         textObservaciones.setBackground(Colores.fondo);
         textObservaciones.setColumns(20);
         textObservaciones.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textObservaciones.setForeground(new java.awt.Color(102, 102, 102));
+        textObservaciones.setForeground(Colores.campoTextSinFocus);
         textObservaciones.setRows(5);
-        textObservaciones.setText("Observaciones…");
+        textObservaciones.setText("Escribe una observación...");
+        textObservaciones.setSelectedTextColor(Colores.letraBotones);
+        textObservaciones.setSelectionColor(Colores.accento);
+        textObservaciones.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textObservacionesFocusLost(evt);
+            }
+        });
         textObservaciones.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 textObservacionesKeyPressed(evt);
@@ -293,7 +293,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         jScrollPane2.setViewportView(textObservaciones);
 
         jLabel30.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel30.setForeground(Colores.letraNormal);
         jLabel30.setText("Observaciones");
 
         javax.swing.GroupLayout panelObservacionesLayout = new javax.swing.GroupLayout(panelObservaciones);
@@ -303,22 +303,19 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelObservacionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelObservacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
                     .addGroup(panelObservacionesLayout.createSequentialGroup()
                         .addComponent(jLabel30)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelObservacionesLayout.setVerticalGroup(
             panelObservacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelObservacionesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelObservacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel30))
+                .addComponent(jLabel30)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
 
@@ -342,8 +339,8 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelEstadoParent15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelObservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addComponent(panelObservaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panelEjemplaresLayout = new javax.swing.GroupLayout(panelEjemplares);
@@ -514,7 +511,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
 
         try {
             //Actualizamos los campos del historial y el ejemplar hijo del historial.
-            
+
             Ejemplar ejemplar = historial.getEjemplar();
 
             ejemplar.setEstado(historial.getEstado_final());
@@ -533,6 +530,11 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
                     "Aceptar");
         }
     }//GEN-LAST:event_btnAceptarMouseReleased
+
+    private void textObservacionesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textObservacionesFocusLost
+        // TODO add your handling code here:
+        textObservaciones.setText(placeHolderObservaciones);
+    }//GEN-LAST:event_textObservacionesFocusLost
 
     /**
      * @param args the command line arguments
@@ -584,7 +586,6 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel panelBotonera;
     private javax.swing.JPanel panelCodigoEjemplar;

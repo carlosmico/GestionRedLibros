@@ -2379,7 +2379,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 listaCursos = daoCurso.buscarTodos();
 
                 sustituirPadresCursos();
-                
+
                 System.out.println("Libros cargados: " + listaLibros.size() + " Cursos cargados: " + listaCursos.size());
                 return null;
             }
@@ -2542,7 +2542,7 @@ public class FrameLibro extends javax.swing.JFrame {
      * por el nombre del Padre
      */
     /*
-<<<<<<< HEAD
+     <<<<<<< HEAD
      private void sustituirPadresCursos() {
      for (int i = 0; i < listaCursos.size(); i++) {
      Curso curso = listaCursos.get(i);
@@ -2553,18 +2553,18 @@ public class FrameLibro extends javax.swing.JFrame {
      }
      }
      }
-=======
-    private void sustituirPadresCursos() {
-        for (int i = 0; i < listaCursos.size(); i++) {
-            Curso curso = listaCursos.get(i);
-            Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
+     =======
+     private void sustituirPadresCursos() {
+     for (int i = 0; i < listaCursos.size(); i++) {
+     Curso curso = listaCursos.get(i);
+     Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
 
-            if (cursoPadre != null) {
-                curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
-            }
-        }
-    }
->>>>>>> master
+     if (cursoPadre != null) {
+     curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
+     }
+     }
+     }
+     >>>>>>> master
      */
     /**
      * Metodo para rellenar el campos con los datos de un Libro
@@ -2633,7 +2633,7 @@ public class FrameLibro extends javax.swing.JFrame {
         Ejemplar ejemplarActual = listaEjemplares.get(contadorEjemplar - 1);
         textCodigo.setText(ejemplarActual.getCodigo());
         textTituloLibro.setText(ejemplarActual.getLibro().getNombre());
-        
+
         try {
             CodigoBarras cb = new CodigoBarras();
             ImageIcon icon = cb.getImage(cb.generarCodigoIndividual(ejemplarActual.getCodigo()), 320, 120);
