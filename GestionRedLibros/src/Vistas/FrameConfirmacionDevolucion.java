@@ -197,15 +197,16 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         panelCodigoEjemplar.setBackground(Colores.fondo);
         panelCodigoEjemplar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel15.setBackground(Colores.accent);
+        jLabel15.setBackground(Colores.accento);
         jLabel15.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel15.setForeground(Colores.letraNormal);
         jLabel15.setText("Código del ejemplar");
 
         imgCodigo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         imgCodigo.setToolTipText("");
 
-        btnImprimirEtiqueta.setBackground(Colores.buttons);
+        btnImprimirEtiqueta.setBackground(Colores.botones);
+        btnImprimirEtiqueta.setForeground(Colores.letraBotones);
         btnImprimirEtiqueta.setText("Imprimir etiqueta");
         btnImprimirEtiqueta.setCornerRound(10);
         btnImprimirEtiqueta.setPreferredSize(new java.awt.Dimension(169, 32));
@@ -364,7 +365,8 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
 
         panelBotonera.setBackground(Colores.fondo);
 
-        btnCancel.setBackground(Colores.buttons);
+        btnCancel.setBackground(Colores.botones);
+        btnCancel.setForeground(Colores.letraBotones);
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/close.png"))); // NOI18N
         btnCancel.setText("Cancelar");
         btnCancel.setCornerRound(10);
@@ -374,7 +376,8 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
             }
         });
 
-        btnAceptar.setBackground(Colores.buttons);
+        btnAceptar.setBackground(Colores.botones);
+        btnAceptar.setForeground(Colores.letraBotones);
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/check-white.png"))); // NOI18N
         btnAceptar.setText("Aceptar");
         btnAceptar.setCornerRound(10);
