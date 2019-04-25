@@ -56,7 +56,7 @@ public class Curso implements Serializable {
     
     //Este atributo no persiste en la BD.
     @Transient 
-    private String nombre_padre = "Bebesita, uuaaa!!!";
+    private String nombre_padre = "404 idPadre not found";
 
     @OneToMany(mappedBy = "curso_contenido", fetch = FetchType.LAZY)
     private List<Contenido> contenidos;
@@ -148,6 +148,14 @@ public class Curso implements Serializable {
         this.idPadre = idPadre;
     }
 
+    public String getNombre_padre() {
+        return nombre_padre;
+    }
+
+    public void setNombre_padre(String nombre_padre) {
+        this.nombre_padre = nombre_padre;
+    }
+
     public List<Contenido> getContenidos() {
         return contenidos;
     }
@@ -204,13 +212,11 @@ public class Curso implements Serializable {
 
     @Override
     public String toString() {
-        return abreviatura + " - " + idPadre;
-        /*
         if (idPadre.equals(" ")) {
             return abreviatura + " - " + nombre_cas;
         }else{
-            return abreviatura + " - " + idPadre;
-        }*/
+            return abreviatura + " - " + nombre_padre;
+        }
     }
 
 }

@@ -33,16 +33,9 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
 
         if (value instanceof Matricula) {
             Matricula matricula = (Matricula) value;
-            
+
             Curso c = null;
             Curso cursoPendiente = null;
-
-            try{
-                c = daoCurso.buscar(matricula.getCurso());
-                cursoPendiente = daoCurso.buscar(matricula.getCurso_pendiente());
-            }catch(Exception e){
-                e.printStackTrace();
-            }
             
             switch (column) {
                 case 0:
@@ -51,8 +44,9 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
                     break;
 
                 case 1:
-                    setText(c.getAbreviatura() + " - " + c.getIdPadre());
-                    setToolTipText(c.getAbreviatura() + " - " + c.getIdPadre());
+                    c = sustituirNombrePadre(matricula);
+                    setText(c.getAbreviatura() + " - " + c.getNombre_padre());
+                    setToolTipText(c.getAbreviatura() + " - " + c.getNombre_padre());
                     break;
 
                 case 2:
@@ -64,14 +58,16 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
                     break;
                 case 3:
                     if (!matricula.getCurso_pendiente().equals(" ")) {
-                        setText(c.getAbreviatura() + " - " + c.getIdPadre());
+                        c = obtenerCursoPendiente(matricula);
+                        setText(c.getAbreviatura() + " - " + c.getNombre_padre());
                     } else {
                         setText("");
                     }
                     break;
                 case 4:
-                    setText(cursoPendiente.getAbreviatura() + " - " + cursoPendiente.getIdPadre());
-                    setToolTipText(cursoPendiente.getAbreviatura() + " - " + cursoPendiente.getIdPadre());
+                    cursoPendiente = sustituirNombrePadre(c);
+                    setText(cursoPendiente.getAbreviatura() + " - " + cursoPendiente.getNombre_padre());
+                    setToolTipText(cursoPendiente.getAbreviatura() + " - " + cursoPendiente.getNombre_padre());
                     break;
             }
             getColor(this, matricula);
@@ -88,7 +84,8 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
                     setText(ejemplar.getLibro().getNombre());
                     break;
                 case 2:
-                    setText(curso.getAbreviatura() + " - " + curso.getIdPadre());
+                    curso = sustituirNombrePadre(curso);
+                    setText(curso.getAbreviatura() + " - " + curso.getNombre_padre());
                     break;
                 case 3:
                     setText(historial.getCurso_escolar() + "/" + ((historial.getCurso_escolar() + 1) + "").substring(2));
@@ -117,5 +114,51 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
             label.setForeground(Colores.letraNormal);
             label.setBackground(Colores.fondoOscuro);
         }
+    }
+
+    /**
+     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
+     * por el nombre del Padre a partir de la matricula
+     */
+    private Curso sustituirNombrePadre(Matricula m) {
+
+        Curso curso = daoCurso.buscar(m.getCurso());
+        Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
+
+        if (cursoPadre != null) {
+            curso.setNombre_padre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
+        }
+        return curso;
+    }
+
+    /**
+     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
+     * por el nombre del Padre a partir del curso actual
+     */
+    private Curso sustituirNombrePadre(Curso curso) {
+        Curso c = curso;
+        Curso cursoPadre = daoCurso.buscar(c.getIdPadre());
+
+        if (cursoPadre != null) {
+            c.setNombre_padre(daoCurso.buscar(c.getIdPadre()).getNombre_cas());
+        }
+        return c;
+    }
+
+    /**
+     * Metodo para saber el nombre de los cursos pendientes de una matricula
+     *
+     * @param m MAtricula de la cual queremos saber los cursos pendientes
+     * @return Curso pedndiente (objeto)
+     */
+    private Curso obtenerCursoPendiente(Matricula m) {
+        Curso cursoPendiente = daoCurso.buscar(m.getCurso_pendiente());
+        Curso cursoPadre = daoCurso.buscar(cursoPendiente.getIdPadre());
+
+        if (cursoPadre != null) {
+            cursoPendiente.setNombre_padre(daoCurso.buscar(cursoPendiente.getIdPadre()).getNombre_cas());
+        }
+        
+        return cursoPendiente;
     }
 }
