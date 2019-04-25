@@ -53,6 +53,7 @@ import org.hibernate.Session;
  * @author Jose Sanchis
  */
 public class FrameDevoluciones extends javax.swing.JFrame {
+
     private Session session = Main.gestorSesiones.getSession();
 
     public static int isConfirmationReady;
@@ -98,10 +99,10 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 JLabel l = (JLabel) super.getListCellRendererComponent(
                         list, value, index, isSelected, hasFocus);
                 if (isSelected) {
-                    l.setForeground(Colores.fondo);
-                    l.setBackground(Colores.botones);
+                    l.setForeground(Colores.letraNormal);
+                    l.setBackground(Colores.accento);
                 } else {
-                    l.setForeground(Colores.botones);
+                    l.setForeground(Colores.accento);
                     l.setBackground(Colores.fondo);
                 }
                 return l;
@@ -195,6 +196,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         panelTitulo.setBackground(Colores.accento);
 
+        jLabel1.setBackground(Colores.fondo);
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setForeground(Colores.letraNormal);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -222,7 +224,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         textBusquedaNIA.setBackground(Colores.fondo);
         textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textBusquedaNIA.setForeground(Colores.accento);
+        textBusquedaNIA.setForeground(new java.awt.Color(153, 153, 153));
         textBusquedaNIA.setText("Codigo NIA");
         textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -240,6 +242,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         });
 
         btnBusquedaNIA.setBackground(Colores.botones);
+        btnBusquedaNIA.setForeground(Colores.letraBotones);
         btnBusquedaNIA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
         btnBusquedaNIA.setCornerRound(10);
         btnBusquedaNIA.addActionListener(new java.awt.event.ActionListener() {
@@ -271,8 +274,9 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         panelBusquedaLista.setBackground(Colores.fondo);
 
-        cbCurso.setBackground(Colores.accent);
+        cbCurso.setBackground(Colores.accento);
         cbCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbCurso.setForeground(Colores.letraNormal);
         cbCurso.setPreferredSize(new java.awt.Dimension(374, 34));
         cbCurso.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -287,7 +291,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         jlistAlumnos.setBackground(Colores.fondo);
         jlistAlumnos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jlistAlumnos.setForeground(Colores.accent);
+        jlistAlumnos.setForeground(Colores.letraNormal);
         jlistAlumnos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jlistAlumnosValueChanged(evt);
@@ -295,7 +299,9 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jlistAlumnos);
 
+        jLabel8.setBackground(Colores.fondo);
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel8.setForeground(Colores.letraNormal);
         jLabel8.setText("Listado de alumnos");
 
         javax.swing.GroupLayout panelBusquedaListaLayout = new javax.swing.GroupLayout(panelBusquedaLista);
@@ -364,8 +370,9 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         panelInfoGeneral.setMaximumSize(new java.awt.Dimension(300, 32767));
         panelInfoGeneral.setPreferredSize(new java.awt.Dimension(922, 170));
 
-        jLabel3.setBackground(Colores.accent);
+        jLabel3.setBackground(Colores.fondo);
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setForeground(Colores.letraNormal);
         jLabel3.setText("Información");
 
         jPanel3.setBackground(Colores.fondo);
@@ -373,18 +380,22 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         jPanel1.setBackground(Colores.fondo);
 
+        jLabel7.setBackground(Colores.fondo);
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel7.setForeground(Colores.letraNormal);
         jLabel7.setText("NIA:");
 
+        textNIAAlumno.setBackground(Colores.fondo);
         textNIAAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textNIAAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textNIAAlumno.setForeground(Colores.letraNormal);
 
+        textNombreAlumno.setBackground(Colores.fondo);
         textNombreAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textNombreAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textNombreAlumno.setForeground(Colores.letraNormal);
 
+        jLabel4.setBackground(Colores.fondo);
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel4.setForeground(Colores.letraNormal);
         jLabel4.setText("Nombre:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -422,12 +433,14 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         jPanel2.setBackground(Colores.fondo);
 
+        jLabel2.setBackground(Colores.fondo);
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setForeground(Colores.letraNormal);
         jLabel2.setText("Curso escolar:");
 
+        textCursoEscolar.setBackground(Colores.fondo);
         textCursoEscolar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textCursoEscolar.setForeground(new java.awt.Color(51, 51, 51));
+        textCursoEscolar.setForeground(Colores.letraNormal);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -476,8 +489,9 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         panelGestionAsignaturas.setBackground(Colores.fondo);
 
+        jLabel5.setBackground(Colores.fondo);
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel5.setForeground(Colores.letraNormal);
         jLabel5.setText("Asignaturas");
 
         jPanel4.setBackground(Colores.fondo);
@@ -487,6 +501,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         jlistEjemplaresPendientes.setBackground(Colores.fondo);
         jlistEjemplaresPendientes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jlistEjemplaresPendientes.setForeground(Colores.letraNormal);
         jScrollPane5.setViewportView(jlistEjemplaresPendientes);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -511,7 +526,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         textCodigoEjemplar.setBackground(Colores.fondo);
         textCodigoEjemplar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textCodigoEjemplar.setForeground(Colores.accent);
+        textCodigoEjemplar.setForeground(new java.awt.Color(153, 153, 153));
         textCodigoEjemplar.setText("Escanee código ejemplar...");
         textCodigoEjemplar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textCodigoEjemplar.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -528,7 +543,8 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             }
         });
 
-        btCodigoEjemplar.setBackground(Colores.buttons);
+        btCodigoEjemplar.setBackground(Colores.botones);
+        btCodigoEjemplar.setForeground(Colores.letraBotones);
         btCodigoEjemplar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up.png"))); // NOI18N
         btCodigoEjemplar.setCornerRound(10);
 
@@ -550,6 +566,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         jlistEjemplaresDevueltos.setBackground(Colores.fondo);
         jlistEjemplaresDevueltos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jlistEjemplaresDevueltos.setForeground(Colores.letraNormal);
         jScrollPane3.setViewportView(jlistEjemplaresDevueltos);
 
         javax.swing.GroupLayout panelEjemplaresEntregadosLayout = new javax.swing.GroupLayout(panelEjemplaresEntregados);
@@ -573,13 +590,15 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jPanel5.setBackground(Colores.fondo);
         jPanel5.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
 
+        jLabel6.setBackground(Colores.fondo);
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setForeground(Colores.accent);
+        jLabel6.setForeground(Colores.letraNormal);
         jLabel6.setText("Pendientes de devolver:");
         jPanel5.add(jLabel6);
 
+        jLabel10.setBackground(Colores.fondo);
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setForeground(Colores.accent);
+        jLabel10.setForeground(Colores.letraNormal);
         jLabel10.setText("Ejemplares devueltos:");
         jPanel5.add(jLabel10);
 
@@ -713,7 +732,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     private void textBusquedaNIAFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusGained
         // TODO add your handling code here:
         textBusquedaNIA.setText("");
-        textBusquedaNIA.setForeground(Colores.accent);
+        textBusquedaNIA.setForeground(Colores.letraNormal);
     }//GEN-LAST:event_textBusquedaNIAFocusGained
 
     private void textBusquedaNIAFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusLost
@@ -738,13 +757,13 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     private void textCodigoEjemplarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCodigoEjemplarFocusGained
         // TODO add your handling code here:
         textCodigoEjemplar.setText("");
-        textBusquedaNIA.setForeground(Colores.accent);
+        textCodigoEjemplar.setForeground(Colores.letraNormal);
     }//GEN-LAST:event_textCodigoEjemplarFocusGained
 
     private void textCodigoEjemplarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCodigoEjemplarFocusLost
         // TODO add your handling code here:
         textCodigoEjemplar.setText("Escanee código ejemplar...");
-        textBusquedaNIA.setForeground(new Color(102, 102, 102));
+        textCodigoEjemplar.setForeground(new Color(102, 102, 102));
     }//GEN-LAST:event_textCodigoEjemplarFocusLost
 
     private void cbCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCursoActionPerformed
@@ -1158,7 +1177,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         }
         jlistAlumnos.setModel(listModel);
     }
-    
+
     private void modoEdicion(boolean b) {
         textCodigoEjemplar.setEnabled(b);
         jlistEjemplaresDevueltos.setEnabled(b);
