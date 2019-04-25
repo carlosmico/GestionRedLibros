@@ -28,6 +28,7 @@ import Vistas.FramePopup;
 import java.awt.Color;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -214,9 +215,9 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         btnImprimirEtiqueta.setText("Imprimir etiqueta");
         btnImprimirEtiqueta.setCornerRound(10);
         btnImprimirEtiqueta.setPreferredSize(new java.awt.Dimension(169, 32));
-        btnImprimirEtiqueta.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnImprimirEtiquetaMouseClicked(evt);
+        btnImprimirEtiqueta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirEtiquetaActionPerformed(evt);
             }
         });
 
@@ -386,6 +387,11 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
                 btnAceptarMouseReleased(evt);
             }
         });
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelBotoneraLayout = new javax.swing.GroupLayout(panelBotonera);
         panelBotonera.setLayout(panelBotoneraLayout);
@@ -475,16 +481,6 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_textObservacionesKeyReleased
 
-    private void btnImprimirEtiquetaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetaMouseClicked
-        // TODO add your handling code here:
-        CodigoBarras cb = new CodigoBarras();
-        try {
-            cb.imprimirIndividual(historial.getEjemplar(), cb.generarCodigoIndividual(historial.getEjemplar().getCodigo()));
-        } catch (Exception e) {
-            new FramePopup("No se ha podido imprimir el codigo", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
-        }
-    }//GEN-LAST:event_btnImprimirEtiquetaMouseClicked
-
     private void btnBadStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBadStatusMouseClicked
         // TODO add your handling code here:
         setEstado(Estado.deteriorado);
@@ -503,6 +499,35 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
     private void btnAceptarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseReleased
         // TODO add your handling code here:
         // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnAceptarMouseReleased
+
+    private void btnImprimirEtiquetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetaActionPerformed
+        // TODO add your handling code here:
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+            protected Void doInBackground() throws InterruptedException {
+                CodigoBarras cb = new CodigoBarras();
+                try {
+                    cb.imprimirIndividual(historial.getEjemplar(), cb.generarCodigoIndividual(historial.getEjemplar().getCodigo()));
+                } catch (Exception e) {
+                    new FramePopup("No se ha podido imprimir el codigo", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
+                }
+                return null;
+            }
+
+            protected void done() {
+
+                framePopup.dispose();
+            }
+        };
+        worker.execute();
+        framePopup = new FramePopup("Generando etiqueta de impresión...");
+        framePopup.setVisible(true);
+    }//GEN-LAST:event_btnImprimirEtiquetaActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        // TODO add your handling code here:
+
         String observaciones = textObservaciones.getText();
 
         //El estado se actualiza al cambiar el estado visual en el metodo setEstado()
@@ -510,26 +535,44 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         historial.setObservaciones(observaciones);
 
         try {
+<<<<<<< HEAD
             //Actualizamos los campos del historial y el ejemplar hijo del historial.
 
             Ejemplar ejemplar = historial.getEjemplar();
+=======
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                protected Void doInBackground() throws InterruptedException {
+                    Ejemplar ejemplar = historial.getEjemplar();
+>>>>>>> master
 
-            ejemplar.setEstado(historial.getEstado_final());
-            ejemplar.setPrestado(false);
+                    ejemplar.setEstado(historial.getEstado_final());
+                    ejemplar.setPrestado(false);
 
-            historial.setEjemplar(ejemplar);
+                    historial.setEjemplar(ejemplar);
+                    return null;
+                }
 
-            FrameDevoluciones.isConfirmationReady = ConfirmacionDevolucion.REALIZADA;
-            FrameDevoluciones.historialConfirmado = historial;
+                protected void done() {
+                    FrameDevoluciones.isConfirmationReady = ConfirmacionDevolucion.REALIZADA;
+                    FrameDevoluciones.historialConfirmado = historial;
+                    
+                    framePopup.dispose();
+                    dispose();
+                }
+            };
+            worker.execute();
+            framePopup = new FramePopup("Generando historial de préstamo...");
+            framePopup.setVisible(true);
         } catch (Exception e) {
             FrameDevoluciones.isConfirmationReady = ConfirmacionDevolucion.CANCELADA;
             e.printStackTrace();
 
             new FramePopup("Error al devolver el ejemplar.",
                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                    "Aceptar");
+                    "Aceptar").setVisible(true);
         }
-    }//GEN-LAST:event_btnAceptarMouseReleased
+
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void textObservacionesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textObservacionesFocusLost
         // TODO add your handling code here:

@@ -51,6 +51,8 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private String placeHolderCodigo = "Introduce o escanea codigo…",
             placeHolderNombre = "Introduce nombre…";
+    
+    private String campoBusquedaTemp = "";
 
     private FramePopup frameCarga = null,
             popupConfirmacion = null;
@@ -1760,7 +1762,9 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         //Buscamos el libro cuando pulsamos el botón
-        buscarLibro(textBusquedaCodigoLibro.getText());
+        if (!modoEdicion) {
+            buscarLibro(campoBusquedaTemp.toUpperCase());
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
@@ -1769,9 +1773,12 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private void textBusquedaCodigoLibroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroKeyPressed
         // TODO add your handling code here:
+        campoBusquedaTemp = textBusquedaCodigoLibro.getText();
+                
         if (!modoEdicion) {
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                buscarLibro(textBusquedaCodigoLibro.getText());
+                String codigo = textBusquedaCodigoLibro.getText();
+                buscarLibro(codigo.toUpperCase());
             }
         }
     }//GEN-LAST:event_textBusquedaCodigoLibroKeyPressed
@@ -1855,6 +1862,7 @@ public class FrameLibro extends javax.swing.JFrame {
         if (textBusquedaCodigoLibro.getText().equals(placeHolderCodigo)) {
             textBusquedaCodigoLibro.setText("");
             textBusquedaCodigoLibro.setForeground(Colores.letraNormal);
+            campoBusquedaTemp = "";
         }
     }//GEN-LAST:event_textBusquedaCodigoLibroFocusGained
 
@@ -2499,6 +2507,8 @@ public class FrameLibro extends javax.swing.JFrame {
      * Metodo para buscar un Libro mediante el codigo recibido
      */
     private void buscarLibro(String codigo) {
+        System.out.println(codigo);
+        
         if (!codigo.equals("")) {
             //Se ha insertado un codigo
             SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
@@ -2529,8 +2539,6 @@ public class FrameLibro extends javax.swing.JFrame {
             }
             frameCarga.setVisible(true);
         } else {
-            //No se ha insertado ningun valor en el campo de texto
-
             new FramePopup("El código no puede ser un campo vacío.",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
@@ -2538,6 +2546,7 @@ public class FrameLibro extends javax.swing.JFrame {
     }
 
     /**
+<<<<<<< HEAD
      * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
      * por el nombre del Padre
      */
@@ -2567,6 +2576,8 @@ public class FrameLibro extends javax.swing.JFrame {
      >>>>>>> master
      */
     /**
+=======
+>>>>>>> master
      * Metodo para rellenar el campos con los datos de un Libro
      */
     private void rellenarCamposLibro() {
@@ -2657,7 +2668,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 }
 
                 protected void done() {
-                    if (ejemplarActual.isPrestado() == false && historialEjemplar != null) {
+                    if (ejemplarActual.isPrestado() == true && historialEjemplar != null) {
                         Alumno alumnoActual = historialEjemplar.getAlumno();
 
                         textNombreAlumno.setText(alumnoActual.getNombre() + " "
