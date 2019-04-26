@@ -2531,6 +2531,7 @@ public class FrameLibro extends javax.swing.JFrame {
                                 new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                                 "Aceptar").setVisible(true);
                     } else {
+                        seleccionaLibroEnLista(libro);
                         rellenarCamposLibro();
                     }
 
@@ -2548,9 +2549,18 @@ public class FrameLibro extends javax.swing.JFrame {
         }
     }
 
+    private void seleccionaLibroEnLista(Libro libro) {
+        for (int i = 0; i < jlistLibros.getModel().getSize(); i++) {
+            Libro l = (Libro) jlistLibros.getModel().getElementAt(i);
+
+            if (l.getCodigo().equals(libro.getCodigo())) {
+                jlistLibros.setSelectedIndex(i);
+            }
+        }
+    }
+
     /**
-     * ======= >>>>>>> master Metodo para rellenar el campos con los datos de un
-     * Libro
+     * Metodo para rellenar el campos con los datos de un Libro
      */
     private void rellenarCamposLibro() {
         if (libro == null) {
