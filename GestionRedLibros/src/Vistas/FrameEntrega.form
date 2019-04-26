@@ -558,11 +558,11 @@
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" attributes="0">
                                                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                                                      <Component id="textNombreAlumno2" max="32767" attributes="0"/>
+                                                      <Component id="textNombreAlumno" max="32767" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="1" attributes="0">
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="textNIAAlumno2" max="32767" attributes="0"/>
+                                                      <Component id="textNIAAlumno" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -575,11 +575,11 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="textNIAAlumno2" min="-2" max="-2" attributes="0"/>
+                                              <Component id="textNIAAlumno" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="32767" attributes="0"/>
                                               <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                                              <Component id="textNombreAlumno2" min="-2" max="-2" attributes="0"/>
+                                              <Component id="textNombreAlumno" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
@@ -596,7 +596,7 @@
                                         <Property name="text" type="java.lang.String" value="NIA:"/>
                                       </Properties>
                                     </Component>
-                                    <Component class="javax.swing.JLabel" name="textNIAAlumno2">
+                                    <Component class="javax.swing.JLabel" name="textNIAAlumno">
                                       <Properties>
                                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                           <Font name="Dialog" size="18" style="0"/>
@@ -609,7 +609,7 @@
                                         </Property>
                                       </Properties>
                                     </Component>
-                                    <Component class="javax.swing.JLabel" name="textNombreAlumno2">
+                                    <Component class="javax.swing.JLabel" name="textNombreAlumno">
                                       <Properties>
                                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                           <Font name="Dialog" size="18" style="0"/>

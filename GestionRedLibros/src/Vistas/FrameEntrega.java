@@ -176,8 +176,8 @@ public class FrameEntrega extends javax.swing.JFrame {
         jPanel17 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        textNIAAlumno2 = new javax.swing.JLabel();
-        textNombreAlumno2 = new javax.swing.JLabel();
+        textNIAAlumno = new javax.swing.JLabel();
+        textNombreAlumno = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -427,13 +427,13 @@ public class FrameEntrega extends javax.swing.JFrame {
         jLabel16.setForeground(Colores.letraNormal);
         jLabel16.setText("NIA:");
 
-        textNIAAlumno2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textNIAAlumno2.setForeground(Colores.letraNormal);
-        textNIAAlumno2.setPreferredSize(new java.awt.Dimension(32, 32));
+        textNIAAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textNIAAlumno.setForeground(Colores.letraNormal);
+        textNIAAlumno.setPreferredSize(new java.awt.Dimension(32, 32));
 
-        textNombreAlumno2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textNombreAlumno2.setForeground(Colores.letraNormal);
-        textNombreAlumno2.setPreferredSize(new java.awt.Dimension(32, 32));
+        textNombreAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textNombreAlumno.setForeground(Colores.letraNormal);
+        textNombreAlumno.setPreferredSize(new java.awt.Dimension(32, 32));
 
         jLabel17.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel17.setForeground(Colores.letraNormal);
@@ -453,10 +453,10 @@ public class FrameEntrega extends javax.swing.JFrame {
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel16Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(textNombreAlumno2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(textNombreAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(textNIAAlumno2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(textNIAAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
@@ -465,11 +465,11 @@ public class FrameEntrega extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textNIAAlumno2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textNIAAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel17)
                 .addGap(4, 4, 4)
-                .addComponent(textNombreAlumno2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(textNombreAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel17.add(jPanel16);
@@ -1066,8 +1066,8 @@ public class FrameEntrega extends javax.swing.JFrame {
     private javax.swing.JTextField textBusquedaNIA;
     private javax.swing.JTextField textCodigoEjemplar;
     private javax.swing.JLabel textCursoEscolar;
-    private javax.swing.JLabel textNIAAlumno2;
-    private javax.swing.JLabel textNombreAlumno2;
+    private javax.swing.JLabel textNIAAlumno;
+    private javax.swing.JLabel textNombreAlumno;
     // End of variables declaration//GEN-END:variables
 
     /**
