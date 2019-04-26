@@ -17,6 +17,7 @@
  */
 package Daos;
 
+import Pojos.Contenido;
 import Pojos.Ejemplar;
 import dao.DaoGenerico;
 import dao.InterfaceDaoGenerico;
@@ -83,6 +84,26 @@ public class DaoEjemplar extends DaoGenerico<Ejemplar, Integer> implements Inter
         ejemplar = (Ejemplar) this.session.get(Ejemplar.class, codigo);
 
         return ejemplar;
+    }
+    
+    /**
+     * Metodo para obtener el primer ejemplar de un contenido que esté disponible.
+     * @param contenido
+     * @return 
+     */
+    public Ejemplar buscarLibre(Contenido contenido){
+        List<Ejemplar> lista = new ArrayList<Ejemplar>();
+
+        Query query = this.session.createQuery("FROM Ejemplar e "
+                + "WHERE e.libro.contenido_libro = " + contenido.getId() 
+                + " AND e.prestado = false");
+        lista = query.list();
+
+        if (lista != null && lista.size() > 0 ) {
+            return lista.get(0);
+        }else{
+            return null;
+        }
     }
 
     /**

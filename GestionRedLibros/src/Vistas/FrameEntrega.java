@@ -137,12 +137,8 @@ public class FrameEntrega extends javax.swing.JFrame {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = tablaPendientes.rowAtPoint(evt.getPoint());
-                int col = tablaPendientes.columnAtPoint(evt.getPoint());
-                if (row >= 0 && col >= 0) {
-                    new FramePopup("Hola",
-                           Imagenes.getImagen("alert-black.png"),
-                            "Acpeta").setVisible(true);
-                }
+                
+                rellenarEjemplarSugerido(listaMatriculas.get(row));
             }
         });
 //</editor-fold>
@@ -1104,8 +1100,7 @@ public class FrameEntrega extends javax.swing.JFrame {
      * @param listaMatriculas Es la lista de matriculas que debemos recuperar
      * del archivo xml previamente importado
      */
-    private void rellenarTablaPendiente(List<Matricula> listaMatriculas) {
-
+    private void rellenarTablaPendiente() {
         Object[][] contenidoTabla = new Object[listaMatriculas.size()][4];
 
         for (int i = 0; i < listaMatriculas.size(); i++) {
@@ -1231,8 +1226,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
                         textCursoEscolar.setText(getFecha() + "-" + (getFecha() + 1));
 
-                        //textCurso.setText(listaMatriculas.get(0).getContenido().getCurso().getAbreviatura());
-                        rellenarTablaPendiente(listaMatriculas);
+                        rellenarTablaPendiente();
 
                         modoEdicion(true);
                     } else {
@@ -1451,6 +1445,24 @@ public class FrameEntrega extends javax.swing.JFrame {
                     "Aceptar").setVisible(true);
         }
 
+    }
+    
+    /**
+     * Al pulsar sobre una fila de una tabla esté metodo nos rellenara el campo
+     * de buscar Ejemplar con el código del primer ejemplar de ese contenido que
+     * no esté prestado.
+     * @param m 
+     */
+    private void rellenarEjemplarSugerido(Matricula m){
+        Ejemplar ejemplarSugerido = daoEjemplar.buscarLibre(m.getContenido());
+        
+        if (ejemplarSugerido != null) {
+            textCodigoEjemplar.setText(ejemplarSugerido.getCodigo());
+        }else{
+            new FramePopup("No se han encontrado libros disponibles "
+                    + "correspondientes a la asignatura seleccionada.",
+                    Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
+        }
     }
 
     /**
