@@ -1,0 +1,30 @@
+body {
+    width: 100%;
+    margin: auto;
+    font-family: 'Quicksand', sans-serif;
+}
+
+h1 {
+    position: relative;
+    top: 50%;
+    padding: 1%;
+}
+
+#cabecera {
+    --color-acento: #3A2723;
+    background-color: var(--color-acento);
+    color: white;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+#cuerpo {
+    --color-fondo: #EFEBE9;
+    background-color: var(--color-fondo);
+}
+
+#footer {
+    --color-acento: #3A2723;
+    background-color: var(--color-acento);
+}
