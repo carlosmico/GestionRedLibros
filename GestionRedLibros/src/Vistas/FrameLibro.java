@@ -1736,9 +1736,9 @@ public class FrameLibro extends javax.swing.JFrame {
         };
 
         if (libro != null) {
-            popupConfirmacion = new FramePopup("<html>"
-                    + "<font size=+2>Eliminar libro definitivamente?</font>"
-                    + "<p>Esta opción no se puede deshacer</p></html>",
+            popupConfirmacion = new FramePopup(
+                    "<font size=+2>Eliminar libro definitivamente?</font>"
+                    + "<p>Esta opción no se puede deshacer</p>",
                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                     "Eliminar",
                     "Cancelar",
@@ -1831,9 +1831,7 @@ public class FrameLibro extends javax.swing.JFrame {
             cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares));
         } catch (Exception e) {
             e.printStackTrace();
-            new FramePopup("<html>"
-                    + "<p>No se han podido general los códigos de barras</p>"
-                    + "</html>",
+            new FramePopup("<p>No se han podido general los códigos de barras</p>",
                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                     "Aceptar").setVisible(true);
         }
@@ -2055,8 +2053,8 @@ public class FrameLibro extends javax.swing.JFrame {
                 frameCarga.setVisible(true);
                 //</editor-fold>
             } else {
-                new FramePopup("<html>Revise los siguientes errores: <br>"
-                        + errores + "</html>",
+                new FramePopup("Revise los siguientes errores: <br>"
+                        + errores,
                         Imagenes.getImagen("alert-black.png"),
                         "Aceptar").setVisible(true);
             }
@@ -2125,8 +2123,8 @@ public class FrameLibro extends javax.swing.JFrame {
                 frameCarga.setVisible(true);
 
             } else {
-                new FramePopup("<html>Revise los siguientes errores: <br>"
-                        + errores + "</html>",
+                new FramePopup("Revise los siguientes errores: <br>"
+                        + errores,
                         Imagenes.getImagen("alert-black.png"),
                         "Aceptar").setVisible(true);
             }
