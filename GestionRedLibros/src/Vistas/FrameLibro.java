@@ -51,7 +51,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private String placeHolderCodigo = "Introduce o escanea codigo…",
             placeHolderNombre = "Introduce nombre…";
-    
+
     private String campoBusquedaTemp = "";
 
     private FramePopup frameCarga = null,
@@ -405,6 +405,9 @@ public class FrameLibro extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 textBusquedaCodigoLibroKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textBusquedaCodigoLibroKeyReleased(evt);
+            }
         });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -532,7 +535,7 @@ public class FrameLibro extends javax.swing.JFrame {
             .addComponent(panelTitulo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeneralIzquierdoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addComponent(panelBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelGeneralIzquierdoLayout.setVerticalGroup(
@@ -548,7 +551,7 @@ public class FrameLibro extends javax.swing.JFrame {
         panelIzquierdo.setLayout(panelIzquierdoLayout);
         panelIzquierdoLayout.setHorizontalGroup(
             panelIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelGeneralIzquierdo, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(panelGeneralIzquierdo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelIzquierdoLayout.setVerticalGroup(
             panelIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1764,6 +1767,7 @@ public class FrameLibro extends javax.swing.JFrame {
         //Buscamos el libro cuando pulsamos el botón
         if (!modoEdicion) {
             buscarLibro(campoBusquedaTemp.toUpperCase());
+            campoBusquedaTemp = "";
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -1773,8 +1777,6 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private void textBusquedaCodigoLibroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroKeyPressed
         // TODO add your handling code here:
-        campoBusquedaTemp = textBusquedaCodigoLibro.getText();
-                
         if (!modoEdicion) {
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                 String codigo = textBusquedaCodigoLibro.getText();
@@ -2223,6 +2225,11 @@ public class FrameLibro extends javax.swing.JFrame {
         showPanelBusqueda(true);
     }//GEN-LAST:event_btnMostrarBuscarActionPerformed
 
+    private void textBusquedaCodigoLibroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroKeyReleased
+        // TODO add your handling code here:
+        campoBusquedaTemp = textBusquedaCodigoLibro.getText();
+    }//GEN-LAST:event_textBusquedaCodigoLibroKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -2507,8 +2514,6 @@ public class FrameLibro extends javax.swing.JFrame {
      * Metodo para buscar un Libro mediante el codigo recibido
      */
     private void buscarLibro(String codigo) {
-        System.out.println(codigo);
-        
         if (!codigo.equals("")) {
             //Se ha insertado un codigo
             SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
@@ -2546,39 +2551,8 @@ public class FrameLibro extends javax.swing.JFrame {
     }
 
     /**
-<<<<<<< HEAD
-     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
-     * por el nombre del Padre
-     */
-    /*
-     <<<<<<< HEAD
-     private void sustituirPadresCursos() {
-     for (int i = 0; i < listaCursos.size(); i++) {
-     Curso curso = listaCursos.get(i);
-     Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
-
-     if (cursoPadre != null) {
-     curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
-     }
-     }
-     }
-     =======
-     private void sustituirPadresCursos() {
-     for (int i = 0; i < listaCursos.size(); i++) {
-     Curso curso = listaCursos.get(i);
-     Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
-
-     if (cursoPadre != null) {
-     curso.setIdPadre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
-     }
-     }
-     }
-     >>>>>>> master
-     */
-    /**
-=======
->>>>>>> master
-     * Metodo para rellenar el campos con los datos de un Libro
+     * ======= >>>>>>> master Metodo para rellenar el campos con los datos de un
+     * Libro
      */
     private void rellenarCamposLibro() {
         if (libro == null) {

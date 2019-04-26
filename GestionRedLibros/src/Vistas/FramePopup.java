@@ -50,7 +50,7 @@ public class FramePopup extends javax.swing.JDialog {
      */
     public FramePopup(String mensaje) {
         initComponents();
-        text.setText(mensaje);
+        text.setText("<html>" + mensaje + "</html>");
         panelButton.setVisible(false);
         pack();
         setLocationRelativeTo(null);
@@ -65,7 +65,7 @@ public class FramePopup extends javax.swing.JDialog {
      */
     public FramePopup(String mensaje, ImageIcon icon) {
         initComponents();
-        text.setText(mensaje);
+        text.setText("<html>" + mensaje + "</html>");
         text.setIcon(icon);
         panelButton.setVisible(false);
         pack();
@@ -83,7 +83,7 @@ public class FramePopup extends javax.swing.JDialog {
      */
     public FramePopup(String mensaje, ImageIcon icon, String buttonText) {
         initComponents();
-        text.setText(mensaje);
+        text.setText("<html>" + mensaje + "</html>");
         text.setIcon(icon);
         btnButton2.setText(buttonText);
         btnButton2.requestFocusInWindow();
@@ -104,7 +104,7 @@ public class FramePopup extends javax.swing.JDialog {
      */
     public FramePopup(String mensaje, ImageIcon icon, String buttonText, Action action) {
         initComponents();
-        text.setText(mensaje);
+        text.setText("<html>" + mensaje + "</html>");
         text.setIcon(icon);
         btnButton2.setText(buttonText);
         btnButton2.addActionListener(action);
@@ -123,7 +123,7 @@ public class FramePopup extends javax.swing.JDialog {
      */
     public FramePopup(String mensaje, ImageIcon icon, Action action) {
         initComponents();
-        text.setText(mensaje);
+        text.setText("<html>" + mensaje + "</html>");
         text.setIcon(icon);
         btnButton2.addActionListener(action);
         btnButton1.setVisible(false);
@@ -144,7 +144,7 @@ public class FramePopup extends javax.swing.JDialog {
      */
     public FramePopup(String mensaje, ImageIcon icon, String button1, String button2, Action actionButton1, Action actionButton2) {
         initComponents();
-        text.setText(mensaje);
+        text.setText("<html>" + mensaje + "</html>");
         text.setIcon(icon);
         btnButton1.setText(button1);
         btnButton1.addActionListener(actionButton1);

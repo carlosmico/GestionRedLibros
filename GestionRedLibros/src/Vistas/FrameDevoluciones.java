@@ -72,6 +72,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     public List<Curso> listaCursos;
 
     private String defaultText = "Escribe NIA...";
+    private String campoBusquedaTemp = "";
 
     /**
      * Creates new form FrameDevoluciones
@@ -231,6 +232,9 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         textBusquedaNIA.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 textBusquedaNIAKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textBusquedaNIAKeyReleased(evt);
             }
         });
 
@@ -736,7 +740,8 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
     private void btnBusquedaNIAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaNIAActionPerformed
         // TODO add your handling code here:
-        buscarAlumno(textBusquedaNIA.getText());
+        buscarAlumno(campoBusquedaTemp);
+        campoBusquedaTemp = "";
 
     }//GEN-LAST:event_btnBusquedaNIAActionPerformed
 
@@ -806,6 +811,11 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                     "Aceptar");
         }
     }//GEN-LAST:event_formWindowActivated
+
+    private void textBusquedaNIAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaNIAKeyReleased
+        // TODO add your handling code here:
+        campoBusquedaTemp = textBusquedaNIA.getText();
+    }//GEN-LAST:event_textBusquedaNIAKeyReleased
 
     /**
      * @param args the command line arguments
@@ -1064,7 +1074,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             //Se ha insertado un codigo
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
                 protected Void doInBackground() throws InterruptedException {
-                    alumno = daoAlumno.buscar(nia);
+                    alumno = daoAlumno.buscar(nia.toUpperCase());
                     return null;
                 }
 
