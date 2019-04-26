@@ -133,13 +133,13 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        textBusquedaNIA = new javax.swing.JTextField();
         panelTitulo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         panelCuerpo = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         panelLista = new javax.swing.JPanel();
         panelBusquedaNIA = new javax.swing.JPanel();
-        textBusquedaNIA = new javax.swing.JTextField();
         btnBusquedaNIA = new com.mommoo.flat.button.FlatButton();
         panelBusquedaLista = new javax.swing.JPanel();
         cbCurso = new javax.swing.JComboBox();
@@ -176,6 +176,28 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+
+        textBusquedaNIA.setBackground(Colores.fondo);
+        textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textBusquedaNIA.setForeground(Colores.letraNormal);
+        textBusquedaNIA.setText("Codigo NIA");
+        textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textBusquedaNIAFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textBusquedaNIAFocusLost(evt);
+            }
+        });
+        textBusquedaNIA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textBusquedaNIAKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textBusquedaNIAKeyReleased(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Devoluciones");
@@ -216,28 +238,6 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         panelBusquedaNIA.setBackground(Colores.fondo);
 
-        textBusquedaNIA.setBackground(Colores.fondo);
-        textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textBusquedaNIA.setForeground(Colores.letraNormal);
-        textBusquedaNIA.setText("Codigo NIA");
-        textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                textBusquedaNIAFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                textBusquedaNIAFocusLost(evt);
-            }
-        });
-        textBusquedaNIA.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textBusquedaNIAKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                textBusquedaNIAKeyReleased(evt);
-            }
-        });
-
         btnBusquedaNIA.setBackground(Colores.botones);
         btnBusquedaNIA.setForeground(Colores.letraBotones);
         btnBusquedaNIA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
@@ -253,9 +253,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         panelBusquedaNIALayout.setHorizontalGroup(
             panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBusquedaNIALayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(textBusquedaNIA)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBusquedaNIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -263,9 +261,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBusquedaNIALayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnBusquedaNIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(textBusquedaNIA))
+                .addComponent(btnBusquedaNIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1019,6 +1015,8 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                         modoEdicion(true);
 
                     } else {
+                        modoEdicion(false);
+                        
                         new FramePopup("El alumno no tiene pendiente ninguna entrega.",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
