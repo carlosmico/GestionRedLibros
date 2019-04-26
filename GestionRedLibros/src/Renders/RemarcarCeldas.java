@@ -36,7 +36,7 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
 
             Curso c = null;
             Curso cursoPendiente = null;
-            
+
             switch (column) {
                 case 0:
                     System.out.println("RemarcarCeldas: Contenido de Matricula: " + matricula.toString());
@@ -158,7 +158,7 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
         if (cursoPadre != null) {
             cursoPendiente.setNombre_padre(daoCurso.buscar(cursoPendiente.getIdPadre()).getNombre_cas());
         }
-        
+
         return cursoPendiente;
     }
 }
