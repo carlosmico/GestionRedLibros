@@ -38,4 +38,7 @@ public class StringsGlobales {
     /**
      * STRINGS PLACEHOLDERS
      */
+    public static String placeHolder_codigo = "Introduce o escanea codigo…";
+    public static String placeHolder_nombre = "Introduce nombre…";
+    public static String placeHolder_nia = "Introduce NIA...";
 }

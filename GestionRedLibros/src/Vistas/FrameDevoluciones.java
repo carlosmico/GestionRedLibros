@@ -29,6 +29,7 @@ import Renders.comboBoxRender;
 import Utilidades.Colores;
 import Utilidades.ConfirmacionDevolucion;
 import Utilidades.Imagenes.Imagenes;
+import Utilidades.StringsGlobales;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -71,7 +72,6 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     public List<Alumno> listaAlumnos;
     public List<Curso> listaCursos;
 
-    private String defaultText = "Escribe NIA...";
     private String campoBusquedaTemp = "";
 
     /**
@@ -772,7 +772,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
     private void textBusquedaNIAFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusLost
         // TODO add your handling code here:
-        textBusquedaNIA.setText(defaultText);
+        textBusquedaNIA.setText(StringsGlobales.placeHolder_nia);
         textBusquedaNIA.setForeground(new Color(102, 102, 102));
     }//GEN-LAST:event_textBusquedaNIAFocusLost
 
@@ -1110,7 +1110,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
      * @param nia Deberemos pasarle el NIA del alumno
      */
     public void buscarAlumno(String nia) {
-        if (!nia.equals("") || nia.equals(defaultText)) {
+        if (!nia.equals("") || nia.equals(StringsGlobales.placeHolder_nia)) {
             //Se ha insertado un codigo
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
                 protected Void doInBackground() throws InterruptedException {

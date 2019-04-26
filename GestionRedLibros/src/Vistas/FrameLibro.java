@@ -49,9 +49,6 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private Curso cursoSeleccionado = null;
 
-    private String placeHolderCodigo = "Introduce o escanea codigo…",
-            placeHolderNombre = "Introduce nombre…";
-
     private String campoBusquedaTemp = "";
 
     private FramePopup frameCarga = null,
@@ -91,8 +88,8 @@ public class FrameLibro extends javax.swing.JFrame {
         btnMostrarBuscar.setVisible(false);
 
         //Configuramos los PlaceHolders
-        textNombreLibroBusqueda.setText(placeHolderNombre);
-        textBusquedaCodigoLibro.setText(placeHolderCodigo);
+        textNombreLibroBusqueda.setText(StringsGlobales.placeHolder_nombre);
+        textBusquedaCodigoLibro.setText(StringsGlobales.placeHolder_codigo);
 
         //Inicializamos los Daos
         daoCurso = new DaoCurso(session);
@@ -442,10 +439,15 @@ public class FrameLibro extends javax.swing.JFrame {
         textNombreLibroBusqueda.setForeground(Colores.campoTextSinFocus);
         textNombreLibroBusqueda.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textNombreLibroBusqueda.setMinimumSize(new java.awt.Dimension(200, 32));
-        textNombreLibroBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textNombreLibroBusquedaKeyPressed(evt);
+        textNombreLibroBusqueda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textNombreLibroBusquedaFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textNombreLibroBusquedaFocusLost(evt);
+            }
+        });
+        textNombreLibroBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 textNombreLibroBusquedaKeyReleased(evt);
             }
@@ -1798,28 +1800,6 @@ public class FrameLibro extends javax.swing.JFrame {
         rellenarCamposLibro();
     }//GEN-LAST:event_cbCursoBuscarItemStateChanged
 
-    private void textNombreLibroBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroBusquedaKeyReleased
-        // TODO add your handling code here:
-        String nombreLibro = textNombreLibroBusqueda.getText();
-
-        if (nombreLibro.length() == 0) {
-            textNombreLibroBusqueda.setText(placeHolderNombre);
-            textNombreLibroBusqueda.setForeground(Colores.campoTextSinFocus);
-        }
-
-        filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoBuscar.getSelectedIndex());
-    }//GEN-LAST:event_textNombreLibroBusquedaKeyReleased
-
-    private void textNombreLibroBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroBusquedaKeyPressed
-        // TODO add your handling code here:
-        String nombreLibro = textNombreLibroBusqueda.getText();
-
-        if (nombreLibro.length() > 0 && nombreLibro.equals(placeHolderNombre)) {
-            textNombreLibroBusqueda.setText("");
-            textNombreLibroBusqueda.setForeground(Colores.letraNormal);
-        }
-    }//GEN-LAST:event_textNombreLibroBusquedaKeyPressed
-
     private void btnImprimirEtiquetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetasActionPerformed
         CodigoBarras cb = new CodigoBarras();
         List<String> listaCodigoEjemplares = new ArrayList<>();
@@ -1860,7 +1840,7 @@ public class FrameLibro extends javax.swing.JFrame {
      * @param evt
      */
     private void textBusquedaCodigoLibroFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroFocusGained
-        if (textBusquedaCodigoLibro.getText().equals(placeHolderCodigo)) {
+        if (textBusquedaCodigoLibro.getText().equals(StringsGlobales.placeHolder_codigo)) {
             textBusquedaCodigoLibro.setText("");
             textBusquedaCodigoLibro.setForeground(Colores.letraNormal);
             campoBusquedaTemp = "";
@@ -1875,7 +1855,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private void textBusquedaCodigoLibroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroFocusLost
         // TODO add your handling code here:
         textBusquedaCodigoLibro.setForeground(Colores.campoTextSinFocus);
-        textBusquedaCodigoLibro.setText(placeHolderCodigo);
+        textBusquedaCodigoLibro.setText(StringsGlobales.placeHolder_codigo);
     }//GEN-LAST:event_textBusquedaCodigoLibroFocusLost
 
     private void btnImprimirEtiquetaEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetaEjemplarActionPerformed
@@ -2229,6 +2209,22 @@ public class FrameLibro extends javax.swing.JFrame {
         campoBusquedaTemp = textBusquedaCodigoLibro.getText();
     }//GEN-LAST:event_textBusquedaCodigoLibroKeyReleased
 
+    private void textNombreLibroBusquedaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textNombreLibroBusquedaFocusGained
+        // TODO add your handling code here:
+        textNombreLibroBusqueda.setText("");
+        textNombreLibroBusqueda.setForeground(Colores.letraNormal);
+    }//GEN-LAST:event_textNombreLibroBusquedaFocusGained
+
+    private void textNombreLibroBusquedaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textNombreLibroBusquedaFocusLost
+        // TODO add your handling code here:
+        textNombreLibroBusqueda.setText(StringsGlobales.placeHolder_nombre);
+        textNombreLibroBusqueda.setForeground(Colores.campoTextSinFocus);
+    }//GEN-LAST:event_textNombreLibroBusquedaFocusLost
+
+    private void textNombreLibroBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreLibroBusquedaKeyReleased
+        filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoBuscar.getSelectedIndex());
+    }//GEN-LAST:event_textNombreLibroBusquedaKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -2435,7 +2431,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         //Clasificamos el filtro
         //<editor-fold defaultstate="collapsed" desc="Clasificacion del filtro">
-        if (textNombreLibroBusqueda.getText().equals(placeHolderNombre)) {
+        if (textNombreLibroBusqueda.getText().equals(StringsGlobales.placeHolder_nombre)) {
             n = "0";
         } else {
             n = "1";
