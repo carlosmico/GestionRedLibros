@@ -51,7 +51,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private String placeHolderCodigo = "Introduce o escanea codigo…",
             placeHolderNombre = "Introduce nombre…";
-    
+
     private String campoBusquedaTemp = "";
 
     private FramePopup frameCarga = null,
@@ -114,7 +114,7 @@ public class FrameLibro extends javax.swing.JFrame {
                     l.setForeground(Colores.letraBotones);
                     l.setBackground(Colores.accento);
                 } else {
-                    l.setForeground(Colores.accento);
+                    l.setForeground(Colores.letraNormal);
                     l.setBackground(Colores.fondo);
                 }
                 return l;
@@ -134,7 +134,7 @@ public class FrameLibro extends javax.swing.JFrame {
                     l.setForeground(Colores.letraBotones);
                     l.setBackground(Colores.accento);
                 } else {
-                    l.setForeground(Colores.accento);
+                    l.setForeground(Colores.letraNormal);
                     l.setBackground(Colores.fondo);
                 }
                 return l;
@@ -154,7 +154,7 @@ public class FrameLibro extends javax.swing.JFrame {
                     l.setForeground(Colores.letraBotones);
                     l.setBackground(Colores.accento);
                 } else {
-                    l.setForeground(Colores.accento);
+                    l.setForeground(Colores.letraNormal);
                     l.setBackground(Colores.fondo);
                 }
                 return l;
@@ -1774,7 +1774,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private void textBusquedaCodigoLibroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroKeyPressed
         // TODO add your handling code here:
         campoBusquedaTemp = textBusquedaCodigoLibro.getText();
-                
+
         if (!modoEdicion) {
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                 String codigo = textBusquedaCodigoLibro.getText();
@@ -2508,7 +2508,7 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private void buscarLibro(String codigo) {
         System.out.println(codigo);
-        
+
         if (!codigo.equals("")) {
             //Se ha insertado un codigo
             SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
@@ -2546,9 +2546,8 @@ public class FrameLibro extends javax.swing.JFrame {
     }
 
     /**
-<<<<<<< HEAD
-     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
-     * por el nombre del Padre
+     * <<<<<<< HEAD Metodo para buscar el Padre de cada Curso y sustituir el
+     * atributo idPadre por el nombre del Padre
      */
     /*
      <<<<<<< HEAD
@@ -2576,9 +2575,8 @@ public class FrameLibro extends javax.swing.JFrame {
      >>>>>>> master
      */
     /**
-=======
->>>>>>> master
-     * Metodo para rellenar el campos con los datos de un Libro
+     * ======= >>>>>>> master Metodo para rellenar el campos con los datos de un
+     * Libro
      */
     private void rellenarCamposLibro() {
         if (libro == null) {

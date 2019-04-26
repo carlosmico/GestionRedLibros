@@ -97,10 +97,10 @@ public class FrameEntrega extends javax.swing.JFrame {
                 JLabel l = (JLabel) super.getListCellRendererComponent(
                         list, value, index, isSelected, hasFocus);
                 if (isSelected) {
-                    l.setForeground(Colores.fondo);
-                    l.setBackground(Colores.botones);
+                    l.setForeground(Colores.letraBotones);
+                    l.setBackground(Colores.accento);
                 } else {
-                    l.setForeground(Colores.botones);
+                    l.setForeground(Colores.letraNormal);
                     l.setBackground(Colores.fondo);
                 }
                 return l;
@@ -189,9 +189,8 @@ public class FrameEntrega extends javax.swing.JFrame {
         btnCodigoEjemplar = new com.mommoo.flat.button.FlatButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jlistEjemplares = new javax.swing.JList();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -204,8 +203,9 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         panelTitulo.setBackground(Colores.accento);
 
+        jLabel1.setBackground(Colores.accento);
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setForeground(Colores.fondo);
+        jLabel1.setForeground(Colores.letraTitulo);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Entregas");
 
@@ -231,7 +231,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         textBusquedaNIA.setBackground(Colores.fondo);
         textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textBusquedaNIA.setForeground(Colores.accento);
+        textBusquedaNIA.setForeground(Colores.letraNormal);
         textBusquedaNIA.setText("Codigo NIA");
         textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -249,6 +249,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         });
 
         btnBusquedaNIA.setBackground(Colores.botones);
+        btnBusquedaNIA.setForeground(Colores.letraBotones);
         btnBusquedaNIA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
         btnBusquedaNIA.setCornerRound(10);
         btnBusquedaNIA.addActionListener(new java.awt.event.ActionListener() {
@@ -282,6 +283,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         cbCurso.setBackground(Colores.accento);
         cbCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbCurso.setForeground(Colores.accento);
         cbCurso.setPreferredSize(new java.awt.Dimension(374, 34));
         cbCurso.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -296,7 +298,9 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         jlistAlumnos.setBackground(Colores.fondo);
         jlistAlumnos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jlistAlumnos.setForeground(Colores.accento);
+        jlistAlumnos.setForeground(Colores.letraNormal);
+        jlistAlumnos.setSelectionBackground(Colores.accento);
+        jlistAlumnos.setSelectionForeground(Colores.letraBotones);
         jlistAlumnos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jlistAlumnosValueChanged(evt);
@@ -305,6 +309,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jlistAlumnos);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel8.setForeground(Colores.letraNormal);
         jLabel8.setText("Listado de alumnos");
 
         javax.swing.GroupLayout panelBusquedaListaLayout = new javax.swing.GroupLayout(panelBusquedaLista);
@@ -375,6 +380,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         jLabel3.setBackground(Colores.accento);
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setForeground(Colores.letraNormal);
         jLabel3.setText("Información");
 
         jPanel3.setBackground(Colores.fondo);
@@ -383,17 +389,17 @@ public class FrameEntrega extends javax.swing.JFrame {
         jPanel1.setBackground(Colores.fondo);
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel7.setForeground(Colores.letraNormal);
         jLabel7.setText("NIA:");
 
         textNIAAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textNIAAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textNIAAlumno.setForeground(Colores.letraNormal);
 
         textNombreAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textNombreAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textNombreAlumno.setForeground(Colores.letraNormal);
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel4.setForeground(Colores.letraNormal);
         jLabel4.setText("Nombre:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -432,11 +438,11 @@ public class FrameEntrega extends javax.swing.JFrame {
         jPanel2.setBackground(Colores.fondo);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setForeground(Colores.letraNormal);
         jLabel2.setText("Curso escolar:");
 
         textCursoEscolar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textCursoEscolar.setForeground(new java.awt.Color(51, 51, 51));
+        textCursoEscolar.setForeground(Colores.letraNormal);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -467,7 +473,7 @@ public class FrameEntrega extends javax.swing.JFrame {
             .addGroup(panelInfoGeneralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(panelInfoGeneralLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -486,11 +492,10 @@ public class FrameEntrega extends javax.swing.JFrame {
         panelGestionAsignaturas.setBackground(Colores.fondo);
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel5.setForeground(Colores.letraNormal);
         jLabel5.setText("Asignaturas");
 
         jPanel4.setBackground(Colores.fondo);
-        jPanel4.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
 
         jPanel6.setBackground(Colores.fondo);
 
@@ -542,7 +547,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         );
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel9.setForeground(Colores.accento);
+        jLabel9.setForeground(Colores.letraNormal);
         jLabel9.setText("Curso pendiente");
         jLabel9.setToolTipText("");
 
@@ -554,7 +559,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -587,7 +592,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         );
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel11.setForeground(Colores.accento);
+        jLabel11.setForeground(Colores.letraNormal);
         jLabel11.setText("Curso actual");
         jLabel11.setToolTipText("");
 
@@ -599,7 +604,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -627,13 +632,11 @@ public class FrameEntrega extends javax.swing.JFrame {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        jPanel4.add(jPanel6);
 
         panelEjemplaresEntregados.setBackground(Colores.fondo);
 
@@ -641,7 +644,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         textCodigoEjemplar.setBackground(Colores.fondo);
         textCodigoEjemplar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textCodigoEjemplar.setForeground(Colores.accento);
+        textCodigoEjemplar.setForeground(Colores.campoTextSinFocus);
         textCodigoEjemplar.setText("Escanee código ejemplar...");
         textCodigoEjemplar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textCodigoEjemplar.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -659,6 +662,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         });
 
         btnCodigoEjemplar.setBackground(Colores.botones);
+        btnCodigoEjemplar.setForeground(Colores.letraBotones);
         btnCodigoEjemplar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up.png"))); // NOI18N
         btnCodigoEjemplar.setCornerRound(10);
 
@@ -667,7 +671,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         panelCodigoLayout.setHorizontalGroup(
             panelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCodigoLayout.createSequentialGroup()
-                .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
+                .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -680,6 +684,10 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         jlistEjemplares.setBackground(Colores.fondo);
         jlistEjemplares.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jlistEjemplares.setForeground(Colores.letraNormal);
+        jlistEjemplares.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jlistEjemplares.setSelectionBackground(Colores.accento);
+        jlistEjemplares.setSelectionForeground(Colores.letraBotones);
         jScrollPane3.setViewportView(jlistEjemplares);
 
         javax.swing.GroupLayout panelEjemplaresEntregadosLayout = new javax.swing.GroupLayout(panelEjemplaresEntregados);
@@ -694,24 +702,49 @@ public class FrameEntrega extends javax.swing.JFrame {
             .addGroup(panelEjemplaresEntregadosLayout.createSequentialGroup()
                 .addComponent(panelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel4.add(panelEjemplaresEntregados);
-
-        jPanel5.setBackground(Colores.fondo);
-        jPanel5.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel10.setForeground(Colores.letraNormal);
+        jLabel10.setText("Ejemplares entregados:");
+        jLabel10.setPreferredSize(new java.awt.Dimension(167, 32));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setForeground(Colores.accento);
+        jLabel6.setForeground(Colores.letraNormal);
         jLabel6.setText("Pendientes de entregar:");
-        jPanel5.add(jLabel6);
+        jLabel6.setPreferredSize(new java.awt.Dimension(171, 32));
 
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setForeground(Colores.accento);
-        jLabel10.setText("Ejemplares entregados:");
-        jPanel5.add(jLabel10);
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(6, 6, 6))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelEjemplaresEntregados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelEjemplaresEntregados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
 
         javax.swing.GroupLayout panelGestionAsignaturasLayout = new javax.swing.GroupLayout(panelGestionAsignaturas);
         panelGestionAsignaturas.setLayout(panelGestionAsignaturasLayout);
@@ -720,19 +753,17 @@ public class FrameEntrega extends javax.swing.JFrame {
             .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         panelGestionAsignaturasLayout.setVerticalGroup(
             panelGestionAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGestionAsignaturasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addGap(24, 24, 24)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -747,9 +778,9 @@ public class FrameEntrega extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInformacionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 1486, Short.MAX_VALUE))
+                    .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 1486, Short.MAX_VALUE)
+                    .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelInformacionLayout.setVerticalGroup(
@@ -845,13 +876,13 @@ public class FrameEntrega extends javax.swing.JFrame {
     private void textBusquedaNIAFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusGained
         // TODO add your handling code here:
         textBusquedaNIA.setText("");
-        textBusquedaNIA.setForeground(Colores.accento);
+        textBusquedaNIA.setForeground(Colores.letraNormal);
     }//GEN-LAST:event_textBusquedaNIAFocusGained
 
     private void textBusquedaNIAFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusLost
         // TODO add your handling code here:
         textBusquedaNIA.setText(defaultText);
-        textBusquedaNIA.setForeground(new Color(102, 102, 102));
+        textBusquedaNIA.setForeground(Colores.campoTextSinFocus);
     }//GEN-LAST:event_textBusquedaNIAFocusLost
 
     private void btnBusquedaNIAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaNIAActionPerformed
@@ -870,13 +901,13 @@ public class FrameEntrega extends javax.swing.JFrame {
     private void textCodigoEjemplarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCodigoEjemplarFocusGained
         // TODO add your handling code here:
         textCodigoEjemplar.setText("");
-        textBusquedaNIA.setForeground(Colores.accento);
+        textCodigoEjemplar.setForeground(Colores.letraNormal);
     }//GEN-LAST:event_textCodigoEjemplarFocusGained
 
     private void textCodigoEjemplarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCodigoEjemplarFocusLost
         // TODO add your handling code here:
         textCodigoEjemplar.setText("Escanee código ejemplar...");
-        textBusquedaNIA.setForeground(new Color(102, 102, 102));
+        textCodigoEjemplar.setForeground(Colores.campoTextSinFocus);
     }//GEN-LAST:event_textCodigoEjemplarFocusLost
 
     private void cbCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCursoActionPerformed
@@ -945,7 +976,6 @@ public class FrameEntrega extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -1001,8 +1031,19 @@ public class FrameEntrega extends javax.swing.JFrame {
         tablaPendientes.setModel(tableModel);
 
         TableColumnModel tcm = tablaPendientes.getColumnModel();
-        tcm.getColumn(0).setPreferredWidth(300);
-        tcm.getColumn(0).setMaxWidth(300);
+        tcm.getColumn(0).setMinWidth(75);
+
+        tcm.getColumn(1).setMinWidth(75);
+        tcm.getColumn(1).setMaxWidth(500);
+        tcm.getColumn(1).setPreferredWidth(350);
+
+        tcm.getColumn(2).setMinWidth(75);
+        tcm.getColumn(2).setMaxWidth(200);
+        tcm.getColumn(2).setPreferredWidth(125);
+
+        tcm.getColumn(3).setMinWidth(75);
+        tcm.getColumn(3).setMaxWidth(350);
+        tcm.getColumn(3).setPreferredWidth(100);
 
         RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCursoTabla);
 
