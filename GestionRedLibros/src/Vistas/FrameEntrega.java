@@ -30,7 +30,7 @@ import Pojos.Matricula;
 import Renders.RemarcarCeldas;
 import Renders.comboBoxRender;
 import Utilidades.Colores;
-import Utilidades.Imagenes;
+import Utilidades.Imagenes.Imagenes;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -1396,6 +1396,8 @@ public class FrameEntrega extends javax.swing.JFrame {
         if (ejemplarSugerido != null) {
             textCodigoEjemplar.setText(ejemplarSugerido.getCodigo());
         }else{
+            textCodigoEjemplar.setText("");
+            
             new FramePopup("No se han encontrado libros disponibles "
                     + "correspondientes a la asignatura seleccionada.",
                     Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);

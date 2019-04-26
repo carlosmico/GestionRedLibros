@@ -17,7 +17,7 @@
  */
 package Pruebas;
 
-import Utilidades.ImportarMatriculasXML;
+import Utilidades.Importaciones.ImportarMatriculasXML;
 import java.text.ParseException;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;

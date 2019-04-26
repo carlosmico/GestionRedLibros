@@ -23,7 +23,7 @@ import Utilidades.CodigoBarras;
 import Utilidades.Colores;
 import Utilidades.ConfirmacionDevolucion;
 import Utilidades.Estado;
-import Utilidades.Imagenes;
+import Utilidades.Imagenes.Imagenes;
 import Vistas.FramePopup;
 import java.awt.Color;
 import java.util.Date;

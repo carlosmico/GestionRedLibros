@@ -19,7 +19,7 @@ package Pruebas;
 
 import Utilidades.ButtonColumn;
 import Utilidades.Colores;
-import Utilidades.Imagenes;
+import Utilidades.Imagenes.Imagenes;
 import Vistas.FramePopup;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;

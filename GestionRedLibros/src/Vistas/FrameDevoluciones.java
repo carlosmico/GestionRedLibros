@@ -28,7 +28,7 @@ import Pojos.Historial;
 import Renders.comboBoxRender;
 import Utilidades.Colores;
 import Utilidades.ConfirmacionDevolucion;
-import Utilidades.Imagenes;
+import Utilidades.Imagenes.Imagenes;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;

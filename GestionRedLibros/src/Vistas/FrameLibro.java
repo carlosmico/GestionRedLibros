@@ -17,6 +17,7 @@
  */
 package Vistas;
 
+import Utilidades.Imagenes.Imagenes;
 import Daos.*;
 import Pojos.*;
 import Renders.comboBoxRender;
