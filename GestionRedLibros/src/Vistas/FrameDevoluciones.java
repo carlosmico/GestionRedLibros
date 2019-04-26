@@ -501,6 +501,11 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jlistEjemplaresPendientes.setBackground(Colores.fondo);
         jlistEjemplaresPendientes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jlistEjemplaresPendientes.setForeground(Colores.letraNormal);
+        jlistEjemplaresPendientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlistEjemplaresPendientesMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(jlistEjemplaresPendientes);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -637,7 +642,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 .addGroup(panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 706, Short.MAX_VALUE))
+                    .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 1206, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelInformacionLayout.setVerticalGroup(
@@ -664,7 +669,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         );
         panelCuerpoLayout.setVerticalGroup(
             panelCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+            .addComponent(jSplitPane1)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -813,6 +818,13 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         // TODO add your handling code here:
         campoBusquedaTemp = textBusquedaNIA.getText();
     }//GEN-LAST:event_textBusquedaNIAKeyReleased
+
+    private void jlistEjemplaresPendientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlistEjemplaresPendientesMouseClicked
+        // TODO add your handling code here:
+        Historial historialSeleccionado = (Historial) jlistEjemplaresPendientes.getModel().getElementAt(jlistEjemplaresPendientes.getSelectedIndex());
+        
+        buscarEjemplar(historialSeleccionado.getEjemplar().getCodigo());
+    }//GEN-LAST:event_jlistEjemplaresPendientesMouseClicked
 
     /**
      * @param args the command line arguments
