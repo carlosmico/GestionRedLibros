@@ -188,11 +188,11 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             }
         });
 
-        panelTitulo.setBackground(Colores.accento);
+        panelTitulo.setBackground(Colores.fondo);
 
         jLabel1.setBackground(Colores.fondo);
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setForeground(Colores.letraNormal);
+        jLabel1.setForeground(Colores.letraTitulo);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Devoluciones");
 
@@ -218,7 +218,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         textBusquedaNIA.setBackground(Colores.fondo);
         textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textBusquedaNIA.setForeground(new java.awt.Color(153, 153, 153));
+        textBusquedaNIA.setForeground(Colores.letraNormal);
         textBusquedaNIA.setText("Codigo NIA");
         textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -271,7 +271,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         panelBusquedaLista.setBackground(Colores.fondo);
 
-        cbCurso.setBackground(Colores.accento);
+        cbCurso.setBackground(Colores.fondo);
         cbCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         cbCurso.setForeground(Colores.letraNormal);
         cbCurso.setPreferredSize(new java.awt.Dimension(374, 34));
@@ -289,6 +289,8 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jlistAlumnos.setBackground(Colores.fondo);
         jlistAlumnos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jlistAlumnos.setForeground(Colores.letraNormal);
+        jlistAlumnos.setSelectionBackground(Colores.accento);
+        jlistAlumnos.setSelectionForeground(Colores.letraBotones);
         jlistAlumnos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jlistAlumnosValueChanged(evt);
@@ -323,7 +325,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -410,7 +412,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textNombreAlumno)))
-                .addContainerGap(505, Short.MAX_VALUE))
+                .addContainerGap(258, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,7 +450,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textCursoEscolar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(288, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -512,7 +514,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
         );
 
         jPanel4.add(jPanel6);
@@ -523,7 +525,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         textCodigoEjemplar.setBackground(Colores.fondo);
         textCodigoEjemplar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textCodigoEjemplar.setForeground(new java.awt.Color(153, 153, 153));
+        textCodigoEjemplar.setForeground(Colores.letraNormal);
         textCodigoEjemplar.setText("Escanee código ejemplar...");
         textCodigoEjemplar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textCodigoEjemplar.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -550,7 +552,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         panelCodigoLayout.setHorizontalGroup(
             panelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCodigoLayout.createSequentialGroup()
-                .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
+                .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -578,7 +580,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             .addGroup(panelEjemplaresEntregadosLayout.createSequentialGroup()
                 .addComponent(panelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -634,8 +636,8 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 706, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelInformacionLayout.setVerticalGroup(
@@ -658,16 +660,11 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         panelCuerpo.setLayout(panelCuerpoLayout);
         panelCuerpoLayout.setHorizontalGroup(
             panelCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCuerpoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1626, Short.MAX_VALUE))
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1632, Short.MAX_VALUE)
         );
         panelCuerpoLayout.setVerticalGroup(
             panelCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCuerpoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSplitPane1)
-                .addContainerGap())
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

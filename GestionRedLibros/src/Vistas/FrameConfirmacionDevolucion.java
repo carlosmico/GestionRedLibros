@@ -47,7 +47,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
      */
     public FrameConfirmacionDevolucion(Historial h) {
         initComponents();
-        
+
         textObservaciones.setText(placeHolderObservaciones);
 
         this.setModal(true);
@@ -535,15 +535,10 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
         historial.setObservaciones(observaciones);
 
         try {
-<<<<<<< HEAD
             //Actualizamos los campos del historial y el ejemplar hijo del historial.
-
-            Ejemplar ejemplar = historial.getEjemplar();
-=======
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
                 protected Void doInBackground() throws InterruptedException {
                     Ejemplar ejemplar = historial.getEjemplar();
->>>>>>> master
 
                     ejemplar.setEstado(historial.getEstado_final());
                     ejemplar.setPrestado(false);
@@ -555,7 +550,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
                 protected void done() {
                     FrameDevoluciones.isConfirmationReady = ConfirmacionDevolucion.REALIZADA;
                     FrameDevoluciones.historialConfirmado = historial;
-                    
+
                     framePopup.dispose();
                     dispose();
                 }
