@@ -83,9 +83,6 @@ public class FrameHistorial extends javax.swing.JFrame {
      */
     public FrameHistorial() {
         initComponents();
-        //<editor-fold defaultstate="collapsed" desc="Configuracion Tabbed PAne">
-        //tabbedPage.setIconAt(1, new ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-down-outline.png")));
-        //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Configuración combobox">
         cbCurso.setEditable(false);

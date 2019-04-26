@@ -588,7 +588,7 @@ public class FrameLibro extends javax.swing.JFrame {
         });
 
         labelInfoEdicion.setBackground(Colores.accento);
-        labelInfoEdicion.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+        labelInfoEdicion.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         labelInfoEdicion.setForeground(Colores.letraTitulo);
         labelInfoEdicion.setText("modo edición");
 
@@ -1161,7 +1161,7 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel29.setBackground(Colores.letraNormal);
         jLabel29.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel29.setForeground(Colores.letraNormal);
-        jLabel29.setText("Estado:");
+        jLabel29.setText("Estado");
 
         panelEstado15.setBackground(Colores.fondo);
         panelEstado15.setLayout(new java.awt.GridLayout(1, 0, 5, 5));
@@ -1214,7 +1214,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         jLabel30.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel30.setForeground(Colores.letraNormal);
-        jLabel30.setText("Prestado a:");
+        jLabel30.setText("Prestado a");
 
         jPanel11.setBackground(Colores.fondo);
 
@@ -1444,7 +1444,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         jLabel36.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel36.setForeground(Colores.letraNormal);
-        jLabel36.setText("Prestado a:");
+        jLabel36.setText("Prestado a");
 
         jPanel18.setBackground(Colores.fondo);
 
@@ -1499,7 +1499,7 @@ public class FrameLibro extends javax.swing.JFrame {
         jLabel15.setBackground(Colores.fondo);
         jLabel15.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel15.setForeground(Colores.letraNormal);
-        jLabel15.setText("Codigo del libro:");
+        jLabel15.setText("Codigo del libro");
 
         imgCodigo.setBackground(Colores.fondo);
         imgCodigo.setForeground(Colores.letraNormal);
@@ -1777,11 +1777,7 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private void textBusquedaCodigoLibroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaCodigoLibroKeyPressed
         // TODO add your handling code here:
-<<<<<<< HEAD
-        campoBusquedaTemp = textBusquedaCodigoLibro.getText();
 
-=======
->>>>>>> master
         if (!modoEdicion) {
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                 String codigo = textBusquedaCodigoLibro.getText();
@@ -2517,11 +2513,6 @@ public class FrameLibro extends javax.swing.JFrame {
      * Metodo para buscar un Libro mediante el codigo recibido
      */
     private void buscarLibro(String codigo) {
-<<<<<<< HEAD
-        System.out.println(codigo);
-
-=======
->>>>>>> master
         if (!codigo.equals("")) {
             //Se ha insertado un codigo
             SwingWorker<?, ?> worker = new SwingWorker<Void, Integer>() {
@@ -2559,9 +2550,8 @@ public class FrameLibro extends javax.swing.JFrame {
     }
 
     /**
-<<<<<<< HEAD
-     * <<<<<<< HEAD Metodo para buscar el Padre de cada Curso y sustituir el
-     * atributo idPadre por el nombre del Padre
+     * <<<<<<< HEAD <<<<<<< HEAD Metodo para buscar el Padre de cada Curso y
+     * sustituir el atributo idPadre por el nombre del Padre
      */
     /*
      <<<<<<< HEAD
@@ -2589,10 +2579,8 @@ public class FrameLibro extends javax.swing.JFrame {
      >>>>>>> master
      */
     /**
-=======
->>>>>>> master
-     * ======= >>>>>>> master Metodo para rellenar el campos con los datos de un
-     * Libro
+     * ======= >>>>>>> master ======= >>>>>>> master Metodo para rellenar el
+     * campos con los datos de un Libro
      */
     private void rellenarCamposLibro() {
         if (libro == null) {
