@@ -834,8 +834,8 @@ public class FrameOpciones extends javax.swing.JFrame {
                         Imagenes.getImagen("check-black.png"), "Aceptar")
                         .setVisible(true);
             } catch (Exception ex) {
-                new FramePopup("<html>No se han podido importar las matriculas."
-                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage() + "</html>",
+                new FramePopup("No se han podido importar las matriculas."
+                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage(),
                         Imagenes.getImagen("alert-black.png"), "Aceptar")
                         .setVisible(true);
                 ex.printStackTrace();
@@ -882,8 +882,8 @@ public class FrameOpciones extends javax.swing.JFrame {
                         Imagenes.getImagen("check-black.png"), "Aceptar")
                         .setVisible(true);
             } catch (Exception ex) {
-                new FramePopup("<html>No se han podido importar los cursos."
-                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage() + "</html>",
+                new FramePopup("No se han podido importar los cursos."
+                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage(),
                         Imagenes.getImagen("alert-black.png"), "Aceptar")
                         .setVisible(true);
 
@@ -952,8 +952,8 @@ public class FrameOpciones extends javax.swing.JFrame {
                         Imagenes.getImagen("check-black.png"), "Aceptar")
                         .setVisible(true);
             } catch (Exception ex) {
-                new FramePopup("<html>No se han podido importar los grupos."
-                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage() + "</html>",
+                new FramePopup("No se han podido importar los grupos."
+                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage(),
                         Imagenes.getImagen("alert-black.png"), "Aceptar")
                         .setVisible(true);
                 ex.printStackTrace();
@@ -1000,16 +1000,16 @@ public class FrameOpciones extends javax.swing.JFrame {
                         Imagenes.getImagen("check-black.png"), "Aceptar")
                         .setVisible(true);
             } catch (Exception ex) {
-                new FramePopup("<html>No se han podido importar las asignaturas."
-                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage() + "</html>",
+                new FramePopup("No se han podido importar las asignaturas."
+                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage(),
                         Imagenes.getImagen("alert-black.png"), "Aceptar")
-                        .setVisible(true);                
+                        .setVisible(true);
                 ex.printStackTrace();
             }
         } else {
-            new FramePopup("Debes seleccionar un archivo para poder importar las asignaturas.", 
-                        Imagenes.getImagen("alert-black.png"),"Aceptar")
-                        .setVisible(true);
+            new FramePopup("Debes seleccionar un archivo para poder importar las asignaturas.",
+                    Imagenes.getImagen("alert-black.png"), "Aceptar")
+                    .setVisible(true);
         }
     }//GEN-LAST:event_btnImportarAsignaturasActionPerformed
 
@@ -1044,20 +1044,20 @@ public class FrameOpciones extends javax.swing.JFrame {
             try {
                 new ImportarAlumnosXML(textRutaAlumnos.getText());
 
-                new FramePopup("Alumnos importados correctamente!", 
-                        Imagenes.getImagen("check-black.png"),"Aceptar")
+                new FramePopup("Alumnos importados correctamente!",
+                        Imagenes.getImagen("check-black.png"), "Aceptar")
                         .setVisible(true);
             } catch (Exception ex) {
-                new FramePopup("<html>No se han podido importar los alumnos."
-                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage() + "</html>", 
-                        Imagenes.getImagen("alert-black.png"),"Aceptar")
+                new FramePopup("No se han podido importar los alumnos."
+                        + "<br>-Revise el archivo XML.<br>Error: " + ex.getMessage(),
+                        Imagenes.getImagen("alert-black.png"), "Aceptar")
                         .setVisible(true);
                 ex.printStackTrace();
             }
         } else {
-            new FramePopup("Debes seleccionar un archivo para poder importar los alumnos.", 
-                        Imagenes.getImagen("alert-black.png"),"Aceptar")
-                        .setVisible(true);
+            new FramePopup("Debes seleccionar un archivo para poder importar los alumnos.",
+                    Imagenes.getImagen("alert-black.png"), "Aceptar")
+                    .setVisible(true);
         }
     }//GEN-LAST:event_btnImportarAlumnosActionPerformed
 
@@ -1111,7 +1111,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                         "Aceptar").setVisible(true);
             }
         } else {
-            new FramePopup("<html>Revise los siguientes errores:" + error + "</html>",
+            new FramePopup("Revise los siguientes errores:" + error,
                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                     "Aceptar").setVisible(true);
         }

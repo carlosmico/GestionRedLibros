@@ -76,6 +76,7 @@ public class FrameHistorial extends javax.swing.JFrame {
     public static boolean isCellSelected = false;
 
     private String defaultText = "Escribe NIA...";
+    private String campoBusquedaTemp = "";
 
     /**
      * Creates new form FrameDevoluciones
@@ -219,6 +220,9 @@ public class FrameHistorial extends javax.swing.JFrame {
         textBusquedaNIA.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 textBusquedaNIAKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textBusquedaNIAKeyReleased(evt);
             }
         });
 
@@ -686,7 +690,8 @@ public class FrameHistorial extends javax.swing.JFrame {
 
     private void btnBusquedaNIAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBusquedaNIAMouseClicked
         // TODO add your handling code here:
-        buscarAlumno(textBusquedaNIA.getText());
+        buscarAlumno(campoBusquedaTemp);
+        campoBusquedaTemp = "";
     }//GEN-LAST:event_btnBusquedaNIAMouseClicked
 
     private void tablaHistorialesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaHistorialesMouseClicked
@@ -698,6 +703,11 @@ public class FrameHistorial extends javax.swing.JFrame {
         historial = (Historial) tableModel.getValueAt(row, col);
         showFrameInfo(historial);
     }//GEN-LAST:event_tablaHistorialesMouseClicked
+
+    private void textBusquedaNIAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaNIAKeyReleased
+        // TODO add your handling code here:
+        campoBusquedaTemp = textBusquedaNIA.getText();
+    }//GEN-LAST:event_textBusquedaNIAKeyReleased
 
     /**
      * @param args the command line arguments
@@ -789,7 +799,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                 RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCurso);
 
                 protected Void doInBackground() throws InterruptedException {
-                    alumno = daoAlumno.buscar(nia);
+                    alumno = daoAlumno.buscar(nia.toUpperCase());
                     return null;
                 }
 
