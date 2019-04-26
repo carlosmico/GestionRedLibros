@@ -22,7 +22,7 @@ import Pojos.Ejemplar;
 import Pojos.Historial;
 import Utilidades.Colores;
 import Utilidades.Estado;
-import Utilidades.Imagenes;
+import Utilidades.Imagenes.Imagenes;
 import Vistas.FramePopup;
 import java.util.ArrayList;
 import java.util.List;

@@ -5,6 +5,8 @@
  */
 package Vistas;
 
+import Utilidades.Conexiones.ComprobarConexion;
+import Utilidades.Conexiones.GestorSesiones;
 import Utilidades.*;
 import java.awt.Image;
 import java.awt.event.ActionEvent;

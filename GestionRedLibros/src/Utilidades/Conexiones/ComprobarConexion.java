@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package Utilidades;
+package Utilidades.Conexiones;
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import com.sun.org.apache.xerces.internal.impl.io.MalformedByteSequenceException;

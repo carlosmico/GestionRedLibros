@@ -17,7 +17,8 @@
  */
 package Vistas;
 
-import Utilidades.ImportarCursoXML;
+import Utilidades.Importaciones.ImportarMatriculasXML;
+import Utilidades.Importaciones.ImportarCursoXML;
 import Daos.DaoMatricula;
 import Pojos.Matricula;
 import javax.swing.JFrame;

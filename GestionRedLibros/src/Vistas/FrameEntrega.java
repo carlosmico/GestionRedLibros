@@ -30,7 +30,8 @@ import Pojos.Matricula;
 import Renders.RemarcarCeldas;
 import Renders.comboBoxRender;
 import Utilidades.Colores;
-import Utilidades.Imagenes;
+import Utilidades.Imagenes.Imagenes;
+import Utilidades.StringsGlobales;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -76,7 +77,6 @@ public class FrameEntrega extends javax.swing.JFrame {
     public List<Matricula> listaMatriculas;
     public List<Curso> listaCursos;
 
-    private String defaultText = "Escribe NIA...";
     private String campoBusquedaTemp = "";
 
     /**
@@ -137,7 +137,7 @@ public class FrameEntrega extends javax.swing.JFrame {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = tablaPendientes.rowAtPoint(evt.getPoint());
-                
+
                 rellenarEjemplarSugerido(listaMatriculas.get(row));
             }
         });
@@ -246,7 +246,6 @@ public class FrameEntrega extends javax.swing.JFrame {
         textBusquedaNIA.setBackground(Colores.fondo);
         textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         textBusquedaNIA.setForeground(Colores.letraNormal);
-        textBusquedaNIA.setText("Codigo NIA");
         textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -937,7 +936,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
     private void textBusquedaNIAFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusLost
         // TODO add your handling code here:
-        textBusquedaNIA.setText(defaultText);
+        textBusquedaNIA.setText(StringsGlobales.placeHolder_nia);
         textBusquedaNIA.setForeground(Colores.campoTextSinFocus);
     }//GEN-LAST:event_textBusquedaNIAFocusLost
 
@@ -1024,32 +1023,20 @@ public class FrameEntrega extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -1060,8 +1047,6 @@ public class FrameEntrega extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSplitPane jSplitPane1;
@@ -1073,23 +1058,15 @@ public class FrameEntrega extends javax.swing.JFrame {
     private javax.swing.JPanel panelCuerpo;
     private javax.swing.JPanel panelEjemplaresEntregados;
     private javax.swing.JPanel panelGestionAsignaturas;
-    private javax.swing.JPanel panelInfoGeneral;
-    private javax.swing.JPanel panelInfoGeneral1;
     private javax.swing.JPanel panelInfoGeneral2;
-    private javax.swing.JPanel panelInformacion;
-    private javax.swing.JPanel panelInformacion1;
     private javax.swing.JPanel panelInformacion2;
     private javax.swing.JPanel panelLista;
     private javax.swing.JPanel panelTitulo;
-    private javax.swing.JTable tablaPendientes;
+    public static javax.swing.JTable tablaPendientes;
     private javax.swing.JTextField textBusquedaNIA;
     private javax.swing.JTextField textCodigoEjemplar;
     private javax.swing.JLabel textCursoEscolar;
-    private javax.swing.JLabel textNIAAlumno;
-    private javax.swing.JLabel textNIAAlumno1;
     private javax.swing.JLabel textNIAAlumno2;
-    private javax.swing.JLabel textNombreAlumno;
-    private javax.swing.JLabel textNombreAlumno1;
     private javax.swing.JLabel textNombreAlumno2;
     // End of variables declaration//GEN-END:variables
 
@@ -1292,7 +1269,7 @@ public class FrameEntrega extends javax.swing.JFrame {
      * @param nia Deberemos pasarle el NIA del alumno
      */
     public void buscarAlumno(String nia) {
-        if (!nia.equals("") || nia.equals(defaultText)) {
+        if (!nia.equals("") || nia.equals(StringsGlobales.placeHolder_nia)) {
             //Se ha insertado un codigo
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
 
@@ -1446,19 +1423,22 @@ public class FrameEntrega extends javax.swing.JFrame {
         }
 
     }
-    
+
     /**
      * Al pulsar sobre una fila de una tabla esté metodo nos rellenara el campo
      * de buscar Ejemplar con el código del primer ejemplar de ese contenido que
      * no esté prestado.
-     * @param m 
+     *
+     * @param m
      */
-    private void rellenarEjemplarSugerido(Matricula m){
+    private void rellenarEjemplarSugerido(Matricula m) {
         Ejemplar ejemplarSugerido = daoEjemplar.buscarLibre(m.getContenido());
-        
+
         if (ejemplarSugerido != null) {
             textCodigoEjemplar.setText(ejemplarSugerido.getCodigo());
-        }else{
+        } else {
+            textCodigoEjemplar.setText("");
+
             new FramePopup("No se han encontrado libros disponibles "
                     + "correspondientes a la asignatura seleccionada.",
                     Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);

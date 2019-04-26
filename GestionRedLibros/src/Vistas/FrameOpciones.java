@@ -18,14 +18,14 @@
 package Vistas;
 
 import Utilidades.Colores;
-import Utilidades.ComprobarConexion;
+import Utilidades.Conexiones.ComprobarConexion;
 import Utilidades.Configuracion;
-import Utilidades.Imagenes;
-import Utilidades.ImportarAlumnosXML;
-import Utilidades.ImportarContenidoXML;
-import Utilidades.ImportarCursoXML;
-import Utilidades.ImportarGruposXML;
-import Utilidades.ImportarMatriculasXML;
+import Utilidades.Imagenes.Imagenes;
+import Utilidades.Importaciones.ImportarAlumnosXML;
+import Utilidades.Importaciones.ImportarContenidoXML;
+import Utilidades.Importaciones.ImportarCursoXML;
+import Utilidades.Importaciones.ImportarGruposXML;
+import Utilidades.Importaciones.ImportarMatriculasXML;
 import java.sql.SQLException;
 import java.text.ParseException;
 import javax.swing.Icon;
@@ -324,9 +324,9 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addComponent(labelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(btnMostrarContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panelPasswordLayout.setVerticalGroup(
             panelPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,7 +335,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addGroup(panelPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(textContrasena)
-                    .addGroup(panelPasswordLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPasswordLayout.createSequentialGroup()
                         .addComponent(btnMostrarContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())

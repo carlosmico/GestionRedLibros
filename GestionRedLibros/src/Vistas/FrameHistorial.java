@@ -27,7 +27,7 @@ import Pojos.Historial;
 import Renders.RemarcarCeldas;
 import Renders.comboBoxRender;
 import Utilidades.Colores;
-import Utilidades.Imagenes;
+import Utilidades.Imagenes.Imagenes;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyEvent;

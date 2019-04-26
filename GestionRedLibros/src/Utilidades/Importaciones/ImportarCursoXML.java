@@ -1,8 +1,8 @@
-package Utilidades;
+package Utilidades.Importaciones;
 
 import Daos.DaoCurso;
 import Pojos.Curso;
-import Utilidades.ImportarMatriculasXML;
+import Utilidades.Importaciones.ImportarMatriculasXML;
 import Vistas.Main;
 import java.io.IOException;
 import java.text.ParseException;

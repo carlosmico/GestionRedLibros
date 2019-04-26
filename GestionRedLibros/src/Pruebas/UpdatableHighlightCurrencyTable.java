@@ -4,7 +4,7 @@
  * Prentice Hall
  */
 import Utilidades.Colores;
-import Utilidades.Imagenes;
+import Utilidades.Imagenes.Imagenes;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
