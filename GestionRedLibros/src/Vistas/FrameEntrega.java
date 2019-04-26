@@ -1394,6 +1394,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         Ejemplar ejemplarSugerido = daoEjemplar.buscarLibre(m.getContenido());
         
         if (ejemplarSugerido != null) {
+            textCodigoEjemplar.setText(ejemplarSugerido.getCodigo());
         }else{
             new FramePopup("No se han encontrado libros disponibles "
                     + "correspondientes a la asignatura seleccionada.",
