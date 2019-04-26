@@ -22,7 +22,6 @@ import Daos.*;
 import Pojos.*;
 import Renders.comboBoxRender;
 import Utilidades.*;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -33,10 +32,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.persistence.PersistenceException;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import org.hibernate.Session;
 
 /**
