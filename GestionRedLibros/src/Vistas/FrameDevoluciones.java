@@ -133,7 +133,6 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        textBusquedaNIA = new javax.swing.JTextField();
         panelTitulo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         panelCuerpo = new javax.swing.JPanel();
@@ -141,6 +140,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         panelLista = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         panelBusquedaNIA = new javax.swing.JPanel();
+        textBusquedaNIA = new javax.swing.JTextField();
         btnBusquedaNIA = new com.mommoo.flat.button.FlatButton();
         panelBusquedaLista = new javax.swing.JPanel();
         cbCurso = new javax.swing.JComboBox();
@@ -179,28 +179,6 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
-        textBusquedaNIA.setBackground(Colores.fondo);
-        textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textBusquedaNIA.setForeground(Colores.letraNormal);
-        textBusquedaNIA.setText("Codigo NIA");
-        textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                textBusquedaNIAFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                textBusquedaNIAFocusLost(evt);
-            }
-        });
-        textBusquedaNIA.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textBusquedaNIAKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                textBusquedaNIAKeyReleased(evt);
-            }
-        });
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Devoluciones");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -235,12 +213,35 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         panelLista.setBackground(Colores.fondo);
         panelLista.setMaximumSize(new java.awt.Dimension(450, 32767));
-        panelLista.setMinimumSize(new java.awt.Dimension(400, 0));
+        panelLista.setMinimumSize(new java.awt.Dimension(406, 0));
 
         jPanel1.setBackground(Colores.fondo);
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel1.setMinimumSize(new java.awt.Dimension(400, 0));
 
         panelBusquedaNIA.setBackground(Colores.fondo);
+
+        textBusquedaNIA.setBackground(Colores.fondo);
+        textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textBusquedaNIA.setForeground(Colores.letraNormal);
+        textBusquedaNIA.setText("Codigo NIA");
+        textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textBusquedaNIAFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textBusquedaNIAFocusLost(evt);
+            }
+        });
+        textBusquedaNIA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textBusquedaNIAKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textBusquedaNIAKeyReleased(evt);
+            }
+        });
 
         btnBusquedaNIA.setBackground(Colores.botones);
         btnBusquedaNIA.setForeground(Colores.letraBotones);
@@ -257,7 +258,9 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         panelBusquedaNIALayout.setHorizontalGroup(
             panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBusquedaNIALayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(textBusquedaNIA)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBusquedaNIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -265,7 +268,9 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBusquedaNIALayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnBusquedaNIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBusquedaNIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textBusquedaNIA))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -314,7 +319,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                     .addGroup(panelBusquedaListaLayout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(42, 42, 42))
-                    .addComponent(cbCurso, 0, 368, Short.MAX_VALUE))
+                    .addComponent(cbCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelBusquedaListaLayout.setVerticalGroup(
@@ -339,8 +344,10 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelBusquedaNIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelBusquedaLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jSeparator2)
+                .addGap(6, 6, 6))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,9 +364,9 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         panelLista.setLayout(panelListaLayout);
         panelListaLayout.setHorizontalGroup(
             panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelListaLayout.createSequentialGroup()
+            .addGroup(panelListaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelListaLayout.setVerticalGroup(
@@ -520,11 +527,6 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jlistEjemplaresPendientes.setBackground(Colores.fondo);
         jlistEjemplaresPendientes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jlistEjemplaresPendientes.setForeground(Colores.letraNormal);
-        jlistEjemplaresPendientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlistEjemplaresPendientesMouseClicked(evt);
-            }
-        });
         jScrollPane5.setViewportView(jlistEjemplaresPendientes);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -680,14 +682,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInformacionLayout.createSequentialGroup()
                 .addContainerGap()
-<<<<<<< HEAD
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-=======
-                .addGroup(panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 1206, Short.MAX_VALUE))
->>>>>>> master
                 .addContainerGap())
         );
         panelInformacionLayout.setVerticalGroup(
@@ -859,13 +854,6 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         // TODO add your handling code here:
         campoBusquedaTemp = textBusquedaNIA.getText();
     }//GEN-LAST:event_textBusquedaNIAKeyReleased
-
-    private void jlistEjemplaresPendientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlistEjemplaresPendientesMouseClicked
-        // TODO add your handling code here:
-        Historial historialSeleccionado = (Historial) jlistEjemplaresPendientes.getModel().getElementAt(jlistEjemplaresPendientes.getSelectedIndex());
-        
-        buscarEjemplar(historialSeleccionado.getEjemplar().getCodigo());
-    }//GEN-LAST:event_jlistEjemplaresPendientesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1062,8 +1050,6 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                         modoEdicion(true);
 
                     } else {
-                        modoEdicion(false);
-                        
                         new FramePopup("El alumno no tiene pendiente ninguna entrega.",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
