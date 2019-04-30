@@ -28,6 +28,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -43,6 +44,14 @@ public class Configuracion {
     /**
      * CONFIGURACIÓN DE RED
      */
+    /**
+     * Metodo que guarda la configuración de red del programa.
+     *
+     * @param ip
+     * @param puerto
+     * @param usuario
+     * @param password
+     */
     public static void guardarRed(String ip, int puerto, String usuario, String password) {
         propiedades.setProperty("ip", ip);
         propiedades.setProperty("puerto", puerto + "");
@@ -56,7 +65,7 @@ public class Configuracion {
         } catch (Exception ex) {
             ex.printStackTrace();
 
-            new FramePopup("Error al guardar la configuración de red.",
+            new FramePopup(new JFrame(), "Error al guardar la configuración de red.",
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
                     "Aceptar").setVisible(true);
         }
@@ -95,7 +104,7 @@ public class Configuracion {
         } catch (Exception ex) {
             ex.printStackTrace();
 
-            new FramePopup("Error al guardar la configuración de colores.",
+            new FramePopup(new JFrame(), "Error al guardar la configuración de colores.",
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
                     "Aceptar").setVisible(true);
         }

@@ -36,6 +36,7 @@ import org.hibernate.Session;
  * @author Jose Sanchis
  */
 public class FrameAlumno extends javax.swing.JFrame {
+
     private Session session = Main.gestorSesiones.getSession();
 
     private Alumno alumno;
@@ -77,7 +78,7 @@ public class FrameAlumno extends javax.swing.JFrame {
         };
         worker.execute();
         if (frameCarga == null) {
-            frameCarga = new FramePopup();
+            frameCarga = new FramePopup(this);
         }
         frameCarga.setVisible(true);
 

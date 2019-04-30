@@ -43,7 +43,7 @@ public class FrameMatriculas extends javax.swing.JFrame {
 
     private Session session = Main.gestorSesiones.getSession();
 
-    FramePopup frameCarga = null;
+    FramePopup_ frameCarga = null;
 
     public DaoMatricula daoMatricula;
 

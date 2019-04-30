@@ -26,15 +26,18 @@ import Utilidades.Estado;
 import Utilidades.Imagenes.Imagenes;
 import Vistas.FramePopup;
 import java.awt.Color;
+import java.awt.Frame;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
  *
  * @author Jose Sanchis
  */
-public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
+public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
 
     private Historial historial;
 
@@ -42,15 +45,18 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
 
     private String placeHolderObservaciones = "Escribe una observación…";
 
+    //Cogemos el FramePadre para trabajar con los dialogos
+    private JFrame topFrame;
+
     /**
      * Creates new form FrameConfirmacionEntrega
      */
     public FrameConfirmacionDevolucion(Historial h) {
         initComponents();
 
-        textObservaciones.setText(placeHolderObservaciones);
+        topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
-        this.setModal(true);
+        textObservaciones.setText(placeHolderObservaciones);
 
         this.historial = h;
 
@@ -505,12 +511,13 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
     private void btnImprimirEtiquetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetaActionPerformed
         // TODO add your handling code here:
         SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+
             protected Void doInBackground() throws InterruptedException {
                 CodigoBarras cb = new CodigoBarras();
                 try {
                     cb.imprimirIndividual(historial.getEjemplar(), cb.generarCodigoIndividual(historial.getEjemplar().getCodigo()));
                 } catch (Exception e) {
-                    new FramePopup("No se ha podido imprimir el codigo", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
+                    new FramePopup(topFrame, "No se ha podido imprimir el codigo", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
                 }
                 return null;
             }
@@ -521,7 +528,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
             }
         };
         worker.execute();
-        framePopup = new FramePopup("Generando etiqueta de impresión...");
+        framePopup = new FramePopup(this, "Generando etiqueta de impresión...");
         framePopup.setVisible(true);
     }//GEN-LAST:event_btnImprimirEtiquetaActionPerformed
 
@@ -556,13 +563,13 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
                 }
             };
             worker.execute();
-            framePopup = new FramePopup("Generando historial de préstamo...");
+            framePopup = new FramePopup(this, "Generando historial de préstamo...");
             framePopup.setVisible(true);
         } catch (Exception e) {
             FrameDevoluciones.isConfirmationReady = ConfirmacionDevolucion.CANCELADA;
             e.printStackTrace();
 
-            new FramePopup("Error al devolver el ejemplar.",
+            new FramePopup(this, "Error al devolver el ejemplar.",
                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                     "Aceptar").setVisible(true);
         }
@@ -649,7 +656,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JDialog {
             imgCodigo.setIcon(icon);
         } catch (Exception e) {
             e.printStackTrace();
-            new FramePopup("Error al conseguir el codigo de barras de los ejemplares",
+            new FramePopup(this, "Error al conseguir el codigo de barras de los ejemplares",
                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                     "Aceptar").setVisible(true);
         }

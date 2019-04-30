@@ -21,7 +21,7 @@ import Daos.*;
 import Pojos.*;
 import Vistas.FrameDevoluciones;
 import Vistas.FrameEntrega;
-import Vistas.FramePopup;
+import Vistas.FramePopup_;
 import Vistas.Main;
 import java.awt.event.KeyEvent;
 import java.util.stream.Collectors;
@@ -35,7 +35,7 @@ public class FrameConfirmacionEntrega extends javax.swing.JDialog {
 
     public boolean isLoading = false;
 
-    private FramePopup frameCarga;
+    private FramePopup_ frameCarga;
 
     private DaoAlumno daoAlumno;
 
