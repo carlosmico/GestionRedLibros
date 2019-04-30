@@ -19,11 +19,17 @@ package Vistas;
 
 import Utilidades.Colores;
 import Utilidades.Configuracion;
+import Utilidades.DimensionesFrame;
 import Utilidades.Imagenes.Imagenes;
 import Utilidades.StringsGlobales;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -35,7 +41,11 @@ public class CargaInicial {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        cargaColores();
+        try {
+            cargaColores();
+        } catch (Exception ex) {
+            System.out.println("Error - Fallo al cargar los colores del programa.");
+        }
         
         try {
             new Main().setVisible(true);
@@ -44,20 +54,15 @@ public class CargaInicial {
             new FramePopup("Error al iniciar el programa.", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
         }
     }
-    
-    private static void cargaColores() {
-        try {
-            Colores.fondo = Configuracion.getColor(StringsGlobales.color_fondo);
-            Colores.fondoOscuro = Configuracion.getColor(StringsGlobales.color_fondo_oscuro);
-            Colores.botones = Configuracion.getColor(StringsGlobales.color_fondo_botones);
-            Colores.accento = Configuracion.getColor(StringsGlobales.color_acentos);
-            Colores.letraNormal = Configuracion.getColor(StringsGlobales.color_letra_general);
-            Colores.letraBotones = Configuracion.getColor(StringsGlobales.color_letra_botones);
-            Colores.letraTitulo = Configuracion.getColor(StringsGlobales.color_letra_titulos);
-            Colores.campoTextSinFocus = Configuracion.getColor(StringsGlobales.color_letra_noseleccionada);
-        } catch (IOException ex) {
-            new FramePopup("Error al cargar los colores del programa.",
-                    Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
-        }
+
+    private static void cargaColores() throws IOException {
+        Colores.fondo = Configuracion.getColor(StringsGlobales.color_fondo);
+        Colores.fondoOscuro = Configuracion.getColor(StringsGlobales.color_fondo_oscuro);
+        Colores.botones = Configuracion.getColor(StringsGlobales.color_fondo_botones);
+        Colores.accento = Configuracion.getColor(StringsGlobales.color_acentos);
+        Colores.letraNormal = Configuracion.getColor(StringsGlobales.color_letra_general);
+        Colores.letraBotones = Configuracion.getColor(StringsGlobales.color_letra_botones);
+        Colores.letraTitulo = Configuracion.getColor(StringsGlobales.color_letra_titulos);
+        Colores.campoTextSinFocus = Configuracion.getColor(StringsGlobales.color_letra_noseleccionada);
     }
 }

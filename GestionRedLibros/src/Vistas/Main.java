@@ -13,10 +13,14 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.persistence.criteria.Path;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -58,20 +62,30 @@ public class Main extends javax.swing.JFrame {
         //Comprobamos la conexión al servidor
         //Configuramos la imagen de fondo de la pantalla principal
         //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
-        String icono = "";
-        BufferedImage img = null;
-        icono = "../Imagenes/wallpaper.jpg";
-        
         try {
-            img = ImageIO.read(new File(icono));
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            BufferedImage img = null;
+            
+            String wallpaperGuardado = Configuracion.getWallpaper();
+            
+            img = ImageIO.read(new File("src/Imagenes/wallpapers/" + wallpaperGuardado));
+            
+            Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
+            ImageIcon imageIcon = new ImageIcon(image);
+            
+            wallpaper.setIcon(imageIcon);
+            banner.setVisible(true);
+        } catch (Exception e) {
+            BufferedImage img = null;
+            
+            img = ImageIO.read(new File("src/Imagenes/wallpapers/1.jpg"));
+            
+            Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
+            ImageIcon imageIcon = new ImageIcon(image);
+            
+            wallpaper.setIcon(imageIcon);
+            banner.setVisible(true);
+            e.printStackTrace();
         }
-        
-        Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
-        ImageIcon imageIcon = new ImageIcon(image);
-        wallpaper.setIcon(imageIcon);
-        banner.setVisible(true);
 //</editor-fold>
 
         //Carga de configuración inicial
@@ -386,35 +400,7 @@ public class Main extends javax.swing.JFrame {
     private void compruebaConexionBD(boolean main, String nombreFrame) {
         if (framePopup == null) {
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-                protected Void doInBackground() throws InterruptedException {
-                    String ip, usuario, password;
-                    int puerto;
-
-                    try {
-                        ip = Configuracion.getIp();
-                        puerto = Integer.parseInt(Configuracion.getPuerto());
-                        usuario = Configuracion.getUsuario();
-                        password = Configuracion.getPassword();
-
-                        ComprobarConexion.comprobarConexion(
-                                ip,
-                                puerto,
-                                "institut",
-                                usuario,
-                                password);
-
-                        gestorSesiones = new GestorSesiones();
-
-                        gestorSesiones.configurarPropiedades(ip, puerto, usuario, password);
-
-                        existeConexion = true;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        existeConexion = false;
-                    }
-
-                    return null;
-                }
+                protected Void doInBackground() throws InterruptedException 
 
                 protected void done() {
                     if (existeConexion) {
@@ -489,7 +475,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel banner;
+    public javax.swing.JPanel banner;
     private com.mommoo.flat.button.FlatButton btnAydua;
     private com.mommoo.flat.button.FlatButton btnDevoluciones;
     private com.mommoo.flat.button.FlatButton btnEntrega;
@@ -500,6 +486,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel wallpaper;
+    public javax.swing.JLabel wallpaper;
     // End of variables declaration//GEN-END:variables
 }

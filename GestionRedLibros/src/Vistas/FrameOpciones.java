@@ -20,6 +20,7 @@ package Vistas;
 import Utilidades.Colores;
 import Utilidades.Conexiones.ComprobarConexion;
 import Utilidades.Configuracion;
+import Utilidades.DimensionesFrame;
 import Utilidades.Imagenes.Imagenes;
 import Utilidades.Importaciones.ImportarAlumnosXML;
 import Utilidades.Importaciones.ImportarContenidoXML;
@@ -28,15 +29,20 @@ import Utilidades.Importaciones.ImportarGruposXML;
 import Utilidades.Importaciones.ImportarMatriculasXML;
 import Utilidades.StringsGlobales;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import jdk.nashorn.internal.runtime.ParserException;
@@ -51,14 +57,18 @@ public class FrameOpciones extends javax.swing.JFrame {
 
     private FramePopup frameCarga = null;
 
+    private Main main = null;
+
     /**
      * Creates new form FrameDevoluciones
      */
-    public FrameOpciones() {
+    public FrameOpciones(Main main) {
         initComponents();
         //<editor-fold defaultstate="collapsed" desc="Configuracion Tabbed PAne">
         //tabbedPage.setIconAt(1, new ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-down-outline.png")));
         //</editor-fold>
+
+        this.main = main;
 
         this.setLocationRelativeTo(null);
 
@@ -161,9 +171,13 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
         jPanel23 = new javax.swing.JPanel();
+        wallpaper1 = new javax.swing.JLabel();
         jPanel24 = new javax.swing.JPanel();
+        wallpaper2 = new javax.swing.JLabel();
         jPanel25 = new javax.swing.JPanel();
+        wallpaper3 = new javax.swing.JLabel();
         jPanel26 = new javax.swing.JPanel();
+        wallpaper4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opciones");
@@ -1195,72 +1209,104 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel16.setForeground(Colores.letraNormal);
-        jLabel16.setText("Temas");
+        jLabel16.setText("Fondos");
 
         jPanel22.setBackground(Colores.fondo);
         jPanel22.setLayout(new java.awt.GridLayout(1, 4, 25, 0));
 
-        jPanel23.setBackground(new java.awt.Color(255, 0, 255));
+        jPanel23.setBackground(new java.awt.Color(0, 0, 0));
         jPanel23.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         jPanel23.setForeground(new java.awt.Color(255, 0, 102));
+
+        wallpaper1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/wallpapers/1peq.jpg"))); // NOI18N
+        wallpaper1.setText("jLabel7");
+        wallpaper1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                wallpaper1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
         jPanel23Layout.setHorizontalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(wallpaper1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, Short.MAX_VALUE)
         );
         jPanel23Layout.setVerticalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(wallpaper1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, Short.MAX_VALUE)
         );
 
         jPanel22.add(jPanel23);
 
-        jPanel24.setBackground(new java.awt.Color(255, 153, 153));
+        jPanel24.setBackground(new java.awt.Color(0, 0, 0));
         jPanel24.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+
+        wallpaper2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/wallpapers/2peq.jpg"))); // NOI18N
+        wallpaper2.setText("jLabel7");
+        wallpaper2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                wallpaper2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);
         jPanel24Layout.setHorizontalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(wallpaper2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, Short.MAX_VALUE)
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(wallpaper2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, Short.MAX_VALUE)
         );
 
         jPanel22.add(jPanel24);
 
-        jPanel25.setBackground(new java.awt.Color(0, 51, 255));
+        jPanel25.setBackground(new java.awt.Color(0, 0, 0));
         jPanel25.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+
+        wallpaper3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/wallpapers/3peq.jpg"))); // NOI18N
+        wallpaper3.setText("jLabel7");
+        wallpaper3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                wallpaper3MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
         jPanel25.setLayout(jPanel25Layout);
         jPanel25Layout.setHorizontalGroup(
             jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(wallpaper3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, Short.MAX_VALUE)
         );
         jPanel25Layout.setVerticalGroup(
             jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(wallpaper3, javax.swing.GroupLayout.PREFERRED_SIZE, 178, Short.MAX_VALUE)
         );
 
         jPanel22.add(jPanel25);
 
-        jPanel26.setBackground(new java.awt.Color(51, 255, 102));
+        jPanel26.setBackground(new java.awt.Color(0, 0, 0));
         jPanel26.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+
+        wallpaper4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/wallpapers/4peq.jpg"))); // NOI18N
+        wallpaper4.setText("jLabel7");
+        wallpaper4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                wallpaper4MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
         jPanel26.setLayout(jPanel26Layout);
         jPanel26Layout.setHorizontalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(wallpaper4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, Short.MAX_VALUE)
         );
         jPanel26Layout.setVerticalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(wallpaper4, javax.swing.GroupLayout.PREFERRED_SIZE, 178, Short.MAX_VALUE)
         );
 
         jPanel22.add(jPanel26);
@@ -1921,6 +1967,34 @@ public class FrameOpciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSelLetraDeseleccionadaMouseClicked
 
+    private void wallpaper1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wallpaper1MouseClicked
+        Configuracion.guardarWallpaper("1.jpg");
+        
+        try{
+            BufferedImage img = ImageIO.read(new File("src/Imagenes/wallpapers/1.jpg"));
+            
+            Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
+            ImageIcon imageIcon = new ImageIcon(image);
+            
+            main.wallpaper.setIcon(imageIcon);
+            main.banner.setVisible(true);
+        }catch(Exception e){
+            
+        }
+    }//GEN-LAST:event_wallpaper1MouseClicked
+
+    private void wallpaper2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wallpaper2MouseClicked
+        Configuracion.guardarWallpaper("2.jpg");
+    }//GEN-LAST:event_wallpaper2MouseClicked
+
+    private void wallpaper3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wallpaper3MouseClicked
+        Configuracion.guardarWallpaper("3.jpg");
+    }//GEN-LAST:event_wallpaper3MouseClicked
+
+    private void wallpaper4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wallpaper4MouseClicked
+        Configuracion.guardarWallpaper("4.jpg");
+    }//GEN-LAST:event_wallpaper4MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1952,7 +2026,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameOpciones().setVisible(true);
+                new FrameOpciones(null).setVisible(true);
             }
         });
     }
@@ -2046,6 +2120,10 @@ public class FrameOpciones extends javax.swing.JFrame {
     private javax.swing.JTextField textRutaGrupos;
     private javax.swing.JTextField textRutaMatriculas;
     private javax.swing.JTextField textUsuario;
+    private javax.swing.JLabel wallpaper1;
+    private javax.swing.JLabel wallpaper2;
+    private javax.swing.JLabel wallpaper3;
+    private javax.swing.JLabel wallpaper4;
     // End of variables declaration//GEN-END:variables
 
     private void cargarConfiguracion() {
@@ -2059,7 +2137,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
                     "Aceptar").setVisible(true);
         }
-        
+
         try {
             btnSelFondo.setBackground(Configuracion.getColor(StringsGlobales.color_fondo));
             btnSelFondoOscuro.setBackground(Configuracion.getColor(StringsGlobales.color_fondo_oscuro));
@@ -2070,9 +2148,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             btnSelLetraTitulo.setBackground(Configuracion.getColor(StringsGlobales.color_letra_titulos));
             btnSelLetraDeseleccionada.setBackground(Configuracion.getColor(StringsGlobales.color_letra_noseleccionada));
         } catch (Exception e) {
-            new FramePopup("Error al cargar la configuración de colores.",
-                    new ImageIcon("/Imagenes/icons/alert-black.png"),
-                    "Aceptar").setVisible(true);
+            System.out.println("Error - Fallo al cargar la configuración de los colores.");
         }
 
     }

@@ -39,19 +39,10 @@ public class Configuracion {
     private static final String rutaConfiguracion = Thread.currentThread().getContextClassLoader().getResource("").getPath()
             + "configuracion.properties";
     private static final Properties propiedades = new Properties();
-    
+
     /**
      * CONFIGURACIÓN DE RED
      */
-    
-    /**
-     * Metodo que guarda la configuración de red del programa.
-     * @param ip
-     * @param puerto
-     * @param usuario
-     * @param password 
-     */
-
     public static void guardarRed(String ip, int puerto, String usuario, String password) {
         propiedades.setProperty("ip", ip);
         propiedades.setProperty("puerto", puerto + "");
@@ -67,7 +58,7 @@ public class Configuracion {
 
             new FramePopup("Error al guardar la configuración de red.",
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
-                     "Aceptar").setVisible(true);
+                    "Aceptar").setVisible(true);
         }
     }
 
@@ -90,14 +81,13 @@ public class Configuracion {
         propiedades.load(new FileInputStream(rutaConfiguracion));
         return propiedades.getProperty("password");
     }
-    
+
     /**
      * CONFIGURACIÓN DE COLORES
      */
-    
     public static void guardarColor(String nombreColor, Color color) {
         propiedades.setProperty(nombreColor, Integer.toString(color.getRGB()));
-        
+
         try {
             OutputStream output = new FileOutputStream(rutaConfiguracion);
 
@@ -107,22 +97,77 @@ public class Configuracion {
 
             new FramePopup("Error al guardar la configuración de colores.",
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
-                     "Aceptar").setVisible(true);
+                    "Aceptar").setVisible(true);
+        }
+    }
+
+    public static Color getColor(String nombreColor) throws FileNotFoundException, IOException {
+        propiedades.load(new FileInputStream(rutaConfiguracion));
+
+        String colorGuardado = propiedades.getProperty(nombreColor);
+
+        Color color = null;
+
+        color = new Color(Integer.parseInt(colorGuardado));
+
+        switch (nombreColor) {
+            case StringsGlobales.color_fondo:
+                color = Colores.fondo;
+                break;
+
+            case StringsGlobales.color_fondo_oscuro:
+                color = Colores.fondoOscuro;
+                break;
+
+            case StringsGlobales.color_fondo_botones:
+                color = Colores.botones;
+                break;
+
+            case StringsGlobales.color_acentos:
+                color = Colores.accento;
+                break;
+
+            case StringsGlobales.color_letra_botones:
+                color = Colores.letraBotones;
+                break;
+
+            case StringsGlobales.color_letra_general:
+                color = Colores.letraNormal;
+                break;
+
+            case StringsGlobales.color_letra_titulos:
+                color = Colores.letraTitulo;
+                break;
+
+            case StringsGlobales.color_letra_noseleccionada:
+                color = Colores.campoTextSinFocus;
+                break;
+        }
+
+        return color;
+    }
+    
+    /**
+     * CONFIGURACIÓN DE WALLPAPER
+     */
+    public static void guardarWallpaper(String wallpaper){
+        propiedades.setProperty("wallpaper", wallpaper);
+
+        try {
+            OutputStream output = new FileOutputStream(rutaConfiguracion);
+
+            propiedades.store(output, null);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+            new FramePopup("Error al guardar la configuración del wallpaper.",
+                    new ImageIcon("/Imagenes/icons/alert-black.png"),
+                    "Aceptar").setVisible(true);
         }
     }
     
-    public static Color getColor(String nombreColor) throws FileNotFoundException, IOException{
+    public static String getWallpaper() throws FileNotFoundException, IOException{
         propiedades.load(new FileInputStream(rutaConfiguracion));
-        String colorGuardado = propiedades.getProperty(nombreColor);
-        
-        Color color = null;
-        
-        try{
-            color = new Color(Integer.parseInt(colorGuardado));
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        
-        return color;
+        return propiedades.getProperty("wallpaper");
     }
 }
