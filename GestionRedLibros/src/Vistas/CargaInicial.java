@@ -22,8 +22,7 @@ import Utilidades.Configuracion;
 import Utilidades.Imagenes.Imagenes;
 import Utilidades.StringsGlobales;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /**
  *
@@ -36,15 +35,15 @@ public class CargaInicial {
      */
     public static void main(String[] args) {
         cargaColores();
-        
+
         try {
             new Main().setVisible(true);
         } catch (IOException ex) {
             ex.printStackTrace();
-            new FramePopup("Error al iniciar el programa.", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
+            new FramePopup(new JFrame(), "Error al iniciar el programa.", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
         }
     }
-    
+
     private static void cargaColores() {
         try {
             Colores.fondo = Configuracion.getColor(StringsGlobales.color_fondo);
@@ -56,7 +55,7 @@ public class CargaInicial {
             Colores.letraTitulo = Configuracion.getColor(StringsGlobales.color_letra_titulos);
             Colores.campoTextSinFocus = Configuracion.getColor(StringsGlobales.color_letra_noseleccionada);
         } catch (IOException ex) {
-            new FramePopup("Error al cargar los colores del programa.",
+            new FramePopup(new JFrame(), "Error al cargar los colores del programa.",
                     Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
         }
     }

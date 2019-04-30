@@ -2059,7 +2059,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
                     "Aceptar").setVisible(true);
         }
-        
+
         try {
             btnSelFondo.setBackground(Configuracion.getColor(StringsGlobales.color_fondo));
             btnSelFondoOscuro.setBackground(Configuracion.getColor(StringsGlobales.color_fondo_oscuro));
@@ -2070,7 +2070,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             btnSelLetraTitulo.setBackground(Configuracion.getColor(StringsGlobales.color_letra_titulos));
             btnSelLetraDeseleccionada.setBackground(Configuracion.getColor(StringsGlobales.color_letra_noseleccionada));
         } catch (Exception e) {
-            new FramePopup("Error al cargar la configuración de colores.",
+            new FramePopup(this, "Error al cargar la configuración de colores.",
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
                     "Aceptar").setVisible(true);
         }
