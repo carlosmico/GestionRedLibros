@@ -18,6 +18,7 @@
 package Utilidades;
 
 import Vistas.FramePopup;
+import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -93,9 +94,10 @@ public class Configuracion {
     /**
      * CONFIGURACIÓN DE COLORES
      */
-    public static void guardarColor(String nombreColor, String color) {
-        propiedades.setProperty(nombreColor, color);
-
+    
+    public static void guardarColor(String nombreColor, Color color) {
+        propiedades.setProperty(nombreColor, Integer.toString(color.getRGB()));
+        
         try {
             OutputStream output = new FileOutputStream(rutaConfiguracion);
 
@@ -108,9 +110,19 @@ public class Configuracion {
                     "Aceptar").setVisible(true);
         }
     }
-
-    public String getColor(String nombreColor) throws FileNotFoundException, IOException {
+    
+    public static Color getColor(String nombreColor) throws FileNotFoundException, IOException{
         propiedades.load(new FileInputStream(rutaConfiguracion));
-        return propiedades.getProperty(nombreColor);
+        String colorGuardado = propiedades.getProperty(nombreColor);
+        
+        Color color = null;
+        
+        try{
+            color = new Color(Integer.parseInt(colorGuardado));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        return color;
     }
 }

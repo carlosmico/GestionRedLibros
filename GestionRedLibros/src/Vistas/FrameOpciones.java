@@ -26,10 +26,16 @@ import Utilidades.Importaciones.ImportarContenidoXML;
 import Utilidades.Importaciones.ImportarCursoXML;
 import Utilidades.Importaciones.ImportarGruposXML;
 import Utilidades.Importaciones.ImportarMatriculasXML;
+import Utilidades.StringsGlobales;
+import java.awt.Color;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -138,10 +144,10 @@ public class FrameOpciones extends javax.swing.JFrame {
         btnSelAcento = new javax.swing.JPanel();
         panelBotones = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
-        btnSelBotones = new javax.swing.JPanel();
+        btnSelFondoBotones = new javax.swing.JPanel();
         panelLetraNormal = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
-        btnSelLetraNormal = new javax.swing.JPanel();
+        btnSelLetraGeneral = new javax.swing.JPanel();
         panelLetraBotones = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         btnSelLetraBotones = new javax.swing.JPanel();
@@ -150,7 +156,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         btnSelLetraTitulo = new javax.swing.JPanel();
         panelCampoTextoSinFocus = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
-        btnSelCampoTextoSinFocus = new javax.swing.JPanel();
+        btnSelLetraDeseleccionada = new javax.swing.JPanel();
         panelTemas = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
@@ -161,7 +167,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opciones");
-        setMinimumSize(new java.awt.Dimension(300, 36));
+        setMinimumSize(new java.awt.Dimension(300, 50));
         setPreferredSize(new java.awt.Dimension(1280, 720));
         setResizable(false);
         setSize(new java.awt.Dimension(5000, 0));
@@ -395,14 +401,14 @@ public class FrameOpciones extends javax.swing.JFrame {
             .addGroup(panelGeneralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelConfiguracionBBDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(752, Short.MAX_VALUE))
+                .addContainerGap(740, Short.MAX_VALUE))
         );
         panelGeneralLayout.setVerticalGroup(
             panelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGeneralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelConfiguracionBBDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(411, Short.MAX_VALUE))
+                .addContainerGap(376, Short.MAX_VALUE))
         );
 
         tabbedPage.addTab("Red", panelGeneral);
@@ -454,7 +460,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addGroup(panelImportCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelImportCursosLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(textRutaCursos, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                        .addComponent(textRutaCursos, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSeleccionCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImportCursosLayout.createSequentialGroup()
@@ -473,7 +479,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                     .addComponent(btnSeleccionCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnImportarCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         jPanel19.add(panelImportCursos);
@@ -518,7 +524,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                         .addComponent(btnImportarGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelImportGruposLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(textRutaGrupos, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                        .addComponent(textRutaGrupos, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSeleccionGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -589,7 +595,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                         .addComponent(btnSeleccionAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelImportAsignaturasLayout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(0, 397, Short.MAX_VALUE)))
+                        .addGap(0, 391, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelImportAsignaturasLayout.setVerticalGroup(
@@ -603,7 +609,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                     .addComponent(btnSeleccionAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnImportarAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         jPanel19.add(panelImportAsignaturas);
@@ -716,7 +722,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                         .addComponent(btnSeleccionMatriculas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelImportMatriculasLayout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addGap(0, 412, Short.MAX_VALUE))
+                        .addGap(0, 406, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImportMatriculasLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnImportarMatriculas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -744,14 +750,14 @@ public class FrameOpciones extends javax.swing.JFrame {
             panelImportacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelImportacionesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, 1278, Short.MAX_VALUE)
+                .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, 1266, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelImportacionesLayout.setVerticalGroup(
             panelImportacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelImportacionesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -786,6 +792,11 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         btnSelFondo.setBackground(Colores.fondo);
         btnSelFondo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        btnSelFondo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSelFondoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout btnSelFondoLayout = new javax.swing.GroupLayout(btnSelFondo);
         btnSelFondo.setLayout(btnSelFondoLayout);
@@ -829,6 +840,11 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         btnSelFondoOscuro.setBackground(Colores.fondoOscuro);
         btnSelFondoOscuro.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        btnSelFondoOscuro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSelFondoOscuroMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout btnSelFondoOscuroLayout = new javax.swing.GroupLayout(btnSelFondoOscuro);
         btnSelFondoOscuro.setLayout(btnSelFondoOscuroLayout);
@@ -872,6 +888,11 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         btnSelAcento.setBackground(Colores.accento);
         btnSelAcento.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        btnSelAcento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSelAcentoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout btnSelAcentoLayout = new javax.swing.GroupLayout(btnSelAcento);
         btnSelAcento.setLayout(btnSelAcentoLayout);
@@ -881,7 +902,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         );
         btnSelAcentoLayout.setVerticalGroup(
             btnSelAcentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 61, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panelAcentoLayout = new javax.swing.GroupLayout(panelAcento);
@@ -900,10 +921,8 @@ public class FrameOpciones extends javax.swing.JFrame {
             .addGroup(panelAcentoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelAcentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelAcentoLayout.createSequentialGroup()
-                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 27, Short.MAX_VALUE))
-                    .addComponent(btnSelAcento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSelAcento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -915,17 +934,22 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel22.setForeground(Colores.letraNormal);
         jLabel22.setText("Fondo Botones:");
 
-        btnSelBotones.setBackground(Colores.botones);
-        btnSelBotones.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        btnSelFondoBotones.setBackground(Colores.botones);
+        btnSelFondoBotones.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        btnSelFondoBotones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSelFondoBotonesMouseClicked(evt);
+            }
+        });
 
-        javax.swing.GroupLayout btnSelBotonesLayout = new javax.swing.GroupLayout(btnSelBotones);
-        btnSelBotones.setLayout(btnSelBotonesLayout);
-        btnSelBotonesLayout.setHorizontalGroup(
-            btnSelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout btnSelFondoBotonesLayout = new javax.swing.GroupLayout(btnSelFondoBotones);
+        btnSelFondoBotones.setLayout(btnSelFondoBotonesLayout);
+        btnSelFondoBotonesLayout.setHorizontalGroup(
+            btnSelFondoBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
-        btnSelBotonesLayout.setVerticalGroup(
-            btnSelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btnSelFondoBotonesLayout.setVerticalGroup(
+            btnSelFondoBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
@@ -937,7 +961,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSelFondoBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panelBotonesLayout.setVerticalGroup(
@@ -945,7 +969,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             .addGroup(panelBotonesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSelBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSelFondoBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -956,19 +980,24 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         jLabel23.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel23.setForeground(Colores.letraNormal);
-        jLabel23.setText("Letra Botones:");
+        jLabel23.setText("Letra General:");
 
-        btnSelLetraNormal.setBackground(Colores.letraBotones);
-        btnSelLetraNormal.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        btnSelLetraGeneral.setBackground(Colores.letraBotones);
+        btnSelLetraGeneral.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        btnSelLetraGeneral.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSelLetraGeneralMouseClicked(evt);
+            }
+        });
 
-        javax.swing.GroupLayout btnSelLetraNormalLayout = new javax.swing.GroupLayout(btnSelLetraNormal);
-        btnSelLetraNormal.setLayout(btnSelLetraNormalLayout);
-        btnSelLetraNormalLayout.setHorizontalGroup(
-            btnSelLetraNormalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout btnSelLetraGeneralLayout = new javax.swing.GroupLayout(btnSelLetraGeneral);
+        btnSelLetraGeneral.setLayout(btnSelLetraGeneralLayout);
+        btnSelLetraGeneralLayout.setHorizontalGroup(
+            btnSelLetraGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
-        btnSelLetraNormalLayout.setVerticalGroup(
-            btnSelLetraNormalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btnSelLetraGeneralLayout.setVerticalGroup(
+            btnSelLetraGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
@@ -980,7 +1009,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel23)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSelLetraNormal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSelLetraGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panelLetraNormalLayout.setVerticalGroup(
@@ -989,7 +1018,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelLetraNormalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
-                    .addComponent(btnSelLetraNormal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSelLetraGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -999,10 +1028,15 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         jLabel20.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel20.setForeground(Colores.letraNormal);
-        jLabel20.setText("Letra General:");
+        jLabel20.setText("Letra Botones:");
 
         btnSelLetraBotones.setBackground(Colores.letraNormal);
         btnSelLetraBotones.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        btnSelLetraBotones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSelLetraBotonesMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout btnSelLetraBotonesLayout = new javax.swing.GroupLayout(btnSelLetraBotones);
         btnSelLetraBotones.setLayout(btnSelLetraBotonesLayout);
@@ -1046,6 +1080,11 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         btnSelLetraTitulo.setBackground(Colores.letraTitulo);
         btnSelLetraTitulo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        btnSelLetraTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSelLetraTituloMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout btnSelLetraTituloLayout = new javax.swing.GroupLayout(btnSelLetraTitulo);
         btnSelLetraTitulo.setLayout(btnSelLetraTituloLayout);
@@ -1087,17 +1126,22 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel18.setForeground(Colores.letraNormal);
         jLabel18.setText("Letra Deseleccionada:");
 
-        btnSelCampoTextoSinFocus.setBackground(Colores.campoTextSinFocus);
-        btnSelCampoTextoSinFocus.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        btnSelLetraDeseleccionada.setBackground(Colores.campoTextSinFocus);
+        btnSelLetraDeseleccionada.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        btnSelLetraDeseleccionada.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSelLetraDeseleccionadaMouseClicked(evt);
+            }
+        });
 
-        javax.swing.GroupLayout btnSelCampoTextoSinFocusLayout = new javax.swing.GroupLayout(btnSelCampoTextoSinFocus);
-        btnSelCampoTextoSinFocus.setLayout(btnSelCampoTextoSinFocusLayout);
-        btnSelCampoTextoSinFocusLayout.setHorizontalGroup(
-            btnSelCampoTextoSinFocusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout btnSelLetraDeseleccionadaLayout = new javax.swing.GroupLayout(btnSelLetraDeseleccionada);
+        btnSelLetraDeseleccionada.setLayout(btnSelLetraDeseleccionadaLayout);
+        btnSelLetraDeseleccionadaLayout.setHorizontalGroup(
+            btnSelLetraDeseleccionadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
-        btnSelCampoTextoSinFocusLayout.setVerticalGroup(
-            btnSelCampoTextoSinFocusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btnSelLetraDeseleccionadaLayout.setVerticalGroup(
+            btnSelLetraDeseleccionadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
@@ -1108,8 +1152,8 @@ public class FrameOpciones extends javax.swing.JFrame {
             .addGroup(panelCampoTextoSinFocusLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 335, Short.MAX_VALUE)
-                .addComponent(btnSelCampoTextoSinFocus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 329, Short.MAX_VALUE)
+                .addComponent(btnSelLetraDeseleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panelCampoTextoSinFocusLayout.setVerticalGroup(
@@ -1118,7 +1162,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelCampoTextoSinFocusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
-                    .addComponent(btnSelCampoTextoSinFocus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSelLetraDeseleccionada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1292,14 +1336,14 @@ public class FrameOpciones extends javax.swing.JFrame {
             panelPersonalizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPersonalizacionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1277, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1265, Short.MAX_VALUE)
                 .addGap(7, 7, 7))
         );
         panelPersonalizacionLayout.setVerticalGroup(
             panelPersonalizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPersonalizacionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1322,7 +1366,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, 1292, Short.MAX_VALUE)
+            .addComponent(panelSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -1659,6 +1703,12 @@ public class FrameOpciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnComprobarActionPerformed
 
+    /**
+     * Método que nos permite mostrar u ocultar la contraseña introducica
+     * actualmente
+     *
+     * @param evt
+     */
     private void btnMostrarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarContrasenaActionPerformed
         // TODO add your handling code here:
         if (mostrarContrasena) {
@@ -1669,6 +1719,207 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         mostrarContrasena = !mostrarContrasena;
     }//GEN-LAST:event_btnMostrarContrasenaActionPerformed
+
+    /**
+     * Método para seleccionar el color de fondo
+     *
+     * @param evt
+     */
+    private void btnSelFondoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSelFondoMouseClicked
+        JColorChooser ventanaDeColores = new JColorChooser();
+
+        Color colorActual = null;
+
+        try {
+            colorActual = Configuracion.getColor(StringsGlobales.color_fondo);
+        } catch (IOException ex) {
+            colorActual = Color.gray;
+            ex.printStackTrace();
+        }
+
+        Color color = ventanaDeColores.showDialog(null, "Seleccione un color de fondo", colorActual);
+
+        if (color != null) {
+            btnSelFondo.setBackground(color);
+            Configuracion.guardarColor(StringsGlobales.color_fondo, color);
+        }
+    }//GEN-LAST:event_btnSelFondoMouseClicked
+
+    /**
+     * Método para seleccionar el color de fondo oscuro
+     *
+     * @param evt
+     */
+    private void btnSelFondoOscuroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSelFondoOscuroMouseClicked
+        // TODO add your handling code here:
+        JColorChooser ventanaDeColores = new JColorChooser();
+
+        Color colorActual = null;
+
+        try {
+            colorActual = Configuracion.getColor(StringsGlobales.color_fondo_oscuro);
+        } catch (IOException ex) {
+            colorActual = Color.gray;
+            ex.printStackTrace();
+        }
+
+        Color color = ventanaDeColores.showDialog(null, "Seleccione un color de fondo oscuro", colorActual);
+
+        if (color != null) {
+            btnSelFondoOscuro.setBackground(color);
+            Configuracion.guardarColor(StringsGlobales.color_fondo_oscuro, color);
+        }
+    }//GEN-LAST:event_btnSelFondoOscuroMouseClicked
+
+    /**
+     * Método para seleccionar el color de acento
+     *
+     * @param evt
+     */
+    private void btnSelAcentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSelAcentoMouseClicked
+        JColorChooser ventanaDeColores = new JColorChooser();
+
+        Color colorActual = null;
+
+        try {
+            colorActual = Configuracion.getColor(StringsGlobales.color_acentos);
+        } catch (IOException ex) {
+            colorActual = Color.gray;
+            ex.printStackTrace();
+        }
+
+        Color color = ventanaDeColores.showDialog(null, "Seleccione un color de acento", colorActual);
+
+        if (color != null) {
+            btnSelAcento.setBackground(color);
+            Configuracion.guardarColor(StringsGlobales.color_acentos, color);
+        }
+    }//GEN-LAST:event_btnSelAcentoMouseClicked
+
+    /**
+     * Método para seleccionar el color de fondo de los botones
+     *
+     * @param evt
+     */
+    private void btnSelFondoBotonesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSelFondoBotonesMouseClicked
+        JColorChooser ventanaDeColores = new JColorChooser();
+
+        Color colorActual = null;
+
+        try {
+            colorActual = Configuracion.getColor(StringsGlobales.color_fondo_botones);
+        } catch (IOException ex) {
+            colorActual = Color.gray;
+            ex.printStackTrace();
+        }
+
+        Color color = ventanaDeColores.showDialog(null, "Seleccione un color de fondo botones", colorActual);
+
+        if (color != null) {
+            btnSelFondoBotones.setBackground(color);
+            Configuracion.guardarColor(StringsGlobales.color_fondo_botones, color);
+        }
+    }//GEN-LAST:event_btnSelFondoBotonesMouseClicked
+
+    /**
+     * Método para seleccionar el color de la letra general
+     *
+     * @param evt
+     */
+    private void btnSelLetraGeneralMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSelLetraGeneralMouseClicked
+        JColorChooser ventanaDeColores = new JColorChooser();
+
+        Color colorActual = null;
+
+        try {
+            colorActual = Configuracion.getColor(StringsGlobales.color_letra_general);
+        } catch (IOException ex) {
+            colorActual = Color.gray;
+            ex.printStackTrace();
+        }
+
+        Color color = ventanaDeColores.showDialog(null, "Seleccione un color de letra general", colorActual);
+
+        if (color != null) {
+            btnSelLetraGeneral.setBackground(color);
+            Configuracion.guardarColor(StringsGlobales.color_letra_general, color);
+        }
+    }//GEN-LAST:event_btnSelLetraGeneralMouseClicked
+
+    /**
+     * Método para seleccionar el color de la letra de los botones
+     *
+     * @param evt
+     */
+    private void btnSelLetraBotonesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSelLetraBotonesMouseClicked
+        JColorChooser ventanaDeColores = new JColorChooser();
+
+        Color colorActual = null;
+
+        try {
+            colorActual = Configuracion.getColor(StringsGlobales.color_letra_botones);
+        } catch (IOException ex) {
+            colorActual = Color.gray;
+            ex.printStackTrace();
+        }
+
+        Color color = ventanaDeColores.showDialog(null, "Seleccione un color de letra botones", colorActual);
+
+        if (color != null) {
+            btnSelLetraBotones.setBackground(color);
+            Configuracion.guardarColor(StringsGlobales.color_letra_botones, color);
+        }
+    }//GEN-LAST:event_btnSelLetraBotonesMouseClicked
+
+    /**
+     * Método para seleccionar el color de la letra de los títulos
+     *
+     * @param evt
+     */
+    private void btnSelLetraTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSelLetraTituloMouseClicked
+        JColorChooser ventanaDeColores = new JColorChooser();
+
+        Color colorActual = null;
+
+        try {
+            colorActual = Configuracion.getColor(StringsGlobales.color_letra_titulos);
+        } catch (IOException ex) {
+            colorActual = Color.gray;
+            ex.printStackTrace();
+        }
+
+        Color color = ventanaDeColores.showDialog(null, "Seleccione un color de letra titulo", colorActual);
+
+        if (color != null) {
+            btnSelLetraTitulo.setBackground(color);
+            Configuracion.guardarColor(StringsGlobales.color_letra_titulos, color);
+        }
+    }//GEN-LAST:event_btnSelLetraTituloMouseClicked
+
+    /**
+     * Método para seleccionar el color de la letra deseleccionada
+     *
+     * @param evt
+     */
+    private void btnSelLetraDeseleccionadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSelLetraDeseleccionadaMouseClicked
+        JColorChooser ventanaDeColores = new JColorChooser();
+
+        Color colorActual = null;
+
+        try {
+            colorActual = Configuracion.getColor(StringsGlobales.color_letra_noseleccionada);
+        } catch (IOException ex) {
+            colorActual = Color.gray;
+            ex.printStackTrace();
+        }
+
+        Color color = ventanaDeColores.showDialog(null, "Seleccione un color de letra deseleccionada", colorActual);
+
+        if (color != null) {
+            btnSelLetraDeseleccionada.setBackground(color);
+            Configuracion.guardarColor(StringsGlobales.color_letra_noseleccionada, color);
+        }
+    }//GEN-LAST:event_btnSelLetraDeseleccionadaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1716,12 +1967,12 @@ public class FrameOpciones extends javax.swing.JFrame {
     private com.mommoo.flat.button.FlatButton btnImportarMatriculas;
     private com.mommoo.flat.button.FlatButton btnMostrarContrasena;
     private javax.swing.JPanel btnSelAcento;
-    private javax.swing.JPanel btnSelBotones;
-    private javax.swing.JPanel btnSelCampoTextoSinFocus;
     private javax.swing.JPanel btnSelFondo;
+    private javax.swing.JPanel btnSelFondoBotones;
     private javax.swing.JPanel btnSelFondoOscuro;
     private javax.swing.JPanel btnSelLetraBotones;
-    private javax.swing.JPanel btnSelLetraNormal;
+    private javax.swing.JPanel btnSelLetraDeseleccionada;
+    private javax.swing.JPanel btnSelLetraGeneral;
     private javax.swing.JPanel btnSelLetraTitulo;
     private com.mommoo.flat.button.FlatButton btnSeleccionAlumnos;
     private com.mommoo.flat.button.FlatButton btnSeleccionAsignaturas;
@@ -1805,6 +2056,21 @@ public class FrameOpciones extends javax.swing.JFrame {
             textContrasena.setText(Configuracion.getPassword());
         } catch (Exception e) {
             new FramePopup(this, "Error al cargar la configuración de red.",
+                    new ImageIcon("/Imagenes/icons/alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
+        
+        try {
+            btnSelFondo.setBackground(Configuracion.getColor(StringsGlobales.color_fondo));
+            btnSelFondoOscuro.setBackground(Configuracion.getColor(StringsGlobales.color_fondo_oscuro));
+            btnSelFondoBotones.setBackground(Configuracion.getColor(StringsGlobales.color_fondo_botones));
+            btnSelAcento.setBackground(Configuracion.getColor(StringsGlobales.color_acentos));
+            btnSelLetraGeneral.setBackground(Configuracion.getColor(StringsGlobales.color_letra_general));
+            btnSelLetraBotones.setBackground(Configuracion.getColor(StringsGlobales.color_letra_botones));
+            btnSelLetraTitulo.setBackground(Configuracion.getColor(StringsGlobales.color_letra_titulos));
+            btnSelLetraDeseleccionada.setBackground(Configuracion.getColor(StringsGlobales.color_letra_noseleccionada));
+        } catch (Exception e) {
+            new FramePopup("Error al cargar la configuración de colores.",
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
                     "Aceptar").setVisible(true);
         }
