@@ -28,12 +28,12 @@ public class StringsGlobales {
      */
     public static String color_fondo = "color_fondo";
     public static String color_fondo_oscuro = "color_fondo_oscuro";
-    public static String color_letra_normal = "color_letra_normal";
+    public static String color_fondo_botones = "color_fondo_botones";
+    public static String color_letra_general = "color_letra_general";
     public static String color_letra_botones = "color_letra_botones";
     public static String color_letra_titulos = "color_letra_titulos";
     public static String color_acentos = "color_acentos";
-    public static String color_botones = "color_botones";
-    public static String color_texto_noseleccionado = "color_texto_noseleccionado";
+    public static String color_letra_noseleccionada = "color_letra_noseleccionada";
     
     /**
      * STRINGS PLACEHOLDERS
