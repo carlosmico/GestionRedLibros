@@ -8,6 +8,7 @@ package Vistas;
 import Utilidades.Conexiones.ComprobarConexion;
 import Utilidades.Conexiones.GestorSesiones;
 import Utilidades.*;
+import Utilidades.Imagenes.Imagenes;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -60,11 +61,13 @@ public class Main extends javax.swing.JFrame {
         String icono = "";
         BufferedImage img = null;
         icono = "../Imagenes/wallpaper.jpg";
+        
         try {
             img = ImageIO.read(new File(icono));
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
+        
         Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(image);
         wallpaper.setIcon(imageIcon);

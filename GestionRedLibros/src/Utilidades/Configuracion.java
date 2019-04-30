@@ -118,8 +118,6 @@ public class Configuracion {
         Color color = null;
         
         try{
-            System.out.println("Color recuperado: " + colorGuardado);
-            
             color = new Color(Integer.parseInt(colorGuardado));
         }catch(Exception e){
             e.printStackTrace();

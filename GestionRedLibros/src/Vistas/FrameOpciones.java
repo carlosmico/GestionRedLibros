@@ -1757,7 +1757,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         Color colorActual = null;
 
         try {
-            colorActual = Configuracion.getColor(StringsGlobales.color_letra_noseleccionada);
+            colorActual = Configuracion.getColor(StringsGlobales.color_fondo_oscuro);
         } catch (IOException ex) {
             colorActual = Color.gray;
             ex.printStackTrace();
@@ -1782,7 +1782,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         Color colorActual = null;
 
         try {
-            colorActual = Configuracion.getColor(StringsGlobales.color_letra_noseleccionada);
+            colorActual = Configuracion.getColor(StringsGlobales.color_acentos);
         } catch (IOException ex) {
             colorActual = Color.gray;
             ex.printStackTrace();
@@ -1807,7 +1807,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         Color colorActual = null;
 
         try {
-            colorActual = Configuracion.getColor(StringsGlobales.color_letra_noseleccionada);
+            colorActual = Configuracion.getColor(StringsGlobales.color_fondo_botones);
         } catch (IOException ex) {
             colorActual = Color.gray;
             ex.printStackTrace();
@@ -1832,7 +1832,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         Color colorActual = null;
 
         try {
-            colorActual = Configuracion.getColor(StringsGlobales.color_letra_noseleccionada);
+            colorActual = Configuracion.getColor(StringsGlobales.color_letra_general);
         } catch (IOException ex) {
             colorActual = Color.gray;
             ex.printStackTrace();
@@ -1857,7 +1857,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         Color colorActual = null;
 
         try {
-            colorActual = Configuracion.getColor(StringsGlobales.color_letra_noseleccionada);
+            colorActual = Configuracion.getColor(StringsGlobales.color_letra_botones);
         } catch (IOException ex) {
             colorActual = Color.gray;
             ex.printStackTrace();
@@ -1882,7 +1882,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         Color colorActual = null;
 
         try {
-            colorActual = Configuracion.getColor(StringsGlobales.color_letra_noseleccionada);
+            colorActual = Configuracion.getColor(StringsGlobales.color_letra_titulos);
         } catch (IOException ex) {
             colorActual = Color.gray;
             ex.printStackTrace();
@@ -2056,6 +2056,21 @@ public class FrameOpciones extends javax.swing.JFrame {
             textContrasena.setText(Configuracion.getPassword());
         } catch (Exception e) {
             new FramePopup("Error al cargar la configuración de red.",
+                    new ImageIcon("/Imagenes/icons/alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
+        
+        try {
+            btnSelFondo.setBackground(Configuracion.getColor(StringsGlobales.color_fondo));
+            btnSelFondoOscuro.setBackground(Configuracion.getColor(StringsGlobales.color_fondo_oscuro));
+            btnSelFondoBotones.setBackground(Configuracion.getColor(StringsGlobales.color_fondo_botones));
+            btnSelAcento.setBackground(Configuracion.getColor(StringsGlobales.color_acentos));
+            btnSelLetraGeneral.setBackground(Configuracion.getColor(StringsGlobales.color_letra_general));
+            btnSelLetraBotones.setBackground(Configuracion.getColor(StringsGlobales.color_letra_botones));
+            btnSelLetraTitulo.setBackground(Configuracion.getColor(StringsGlobales.color_letra_titulos));
+            btnSelLetraDeseleccionada.setBackground(Configuracion.getColor(StringsGlobales.color_letra_noseleccionada));
+        } catch (Exception e) {
+            new FramePopup("Error al cargar la configuración de colores.",
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
                     "Aceptar").setVisible(true);
         }
