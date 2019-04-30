@@ -355,7 +355,7 @@ public class FrameHistorial extends javax.swing.JFrame {
         jPanel6.setPreferredSize(new java.awt.Dimension(350, 126));
 
         jLabel7.setBackground(Colores.fondo);
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setForeground(Colores.letraNormal);
         jLabel7.setLabelFor(textNIAAlumno);
         jLabel7.setText("NIA:");
@@ -371,7 +371,7 @@ public class FrameHistorial extends javax.swing.JFrame {
         textNombreAlumno.setPreferredSize(new java.awt.Dimension(402, 24));
 
         jLabel4.setBackground(Colores.fondo);
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setForeground(Colores.letraNormal);
         jLabel4.setLabelFor(textNombreAlumno);
         jLabel4.setText("Nombre y Apellidos:");
@@ -390,7 +390,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(textNIAAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(textNombreAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(202, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -403,13 +403,13 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textNombreAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(Colores.fondo);
 
         jLabel9.setBackground(Colores.fondo);
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setForeground(Colores.letraNormal);
         jLabel9.setText("Correo electrónico:");
 
@@ -419,7 +419,7 @@ public class FrameHistorial extends javax.swing.JFrame {
         textEmail.setPreferredSize(new java.awt.Dimension(402, 24));
 
         jLabel11.setBackground(Colores.fondo);
-        jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel11.setForeground(Colores.letraNormal);
         jLabel11.setText("Curso Actual:");
 
@@ -429,7 +429,7 @@ public class FrameHistorial extends javax.swing.JFrame {
         textCursoActual.setPreferredSize(new java.awt.Dimension(0, 24));
 
         jLabel12.setBackground(Colores.fondo);
-        jLabel12.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel12.setForeground(Colores.letraNormal);
         jLabel12.setText("Teléfono:");
 

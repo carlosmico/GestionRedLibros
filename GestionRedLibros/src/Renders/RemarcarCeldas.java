@@ -92,6 +92,8 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
                     break;
             }
         }
+        this.setForeground(Colores.letraNormal);
+        
         return this;
     }
 

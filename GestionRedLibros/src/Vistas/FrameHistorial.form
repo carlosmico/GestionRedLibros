@@ -542,7 +542,7 @@
                                                   </Group>
                                               </Group>
                                           </Group>
-                                          <EmptySpace pref="164" max="32767" attributes="0"/>
+                                          <EmptySpace pref="202" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -557,7 +557,7 @@
                                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="textNombreAlumno" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
+                                          <EmptySpace pref="16" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -569,7 +569,7 @@
                                       <Connection code="Colores.fondo" type="code"/>
                                     </Property>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                      <Font name="Dialog" size="18" style="1"/>
+                                      <Font name="Dialog" size="14" style="1"/>
                                     </Property>
                                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                       <Connection code="Colores.letraNormal" type="code"/>
@@ -618,7 +618,7 @@
                                       <Connection code="Colores.fondo" type="code"/>
                                     </Property>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                      <Font name="Dialog" size="18" style="1"/>
+                                      <Font name="Dialog" size="14" style="1"/>
                                     </Property>
                                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                       <Connection code="Colores.letraNormal" type="code"/>
@@ -701,7 +701,7 @@
                                       <Connection code="Colores.fondo" type="code"/>
                                     </Property>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                      <Font name="Dialog" size="18" style="1"/>
+                                      <Font name="Dialog" size="14" style="1"/>
                                     </Property>
                                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                       <Connection code="Colores.letraNormal" type="code"/>
@@ -731,7 +731,7 @@
                                       <Connection code="Colores.fondo" type="code"/>
                                     </Property>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                      <Font name="Dialog" size="18" style="1"/>
+                                      <Font name="Dialog" size="14" style="1"/>
                                     </Property>
                                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                       <Connection code="Colores.letraNormal" type="code"/>
@@ -761,7 +761,7 @@
                                       <Connection code="Colores.fondo" type="code"/>
                                     </Property>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                      <Font name="Dialog" size="18" style="1"/>
+                                      <Font name="Dialog" size="14" style="1"/>
                                     </Property>
                                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                       <Connection code="Colores.letraNormal" type="code"/>
