@@ -45,7 +45,7 @@ public class Historial implements Serializable {
     private static final long serialVersionUID = -5514760462301220827L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne

@@ -115,10 +115,10 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Confirmación");
 
-        panelTitulo.setBackground(Colores.accent);
+        panelTitulo.setBackground(Colores.accento);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setForeground(Colores.fondo);
+        jLabel1.setForeground(Colores.letraTitulo);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Detalles del Ejemplar");
 
@@ -145,17 +145,17 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         panelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel5.setForeground(Colores.accent);
+        jLabel5.setForeground(Colores.letraNormal);
         jLabel5.setText("Información General:");
 
         jPanel2.setBackground(Colores.fondo);
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel4.setForeground(Colores.accent);
+        jLabel4.setForeground(Colores.letraNormal);
         jLabel4.setText("Código de ejemplar:");
 
         textCodigoEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textCodigoEjemplar.setForeground(Colores.accent);
+        textCodigoEjemplar.setForeground(Colores.letraNormal);
         textCodigoEjemplar.setText("1000001");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -186,11 +186,11 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         jPanel3.setBackground(Colores.fondo);
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel7.setForeground(Colores.accent);
+        jLabel7.setForeground(Colores.letraNormal);
         jLabel7.setText("Nombre del ejemplar:");
 
         textNombreEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textNombreEjemplar.setForeground(Colores.accent);
+        textNombreEjemplar.setForeground(Colores.letraNormal);
         textNombreEjemplar.setText("El are no es lo mateix que la de ta' tia");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -219,11 +219,11 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         jPanel4.setBackground(Colores.fondo);
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel8.setForeground(Colores.accent);
+        jLabel8.setForeground(Colores.letraNormal);
         jLabel8.setText("Asignatura:");
 
         textAsignaturaEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textAsignaturaEjemplar.setForeground(Colores.accent);
+        textAsignaturaEjemplar.setForeground(Colores.letraNormal);
         textAsignaturaEjemplar.setText("La calle es mi gimnasio");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -254,11 +254,11 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         jPanel5.setBackground(Colores.fondo);
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel10.setForeground(Colores.accent);
+        jLabel10.setForeground(Colores.letraNormal);
         jLabel10.setText("Curso:");
 
         textCursoEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textCursoEjemplar.setForeground(Colores.accent);
+        textCursoEjemplar.setForeground(Colores.letraNormal);
         textCursoEjemplar.setText("4 manzanas");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -330,14 +330,14 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
 
         listAlumnos.setBackground(Colores.fondo);
         listAlumnos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        listAlumnos.setForeground(Colores.accent);
+        listAlumnos.setForeground(Colores.letraNormal);
         listAlumnos.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        listAlumnos.setSelectionBackground(Colores.accent);
-        listAlumnos.setSelectionForeground(Colores.fondo);
+        listAlumnos.setSelectionBackground(Colores.accento);
+        listAlumnos.setSelectionForeground(Colores.letraBotones);
         listAlumnos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 listAlumnosValueChanged(evt);
@@ -345,13 +345,14 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(listAlumnos);
 
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setBackground(Colores.fondo);
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         panelEstadoInicialParent.setBackground(Colores.fondo);
         panelEstadoInicialParent.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel29.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel29.setForeground(Colores.accent);
+        jLabel29.setForeground(Colores.letraNormal);
         jLabel29.setText("Estado inicial:");
 
         panelEstadoInicial.setBackground(Colores.fondo);
@@ -400,7 +401,7 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         panelEstadoFinalParent.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel30.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel30.setForeground(Colores.accent);
+        jLabel30.setForeground(Colores.letraNormal);
         jLabel30.setText("Estado final:");
 
         panelEstadoFinal.setBackground(Colores.fondo);
@@ -466,7 +467,7 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         );
 
         jLabel20.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel20.setForeground(Colores.accent);
+        jLabel20.setForeground(Colores.letraNormal);
         jLabel20.setText("Otros Alumnos que han usado este libro:");
 
         javax.swing.GroupLayout panelEjemplaresLayout = new javax.swing.GroupLayout(panelEjemplares);
@@ -498,15 +499,17 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel12.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel12.setForeground(Colores.accent);
+        jLabel12.setForeground(Colores.letraNormal);
         jLabel12.setText("Información prestamo:");
 
+        jPanel7.setBackground(Colores.fondo);
+
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel13.setForeground(Colores.accent);
+        jLabel13.setForeground(Colores.letraNormal);
         jLabel13.setText("Propietario actual:");
 
         textNombrePropietario.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textNombrePropietario.setForeground(Colores.accent);
+        textNombrePropietario.setForeground(Colores.letraNormal);
         textNombrePropietario.setText("Jose Sanchis Belda");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -532,12 +535,14 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel8.setBackground(Colores.fondo);
+
         jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel16.setForeground(Colores.accent);
+        jLabel16.setForeground(Colores.letraNormal);
         jLabel16.setText("Fecha de entrega:");
 
         textFechaEntregaEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textFechaEntregaEjemplar.setForeground(Colores.accent);
+        textFechaEntregaEjemplar.setForeground(Colores.letraNormal);
         textFechaEntregaEjemplar.setText("16-11-1997 / 11:23am");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -563,12 +568,14 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel9.setBackground(Colores.fondo);
+
         jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel18.setForeground(Colores.accent);
+        jLabel18.setForeground(Colores.letraNormal);
         jLabel18.setText("Estado inicial:");
 
         textEstadoInicialEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        textEstadoInicialEjemplar.setForeground(Colores.accent);
+        textEstadoInicialEjemplar.setForeground(Colores.letraNormal);
         textEstadoInicialEjemplar.setText("Deteriorado");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -598,11 +605,11 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         textObservaciones.setBackground(Colores.fondo);
         textObservaciones.setColumns(20);
         textObservaciones.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textObservaciones.setForeground(Colores.accent);
+        textObservaciones.setForeground(Colores.letraNormal);
         textObservaciones.setRows(5);
         textObservaciones.setText("Sin observaciones");
-        textObservaciones.setSelectedTextColor(Colores.fondo);
-        textObservaciones.setSelectionColor(Colores.accent);
+        textObservaciones.setSelectedTextColor(Colores.letraBotones);
+        textObservaciones.setSelectionColor(Colores.accento);
         jScrollPane2.setViewportView(textObservaciones);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -668,7 +675,8 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
 
         panelBotonera.setBackground(Colores.fondo);
 
-        btnAceptar.setBackground(Colores.buttons);
+        btnAceptar.setBackground(Colores.botones);
+        btnAceptar.setForeground(Colores.letraBotones);
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/check-white.png"))); // NOI18N
         btnAceptar.setText("Aceptar");
         btnAceptar.setCornerRound(10);

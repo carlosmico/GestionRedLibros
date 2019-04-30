@@ -22,13 +22,11 @@ import Daos.DaoCurso;
 import Daos.DaoHistorial;
 import Pojos.Alumno;
 import Pojos.Curso;
-import Pojos.Ejemplar;
 import Pojos.Historial;
 import Renders.RemarcarCeldas;
 import Renders.comboBoxRender;
 import Utilidades.Colores;
 import Utilidades.Imagenes.Imagenes;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -39,8 +37,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.SwingWorker;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
@@ -95,10 +91,10 @@ public class FrameHistorial extends javax.swing.JFrame {
                 JLabel l = (JLabel) super.getListCellRendererComponent(
                         list, value, index, isSelected, hasFocus);
                 if (isSelected) {
-                    l.setForeground(Colores.fondo);
-                    l.setBackground(Colores.buttons);
+                    l.setForeground(Colores.letraBotones);
+                    l.setBackground(Colores.accento);
                 } else {
-                    l.setForeground(Colores.buttons);
+                    l.setForeground(Colores.letraNormal);
                     l.setBackground(Colores.fondo);
                 }
                 return l;
@@ -169,11 +165,11 @@ public class FrameHistorial extends javax.swing.JFrame {
         setTitle("Opciones");
         setMinimumSize(new java.awt.Dimension(600, 36));
 
-        jPanel1.setBackground(Colores.accent);
+        jPanel1.setBackground(Colores.accento);
         jPanel1.setPreferredSize(new java.awt.Dimension(1137, 75));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setForeground(Colores.fondo);
+        jLabel1.setForeground(Colores.letraTitulo);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Historial");
         jLabel1.setPreferredSize(new java.awt.Dimension(122, 75));
@@ -192,7 +188,7 @@ public class FrameHistorial extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel3.setBackground(Colores.accent);
+        jPanel3.setBackground(Colores.fondo);
 
         panelLista.setBackground(Colores.fondo);
         panelLista.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -203,7 +199,7 @@ public class FrameHistorial extends javax.swing.JFrame {
 
         textBusquedaNIA.setBackground(Colores.fondo);
         textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textBusquedaNIA.setForeground(Colores.accent);
+        textBusquedaNIA.setForeground(Colores.letraNormal);
         textBusquedaNIA.setText("Codigo NIA");
         textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -223,7 +219,8 @@ public class FrameHistorial extends javax.swing.JFrame {
             }
         });
 
-        btnBusquedaNIA.setBackground(Colores.buttons);
+        btnBusquedaNIA.setBackground(Colores.botones);
+        btnBusquedaNIA.setForeground(Colores.letraBotones);
         btnBusquedaNIA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
         btnBusquedaNIA.setCornerRound(10);
         btnBusquedaNIA.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -255,7 +252,7 @@ public class FrameHistorial extends javax.swing.JFrame {
 
         panelBusquedaLista.setBackground(Colores.fondo);
 
-        cbCurso.setBackground(Colores.accent);
+        cbCurso.setBackground(Colores.accento);
         cbCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         cbCurso.setPreferredSize(new java.awt.Dimension(374, 34));
         cbCurso.addItemListener(new java.awt.event.ItemListener() {
@@ -266,9 +263,9 @@ public class FrameHistorial extends javax.swing.JFrame {
 
         jlistAlumnos.setBackground(Colores.fondo);
         jlistAlumnos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jlistAlumnos.setForeground(Colores.accent);
-        jlistAlumnos.setSelectionBackground(Colores.accent);
-        jlistAlumnos.setSelectionForeground(Colores.fondo);
+        jlistAlumnos.setForeground(Colores.letraNormal);
+        jlistAlumnos.setSelectionBackground(Colores.accento);
+        jlistAlumnos.setSelectionForeground(Colores.letraBotones);
         jlistAlumnos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jlistAlumnosValueChanged(evt);
@@ -277,7 +274,7 @@ public class FrameHistorial extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jlistAlumnos);
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setForeground(Colores.accent);
+        jLabel10.setForeground(Colores.letraNormal);
         jLabel10.setText("Listado de alumnos:");
 
         javax.swing.GroupLayout panelBusquedaListaLayout = new javax.swing.GroupLayout(panelBusquedaLista);
@@ -306,6 +303,8 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addComponent(jScrollPane2)
                 .addContainerGap())
         );
+
+        jSeparator2.setBackground(Colores.fondo);
 
         javax.swing.GroupLayout panelListaLayout = new javax.swing.GroupLayout(panelLista);
         panelLista.setLayout(panelListaLayout);
@@ -345,9 +344,9 @@ public class FrameHistorial extends javax.swing.JFrame {
         panelInfoGeneral.setMaximumSize(new java.awt.Dimension(300, 32767));
         panelInfoGeneral.setPreferredSize(new java.awt.Dimension(922, 170));
 
-        jLabel3.setBackground(Colores.accent);
+        jLabel3.setBackground(Colores.fondo);
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel3.setForeground(Colores.accent);
+        jLabel3.setForeground(Colores.letraNormal);
         jLabel3.setText("Información");
 
         jPanel5.setBackground(Colores.fondo);
@@ -355,21 +354,25 @@ public class FrameHistorial extends javax.swing.JFrame {
         jPanel6.setBackground(Colores.fondo);
         jPanel6.setPreferredSize(new java.awt.Dimension(350, 126));
 
+        jLabel7.setBackground(Colores.fondo);
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel7.setForeground(Colores.accent);
+        jLabel7.setForeground(Colores.letraNormal);
         jLabel7.setLabelFor(textNIAAlumno);
         jLabel7.setText("NIA:");
 
+        textNIAAlumno.setBackground(Colores.fondo);
         textNIAAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textNIAAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textNIAAlumno.setForeground(Colores.letraNormal);
         textNIAAlumno.setPreferredSize(new java.awt.Dimension(402, 24));
 
+        textNombreAlumno.setBackground(Colores.fondo);
         textNombreAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textNombreAlumno.setForeground(new java.awt.Color(51, 51, 51));
+        textNombreAlumno.setForeground(Colores.letraNormal);
         textNombreAlumno.setPreferredSize(new java.awt.Dimension(402, 24));
 
+        jLabel4.setBackground(Colores.fondo);
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel4.setForeground(Colores.accent);
+        jLabel4.setForeground(Colores.letraNormal);
         jLabel4.setLabelFor(textNombreAlumno);
         jLabel4.setText("Nombre y Apellidos:");
 
@@ -405,27 +408,35 @@ public class FrameHistorial extends javax.swing.JFrame {
 
         jPanel2.setBackground(Colores.fondo);
 
+        jLabel9.setBackground(Colores.fondo);
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel9.setForeground(Colores.accent);
+        jLabel9.setForeground(Colores.letraNormal);
         jLabel9.setText("Correo electrónico:");
 
+        textEmail.setBackground(Colores.fondo);
         textEmail.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textEmail.setForeground(new java.awt.Color(51, 51, 51));
+        textEmail.setForeground(Colores.letraNormal);
         textEmail.setPreferredSize(new java.awt.Dimension(402, 24));
 
+        jLabel11.setBackground(Colores.fondo);
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel11.setForeground(Colores.accent);
+        jLabel11.setForeground(Colores.letraNormal);
         jLabel11.setText("Curso Actual:");
 
+        textCursoActual.setBackground(Colores.fondo);
         textCursoActual.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textCursoActual.setForeground(new java.awt.Color(51, 51, 51));
+        textCursoActual.setForeground(Colores.letraNormal);
+        textCursoActual.setPreferredSize(new java.awt.Dimension(0, 24));
 
+        jLabel12.setBackground(Colores.fondo);
         jLabel12.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel12.setForeground(Colores.accent);
+        jLabel12.setForeground(Colores.letraNormal);
         jLabel12.setText("Teléfono:");
 
+        textTelefono.setBackground(Colores.fondo);
         textTelefono.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textTelefono.setForeground(new java.awt.Color(51, 51, 51));
+        textTelefono.setForeground(Colores.letraNormal);
+        textTelefono.setPreferredSize(new java.awt.Dimension(0, 24));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -463,11 +474,11 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textTelefono))
+                    .addComponent(textTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textCursoActual)
+                .addComponent(textCursoActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -491,6 +502,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel7.setBackground(Colores.fondo);
         jPanel7.setForeground(Colores.fondo);
         jPanel7.setPreferredSize(new java.awt.Dimension(128, 128));
 
@@ -526,7 +538,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelInfoGeneralLayout.setVerticalGroup(
             panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -540,10 +552,12 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel4.setBackground(Colores.fondo);
+
         tablaHistoriales.setAutoCreateRowSorter(true);
         tablaHistoriales.setBackground(Colores.fondo);
         tablaHistoriales.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        tablaHistoriales.setForeground(Colores.accent);
+        tablaHistoriales.setForeground(Colores.letraNormal);
         tablaHistoriales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -565,9 +579,8 @@ public class FrameHistorial extends javax.swing.JFrame {
         });
         tablaHistoriales.setRowHeight(32);
         tablaHistoriales.setRowSelectionAllowed(false);
-        tablaHistoriales.setSelectionBackground(Colores.accent);
-        tablaHistoriales.setSelectionForeground(Colores.fondo);
-        tablaHistoriales.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablaHistoriales.setSelectionBackground(Colores.accento);
+        tablaHistoriales.setSelectionForeground(Colores.letraBotones);
         tablaHistoriales.getTableHeader().setReorderingAllowed(false);
         tablaHistoriales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -589,7 +602,7 @@ public class FrameHistorial extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -652,13 +665,13 @@ public class FrameHistorial extends javax.swing.JFrame {
     private void textBusquedaNIAFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusGained
         // TODO add your handling code here:
         textBusquedaNIA.setText("");
-        textBusquedaNIA.setForeground(Colores.accent);
+        textBusquedaNIA.setForeground(Colores.letraNormal);
     }//GEN-LAST:event_textBusquedaNIAFocusGained
 
     private void textBusquedaNIAFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusLost
         // TODO add your handling code here:
         textBusquedaNIA.setText(defaultText);
-        textBusquedaNIA.setForeground(new Color(102, 102, 102));
+        textBusquedaNIA.setForeground(Colores.campoTextSinFocus);
     }//GEN-LAST:event_textBusquedaNIAFocusLost
 
     private void textBusquedaNIAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaNIAKeyPressed
@@ -977,15 +990,12 @@ public class FrameHistorial extends javax.swing.JFrame {
             }
 
             protected void done() {
-                framePopup.dispose();
                 rellenarTablaHistoriales();
+                framePopup.dispose();
             }
         };
         worker.execute();
-        if (framePopup == null) {
-            framePopup = new FramePopup();
-        }
-        framePopup.setVisible(true);
+        framePopup = new FramePopup();
     }
 
     /**
@@ -1006,19 +1016,19 @@ public class FrameHistorial extends javax.swing.JFrame {
 
             tableModel = new DefaultTableModel(contenidoTabla,
                     new Object[]{"Código Ejemplar", "Nombre del Ejemplar", "Curso", "Curso Escolar"}) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
         } else {
             tableModel = new DefaultTableModel(null,
                     new Object[]{"Código Ejemplar", "Nombre del Ejemplar", "Curso", "Curso Escolar"}) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
         }
 
         tablaHistoriales.setModel(tableModel);
@@ -1051,8 +1061,6 @@ public class FrameHistorial extends javax.swing.JFrame {
                 }
 
                 protected void done() {
-
-                    //remarcarCeldas.desconectarDao();
                     framePopup.dispose();
                 }
             };
