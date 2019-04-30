@@ -21,7 +21,7 @@ import Daos.*;
 import Pojos.*;
 import Utilidades.*;
 import Renders.comboBoxRender;
-import Vistas.FramePopup;
+import Vistas.FramePopup_;
 import excepciones.BusinessException;
 import java.awt.Color;
 import java.awt.Component;
@@ -54,9 +54,9 @@ public class FrameLibroOld extends javax.swing.JFrame {
     private static Libro libro = null;
     boolean isNewLibro;
 
-    private FramePopup c = new FramePopup();
+    private FramePopup_ c = new FramePopup_();
 
-    FramePopup frameCarga;
+    FramePopup_ frameCarga;
 
     List<Curso> listaCursos;
     List<Contenido> listaContenido;

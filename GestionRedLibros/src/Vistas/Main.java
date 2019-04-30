@@ -21,6 +21,7 @@ import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
@@ -37,6 +38,9 @@ public class Main extends javax.swing.JFrame {
     FramePopup framePopup;
     FrameHistorial frameAyuda;
 
+    //Cogemos el FramePadre para trabajar con los dialogos
+    private JFrame topFrame;
+
     public static GestorSesiones gestorSesiones;
 
     private boolean existeConexion;
@@ -46,6 +50,8 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() throws IOException {
         initComponents();
+
+        topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
         //Centramos la pestaña al centro de la pantalla
         //(Es irrelevante ya que la maximizamos)
@@ -467,7 +473,7 @@ public class Main extends javax.swing.JFrame {
                         };
 
                         if (framePopup == null) {
-                            framePopup = new FramePopup("No hay conexión al servidor, revise la configuración de red.",
+                            framePopup = new FramePopup(topFrame, "No hay conexión al servidor, revise la configuración de red.",
                                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                                     abrirOpciones
                             );
@@ -479,7 +485,7 @@ public class Main extends javax.swing.JFrame {
             };
             worker.execute();
             if (frameCarga == null) {
-                frameCarga = new FramePopup("Comprobando conexión con el servidor");
+                frameCarga = new FramePopup(this, "Comprobando conexión con el servidor");
             }
             frameCarga.setVisible(true);
         }

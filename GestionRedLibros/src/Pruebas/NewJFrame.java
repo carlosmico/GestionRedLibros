@@ -17,17 +17,15 @@
  */
 package Pruebas;
 
-import Utilidades.ButtonColumn;
 import Utilidades.Colores;
 import Utilidades.Imagenes.Imagenes;
 import Vistas.FramePopup;
+import Vistas.FramePopup_;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -42,48 +40,25 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
 
-        DefaultTableModel tableModel = (DefaultTableModel) tabla.getModel();
+        String mec = "- Mec esto es un texto bastante largo, igual que el anterior, pero esta vez es horizontalmente";
 
-        tableModel.setRowCount(0);
+        new FramePopup(this, "- Esto es una prueba muy larga de la cual vamos "
+                + "a aprender visualmente que la ventana se puede redimensionar.\n"
+                + "Esto funciona perfectamente sin dar problema alguno.\n" + mec,
+                Imagenes.getImagen("alert-black.png"),
+                "Aceptar", "Cancelar", (Action) new AbstractAction() {
 
-        Object[][] contenidoTabla = {
-            {"Jose", ""},
-            {"Carlos", ""},
-            {"Blas", ""}
-        };
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Aceptar");
+                    }
+                }, (Action) new AbstractAction() {
 
-        tableModel.setDataVector(contenidoTabla, new Object[]{"Asignaturas", "Gestión"});
-
-        Action delete = new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                JTable table = (JTable) e.getSource();
-                int modelRow = Integer.valueOf(e.getActionCommand());
-                ((DefaultTableModel) table.getModel()).removeRow(modelRow);
-
-                String mec = "mec esto es un texto bastante largo, igual que el anterior, pero esta vez es horizontalmente";
-                
-                new FramePopup("<html>Esto es una prueba muy larga de la cual vamos "
-                        + "a aprender visualmente que la ventana se puede redimensionar y "
-                        + "funciona perfectamente sin dar problema alguno " + mec + "</html>",
-                        Imagenes.getImagen("alert-black.png"),
-                        "Aceptar", "Cancelar", (Action) new AbstractAction() {
-
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                System.out.println("Aceptar");
-                            }
-                        }, (Action) new AbstractAction() {
-
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                System.out.println("Cancelar");
-                            }
-                        }).setVisible(true);
-            }
-        };
-
-        ButtonColumn buttonColumn = new ButtonColumn(tabla, delete, tableModel.getColumnCount() - 1);
-        buttonColumn.setMnemonic(KeyEvent.VK_D);
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Cancelar");
+                    }
+                }).setVisible(true);
     }
 
     /**
@@ -102,7 +77,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
         tabla.setBackground(Colores.fondo);
         tabla.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        tabla.setForeground(Colores.accent);
+        tabla.setForeground(Colores.accento);
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -115,7 +90,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         ));
         tabla.setRowHeight(32);
-        tabla.setSelectionBackground(Colores.accent);
+        tabla.setSelectionBackground(Colores.accento);
         tabla.setSelectionForeground(Colores.fondo);
         jScrollPane1.setViewportView(tabla);
 

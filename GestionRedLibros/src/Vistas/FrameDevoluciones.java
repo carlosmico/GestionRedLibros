@@ -74,11 +74,15 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
     private String campoBusquedaTemp = "";
 
+    private JFrame topFrame;
+
     /**
      * Creates new form FrameDevoluciones
      */
     public FrameDevoluciones() {
         initComponents();
+
+        topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
         vaciarCampos();
 
@@ -837,14 +841,14 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
                 jlistEjemplaresPendientes.setModel(model);
             } catch (Exception e) {
-                new FramePopup("Error al realizar la devolución: " + e.getMessage(),
+                new FramePopup(this, "Error al realizar la devolución: " + e.getMessage(),
                         new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                         "Aceptar");
             }
 
             isConfirmationReady = ConfirmacionDevolucion.CANCELADA;
         } else {
-            new FramePopup("Error al realizar la devolución.",
+            new FramePopup(this, "Error al realizar la devolución.",
                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                     "Aceptar");
         }
@@ -967,7 +971,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         };
         worker.execute();
         if (framePopup == null) {
-            framePopup = new FramePopup();
+            framePopup = new FramePopup(this);
         }
         framePopup.setVisible(true);
     }
@@ -1001,7 +1005,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 cbCurso.addItem(listaCursos.get(i));
             }
         } else {
-            new FramePopup("No hay cursos en la base de datos.",
+            new FramePopup(this, "No hay cursos en la base de datos.",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
@@ -1050,7 +1054,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                         modoEdicion(true);
 
                     } else {
-                        new FramePopup("El alumno no tiene pendiente ninguna entrega.",
+                        new FramePopup(topFrame, "El alumno no tiene pendiente ninguna entrega.",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
                     }
@@ -1059,7 +1063,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             };
             worker.execute();
             if (framePopup == null) {
-                framePopup = new FramePopup();
+                framePopup = new FramePopup(this);
             }
             framePopup.setVisible(true);
         }
@@ -1097,7 +1101,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 }
             };
 
-            new FramePopup("No se ha podido conseguir el curso escolar",
+            new FramePopup(this, "No se ha podido conseguir el curso escolar",
                     Imagenes.getImagen("/Imagenes/icons/alert-black.png"),
                     "Aceptar", aceptar).setVisible(true);
         }
@@ -1140,7 +1144,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                             }
                         }
                     } else {
-                        new FramePopup("No existe ningún alumno con el NIA introducido.",
+                        new FramePopup(topFrame, "No existe ningún alumno con el NIA introducido.",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
 
@@ -1150,12 +1154,12 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 }
             };
             worker.execute();
-            framePopup = new FramePopup("Cargando datos...");
+            framePopup = new FramePopup(this, "Cargando datos...");
             framePopup.setVisible(true);
 
         } else {
             //No se ha insertado ningun valor en el campo de texto
-            new FramePopup("El NIA no puede ser un campo vacío.",
+            new FramePopup(this, "El NIA no puede ser un campo vacío.",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
@@ -1182,12 +1186,12 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
                     if (ejemplar != null) {
                         if (!ejemplar.isPrestado()) {
-                            new FramePopup("El ejemplar con código "
+                            new FramePopup(topFrame, "El ejemplar con código "
                                     + ejemplar.getCodigo() + " no está prestado actualmente.",
                                     Imagenes.getImagen("alert-black.png"),
                                     "Aceptar").setVisible(true);
                         } else if (!daoHistorial.buscarEjemplarPrestadoA(ejemplar).getAlumno().getNia().equals(alumno.getNia())) {
-                            new FramePopup(
+                            new FramePopup(topFrame,
                                     "El ejemplar con código "
                                     + ejemplar.getCodigo()
                                     + " no está prestado al alumno "
@@ -1202,7 +1206,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                             frameConfirmacion.setVisible(true);
                         }
                     } else {
-                        new FramePopup("No existe ningún ejemplar con el código introducido.",
+                        new FramePopup(topFrame, "No existe ningún ejemplar con el código introducido.",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
                     }
@@ -1210,12 +1214,12 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 }
             };
             worker.execute();
-            framePopup = new FramePopup("Cargando datos...");
+            framePopup = new FramePopup(this, "Cargando datos...");
             framePopup.setVisible(true);
 
         } else {
             //No se ha insertado ningun valor en el campo de texto
-            new FramePopup("El código no puede ser un campo vacío.",
+            new FramePopup(this, "El código no puede ser un campo vacío.",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }

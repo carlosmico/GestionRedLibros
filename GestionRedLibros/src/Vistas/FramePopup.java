@@ -18,13 +18,11 @@
 package Vistas;
 
 import Utilidades.Colores;
-import java.awt.Dimension;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.Font;
+import java.awt.Frame;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -34,9 +32,13 @@ public class FramePopup extends javax.swing.JDialog {
 
     /**
      * Crea el nuevo formulario FramePopup. (No se cierra por si solo)
+     *
+     * @param Padre, para recoger el foco
      */
-    public FramePopup() {
+    public FramePopup(JFrame parent) {
+        super(parent, true);
         initComponents();
+        rellenarDatos("", null);
         panelButton.setVisible(false);
         pack();
         setLocationRelativeTo(null);
@@ -48,9 +50,10 @@ public class FramePopup extends javax.swing.JDialog {
      *
      * @param mensaje Es el texto que aparece en la ventana
      */
-    public FramePopup(String mensaje) {
+    public FramePopup(JFrame parent, String mensaje) {
+        super(parent, true);
         initComponents();
-        text.setText("<html>" + mensaje + "</html>");
+        rellenarDatos(mensaje, null);
         panelButton.setVisible(false);
         pack();
         setLocationRelativeTo(null);
@@ -63,10 +66,10 @@ public class FramePopup extends javax.swing.JDialog {
      * @param mensaje Es el texto que aparece en la ventana
      * @param icon Es la imagen que se muestra en la ventana
      */
-    public FramePopup(String mensaje, ImageIcon icon) {
+    public FramePopup(JFrame parent, String mensaje, ImageIcon icon) {
+        super(parent, true);
         initComponents();
-        text.setText("<html>" + mensaje + "</html>");
-        text.setIcon(icon);
+        rellenarDatos(mensaje, icon);
         panelButton.setVisible(false);
         pack();
         setLocationRelativeTo(null);
@@ -81,10 +84,10 @@ public class FramePopup extends javax.swing.JDialog {
      * @param buttonText Es el texto que contendra el Botón
      *
      */
-    public FramePopup(String mensaje, ImageIcon icon, String buttonText) {
+    public FramePopup(JFrame parent, String mensaje, ImageIcon icon, String buttonText) {
+        super(parent, true);
         initComponents();
-        text.setText("<html>" + mensaje + "</html>");
-        text.setIcon(icon);
+        rellenarDatos(mensaje, icon);
         btnButton2.setText(buttonText);
         btnButton2.requestFocusInWindow();
         btnButton1.setVisible(false);
@@ -102,10 +105,10 @@ public class FramePopup extends javax.swing.JDialog {
      * @param buttonText Es el texto que contendra el Botón
      * @param action Es la acción que realizará el Botón
      */
-    public FramePopup(String mensaje, ImageIcon icon, String buttonText, Action action) {
+    public FramePopup(JFrame parent, String mensaje, ImageIcon icon, String buttonText, Action action) {
+        super(parent, true);
         initComponents();
-        text.setText("<html>" + mensaje + "</html>");
-        text.setIcon(icon);
+        rellenarDatos(mensaje, icon);
         btnButton2.setText(buttonText);
         btnButton2.addActionListener(action);
         btnButton1.setVisible(false);
@@ -121,10 +124,10 @@ public class FramePopup extends javax.swing.JDialog {
      * @param icon Es la imagen que se muestra en la ventana
      * @param action Es la acción que realizará el Botón
      */
-    public FramePopup(String mensaje, ImageIcon icon, Action action) {
+    public FramePopup(JFrame parent, String mensaje, ImageIcon icon, Action action) {
+        super(parent, true);
         initComponents();
-        text.setText("<html>" + mensaje + "</html>");
-        text.setIcon(icon);
+        rellenarDatos(mensaje, icon);
         btnButton2.addActionListener(action);
         btnButton1.setVisible(false);
         pack();
@@ -142,10 +145,10 @@ public class FramePopup extends javax.swing.JDialog {
      * @param actionButton1 Acción que realizara el botón de la Izquierda
      * @param actionButton2 Acción que realizara el botón de la Derecha
      */
-    public FramePopup(String mensaje, ImageIcon icon, String button1, String button2, Action actionButton1, Action actionButton2) {
+    public FramePopup(JFrame parent, String mensaje, ImageIcon icon, String button1, String button2, Action actionButton1, Action actionButton2) {
+        super(parent, true);
         initComponents();
-        text.setText("<html>" + mensaje + "</html>");
-        text.setIcon(icon);
+        rellenarDatos(mensaje, icon);
         btnButton1.setText(button1);
         btnButton1.addActionListener(actionButton1);
         btnButton2.setText(button2);
@@ -155,7 +158,6 @@ public class FramePopup extends javax.swing.JDialog {
     }
 
     /**
-     * _
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
@@ -165,114 +167,31 @@ public class FramePopup extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         text = new org.jdesktop.swingx.JXLabel();
-        jPanel4 = new javax.swing.JPanel();
         panelButton = new javax.swing.JPanel();
-        btnButton1 = new com.mommoo.flat.button.FlatButton();
         btnButton2 = new com.mommoo.flat.button.FlatButton();
+        btnButton1 = new com.mommoo.flat.button.FlatButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setAlwaysOnTop(true);
         setModal(true);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(487, 150));
-        setResizable(false);
-        setType(java.awt.Window.Type.POPUP);
-        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
-            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
-                formWindowGainedFocus(evt);
-            }
-            public void windowLostFocus(java.awt.event.WindowEvent evt) {
-            }
-        });
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
-            }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
         jPanel1.setBackground(Colores.accento);
-        jPanel1.setForeground(Colores.accento);
-
-        jPanel2.setBackground(Colores.fondo);
 
         jPanel3.setBackground(Colores.fondo);
 
+        jPanel2.setBackground(Colores.fondo);
+
+        text.setBackground(Colores.fondo);
         text.setForeground(Colores.letraNormal);
         text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         text.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/load.gif"))); // NOI18N
         text.setText("Recuperando datos del servidor...");
         text.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        text.setMaximumSize(new java.awt.Dimension(32767, 32767));
-        text.setMinimumSize(new java.awt.Dimension(0, 0));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(text, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(text, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jPanel4.setBackground(Colores.fondo);
-
-        panelButton.setBackground(Colores.fondo);
-        panelButton.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
-
-        btnButton1.setBackground(Colores.accento);
-        btnButton1.setForeground(Colores.letraBotones);
-        btnButton1.setText("Button 1");
-        btnButton1.setCornerRound(10);
-        btnButton1.setMaximumSize(new java.awt.Dimension(86, 32));
-        btnButton1.setMinimumSize(null);
-        btnButton1.setPreferredSize(new java.awt.Dimension(192, 32));
-        panelButton.add(btnButton1);
-
-        btnButton2.setBackground(Colores.accento);
-        btnButton2.setForeground(Colores.letraBotones);
-        btnButton2.setText("Aceptar");
-        btnButton2.setCornerRound(10);
-        btnButton2.setFocusPainted(true);
-        btnButton2.setMinimumSize(null);
-        btnButton2.setPreferredSize(new java.awt.Dimension(192, 32));
-        btnButton2.setRequestFocusEnabled(false);
-        btnButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnButton2ActionPerformed(evt);
-            }
-        });
-        panelButton.add(btnButton2);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        text.setLineWrap(true);
+        text.setMinimumSize(new java.awt.Dimension(375, 36));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -280,18 +199,80 @@ public class FramePopup extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(text, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        panelButton.setBackground(Colores.fondo);
+
+        btnButton2.setBackground(Colores.botones);
+        btnButton2.setForeground(Colores.letraBotones);
+        btnButton2.setText("Aceptar");
+        btnButton2.setCornerRound(10);
+        btnButton2.setMaximumSize(new java.awt.Dimension(150, 32));
+        btnButton2.setMinimumSize(new java.awt.Dimension(150, 32));
+        btnButton2.setPreferredSize(new java.awt.Dimension(150, 32));
+        btnButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnButton2ActionPerformed(evt);
+            }
+        });
+
+        btnButton1.setBackground(Colores.botones);
+        btnButton1.setForeground(Colores.letraBotones);
+        btnButton1.setText("Button1");
+        btnButton1.setCornerRound(10);
+        btnButton1.setMaximumSize(new java.awt.Dimension(150, 32));
+        btnButton1.setMinimumSize(new java.awt.Dimension(150, 32));
+        btnButton1.setPreferredSize(new java.awt.Dimension(150, 32));
+
+        javax.swing.GroupLayout panelButtonLayout = new javax.swing.GroupLayout(panelButton);
+        panelButton.setLayout(panelButtonLayout);
+        panelButtonLayout.setHorizontalGroup(
+            panelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelButtonLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelButtonLayout.setVerticalGroup(
+            panelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelButtonLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -300,15 +281,15 @@ public class FramePopup extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(6, 6, 6))
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -320,33 +301,15 @@ public class FramePopup extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Acción del botón de confirmación
-     */
     private void btnButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnButton2ActionPerformed
         dispose();
     }//GEN-LAST:event_btnButton2ActionPerformed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
-    }//GEN-LAST:event_formWindowOpened
-
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-
-    }//GEN-LAST:event_formWindowActivated
-
-    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        resize();
-        repaint();
-    }//GEN-LAST:event_formWindowGainedFocus
 
     /**
      * @param args the command line arguments
@@ -374,12 +337,18 @@ public class FramePopup extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(FramePopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FramePopup().setVisible(true);
+                FramePopup dialog = new FramePopup(new javax.swing.JFrame());
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
@@ -390,12 +359,23 @@ public class FramePopup extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel panelButton;
     private org.jdesktop.swingx.JXLabel text;
     // End of variables declaration//GEN-END:variables
 
-    private void resize() {
-        this.setSize(new Dimension(jPanel1.getWidth(), (jPanel1.getHeight())));
+    private void rellenarDatos(String mensaje, ImageIcon icono) {
+        text.setFont(new Font("Dialog", Font.BOLD, 18));
+
+        if (mensaje.equals("")) {
+            text.setText("Recuperando datos del servidor.");
+            if (icono != null) {
+                text.setIcon(icono);
+            }
+        } else {
+            text.setText(mensaje);
+            if (icono != null) {
+                text.setIcon(icono);
+            }
+        }
     }
 }

@@ -36,6 +36,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -74,11 +75,16 @@ public class FrameHistorial extends javax.swing.JFrame {
     private String defaultText = "Escribe NIA...";
     private String campoBusquedaTemp = "";
 
+    //Cogemos el frame padre para trabajar con los dialogos
+    private JFrame topFrame;
+
     /**
      * Creates new form FrameDevoluciones
      */
     public FrameHistorial() {
         initComponents();
+
+        topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
         //<editor-fold defaultstate="collapsed" desc="Configuración combobox">
         cbCurso.setEditable(false);
@@ -829,7 +835,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                             }
                         }
                     } else {
-                        new FramePopup("No existe ningún alumno con el NIA introducido.",
+                        new FramePopup(topFrame, "No existe ningún alumno con el NIA introducido.",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
                     }
@@ -837,12 +843,12 @@ public class FrameHistorial extends javax.swing.JFrame {
                 }
             };
             worker.execute();
-            framePopup = new FramePopup("Cargando datos...");
+            framePopup = new FramePopup(this, "Cargando datos...");
             framePopup.setVisible(true);
             //alumno = listaAlumnos.stream().filter(a -> a.getNia().equals(nia)).collect(Collectors.toList()).get(0);
         } else {
             //No se ha insertado ningun valor en el campo de texto
-            new FramePopup("El NIA no puede ser un campo vacío.",
+            new FramePopup(this, "El NIA no puede ser un campo vacío.",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
@@ -877,7 +883,7 @@ public class FrameHistorial extends javax.swing.JFrame {
             cargarHitoriales(alumno);
 
         } else {
-            new FramePopup("El alumno no esta matriculado en este curso escolar",
+            new FramePopup(this, "El alumno no esta matriculado en este curso escolar",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
@@ -919,10 +925,7 @@ public class FrameHistorial extends javax.swing.JFrame {
             }
         };
         worker.execute();
-        if (framePopup == null) {
-            framePopup = new FramePopup();
-        }
-        framePopup.setVisible(true);
+        framePopup = new FramePopup(this);
     }
 
     /**
@@ -968,7 +971,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                 cbCurso.addItem(listaCursos.get(i));
             }
         } else {
-            new FramePopup("No hay cursos en la base de datos.",
+            new FramePopup(this, "No hay cursos en la base de datos.",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
@@ -995,7 +998,7 @@ public class FrameHistorial extends javax.swing.JFrame {
             }
         };
         worker.execute();
-        framePopup = new FramePopup();
+        framePopup = new FramePopup(this);
     }
 
     /**
@@ -1066,12 +1069,12 @@ public class FrameHistorial extends javax.swing.JFrame {
             };
             worker.execute();
 
-            framePopup = new FramePopup("Cargando datos...");
+            framePopup = new FramePopup(this, "Cargando datos...");
             framePopup.setVisible(true);
 //</editor-fold>
 
         } else {
-            new FramePopup("Este alumno no tiene historial todavía",
+            new FramePopup(this, "Este alumno no tiene historial todavía",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }

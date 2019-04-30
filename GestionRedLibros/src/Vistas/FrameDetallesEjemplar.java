@@ -28,7 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -1011,7 +1013,7 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
             boolean estadoFinal = setEstado("final", hist.getEstado_final());
 
             if ((!estadoInicial) || (!estadoFinal)) {
-                new FramePopup("No se ha podido asignar el estado del ejemplar",
+                new FramePopup(this, "No se ha podido asignar el estado del ejemplar",
                         Imagenes.getImagen("alert-black.png"),
                         "Aceptar").setVisible(true);
             }

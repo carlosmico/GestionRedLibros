@@ -15,7 +15,7 @@ import Pojos.Grupo;
 import Pojos.Historial;
 import Pojos.Libro;
 import Pojos.Matricula;
-import Vistas.FramePopup;
+import Vistas.FramePopup_;
 import Vistas.FrameEjemplares;
 import VistasOld.FrameLibroOld;
 import java.util.Scanner;
@@ -33,7 +33,7 @@ import net.bytebuddy.asm.Advice;
 public class PruebaHibernate {
 
     static List<Alumno> listaAlumnos;
-    static FramePopup frameCarga;
+    static FramePopup_ frameCarga;
 
     public static void main(String[] args) {
         Curso curso = new Curso("1", "DAM", "a", "a", "a", "a");

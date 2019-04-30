@@ -79,11 +79,16 @@ public class FrameEntrega extends javax.swing.JFrame {
 
     private String campoBusquedaTemp = "";
 
+    //Cogemos el frame padre para trabajar con los dialogos
+    private JFrame topFrame;
+
     /**
      * Creates new form FrameDevoluciones
      */
     public FrameEntrega() {
         initComponents();
+
+        topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
         //<editor-fold defaultstate="collapsed" desc="Configuración combobox">
         cbCurso.setEditable(false);
@@ -1135,7 +1140,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         };
         worker.execute();
         if (framePopup == null) {
-            framePopup = new FramePopup();
+            framePopup = new FramePopup(this);
         }
         framePopup.setVisible(true);
     }
@@ -1168,7 +1173,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                 cbCurso.addItem(listaCursos.get(i));
             }
         } else {
-            new FramePopup("No hay cursos en la base de datos.",
+            new FramePopup(this, "No hay cursos en la base de datos.",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
@@ -1207,7 +1212,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
                         modoEdicion(true);
                     } else {
-                        new FramePopup("El alumno no está matriculado en este curso escolar",
+                        new FramePopup(topFrame, "El alumno no está matriculado en este curso escolar",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
                     }
@@ -1217,7 +1222,7 @@ public class FrameEntrega extends javax.swing.JFrame {
             };
             worker.execute();
             if (framePopup == null) {
-                framePopup = new FramePopup();
+                framePopup = new FramePopup(this);
             }
             framePopup.setVisible(true);
         }
@@ -1256,7 +1261,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                 }
             };
 
-            new FramePopup("No se ha podido conseguir el curso escolar",
+            new FramePopup(this, "No se ha podido conseguir el curso escolar",
                     Imagenes.getImagen("/Imagenes/icons/alert-black.png"),
                     "Aceptar", aceptar).setVisible(true);
         }
@@ -1304,7 +1309,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                             }
                         }
                     } else {
-                        new FramePopup("No existe ningún alumno con el NIA introducido.",
+                        new FramePopup(topFrame, "No existe ningún alumno con el NIA introducido.",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
 
@@ -1314,12 +1319,12 @@ public class FrameEntrega extends javax.swing.JFrame {
                 }
             };
             worker.execute();
-            framePopup = new FramePopup("Cargando datos...");
+            framePopup = new FramePopup(this, "Cargando datos...");
             framePopup.setVisible(true);
 
         } else {
             //No se ha insertado ningun valor en el campo de texto
-            new FramePopup("El NIA no puede ser un campo vacío.",
+            new FramePopup(this, "El NIA no puede ser un campo vacío.",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
@@ -1346,12 +1351,12 @@ public class FrameEntrega extends javax.swing.JFrame {
 
                     if (ejemplar != null) {
                         if (ejemplar.isPrestado()) {
-                            new FramePopup("El ejemplar con código "
+                            new FramePopup(topFrame, "El ejemplar con código "
                                     + ejemplar.getCodigo() + " ya está prestado.",
                                     Imagenes.getImagen("alert-black.png"),
                                     "Aceptar").setVisible(true);
                         } else if (ejemplar.getLibro().getObsoleto()) {
-                            new FramePopup("El ejemplar con código "
+                            new FramePopup(topFrame, "El ejemplar con código "
                                     + ejemplar.getCodigo() + " corresponde a un libro obsoleto.",
                                     Imagenes.getImagen("alert-black.png"),
                                     "Aceptar").setVisible(true);
@@ -1397,14 +1402,14 @@ public class FrameEntrega extends javax.swing.JFrame {
                             } catch (Exception e) {
                                 e.printStackTrace();
 
-                                new FramePopup("Error al generar el historial del ejemplar "
+                                new FramePopup(topFrame, "Error al generar el historial del ejemplar "
                                         + ejemplar.getCodigo() + ".",
                                         Imagenes.getImagen("alert-black.png"),
                                         "Aceptar").setVisible(true);
                             }
                         }
                     } else {
-                        new FramePopup("No existe ningún ejemplar con el código introducido.",
+                        new FramePopup(topFrame, "No existe ningún ejemplar con el código introducido.",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
                     }
@@ -1412,12 +1417,12 @@ public class FrameEntrega extends javax.swing.JFrame {
                 }
             };
             worker.execute();
-            framePopup = new FramePopup("Cargando datos...");
+            framePopup = new FramePopup(this, "Cargando datos...");
             framePopup.setVisible(true);
 
         } else {
             //No se ha insertado ningun valor en el campo de texto
-            new FramePopup("El código no puede ser un campo vacío.",
+            new FramePopup(this, "El código no puede ser un campo vacío.",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
@@ -1439,7 +1444,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         } else {
             textCodigoEjemplar.setText("");
 
-            new FramePopup("No se han encontrado libros disponibles "
+            new FramePopup(this, "No se han encontrado libros disponibles "
                     + "correspondientes a la asignatura seleccionada.",
                     Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
         }
