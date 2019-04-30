@@ -45,6 +45,7 @@ public class Main extends javax.swing.JFrame {
 
     //Cogemos el FramePadre para trabajar con los dialogos
     private JFrame topFrame;
+    private Main frameMain;
 
     public static GestorSesiones gestorSesiones;
 
@@ -58,6 +59,8 @@ public class Main extends javax.swing.JFrame {
 
         topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
+        frameMain = this;
+
         //Centramos la pestaña al centro de la pantalla
         //(Es irrelevante ya que la maximizamos)
         setLocationRelativeTo(null);
@@ -70,24 +73,24 @@ public class Main extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
         try {
             BufferedImage img = null;
-            
+
             String wallpaperGuardado = Configuracion.getWallpaper();
-            
+
             img = ImageIO.read(new File("src/Imagenes/wallpapers/" + wallpaperGuardado));
-            
+
             Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
             ImageIcon imageIcon = new ImageIcon(image);
-            
+
             wallpaper.setIcon(imageIcon);
             banner.setVisible(true);
         } catch (Exception e) {
             BufferedImage img = null;
-            
+
             img = ImageIO.read(new File("src/Imagenes/wallpapers/1.jpg"));
-            
+
             Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
             ImageIcon imageIcon = new ImageIcon(image);
-            
+
             wallpaper.setIcon(imageIcon);
             banner.setVisible(true);
             e.printStackTrace();
@@ -316,11 +319,11 @@ public class Main extends javax.swing.JFrame {
      */
     private void btnOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionesActionPerformed
         if (frameOpciones == null) {
-            frameOpciones = new FrameOpciones();
+            frameOpciones = new FrameOpciones(this);
         } else {
             if (!frameOpciones.isVisible()) {
                 frameOpciones = null;
-                frameOpciones = new FrameOpciones();
+                frameOpciones = new FrameOpciones(this);
             }
         }
         frameOpciones.setVisible(true);
@@ -406,7 +409,35 @@ public class Main extends javax.swing.JFrame {
     private void compruebaConexionBD(boolean main, String nombreFrame) {
         if (framePopup == null) {
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-                protected Void doInBackground() throws InterruptedException 
+                protected Void doInBackground() throws InterruptedException {
+                    String ip, usuario, password;
+                    int puerto;
+
+                    try {
+                        ip = Configuracion.getIp();
+                        puerto = Integer.parseInt(Configuracion.getPuerto());
+                        usuario = Configuracion.getUsuario();
+                        password = Configuracion.getPassword();
+
+                        ComprobarConexion.comprobarConexion(
+                                ip,
+                                puerto,
+                                "institut",
+                                usuario,
+                                password);
+
+                        gestorSesiones = new GestorSesiones();
+
+                        gestorSesiones.configurarPropiedades(ip, puerto, usuario, password);
+
+                        existeConexion = true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        existeConexion = false;
+                    }
+
+                    return null;
+                }
 
                 protected void done() {
                     if (existeConexion) {
@@ -445,11 +476,11 @@ public class Main extends javax.swing.JFrame {
                         Action abrirOpciones = new AbstractAction() {
                             public void actionPerformed(ActionEvent e) {
                                 if (frameOpciones == null) {
-                                    frameOpciones = new FrameOpciones();
+                                    frameOpciones = new FrameOpciones(frameMain);
                                 } else {
                                     if (!frameOpciones.isVisible()) {
                                         frameOpciones = null;
-                                        frameOpciones = new FrameOpciones();
+                                        frameOpciones = new FrameOpciones(frameMain);
                                     }
                                 }
 
@@ -482,16 +513,16 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel banner;
-    private com.mommoo.flat.button.FlatButton btnAydua;
-    private com.mommoo.flat.button.FlatButton btnDevoluciones;
-    private com.mommoo.flat.button.FlatButton btnEntrega;
-    private com.mommoo.flat.button.FlatButton btnLibros;
-    private com.mommoo.flat.button.FlatButton btnOpciones;
-    private com.mommoo.flat.button.FlatButton flatButton1;
-    private javax.swing.JPanel generalaPanel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private static com.mommoo.flat.button.FlatButton btnAydua;
+    private static com.mommoo.flat.button.FlatButton btnDevoluciones;
+    private static com.mommoo.flat.button.FlatButton btnEntrega;
+    private static com.mommoo.flat.button.FlatButton btnLibros;
+    private static com.mommoo.flat.button.FlatButton btnOpciones;
+    private static com.mommoo.flat.button.FlatButton flatButton1;
+    private static javax.swing.JPanel generalaPanel;
+    private static javax.swing.JLabel jLabel1;
+    private static javax.swing.JPanel jPanel1;
+    private static javax.swing.JPanel jPanel2;
     public javax.swing.JLabel wallpaper;
     // End of variables declaration//GEN-END:variables
 }

@@ -117,49 +117,53 @@ public class Configuracion {
 
         Color color = null;
 
-        color = new Color(Integer.parseInt(colorGuardado));
+        try {
+            color = new Color(Integer.parseInt(colorGuardado));
+        } catch (Exception e) {
+            System.out.println("Error - Fallo al cargar los colores.");
+            
+            switch (nombreColor) {
+                case StringsGlobales.color_fondo:
+                    color = Colores.fondo;
+                    break;
 
-        switch (nombreColor) {
-            case StringsGlobales.color_fondo:
-                color = Colores.fondo;
-                break;
+                case StringsGlobales.color_fondo_oscuro:
+                    color = Colores.fondoOscuro;
+                    break;
 
-            case StringsGlobales.color_fondo_oscuro:
-                color = Colores.fondoOscuro;
-                break;
+                case StringsGlobales.color_fondo_botones:
+                    color = Colores.botones;
+                    break;
 
-            case StringsGlobales.color_fondo_botones:
-                color = Colores.botones;
-                break;
+                case StringsGlobales.color_acentos:
+                    color = Colores.accento;
+                    break;
 
-            case StringsGlobales.color_acentos:
-                color = Colores.accento;
-                break;
+                case StringsGlobales.color_letra_botones:
+                    color = Colores.letraBotones;
+                    break;
 
-            case StringsGlobales.color_letra_botones:
-                color = Colores.letraBotones;
-                break;
+                case StringsGlobales.color_letra_general:
+                    color = Colores.letraNormal;
+                    break;
 
-            case StringsGlobales.color_letra_general:
-                color = Colores.letraNormal;
-                break;
+                case StringsGlobales.color_letra_titulos:
+                    color = Colores.letraTitulo;
+                    break;
 
-            case StringsGlobales.color_letra_titulos:
-                color = Colores.letraTitulo;
-                break;
-
-            case StringsGlobales.color_letra_noseleccionada:
-                color = Colores.campoTextSinFocus;
-                break;
+                case StringsGlobales.color_letra_noseleccionada:
+                    color = Colores.campoTextSinFocus;
+                    break;
+            }
         }
 
         return color;
     }
-    
+
     /**
      * CONFIGURACIÓN DE WALLPAPER
      */
-    public static void guardarWallpaper(String wallpaper){
+    public static void guardarWallpaper(JFrame frame, String wallpaper) {
         propiedades.setProperty("wallpaper", wallpaper);
 
         try {
@@ -169,13 +173,13 @@ public class Configuracion {
         } catch (Exception ex) {
             ex.printStackTrace();
 
-            new FramePopup("Error al guardar la configuración del wallpaper.",
+            new FramePopup(frame, "Error al guardar la configuración del wallpaper.",
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
                     "Aceptar").setVisible(true);
         }
     }
-    
-    public static String getWallpaper() throws FileNotFoundException, IOException{
+
+    public static String getWallpaper() throws FileNotFoundException, IOException {
         propiedades.load(new FileInputStream(rutaConfiguracion));
         return propiedades.getProperty("wallpaper");
     }
