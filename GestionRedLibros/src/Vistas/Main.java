@@ -292,17 +292,16 @@ public class Main extends javax.swing.JFrame {
      * Este botón lo utilizamos para mostrar la pestaña de Opciones
      */
     private void btnOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionesActionPerformed
-        if (existeConexion) {
-            if (frameOpciones == null) {
+        if (frameOpciones == null) {
+            frameOpciones = new FrameOpciones();
+        } else {
+            if (!frameOpciones.isVisible()) {
+                frameOpciones = null;
                 frameOpciones = new FrameOpciones();
-            } else {
-                if (!frameOpciones.isVisible()) {
-                    frameOpciones = null;
-                    frameOpciones = new FrameOpciones();
-                }
             }
-            frameOpciones.setVisible(true);
         }
+        frameOpciones.setVisible(true);
+
     }//GEN-LAST:event_btnOpcionesActionPerformed
 
     /**
