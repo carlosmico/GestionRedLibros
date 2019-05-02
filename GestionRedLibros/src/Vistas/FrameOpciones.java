@@ -61,6 +61,7 @@ public class FrameOpciones extends javax.swing.JFrame {
     private boolean mostrarContrasena;
 
     private FramePopup frameCarga = null;
+    private FrameOpciones frameOpc = this;
 
     private Main main = null;
 
@@ -198,6 +199,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opciones");
         setMinimumSize(new java.awt.Dimension(765, 50));
+        setResizable(false);
         setSize(new java.awt.Dimension(5000, 0));
 
         panelSuperior.setBackground(Colores.accento);
@@ -2137,6 +2139,7 @@ public class FrameOpciones extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSelLetraDeseleccionadaMouseClicked
 
     private void wallpaper1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wallpaper1MouseClicked
+<<<<<<< HEAD
         Configuracion.guardarWallpaper(this, "1.jpg");
 
         try {
@@ -2149,10 +2152,39 @@ public class FrameOpciones extends javax.swing.JFrame {
             main.banner.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
+=======
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+            protected Void doInBackground() throws InterruptedException {
+                Configuracion.guardarWallpaper(frameOpc, "1.jpg");
+
+                try {
+                    BufferedImage img = ImageIO.read(new File("src/Imagenes/wallpapers/1.jpg"));
+
+                    Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
+                    ImageIcon imageIcon = new ImageIcon(image);
+
+                    main.wallpaper.setIcon(imageIcon);
+                    main.banner.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            protected void done() {
+                frameCarga.dispose();
+            }
+        };
+        worker.execute();
+        if (frameCarga == null) {
+            frameCarga = new FramePopup(this, "Cambiando fondo de pantalla...");
+>>>>>>> master
         }
+        frameCarga.setVisible(true);
     }//GEN-LAST:event_wallpaper1MouseClicked
 
     private void wallpaper2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wallpaper2MouseClicked
+<<<<<<< HEAD
         Configuracion.guardarWallpaper(this, "2.jpg");
 
         try {
@@ -2165,10 +2197,39 @@ public class FrameOpciones extends javax.swing.JFrame {
             main.banner.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
+=======
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+            protected Void doInBackground() throws InterruptedException {
+                Configuracion.guardarWallpaper(frameOpc, "2.jpg");
+
+                try {
+                    BufferedImage img = ImageIO.read(new File("src/Imagenes/wallpapers/2.jpg"));
+
+                    Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
+                    ImageIcon imageIcon = new ImageIcon(image);
+
+                    main.wallpaper.setIcon(imageIcon);
+                    main.banner.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            protected void done() {
+                frameCarga.dispose();
+            }
+        };
+        worker.execute();
+        if (frameCarga == null) {
+            frameCarga = new FramePopup(this, "Cambiando fondo de pantalla...");
+>>>>>>> master
         }
+        frameCarga.setVisible(true);
     }//GEN-LAST:event_wallpaper2MouseClicked
 
     private void wallpaper3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wallpaper3MouseClicked
+<<<<<<< HEAD
         Configuracion.guardarWallpaper(this, "3.jpg");
 
         try {
@@ -2181,10 +2242,39 @@ public class FrameOpciones extends javax.swing.JFrame {
             main.banner.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
+=======
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+            protected Void doInBackground() throws InterruptedException {
+                Configuracion.guardarWallpaper(frameOpc, "3.jpg");
+
+                try {
+                    BufferedImage img = ImageIO.read(new File("src/Imagenes/wallpapers/3.jpg"));
+
+                    Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
+                    ImageIcon imageIcon = new ImageIcon(image);
+
+                    main.wallpaper.setIcon(imageIcon);
+                    main.banner.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            protected void done() {
+                frameCarga.dispose();
+            }
+        };
+        worker.execute();
+        if (frameCarga == null) {
+            frameCarga = new FramePopup(this, "Cambiando fondo de pantalla...");
+>>>>>>> master
         }
+        frameCarga.setVisible(true);
     }//GEN-LAST:event_wallpaper3MouseClicked
 
     private void wallpaper4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wallpaper4MouseClicked
+<<<<<<< HEAD
         Configuracion.guardarWallpaper(this, "4.jpg");
 
         try {
@@ -2197,7 +2287,35 @@ public class FrameOpciones extends javax.swing.JFrame {
             main.banner.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
+=======
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+            protected Void doInBackground() throws InterruptedException {
+                Configuracion.guardarWallpaper(frameOpc, "4.jpg");
+
+                try {
+                    BufferedImage img = ImageIO.read(new File("src/Imagenes/wallpapers/4.jpg"));
+
+                    Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
+                    ImageIcon imageIcon = new ImageIcon(image);
+
+                    main.wallpaper.setIcon(imageIcon);
+                    main.banner.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            protected void done() {
+                frameCarga.dispose();
+            }
+        };
+        worker.execute();
+        if (frameCarga == null) {
+            frameCarga = new FramePopup(this, "Cambiando fondo de pantalla...");
+>>>>>>> master
         }
+        frameCarga.setVisible(true);
     }//GEN-LAST:event_wallpaper4MouseClicked
 
     private void btnReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReiniciarActionPerformed
@@ -2264,6 +2382,7 @@ public class FrameOpciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< HEAD
     private com.mommoo.flat.button.FlatButton btnAyudaEjemplo;
     private com.mommoo.flat.button.FlatButton btnButonEjemplo;
     private com.mommoo.flat.button.FlatButton btnComprobar;
@@ -2365,18 +2484,116 @@ public class FrameOpciones extends javax.swing.JFrame {
     private javax.swing.JLabel wallpaper2;
     private javax.swing.JLabel wallpaper3;
     private javax.swing.JLabel wallpaper4;
+=======
+    private static com.mommoo.flat.button.FlatButton btnComprobar;
+    private static com.mommoo.flat.button.FlatButton btnHelp;
+    private static com.mommoo.flat.button.FlatButton btnImportarAlumnos;
+    private static com.mommoo.flat.button.FlatButton btnImportarAsignaturas;
+    private static com.mommoo.flat.button.FlatButton btnImportarCursos;
+    private static com.mommoo.flat.button.FlatButton btnImportarGrupos;
+    private static com.mommoo.flat.button.FlatButton btnImportarMatriculas;
+    private static com.mommoo.flat.button.FlatButton btnMostrarContrasena;
+    private static com.mommoo.flat.button.FlatButton btnReiniciar;
+    private static javax.swing.JPanel btnSelAcento;
+    private static javax.swing.JPanel btnSelFondo;
+    private static javax.swing.JPanel btnSelFondoBotones;
+    private static javax.swing.JPanel btnSelFondoOscuro;
+    private static javax.swing.JPanel btnSelLetraBotones;
+    private static javax.swing.JPanel btnSelLetraDeseleccionada;
+    private static javax.swing.JPanel btnSelLetraGeneral;
+    private static javax.swing.JPanel btnSelLetraTitulo;
+    private static com.mommoo.flat.button.FlatButton btnSeleccionAlumnos;
+    private static com.mommoo.flat.button.FlatButton btnSeleccionAsignaturas;
+    private static com.mommoo.flat.button.FlatButton btnSeleccionCursos;
+    private static com.mommoo.flat.button.FlatButton btnSeleccionGrupos;
+    private static com.mommoo.flat.button.FlatButton btnSeleccionMatriculas;
+    private static org.jdesktop.swingx.painter.GlossPainter glossPainter1;
+    private static javax.swing.JLabel jLabel1;
+    private static javax.swing.JLabel jLabel16;
+    private static javax.swing.JLabel jLabel17;
+    private static javax.swing.JLabel jLabel18;
+    private static javax.swing.JLabel jLabel19;
+    private static javax.swing.JLabel jLabel2;
+    private static javax.swing.JLabel jLabel20;
+    private static javax.swing.JLabel jLabel21;
+    private static javax.swing.JLabel jLabel22;
+    private static javax.swing.JLabel jLabel23;
+    private static javax.swing.JLabel jLabel24;
+    private static javax.swing.JLabel jLabel25;
+    private static javax.swing.JLabel jLabel3;
+    private static javax.swing.JLabel jLabel4;
+    private static javax.swing.JLabel jLabel5;
+    private static javax.swing.JLabel jLabel6;
+    private static javax.swing.JPanel jPanel19;
+    private static javax.swing.JPanel jPanel20;
+    private static javax.swing.JPanel jPanel21;
+    private static javax.swing.JPanel jPanel22;
+    private static javax.swing.JPanel jPanel23;
+    private static javax.swing.JPanel jPanel24;
+    private static javax.swing.JPanel jPanel25;
+    private static javax.swing.JPanel jPanel26;
+    private static javax.swing.JPanel jPanel27;
+    private static javax.swing.JPanel jPanel3;
+    private static javax.swing.JScrollPane jScrollPane1;
+    private static javax.swing.JLabel labelConfiguracion;
+    private static javax.swing.JLabel labelIP;
+    private static javax.swing.JLabel labelPuerto;
+    private static javax.swing.JLabel labelUsuario;
+    private static javax.swing.JLabel labelUsuario1;
+    private static javax.swing.JPanel panelAcento;
+    private static javax.swing.JPanel panelBotones;
+    private static javax.swing.JPanel panelCampoTextoSinFocus;
+    private static javax.swing.JPanel panelColores;
+    private static javax.swing.JPanel panelConfiguracionBBDD;
+    private static javax.swing.JPanel panelFondo;
+    private static javax.swing.JPanel panelFondoOscuro;
+    private static javax.swing.JPanel panelGeneral;
+    private static javax.swing.JPanel panelIP;
+    private static javax.swing.JPanel panelImportAlumnos;
+    private static javax.swing.JPanel panelImportAsignaturas;
+    private static javax.swing.JPanel panelImportCursos;
+    private static javax.swing.JPanel panelImportGrupos;
+    private static javax.swing.JPanel panelImportMatriculas;
+    private static javax.swing.JPanel panelImportaciones;
+    private static javax.swing.JPanel panelLetraBotones;
+    private static javax.swing.JPanel panelLetraNormal;
+    private static javax.swing.JPanel panelLetraTitulo;
+    private static javax.swing.JPanel panelPassword;
+    private static javax.swing.JPanel panelPersonalizacion;
+    private static javax.swing.JPanel panelPuerto;
+    private static javax.swing.JPanel panelReiniciar;
+    private static javax.swing.JPanel panelSuperior;
+    private static javax.swing.JPanel panelTemas;
+    private static javax.swing.JPanel panelUsuario;
+    private static javax.swing.JTabbedPane tabbedPage;
+    private static javax.swing.JPasswordField textContrasena;
+    private static javax.swing.JTextField textIP;
+    private static javax.swing.JTextField textPuerto;
+    private static javax.swing.JTextField textRutaAlumnos;
+    private static javax.swing.JTextField textRutaContenidos;
+    private static javax.swing.JTextField textRutaCursos;
+    private static javax.swing.JTextField textRutaGrupos;
+    private static javax.swing.JTextField textRutaMatriculas;
+    private static javax.swing.JTextField textUsuario;
+    private static javax.swing.JLabel wallpaper1;
+    private static javax.swing.JLabel wallpaper2;
+    private static javax.swing.JLabel wallpaper3;
+    private static javax.swing.JLabel wallpaper4;
+>>>>>>> master
     // End of variables declaration//GEN-END:variables
 
     private void cargarConfiguracion() {
+        String error = "";
+
         try {
             textIP.setText(Configuracion.getIp());
             textPuerto.setText(Configuracion.getPuerto());
             textUsuario.setText(Configuracion.getUsuario());
             textContrasena.setText(Configuracion.getPassword());
         } catch (Exception e) {
-            new FramePopup(this, "Error al cargar la configuración de red.",
-                    new ImageIcon("/Imagenes/icons/alert-black.png"),
-                    "Aceptar").setVisible(true);
+            e.printStackTrace();
+
+            error += "\n- No se han podido recuperar los datos de conexión al servidor.";
         }
 
         try {
@@ -2389,11 +2606,16 @@ public class FrameOpciones extends javax.swing.JFrame {
             btnSelLetraTitulo.setBackground(Configuracion.getColor(StringsGlobales.color_letra_titulos));
             btnSelLetraDeseleccionada.setBackground(Configuracion.getColor(StringsGlobales.color_letra_noseleccionada));
         } catch (Exception e) {
-            new FramePopup(this, "Error al cargar la configuración de colores.",
+            e.printStackTrace();
+
+            error += "\n- No se han podido recuperar los colores.";
+        }
+
+        if (!error.equals("")) {
+            new FramePopup(this, "Error al cargar la configuración:" + error,
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
                     "Aceptar").setVisible(true);
         }
-
     }
 
     private void rellenarColoresEjemplo(String parte) {
