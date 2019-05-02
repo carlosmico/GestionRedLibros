@@ -50,11 +50,13 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
     private Session session = Main.gestorSesiones.getSession();
 
+    public static FrameConfirmacionDevolucion frameConfirmacion;
     public static int isConfirmationReady;
     public static Historial historialConfirmado;
 
     //Cremaos el frame de Cargar
     private FramePopup framePopup;
+    
 
     //Creamos el DAO del Alumno y Matricula
     private DaoAlumno daoAlumno;
@@ -370,7 +372,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelListaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelListaLayout.setVerticalGroup(
@@ -531,6 +533,16 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jlistEjemplaresPendientes.setBackground(Colores.fondo);
         jlistEjemplaresPendientes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jlistEjemplaresPendientes.setForeground(Colores.letraNormal);
+        jlistEjemplaresPendientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlistEjemplaresPendientesMouseClicked(evt);
+            }
+        });
+        jlistEjemplaresPendientes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jlistEjemplaresPendientesValueChanged(evt);
+            }
+        });
         jScrollPane5.setViewportView(jlistEjemplaresPendientes);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -664,7 +676,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 1215, Short.MAX_VALUE)
+                    .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 1203, Short.MAX_VALUE)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -858,6 +870,22 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         // TODO add your handling code here:
         campoBusquedaTemp = textBusquedaNIA.getText();
     }//GEN-LAST:event_textBusquedaNIAKeyReleased
+
+    private void jlistEjemplaresPendientesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jlistEjemplaresPendientesValueChanged
+        DefaultListModel model = (DefaultListModel) jlistEjemplaresPendientes.getModel();
+
+        Historial historial = (Historial) model.getElementAt(jlistEjemplaresPendientes.getSelectedIndex());
+
+        buscarEjemplar(historial.getEjemplar().getCodigo().toUpperCase());
+    }//GEN-LAST:event_jlistEjemplaresPendientesValueChanged
+
+    private void jlistEjemplaresPendientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlistEjemplaresPendientesMouseClicked
+         DefaultListModel model = (DefaultListModel) jlistEjemplaresPendientes.getModel();
+
+        Historial historial = (Historial) model.getElementAt(jlistEjemplaresPendientes.getSelectedIndex());
+
+        buscarEjemplar(historial.getEjemplar().getCodigo().toUpperCase());
+    }//GEN-LAST:event_jlistEjemplaresPendientesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1190,7 +1218,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                                     + ejemplar.getCodigo() + " no está prestado actualmente.",
                                     Imagenes.getImagen("alert-black.png"),
                                     "Aceptar").setVisible(true);
-                        } else if (!daoHistorial.buscarEjemplarPrestadoA(ejemplar).getAlumno().getNia().equals(alumno.getNia())) {
+                        } else if (!daoHistorial.isEjemplarPrestadoA(ejemplar, alumno)) {
                             new FramePopup(topFrame,
                                     "El ejemplar con código "
                                     + ejemplar.getCodigo()
@@ -1201,9 +1229,10 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                                     "Aceptar").setVisible(true);
                         } else {
                             //Buscar historial a partir de ejemplar
-                            FrameConfirmacionDevolucion frameConfirmacion
-                                    = new FrameConfirmacionDevolucion(daoHistorial.buscarPorEjemplarPendiente(ejemplar));
-                            frameConfirmacion.setVisible(true);
+                            if (frameConfirmacion == null) {
+                                frameConfirmacion = new FrameConfirmacionDevolucion(daoHistorial.buscarPorEjemplarPendiente(ejemplar));
+                                frameConfirmacion.setVisible(true);
+                            }
                         }
                     } else {
                         new FramePopup(topFrame, "No existe ningún ejemplar con el código introducido.",

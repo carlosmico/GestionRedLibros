@@ -44,6 +44,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
     private FramePopup framePopup;
 
     private String placeHolderObservaciones = "Escribe una observación…";
+    private String observacionesTemp = "";
 
     //Cogemos el FramePadre para trabajar con los dialogos
     private JFrame topFrame;
@@ -103,6 +104,11 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Confirmación");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         panelTitulo.setBackground(Colores.accento);
 
@@ -285,6 +291,9 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
         textObservaciones.setSelectedTextColor(Colores.letraBotones);
         textObservaciones.setSelectionColor(Colores.accento);
         textObservaciones.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textObservacionesFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 textObservacionesFocusLost(evt);
             }
@@ -385,14 +394,6 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/check-white.png"))); // NOI18N
         btnAceptar.setText("Aceptar");
         btnAceptar.setCornerRound(10);
-        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseClicked(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseReleased(evt);
-            }
-        });
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -462,12 +463,9 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
 
     private void btnCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelMouseClicked
         FrameDevoluciones.isConfirmationReady = ConfirmacionDevolucion.CANCELADA;
+        FrameDevoluciones.frameConfirmacion = null;
         dispose();
     }//GEN-LAST:event_btnCancelMouseClicked
-
-    private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-
-    }//GEN-LAST:event_btnAceptarMouseClicked
 
     private void textObservacionesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textObservacionesKeyPressed
         String nombreLibro = textObservaciones.getText();
@@ -502,12 +500,6 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
         setEstado(Estado.nuevo);
     }//GEN-LAST:event_btnGoodStatusMouseClicked
 
-    private void btnAceptarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseReleased
-        // TODO add your handling code here:
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnAceptarMouseReleased
-
     private void btnImprimirEtiquetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetaActionPerformed
         // TODO add your handling code here:
         SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
@@ -534,12 +526,9 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-
-        String observaciones = textObservaciones.getText();
-
         //El estado se actualiza al cambiar el estado visual en el metodo setEstado()
         historial.setFecha_final(new Date());
-        historial.setObservaciones(observaciones);
+        historial.setObservaciones(observacionesTemp);
 
         try {
             //Actualizamos los campos del historial y el ejemplar hijo del historial.
@@ -574,12 +563,23 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
                     "Aceptar").setVisible(true);
         }
 
+        FrameDevoluciones.frameConfirmacion = null;
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void textObservacionesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textObservacionesFocusLost
         // TODO add your handling code here:
+        observacionesTemp = textObservaciones.getText();
         textObservaciones.setText(placeHolderObservaciones);
     }//GEN-LAST:event_textObservacionesFocusLost
+
+    private void textObservacionesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textObservacionesFocusGained
+        observacionesTemp = "";
+        textObservaciones.setText("");
+    }//GEN-LAST:event_textObservacionesFocusGained
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        FrameDevoluciones.frameConfirmacion = null;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

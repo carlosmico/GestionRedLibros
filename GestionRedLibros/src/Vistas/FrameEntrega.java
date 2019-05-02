@@ -80,6 +80,7 @@ public class FrameEntrega extends javax.swing.JFrame {
     public List<Curso> listaCursos;
 
     private String campoBusquedaTemp = "";
+    private String codigoTemp = "";
 
     //Cogemos el frame padre para trabajar con los dialogos
     private JFrame topFrame;
@@ -722,6 +723,11 @@ public class FrameEntrega extends javax.swing.JFrame {
         btnCodigoEjemplar.setForeground(Colores.letraBotones);
         btnCodigoEjemplar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up.png"))); // NOI18N
         btnCodigoEjemplar.setCornerRound(10);
+        btnCodigoEjemplar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCodigoEjemplarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelCodigoLayout = new javax.swing.GroupLayout(panelCodigo);
         panelCodigo.setLayout(panelCodigoLayout);
@@ -974,15 +980,23 @@ public class FrameEntrega extends javax.swing.JFrame {
 
     private void textCodigoEjemplarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCodigoEjemplarFocusLost
         // TODO add your handling code here:
+        codigoTemp = textCodigoEjemplar.getText();
         textCodigoEjemplar.setText("Escanee código ejemplar...");
         textCodigoEjemplar.setForeground(Colores.campoTextSinFocus);
     }//GEN-LAST:event_textCodigoEjemplarFocusLost
 
     private void textCodigoEjemplarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCodigoEjemplarFocusGained
         // TODO add your handling code here:
+        codigoTemp = "";
         textCodigoEjemplar.setText("");
         textCodigoEjemplar.setForeground(Colores.letraNormal);
     }//GEN-LAST:event_textCodigoEjemplarFocusGained
+
+    private void btnCodigoEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCodigoEjemplarActionPerformed
+        buscarEjemplar(codigoTemp.toUpperCase());
+        codigoTemp = "";
+        textCodigoEjemplar.setText("");
+    }//GEN-LAST:event_btnCodigoEjemplarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1444,6 +1458,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         Ejemplar ejemplarSugerido = daoEjemplar.buscarLibre(m.getContenido());
 
         if (ejemplarSugerido != null) {
+            codigoTemp = ejemplarSugerido.getCodigo();
             textCodigoEjemplar.setText(ejemplarSugerido.getCodigo());
         } else {
             textCodigoEjemplar.setText("");

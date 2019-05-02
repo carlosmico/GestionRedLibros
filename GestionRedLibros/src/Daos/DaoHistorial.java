@@ -85,7 +85,7 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
                 historial.setFecha_inicial(h.getFecha_inicial());
                 historial.setFecha_final(h.getFecha_final());
                 historial.setObservaciones(h.getObservaciones());
-            }else{
+            } else {
                 historial.setEjemplar(h.getEjemplar());
                 System.out.println("Ejemplar a actualizar: " + h.getEjemplar().isPrestado());
                 historial.setAlumno(h.getAlumno());
@@ -177,21 +177,34 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
 
         return lista;
     }
-    
-     /**
+
+    /**
      * Metodo para obtener una lista de Historiales filtrando por el Ejemplar
      * recibido
      *
      * @param ejemplar
      * @return
      */
-    public Historial buscarEjemplarPrestadoA(Ejemplar ejemplar) {
+    public boolean isEjemplarPrestadoA(Ejemplar ejemplar, Alumno alumno) {
         List<Historial> lista = new ArrayList<Historial>();
 
-        Query query = this.session.createQuery("from Historial where ejemplar LIKE '" + ejemplar.getCodigo() + "' ORDER BY curso_escolar DESC");
+        Query query = this.session.createQuery(
+                "from Historial where ejemplar LIKE '"
+                + ejemplar.getCodigo()
+                + "' AND fecha_final IS NULL ORDER BY curso_escolar DESC");
+        
         lista = query.list();
 
-        return lista.get(0);
+        for (int i = 0; i < lista.size(); i++) {
+            Historial h = lista.get(i);
+
+            if (h.getEjemplar().getCodigo().equals(ejemplar.getCodigo())
+                    && h.getAlumno().getNia().equals(alumno.getNia())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
