@@ -76,8 +76,6 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         this.main = main;
 
-        cargarComboBoxEjemplo();
-
         this.setLocationRelativeTo(null);
 
         cargarConfiguracion();
@@ -1955,7 +1953,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         try {
             colorActual = Configuracion.getColor(StringsGlobales.color_fondo);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             colorActual = Color.gray;
             ex.printStackTrace();
         }
@@ -2282,6 +2280,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             textBuscarLibroEjemplo.setText("");
             textBuscarLibroEjemplo.setForeground(Configuracion.getColor(StringsGlobales.color_letra_general));
         } catch (IOException ex) {
+            ex.printStackTrace();
             new FramePopup(this, "Error al cargar la configuración de colores.",
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
                     "Aceptar").setVisible(true);
@@ -2448,9 +2447,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             textUsuario.setText(Configuracion.getUsuario());
             textContrasena.setText(Configuracion.getPassword());
         } catch (Exception e) {
-            e.printStackTrace();
-
-            error += "\n- No se han podido recuperar los datos de conexión al servidor.";
+            System.out.println("- No se han podido recuperar los datos de conexión al servidor.");
         }
 
         try {
@@ -2463,15 +2460,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             btnSelLetraTitulo.setBackground(Configuracion.getColor(StringsGlobales.color_letra_titulos));
             btnSelLetraDeseleccionada.setBackground(Configuracion.getColor(StringsGlobales.color_letra_noseleccionada));
         } catch (Exception e) {
-            e.printStackTrace();
-
-            error += "\n- No se han podido recuperar los colores.";
-        }
-
-        if (!error.equals("")) {
-            new FramePopup(this, "Error al cargar la configuración:" + error,
-                    new ImageIcon("/Imagenes/icons/alert-black.png"),
-                    "Aceptar").setVisible(true);
+            System.out.println("- No se han podido recuperar los colores.");
         }
     }
 
@@ -2528,39 +2517,40 @@ public class FrameOpciones extends javax.swing.JFrame {
             }
 
             cargarComboBoxEjemplo();
-        } catch (IOException e) {
-            new FramePopup(this, "Error al cargar la configuración de colores.",
-                    Imagenes.getImagen("alert-black.png"),
-                    "Aceptar").setVisible(true);
+        } catch (Exception e) {
+            System.out.println("Error al rellenar colores Ejemplo");
         }
     }
 
     private void cargarComboBoxEjemplo() {
-        cbEjemplo.setEditable(false);
-        cbEjemplo.setUI(new comboBoxRender());
-        cbEjemplo.setRenderer(new DefaultListCellRenderer() {
-            @Override
-            public Component getListCellRendererComponent(
-                    JList list, Object value, int index,
-                    boolean isSelected, boolean hasFocus) {
-                try {
-                    JLabel l = (JLabel) super.getListCellRendererComponent(
-                            list, value, index, isSelected, hasFocus);
-                    if (isSelected) {
-                        l.setForeground(Configuracion.getColor(StringsGlobales.color_letra_botones));
-                        l.setBackground(Configuracion.getColor(StringsGlobales.color_acentos));
-                    } else {
-                        l.setForeground(Configuracion.getColor(StringsGlobales.color_letra_general));
-                        l.setBackground(Configuracion.getColor(StringsGlobales.color_fondo));
+        try {
+            cbEjemplo.setEditable(false);
+            cbEjemplo.setUI(new comboBoxRender());
+            cbEjemplo.setRenderer(new DefaultListCellRenderer() {
+                @Override
+                public Component getListCellRendererComponent(
+                        JList list, Object value, int index,
+                        boolean isSelected, boolean hasFocus) {
+                    try {
+                        JLabel l = (JLabel) super.getListCellRendererComponent(
+                                list, value, index, isSelected, hasFocus);
+                        if (isSelected) {
+                            l.setForeground(Configuracion.getColor(StringsGlobales.color_letra_botones));
+                            l.setBackground(Configuracion.getColor(StringsGlobales.color_acentos));
+                        } else {
+                            l.setForeground(Configuracion.getColor(StringsGlobales.color_letra_general));
+                            l.setBackground(Configuracion.getColor(StringsGlobales.color_fondo));
+                        }
+                        return l;
+                    } catch (Exception e) {
+                        System.out.println("Error al rellenar ComboBox Ejemplo");
                     }
-                    return l;
-                } catch (IOException e) {
-                    new FramePopup(new JFrame(), "Error al cargar la configuración de colores.",
-                            Imagenes.getImagen("alert-black.png"),
-                            "Aceptar").setVisible(true);
+                    return null;
                 }
-                return null;
-            }
-        });
+            });
+        } catch (Exception e) {
+            System.out.println("Error general al rellenar ComboBox Ejemplo");
+        }
+
     }
 }

@@ -4,52 +4,85 @@ body {
     font-family: 'Ubuntu', sans-serif;
 }
 
-h1 {
-    position: relative;
-    padding: 1%;
-}
-
-.cabecera {
+header {
+    padding: 1px;
     --color-acento: #3A2723;
     background-color: var(--color-acento);
     color: white;
-    height: 10%;
-    width: 100%;
-    margin: auto;
     text-align: center;
 }
 
-.cuerpo {
-    --color-fondo: #EFEBE9;
-    background-color: var(--color-fondo);
+nav {
+    background-color: #3A2723;
+    text-align: center
 }
 
-.botonera {
-    background-color: red;
-}
-
-.botones {
+nav input {
     height: 5%;
-    width: 20%;
-    border: 2px solid black;
-    border-radius: 50px;
+    margin-bottom: 10px;
+    border: 2px solid #3A2723;
+    border-radius: 10px;
+    font-size: 16px;
     color: white;
-    background-color: #efebe9;
+    background-color: #744d45;
 }
 
-.footer {
+aside {
+    background-color: #744d45;
     color: white;
-    --color-acento: #3A2723;
-    background-color: var(--color-acento);
-    height: 10%;
+    width: 17%;
+    height: 100%;
+    float: left;
+}
+
+aside a {
+    color: white;
+    text-decoration: none;
+}
+
+section {
+    --color-fondo: #efebe9;
+    background-color: var(--color-fondo);
+    width: 83%;
+    height: 100%;
+    float: right;
+}
+
+.informacion {
+    color: #3A2723;
+    padding: 2%;
+}
+
+.informacion h1 {}
+
+footer {
+    color: white;
+    background-color: #3A2723;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    float: left;
 }
 
 .footer-icons {
-    text-align: left;
+    width: 20%;
+    float: left;
     margin-left: 2%;
 }
 
+.footer-icons a img {
+    float: left;
+    max-width: 25px;
+    margin-left: 1%;
+    margin-right: 5%;
+}
+
 .footer-text {
+    float: right;
     text-align: right;
     margin-right: 2%;
+}
+
+#linkIcons8 {
+    color: white;
 }
