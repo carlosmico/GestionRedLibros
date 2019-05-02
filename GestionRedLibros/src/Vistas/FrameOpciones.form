@@ -53,7 +53,7 @@
     <Container class="javax.swing.JPanel" name="panelSuperior">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Colores.accento" type="code"/>
+          <Connection code="Colores.fondoOscuro" type="code"/>
         </Property>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[1137, 75]"/>
@@ -121,10 +121,10 @@
     <Container class="javax.swing.JTabbedPane" name="tabbedPage">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Colores.accento" type="code"/>
+          <Connection code="Colores.fondoOscuro" type="code"/>
         </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="33" red="33" type="rgb"/>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Colores.letraNormal" type="code"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value=""/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -489,7 +489,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel19" pref="648" max="32767" attributes="0"/>
+                      <Component id="jPanel19" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -2059,7 +2059,6 @@
                                                       <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
                                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                               <Component id="panelBotoneraEjemplo" min="-2" max="-2" attributes="0"/>

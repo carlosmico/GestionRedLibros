@@ -32,7 +32,6 @@ import Renders.comboBoxRender;
 import Utilidades.Colores;
 import Utilidades.Imagenes.Imagenes;
 import Utilidades.StringsGlobales;
-import com.itextpdf.text.Font;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -228,7 +227,7 @@ public class FrameEntrega extends javax.swing.JFrame {
             }
         });
 
-        panelTitulo.setBackground(Colores.accento);
+        panelTitulo.setBackground(Colores.fondoOscuro);
 
         jLabel1.setBackground(Colores.accento);
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
@@ -590,7 +589,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         jPanel8.setBackground(Colores.fondo);
         jPanel8.setForeground(Colores.fondo);
 
-        jPanel9.setBackground(Colores.fondoOscuro);
+        jPanel9.setBackground(Colores.accento);
         jPanel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);

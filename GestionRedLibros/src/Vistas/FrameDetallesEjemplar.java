@@ -28,9 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JList;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -117,7 +115,7 @@ public class FrameDetallesEjemplar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Confirmación");
 
-        panelTitulo.setBackground(Colores.accento);
+        panelTitulo.setBackground(Colores.fondoOscuro);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setForeground(Colores.letraTitulo);

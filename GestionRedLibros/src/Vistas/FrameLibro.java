@@ -342,7 +342,7 @@ public class FrameLibro extends javax.swing.JFrame {
         panelGeneralIzquierdo.setPreferredSize(new java.awt.Dimension(450, 600));
         panelGeneralIzquierdo.setRequestFocusEnabled(false);
 
-        panelTitulo1.setBackground(Colores.accento);
+        panelTitulo1.setBackground(Colores.fondoOscuro);
 
         textTitulo1.setBackground(new java.awt.Color(239, 235, 233));
         textTitulo1.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
@@ -547,7 +547,7 @@ public class FrameLibro extends javax.swing.JFrame {
             .addComponent(panelTitulo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeneralIzquierdoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addComponent(panelBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelGeneralIzquierdoLayout.setVerticalGroup(
@@ -563,7 +563,7 @@ public class FrameLibro extends javax.swing.JFrame {
         panelIzquierdo.setLayout(panelIzquierdoLayout);
         panelIzquierdoLayout.setHorizontalGroup(
             panelIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelGeneralIzquierdo, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(panelGeneralIzquierdo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelIzquierdoLayout.setVerticalGroup(
             panelIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1002,7 +1002,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelTituloLibro.setBackground(Colores.accento);
+        panelTituloLibro.setBackground(Colores.fondoOscuro);
 
         textTitulo.setBackground(new java.awt.Color(239, 235, 233));
         textTitulo.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
@@ -1113,7 +1113,7 @@ public class FrameLibro extends javax.swing.JFrame {
         panelGeneralDerechoInferior.setBackground(Colores.fondo);
         panelGeneralDerechoInferior.setPreferredSize(new java.awt.Dimension(750, 400));
 
-        panelTituloEjemplar.setBackground(Colores.accento);
+        panelTituloEjemplar.setBackground(Colores.fondoOscuro);
         panelTituloEjemplar.setForeground(Colores.accento);
         panelTituloEjemplar.setMinimumSize(new java.awt.Dimension(0, 60));
         panelTituloEjemplar.setPreferredSize(new java.awt.Dimension(250, 60));

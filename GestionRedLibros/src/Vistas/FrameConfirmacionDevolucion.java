@@ -26,7 +26,6 @@ import Utilidades.Estado;
 import Utilidades.Imagenes.Imagenes;
 import Vistas.FramePopup;
 import java.awt.Color;
-import java.awt.Frame;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -110,7 +109,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
             }
         });
 
-        panelTitulo.setBackground(Colores.accento);
+        panelTitulo.setBackground(Colores.fondoOscuro);
 
         jLabel1.setBackground(Colores.accento);
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N

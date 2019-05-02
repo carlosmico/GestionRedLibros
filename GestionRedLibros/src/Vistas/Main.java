@@ -127,7 +127,7 @@ public class Main extends javax.swing.JFrame {
         setTitle("Gestión Red Libros");
         setMinimumSize(new java.awt.Dimension(960, 0));
 
-        generalaPanel.setBackground(Colores.accento);
+        generalaPanel.setBackground(Colores.fondoOscuro);
 
         banner.setBackground(Colores.accento);
         banner.setLayout(new java.awt.GridLayout(2, 1));

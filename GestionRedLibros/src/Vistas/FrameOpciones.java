@@ -202,7 +202,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(5000, 0));
 
-        panelSuperior.setBackground(Colores.accento);
+        panelSuperior.setBackground(Colores.fondoOscuro);
         panelSuperior.setPreferredSize(new java.awt.Dimension(1137, 75));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
@@ -241,8 +241,8 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        tabbedPage.setBackground(Colores.accento);
-        tabbedPage.setForeground(new java.awt.Color(51, 51, 51));
+        tabbedPage.setBackground(Colores.fondoOscuro);
+        tabbedPage.setForeground(Colores.letraNormal);
         tabbedPage.setToolTipText("");
         tabbedPage.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
 
@@ -805,7 +805,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             panelImportacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelImportacionesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+                .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1354,7 +1354,6 @@ public class FrameOpciones extends javax.swing.JFrame {
                     .addGroup(panelCuerpoEjemploLayout.createSequentialGroup()
                         .addComponent(textBuscarLibroEjemplo)
                         .addGap(4, 4, 4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addGap(10, 10, 10)
                 .addComponent(panelBotoneraEjemplo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2322,107 +2321,107 @@ public class FrameOpciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.mommoo.flat.button.FlatButton btnAyudaEjemplo;
-    private com.mommoo.flat.button.FlatButton btnButonEjemplo;
-    private com.mommoo.flat.button.FlatButton btnComprobar;
-    private com.mommoo.flat.button.FlatButton btnHelp;
-    private com.mommoo.flat.button.FlatButton btnImportarAlumnos;
-    private com.mommoo.flat.button.FlatButton btnImportarAsignaturas;
-    private com.mommoo.flat.button.FlatButton btnImportarCursos;
-    private com.mommoo.flat.button.FlatButton btnImportarGrupos;
-    private com.mommoo.flat.button.FlatButton btnImportarMatriculas;
-    private com.mommoo.flat.button.FlatButton btnMostrarContrasena;
-    private com.mommoo.flat.button.FlatButton btnReiniciar;
-    private javax.swing.JPanel btnSelAcento;
-    private javax.swing.JPanel btnSelFondo;
-    private javax.swing.JPanel btnSelFondoBotones;
-    private javax.swing.JPanel btnSelFondoOscuro;
-    private javax.swing.JPanel btnSelLetraBotones;
-    private javax.swing.JPanel btnSelLetraDeseleccionada;
-    private javax.swing.JPanel btnSelLetraGeneral;
-    private javax.swing.JPanel btnSelLetraTitulo;
-    private com.mommoo.flat.button.FlatButton btnSeleccionAlumnos;
-    private com.mommoo.flat.button.FlatButton btnSeleccionAsignaturas;
-    private com.mommoo.flat.button.FlatButton btnSeleccionCursos;
-    private com.mommoo.flat.button.FlatButton btnSeleccionGrupos;
-    private com.mommoo.flat.button.FlatButton btnSeleccionMatriculas;
-    private javax.swing.JComboBox cbEjemplo;
-    private org.jdesktop.swingx.painter.GlossPainter glossPainter1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel19;
-    private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel21;
-    private javax.swing.JPanel jPanel22;
-    private javax.swing.JPanel jPanel27;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel labelConfiguracion;
-    private javax.swing.JLabel labelIP;
-    private javax.swing.JLabel labelPuerto;
-    private javax.swing.JLabel labelUsuario;
-    private javax.swing.JLabel labelUsuario1;
-    private javax.swing.JList listEjemplo;
-    private javax.swing.JPanel panelAcento;
-    private javax.swing.JPanel panelBotoneraEjemplo;
-    private javax.swing.JPanel panelBotones;
-    private javax.swing.JPanel panelCampoTextoSinFocus;
-    private javax.swing.JPanel panelColores;
-    private javax.swing.JPanel panelConfiguracionBBDD;
-    private javax.swing.JPanel panelCuerpoEjemplo;
-    private javax.swing.JPanel panelFondo;
-    private javax.swing.JPanel panelFondoOscuro;
-    private javax.swing.JPanel panelFondos;
-    private javax.swing.JPanel panelGeneral;
-    private javax.swing.JPanel panelIP;
-    private javax.swing.JPanel panelImportAlumnos;
-    private javax.swing.JPanel panelImportAsignaturas;
-    private javax.swing.JPanel panelImportCursos;
-    private javax.swing.JPanel panelImportGrupos;
-    private javax.swing.JPanel panelImportMatriculas;
-    private javax.swing.JPanel panelImportaciones;
-    private javax.swing.JPanel panelLetraBotones;
-    private javax.swing.JPanel panelLetraNormal;
-    private javax.swing.JPanel panelLetraTitulo;
-    private javax.swing.JPanel panelPassword;
-    private javax.swing.JPanel panelPersonalizacion;
-    private javax.swing.JPanel panelPuerto;
-    private javax.swing.JPanel panelReiniciar;
-    private javax.swing.JPanel panelSuperior;
-    private javax.swing.JPanel panelTituloEjemplo;
-    private javax.swing.JPanel panelUsuario;
-    private javax.swing.JTabbedPane tabbedPage;
-    private javax.swing.JTextField textBuscarLibroEjemplo;
-    private javax.swing.JPasswordField textContrasena;
-    private javax.swing.JLabel textEnunciadoEjemplo;
-    private javax.swing.JTextField textIP;
-    private javax.swing.JTextField textPuerto;
-    private javax.swing.JTextField textRutaAlumnos;
-    private javax.swing.JTextField textRutaContenidos;
-    private javax.swing.JTextField textRutaCursos;
-    private javax.swing.JTextField textRutaGrupos;
-    private javax.swing.JTextField textRutaMatriculas;
-    private javax.swing.JLabel textTituloEjemplo;
-    private javax.swing.JTextField textUsuario;
-    private javax.swing.JLabel wallpaper1;
-    private javax.swing.JLabel wallpaper2;
-    private javax.swing.JLabel wallpaper3;
-    private javax.swing.JLabel wallpaper4;
+    private static com.mommoo.flat.button.FlatButton btnAyudaEjemplo;
+    private static com.mommoo.flat.button.FlatButton btnButonEjemplo;
+    private static com.mommoo.flat.button.FlatButton btnComprobar;
+    private static com.mommoo.flat.button.FlatButton btnHelp;
+    private static com.mommoo.flat.button.FlatButton btnImportarAlumnos;
+    private static com.mommoo.flat.button.FlatButton btnImportarAsignaturas;
+    private static com.mommoo.flat.button.FlatButton btnImportarCursos;
+    private static com.mommoo.flat.button.FlatButton btnImportarGrupos;
+    private static com.mommoo.flat.button.FlatButton btnImportarMatriculas;
+    private static com.mommoo.flat.button.FlatButton btnMostrarContrasena;
+    private static com.mommoo.flat.button.FlatButton btnReiniciar;
+    private static javax.swing.JPanel btnSelAcento;
+    private static javax.swing.JPanel btnSelFondo;
+    private static javax.swing.JPanel btnSelFondoBotones;
+    private static javax.swing.JPanel btnSelFondoOscuro;
+    private static javax.swing.JPanel btnSelLetraBotones;
+    private static javax.swing.JPanel btnSelLetraDeseleccionada;
+    private static javax.swing.JPanel btnSelLetraGeneral;
+    private static javax.swing.JPanel btnSelLetraTitulo;
+    private static com.mommoo.flat.button.FlatButton btnSeleccionAlumnos;
+    private static com.mommoo.flat.button.FlatButton btnSeleccionAsignaturas;
+    private static com.mommoo.flat.button.FlatButton btnSeleccionCursos;
+    private static com.mommoo.flat.button.FlatButton btnSeleccionGrupos;
+    private static com.mommoo.flat.button.FlatButton btnSeleccionMatriculas;
+    private static javax.swing.JComboBox cbEjemplo;
+    private static org.jdesktop.swingx.painter.GlossPainter glossPainter1;
+    private static javax.swing.JLabel jLabel1;
+    private static javax.swing.JLabel jLabel16;
+    private static javax.swing.JLabel jLabel17;
+    private static javax.swing.JLabel jLabel18;
+    private static javax.swing.JLabel jLabel19;
+    private static javax.swing.JLabel jLabel2;
+    private static javax.swing.JLabel jLabel20;
+    private static javax.swing.JLabel jLabel21;
+    private static javax.swing.JLabel jLabel22;
+    private static javax.swing.JLabel jLabel23;
+    private static javax.swing.JLabel jLabel24;
+    private static javax.swing.JLabel jLabel25;
+    private static javax.swing.JLabel jLabel3;
+    private static javax.swing.JLabel jLabel4;
+    private static javax.swing.JLabel jLabel5;
+    private static javax.swing.JLabel jLabel6;
+    private static javax.swing.JPanel jPanel1;
+    private static javax.swing.JPanel jPanel19;
+    private static javax.swing.JPanel jPanel20;
+    private static javax.swing.JPanel jPanel21;
+    private static javax.swing.JPanel jPanel22;
+    private static javax.swing.JPanel jPanel27;
+    private static javax.swing.JScrollPane jScrollPane1;
+    private static javax.swing.JScrollPane jScrollPane2;
+    private static javax.swing.JLabel labelConfiguracion;
+    private static javax.swing.JLabel labelIP;
+    private static javax.swing.JLabel labelPuerto;
+    private static javax.swing.JLabel labelUsuario;
+    private static javax.swing.JLabel labelUsuario1;
+    private static javax.swing.JList listEjemplo;
+    private static javax.swing.JPanel panelAcento;
+    private static javax.swing.JPanel panelBotoneraEjemplo;
+    private static javax.swing.JPanel panelBotones;
+    private static javax.swing.JPanel panelCampoTextoSinFocus;
+    private static javax.swing.JPanel panelColores;
+    private static javax.swing.JPanel panelConfiguracionBBDD;
+    private static javax.swing.JPanel panelCuerpoEjemplo;
+    private static javax.swing.JPanel panelFondo;
+    private static javax.swing.JPanel panelFondoOscuro;
+    private static javax.swing.JPanel panelFondos;
+    private static javax.swing.JPanel panelGeneral;
+    private static javax.swing.JPanel panelIP;
+    private static javax.swing.JPanel panelImportAlumnos;
+    private static javax.swing.JPanel panelImportAsignaturas;
+    private static javax.swing.JPanel panelImportCursos;
+    private static javax.swing.JPanel panelImportGrupos;
+    private static javax.swing.JPanel panelImportMatriculas;
+    private static javax.swing.JPanel panelImportaciones;
+    private static javax.swing.JPanel panelLetraBotones;
+    private static javax.swing.JPanel panelLetraNormal;
+    private static javax.swing.JPanel panelLetraTitulo;
+    private static javax.swing.JPanel panelPassword;
+    private static javax.swing.JPanel panelPersonalizacion;
+    private static javax.swing.JPanel panelPuerto;
+    private static javax.swing.JPanel panelReiniciar;
+    private static javax.swing.JPanel panelSuperior;
+    private static javax.swing.JPanel panelTituloEjemplo;
+    private static javax.swing.JPanel panelUsuario;
+    private static javax.swing.JTabbedPane tabbedPage;
+    private static javax.swing.JTextField textBuscarLibroEjemplo;
+    private static javax.swing.JPasswordField textContrasena;
+    private static javax.swing.JLabel textEnunciadoEjemplo;
+    private static javax.swing.JTextField textIP;
+    private static javax.swing.JTextField textPuerto;
+    private static javax.swing.JTextField textRutaAlumnos;
+    private static javax.swing.JTextField textRutaContenidos;
+    private static javax.swing.JTextField textRutaCursos;
+    private static javax.swing.JTextField textRutaGrupos;
+    private static javax.swing.JTextField textRutaMatriculas;
+    private static javax.swing.JLabel textTituloEjemplo;
+    private static javax.swing.JTextField textUsuario;
+    private static javax.swing.JLabel wallpaper1;
+    private static javax.swing.JLabel wallpaper2;
+    private static javax.swing.JLabel wallpaper3;
+    private static javax.swing.JLabel wallpaper4;
     // End of variables declaration//GEN-END:variables
 
     private void cargarConfiguracion() {

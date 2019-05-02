@@ -19,7 +19,6 @@ package Vistas;
 
 import Utilidades.Colores;
 import java.awt.Font;
-import java.awt.Frame;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -178,7 +177,7 @@ public class FramePopup extends javax.swing.JDialog {
         setModal(true);
         setUndecorated(true);
 
-        jPanel1.setBackground(Colores.accento);
+        jPanel1.setBackground(Colores.fondoOscuro);
 
         jPanel3.setBackground(Colores.fondo);
 

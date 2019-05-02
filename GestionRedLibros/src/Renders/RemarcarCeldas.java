@@ -93,7 +93,7 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
             }
         }
         this.setForeground(Colores.letraNormal);
-        
+
         return this;
     }
 
@@ -114,7 +114,7 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
             label.setBackground(Colores.fondo);
         } else {
             label.setForeground(Colores.letraNormal);
-            label.setBackground(Colores.fondoOscuro);
+            label.setBackground(Colores.accento);
         }
     }
 

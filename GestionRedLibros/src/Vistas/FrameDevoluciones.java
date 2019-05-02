@@ -196,7 +196,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             }
         });
 
-        panelTitulo.setBackground(Colores.accento);
+        panelTitulo.setBackground(Colores.fondoOscuro);
 
         jLabel1.setBackground(Colores.fondo);
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N

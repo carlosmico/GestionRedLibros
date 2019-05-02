@@ -19,17 +19,9 @@ package Vistas;
 
 import Utilidades.Colores;
 import Utilidades.Configuracion;
-import Utilidades.DimensionesFrame;
 import Utilidades.Imagenes.Imagenes;
 import Utilidades.StringsGlobales;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -47,7 +39,7 @@ public class CargaInicial {
         } catch (Exception ex) {
             System.out.println("Error - Fallo al cargar los colores del programa.");
         }
-        
+
         try {
             new Main().setVisible(true);
         } catch (IOException ex) {

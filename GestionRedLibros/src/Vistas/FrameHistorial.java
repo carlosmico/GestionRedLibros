@@ -171,7 +171,7 @@ public class FrameHistorial extends javax.swing.JFrame {
         setTitle("Opciones");
         setMinimumSize(new java.awt.Dimension(600, 36));
 
-        jPanel1.setBackground(Colores.accento);
+        jPanel1.setBackground(Colores.fondoOscuro);
         jPanel1.setPreferredSize(new java.awt.Dimension(1137, 75));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
