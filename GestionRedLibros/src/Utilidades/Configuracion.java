@@ -94,10 +94,9 @@ public class Configuracion {
     /**
      * CONFIGURACIÓN DE COLORES
      */
-    
     public static void guardarColor(String nombreColor, Color color) {
         propiedades.setProperty(nombreColor, Integer.toString(color.getRGB()));
-        
+
         try {
             OutputStream output = new FileOutputStream(rutaConfiguracion);
 
@@ -110,19 +109,78 @@ public class Configuracion {
                     "Aceptar").setVisible(true);
         }
     }
-    
-    public static Color getColor(String nombreColor) throws FileNotFoundException, IOException{
+
+    public static Color getColor(String nombreColor) throws FileNotFoundException, IOException {
         propiedades.load(new FileInputStream(rutaConfiguracion));
+
         String colorGuardado = propiedades.getProperty(nombreColor);
-        
+
         Color color = null;
-        
-        try{
+
+        try {
             color = new Color(Integer.parseInt(colorGuardado));
-        }catch(Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Error - Fallo al cargar los colores.");
+            
+            switch (nombreColor) {
+                case StringsGlobales.color_fondo:
+                    color = Colores.fondo;
+                    break;
+
+                case StringsGlobales.color_fondo_oscuro:
+                    color = Colores.fondoOscuro;
+                    break;
+
+                case StringsGlobales.color_fondo_botones:
+                    color = Colores.botones;
+                    break;
+
+                case StringsGlobales.color_acentos:
+                    color = Colores.accento;
+                    break;
+
+                case StringsGlobales.color_letra_botones:
+                    color = Colores.letraBotones;
+                    break;
+
+                case StringsGlobales.color_letra_general:
+                    color = Colores.letraNormal;
+                    break;
+
+                case StringsGlobales.color_letra_titulos:
+                    color = Colores.letraTitulo;
+                    break;
+
+                case StringsGlobales.color_letra_noseleccionada:
+                    color = Colores.campoTextSinFocus;
+                    break;
+            }
         }
-        
+
         return color;
+    }
+
+    /**
+     * CONFIGURACIÓN DE WALLPAPER
+     */
+    public static void guardarWallpaper(JFrame frame, String wallpaper) {
+        propiedades.setProperty("wallpaper", wallpaper);
+
+        try {
+            OutputStream output = new FileOutputStream(rutaConfiguracion);
+
+            propiedades.store(output, null);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+            new FramePopup(frame, "Error al guardar la configuración del wallpaper.",
+                    new ImageIcon("/Imagenes/icons/alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
+    }
+
+    public static String getWallpaper() throws FileNotFoundException, IOException {
+        propiedades.load(new FileInputStream(rutaConfiguracion));
+        return propiedades.getProperty("wallpaper");
     }
 }

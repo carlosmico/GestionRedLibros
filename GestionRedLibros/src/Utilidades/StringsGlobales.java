@@ -26,19 +26,19 @@ public class StringsGlobales {
     /**
      * STRINGS COLORES
      */
-    public static String color_fondo = "color_fondo";
-    public static String color_fondo_oscuro = "color_fondo_oscuro";
-    public static String color_fondo_botones = "color_fondo_botones";
-    public static String color_letra_general = "color_letra_general";
-    public static String color_letra_botones = "color_letra_botones";
-    public static String color_letra_titulos = "color_letra_titulos";
-    public static String color_acentos = "color_acentos";
-    public static String color_letra_noseleccionada = "color_letra_noseleccionada";
+    public static final String color_fondo = "color_fondo";
+    public static final String color_fondo_oscuro = "color_fondo_oscuro";
+    public static final String color_fondo_botones = "color_fondo_botones";
+    public static final String color_letra_general = "color_letra_general";
+    public static final String color_letra_botones = "color_letra_botones";
+    public static final String color_letra_titulos = "color_letra_titulos";
+    public static final String color_acentos = "color_acentos";
+    public static final String color_letra_noseleccionada = "color_letra_noseleccionada";
     
     /**
      * STRINGS PLACEHOLDERS
      */
-    public static String placeHolder_codigo = "Introduce o escanea codigo…";
-    public static String placeHolder_nombre = "Introduce nombre…";
-    public static String placeHolder_nia = "Introduce NIA...";
+    public static final String placeHolder_codigo = "Introduce o escanea codigo…";
+    public static final String placeHolder_nombre = "Introduce nombre…";
+    public static final String placeHolder_nia = "Introduce NIA...";
 }
