@@ -1076,12 +1076,12 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" alignment="0" pref="1375" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" pref="1298" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" alignment="0" pref="647" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" pref="781" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -1122,8 +1122,8 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel27" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="102" max="32767" attributes="0"/>
+                                  <Component id="jPanel27" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1146,9 +1146,9 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="panelTemas" max="32767" attributes="0"/>
+                                          <Component id="panelReiniciar" max="32767" attributes="0"/>
                                           <Component id="panelColores" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="panelReiniciar" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="panelTemas" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
@@ -1160,10 +1160,10 @@
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Component id="panelTemas" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                                      <Component id="panelColores" max="32767" attributes="0"/>
-                                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                                      <Component id="panelReiniciar" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                                      <Component id="panelColores" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="panelReiniciar" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1186,7 +1186,7 @@
                                       </Group>
                                       <Group type="102" attributes="0">
                                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                                          <Component id="jPanel21" max="32767" attributes="0"/>
+                                          <Component id="jPanel21" pref="1254" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -1787,7 +1787,7 @@
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace pref="377" max="32767" attributes="0"/>
+                                                  <EmptySpace pref="345" max="32767" attributes="0"/>
                                                   <Component id="btnSelLetraDeseleccionada" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                               </Group>
@@ -1871,10 +1871,10 @@
                                           <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="jPanel22" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                          <Component id="jPanel22" pref="0" max="32767" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -1939,7 +1939,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                                  <Component id="wallpaper1" pref="286" max="32767" attributes="0"/>
+                                                  <Component id="wallpaper1" pref="299" max="32767" attributes="0"/>
                                                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -1957,10 +1957,10 @@
                                       <SubComponents>
                                         <Component class="javax.swing.JLabel" name="wallpaper1">
                                           <Properties>
+                                            <Property name="horizontalAlignment" type="int" value="0"/>
                                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                                               <Image iconType="3" name="/Imagenes/wallpapers/1peq.jpg"/>
                                             </Property>
-                                            <Property name="text" type="java.lang.String" value="jLabel7"/>
                                           </Properties>
                                           <Events>
                                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="wallpaper1MouseClicked"/>
@@ -1989,7 +1989,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                                  <Component id="wallpaper2" pref="286" max="32767" attributes="0"/>
+                                                  <Component id="wallpaper2" pref="299" max="32767" attributes="0"/>
                                                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -2007,10 +2007,10 @@
                                       <SubComponents>
                                         <Component class="javax.swing.JLabel" name="wallpaper2">
                                           <Properties>
+                                            <Property name="horizontalAlignment" type="int" value="0"/>
                                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                                               <Image iconType="3" name="/Imagenes/wallpapers/2peq.jpg"/>
                                             </Property>
-                                            <Property name="text" type="java.lang.String" value="jLabel7"/>
                                           </Properties>
                                           <Events>
                                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="wallpaper2MouseClicked"/>
@@ -2039,7 +2039,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                                  <Component id="wallpaper3" pref="286" max="32767" attributes="0"/>
+                                                  <Component id="wallpaper3" pref="299" max="32767" attributes="0"/>
                                                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -2057,10 +2057,10 @@
                                       <SubComponents>
                                         <Component class="javax.swing.JLabel" name="wallpaper3">
                                           <Properties>
+                                            <Property name="horizontalAlignment" type="int" value="0"/>
                                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                                               <Image iconType="3" name="/Imagenes/wallpapers/3peq.jpg"/>
                                             </Property>
-                                            <Property name="text" type="java.lang.String" value="jLabel7"/>
                                           </Properties>
                                           <Events>
                                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="wallpaper3MouseClicked"/>
@@ -2089,7 +2089,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                                  <Component id="wallpaper4" pref="286" max="32767" attributes="0"/>
+                                                  <Component id="wallpaper4" pref="299" max="32767" attributes="0"/>
                                                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -2107,10 +2107,10 @@
                                       <SubComponents>
                                         <Component class="javax.swing.JLabel" name="wallpaper4">
                                           <Properties>
+                                            <Property name="horizontalAlignment" type="int" value="0"/>
                                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                                               <Image iconType="3" name="/Imagenes/wallpapers/4peq.jpg"/>
                                             </Property>
-                                            <Property name="text" type="java.lang.String" value="jLabel7"/>
                                           </Properties>
                                           <Events>
                                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="wallpaper4MouseClicked"/>
@@ -2123,6 +2123,11 @@
                               </SubComponents>
                             </Container>
                             <Container class="javax.swing.JPanel" name="panelReiniciar">
+                              <Properties>
+                                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                                  <Connection code="Colores.fondo" type="code"/>
+                                </Property>
+                              </Properties>
 
                               <Layout>
                                 <DimensionLayout dim="0">
@@ -2136,10 +2141,10 @@
                                 </DimensionLayout>
                                 <DimensionLayout dim="1">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <EmptySpace pref="113" max="32767" attributes="0"/>
                                           <Component id="btnReiniciar" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
