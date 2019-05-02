@@ -41,7 +41,7 @@ public class Main extends javax.swing.JFrame {
     FrameOpciones frameOpciones;
     FramePopup frameCarga;
     FramePopup framePopup;
-    FrameHistorial frameAyuda;
+    FrameHistorial frameHistorial;
 
     //Cogemos el FramePadre para trabajar con los dialogos
     private JFrame topFrame;
@@ -356,15 +356,20 @@ public class Main extends javax.swing.JFrame {
      */
     private void btnAyduaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyduaActionPerformed
         //compruebaConexionBD();
-        if (frameAyuda == null) {
-            frameAyuda = new FrameHistorial();
-        } else {
-            if (!frameAyuda.isVisible()) {
-                frameAyuda = null;
-                frameAyuda = new FrameHistorial();
+        if (existeConexion) {
+            if (frameHistorial == null) {
+                frameHistorial = new FrameHistorial();
+            } else {
+                if (!frameHistorial.isVisible()) {
+                    frameHistorial = null;
+                    frameHistorial = new FrameHistorial();
+                }
             }
+            frameHistorial.setVisible(true);
+        } else {
+            compruebaConexionBD(false, "FrameHistorial");
         }
-        frameAyuda.setVisible(true);
+
     }//GEN-LAST:event_btnAyduaActionPerformed
 
     /**
@@ -410,8 +415,8 @@ public class Main extends javax.swing.JFrame {
         if (framePopup == null) {
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
                 protected Void doInBackground() throws InterruptedException {
-                    String ip, usuario, password;
-                    int puerto;
+                    String ip = "localhost", usuario = "", password = "";
+                    Integer puerto = 0;
 
                     try {
                         ip = Configuracion.getIp();
@@ -426,24 +431,24 @@ public class Main extends javax.swing.JFrame {
                                 usuario,
                                 password);
 
-                        gestorSesiones = new GestorSesiones();
-
-                        gestorSesiones.configurarPropiedades(ip, puerto, usuario, password);
-
                         existeConexion = true;
                     } catch (Exception e) {
                         e.printStackTrace();
                         existeConexion = false;
                     }
 
+                    gestorSesiones = new GestorSesiones();
+
+                    gestorSesiones.configurarPropiedades(ip, puerto, usuario, password);
+
                     return null;
                 }
 
                 protected void done() {
+                    frameCarga.dispose();
+
                     if (existeConexion) {
                         System.out.println("Conexión con el servidor correcta!");
-
-                        frameCarga.dispose();
 
                         JFrame frame = null;
 
@@ -466,12 +471,17 @@ public class Main extends javax.swing.JFrame {
                                         frame = new FrameDevoluciones();
                                     }
                                     break;
+
+                                case "FrameHistorial":
+                                    if (frameHistorial == null) {
+                                        frame = new FrameHistorial();
+                                    }
+                                    break;
                             }
 
                             frame.setVisible(true);
                         }
                     } else {
-                        frameCarga.dispose();
 
                         Action abrirOpciones = new AbstractAction() {
                             public void actionPerformed(ActionEvent e) {

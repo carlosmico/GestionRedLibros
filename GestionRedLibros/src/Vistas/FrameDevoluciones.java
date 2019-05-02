@@ -538,11 +538,6 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 jlistEjemplaresPendientesMouseClicked(evt);
             }
         });
-        jlistEjemplaresPendientes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jlistEjemplaresPendientesValueChanged(evt);
-            }
-        });
         jScrollPane5.setViewportView(jlistEjemplaresPendientes);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -870,14 +865,6 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         // TODO add your handling code here:
         campoBusquedaTemp = textBusquedaNIA.getText();
     }//GEN-LAST:event_textBusquedaNIAKeyReleased
-
-    private void jlistEjemplaresPendientesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jlistEjemplaresPendientesValueChanged
-        DefaultListModel model = (DefaultListModel) jlistEjemplaresPendientes.getModel();
-
-        Historial historial = (Historial) model.getElementAt(jlistEjemplaresPendientes.getSelectedIndex());
-
-        buscarEjemplar(historial.getEjemplar().getCodigo().toUpperCase());
-    }//GEN-LAST:event_jlistEjemplaresPendientesValueChanged
 
     private void jlistEjemplaresPendientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlistEjemplaresPendientesMouseClicked
          DefaultListModel model = (DefaultListModel) jlistEjemplaresPendientes.getModel();
