@@ -132,7 +132,7 @@ public class Main extends javax.swing.JFrame {
         banner.setBackground(Colores.accento);
         banner.setLayout(new java.awt.GridLayout(2, 1));
 
-        jPanel2.setBackground(Colores.accento);
+        jPanel2.setBackground(Colores.fondoOscuro);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setForeground(Colores.letraTitulo);
@@ -167,7 +167,7 @@ public class Main extends javax.swing.JFrame {
 
         banner.add(jPanel2);
 
-        jPanel1.setBackground(Colores.accento);
+        jPanel1.setBackground(Colores.fondoOscuro);
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 37));
         jPanel1.setLayout(new java.awt.GridLayout(1, 4, 5, 0));
 

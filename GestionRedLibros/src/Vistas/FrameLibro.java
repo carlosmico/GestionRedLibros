@@ -170,6 +170,11 @@ public class FrameLibro extends javax.swing.JFrame {
         });
 //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Configuración lista desplegable menupopup">
+        UIManager.put("MenuItem.selectionBackground", Colores.accento);
+        UIManager.put("MenuItem.selectionForeground", Colores.letraBotones);
+//</editor-fold>
+
         setEditMode(false);
 
         mostrarElementosEjemplares(libro != null);
