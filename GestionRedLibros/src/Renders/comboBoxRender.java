@@ -21,14 +21,13 @@ package Renders;
  *
  * @author Jose Sanchis
  */
-import Utilidades.Colores;
+import Utilidades.Configuracion;
+import Utilidades.StringsGlobales;
 import java.awt.Color;
 import java.awt.Component;
+import java.io.IOException;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-
 import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.plaf.ComboBoxUI;
@@ -42,9 +41,15 @@ public class comboBoxRender extends BasicComboBoxUI {
     }
 
     protected JButton createArrowButton() {
-        BasicArrowButton bab = new BasicArrowButton(BasicArrowButton.SOUTH, Colores.fondo, Colores.fondo, Colores.letraNormal, Colores.fondo);
+        try {
+            Color fondo = Configuracion.getColor(StringsGlobales.color_fondo);
+            Color letraNormal = Configuracion.getColor(StringsGlobales.color_letra_general);
+            BasicArrowButton bab = new BasicArrowButton(BasicArrowButton.SOUTH, fondo, fondo, letraNormal, fondo);
 
-        return bab;
+            return bab;
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
