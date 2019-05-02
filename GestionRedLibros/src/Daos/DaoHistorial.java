@@ -179,10 +179,11 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
     }
 
     /**
-     * Metodo para obtener una lista de Historiales filtrando por el Ejemplar
+     * Metodo para saber si el Ejemplar está prestado al alumno recibido o no
      * recibido
      *
      * @param ejemplar
+     * @param alumno
      * @return
      */
     public boolean isEjemplarPrestadoA(Ejemplar ejemplar, Alumno alumno) {
@@ -205,6 +206,30 @@ public class DaoHistorial extends DaoGenerico<Historial, Integer> implements Int
         }
 
         return false;
+    }
+    
+    /**
+     * Metodo para obtener el último historial pendiente correspondiente al ejemplar
+     * recibido. Con el podremos saber a quien está realmente prestado el ejemplar.
+     * 
+     * @param ejemplar
+     * @return 
+     */
+    public Historial buscarEjemplarPrestadoA(Ejemplar ejemplar){
+        List<Historial> lista = new ArrayList<Historial>();
+
+        Query query = this.session.createQuery(
+                "from Historial where ejemplar LIKE '"
+                + ejemplar.getCodigo()
+                + "' AND fecha_final IS NULL ORDER BY curso_escolar DESC");
+        
+        lista = query.list();
+
+        if (lista.size() < 0) {
+            return null;
+        }else{
+            return lista.get(0);
+        }
     }
 
     /**

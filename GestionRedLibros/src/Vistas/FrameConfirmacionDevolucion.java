@@ -43,7 +43,6 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
     private FramePopup framePopup;
 
     private String placeHolderObservaciones = "Escribe una observación…";
-    private String observacionesTemp = "";
 
     //Cogemos el FramePadre para trabajar con los dialogos
     private JFrame topFrame;
@@ -286,25 +285,8 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
         textObservaciones.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         textObservaciones.setForeground(Colores.campoTextSinFocus);
         textObservaciones.setRows(5);
-        textObservaciones.setText("Escribe una observación...");
         textObservaciones.setSelectedTextColor(Colores.letraBotones);
         textObservaciones.setSelectionColor(Colores.accento);
-        textObservaciones.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                textObservacionesFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                textObservacionesFocusLost(evt);
-            }
-        });
-        textObservaciones.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textObservacionesKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                textObservacionesKeyReleased(evt);
-            }
-        });
         jScrollPane2.setViewportView(textObservaciones);
 
         jLabel30.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -466,24 +448,6 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelMouseClicked
 
-    private void textObservacionesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textObservacionesKeyPressed
-        String nombreLibro = textObservaciones.getText();
-
-        if (nombreLibro.length() > 0 && nombreLibro.equals(placeHolderObservaciones)) {
-            textObservaciones.setText("");
-            textObservaciones.setForeground(Colores.accento);
-        }
-    }//GEN-LAST:event_textObservacionesKeyPressed
-
-    private void textObservacionesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textObservacionesKeyReleased
-        String nombreLibro = textObservaciones.getText();
-
-        if (nombreLibro.length() == 0) {
-            textObservaciones.setText(placeHolderObservaciones);
-            textObservaciones.setForeground(new Color(102, 102, 102));
-        }
-    }//GEN-LAST:event_textObservacionesKeyReleased
-
     private void btnBadStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBadStatusMouseClicked
         // TODO add your handling code here:
         setEstado(Estado.deteriorado);
@@ -527,7 +491,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
         // TODO add your handling code here:
         //El estado se actualiza al cambiar el estado visual en el metodo setEstado()
         historial.setFecha_final(new Date());
-        historial.setObservaciones(observacionesTemp);
+        historial.setObservaciones(textObservaciones.getText());
 
         try {
             //Actualizamos los campos del historial y el ejemplar hijo del historial.
@@ -564,17 +528,6 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
 
         FrameDevoluciones.frameConfirmacion = null;
     }//GEN-LAST:event_btnAceptarActionPerformed
-
-    private void textObservacionesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textObservacionesFocusLost
-        // TODO add your handling code here:
-        observacionesTemp = textObservaciones.getText();
-        textObservaciones.setText(placeHolderObservaciones);
-    }//GEN-LAST:event_textObservacionesFocusLost
-
-    private void textObservacionesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textObservacionesFocusGained
-        observacionesTemp = "";
-        textObservaciones.setText("");
-    }//GEN-LAST:event_textObservacionesFocusGained
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         FrameDevoluciones.frameConfirmacion = null;

@@ -182,7 +182,10 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                 + " WHERE m.alumno LIKE '" + alumno.getNia() + "'"
                 + " AND m.curso_escolar = " + curso_escolar
                 + " AND m.contenido NOT IN(SELECT h.ejemplar.libro.contenido_libro "
-                + "FROM Historial h WHERE h.alumno LIKE '" + alumno.getNia() + "'AND h.curso_escolar = " + curso_escolar + " AND h.ejemplar.prestado = true)";
+                + "FROM Historial h WHERE h.alumno LIKE '" + alumno.getNia()
+                + "'AND h.curso_escolar = " + curso_escolar
+                + " AND h.ejemplar.prestado = true "
+                + " AND h.fecha_final IS NULL)";
 
         try {
             Query query = this.session.createQuery(hql);
