@@ -533,6 +533,8 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jlistEjemplaresPendientes.setBackground(Colores.fondo);
         jlistEjemplaresPendientes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jlistEjemplaresPendientes.setForeground(Colores.letraNormal);
+        jlistEjemplaresPendientes.setSelectionBackground(Colores.accento);
+        jlistEjemplaresPendientes.setSelectionForeground(Colores.letraBotones);
         jlistEjemplaresPendientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlistEjemplaresPendientesMouseClicked(evt);
@@ -603,6 +605,8 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jlistEjemplaresDevueltos.setBackground(Colores.fondo);
         jlistEjemplaresDevueltos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jlistEjemplaresDevueltos.setForeground(Colores.letraNormal);
+        jlistEjemplaresDevueltos.setSelectionBackground(Colores.accento);
+        jlistEjemplaresDevueltos.setSelectionForeground(Colores.letraBotones);
         jScrollPane3.setViewportView(jlistEjemplaresDevueltos);
 
         javax.swing.GroupLayout panelEjemplaresDevueltosLayout = new javax.swing.GroupLayout(panelEjemplaresDevueltos);
