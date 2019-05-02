@@ -52,7 +52,7 @@ import org.hibernate.Session;
  * @author Jose Sanchis
  */
 public class FrameEntrega extends javax.swing.JFrame {
-
+    
     private Session session = Main.gestorSesiones.getSession();
 
     //Cremaos el frame de Cargar
@@ -65,7 +65,7 @@ public class FrameEntrega extends javax.swing.JFrame {
     private DaoCurso daoCursoTabla;
     private DaoEjemplar daoEjemplar;
     private DaoHistorial daoHistorial;
-
+    
     public Alumno alumno;
     public Ejemplar ejemplar;
 
@@ -77,7 +77,7 @@ public class FrameEntrega extends javax.swing.JFrame {
     public List<Alumno> listaAlumnos;
     public List<Matricula> listaMatriculas;
     public List<Curso> listaCursos;
-
+    
     private String campoBusquedaTemp = "";
     private String codigoTemp = "";
 
@@ -141,9 +141,9 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         //Maximizamos la pestaña
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+        
         modoEdicion(false);
-
+        
         cargarDatos();
 
         //<editor-fold defaultstate="collapsed" desc="Click Tabla">
@@ -151,7 +151,7 @@ public class FrameEntrega extends javax.swing.JFrame {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = tablaPendientes.rowAtPoint(evt.getPoint());
-
+                
                 rellenarEjemplarSugerido(listaMatriculas.get(row));
             }
         });
@@ -938,7 +938,7 @@ public class FrameEntrega extends javax.swing.JFrame {
     private void jlistAlumnosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jlistAlumnosValueChanged
         // TODO add your handling code here:
         alumno = (Alumno) jlistAlumnos.getSelectedValue();
-
+        
         cargarDatosAlumno();
     }//GEN-LAST:event_jlistAlumnosValueChanged
 
@@ -1011,7 +1011,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
@@ -1101,36 +1101,36 @@ public class FrameEntrega extends javax.swing.JFrame {
      */
     private void rellenarTablaPendiente(List<Matricula> lista) {
         Object[][] contenidoTabla = new Object[lista.size()][4];
-
+        
         for (int i = 0; i < lista.size(); i++) {
             contenidoTabla[i][0] = lista.get(i);
             contenidoTabla[i][1] = lista.get(i);
             contenidoTabla[i][2] = lista.get(i);
             contenidoTabla[i][3] = lista.get(i);
         }
-
+        
         DefaultTableModel tableModel = new DefaultTableModel(contenidoTabla,
                 new Object[]{"Asignaturas", "Curso", "Idioma", "Curso Pendiente"});
-
+        
         tablaPendientes.setModel(tableModel);
-
+        
         TableColumnModel tcm = tablaPendientes.getColumnModel();
         tcm.getColumn(0).setMinWidth(75);
-
+        
         tcm.getColumn(1).setMinWidth(75);
         tcm.getColumn(1).setMaxWidth(500);
         tcm.getColumn(1).setPreferredWidth(350);
-
+        
         tcm.getColumn(2).setMinWidth(75);
         tcm.getColumn(2).setMaxWidth(200);
         tcm.getColumn(2).setPreferredWidth(125);
-
+        
         tcm.getColumn(3).setMinWidth(75);
         tcm.getColumn(3).setMaxWidth(350);
         tcm.getColumn(3).setPreferredWidth(100);
-
+        
         RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCursoTabla);
-
+        
         for (int i = 0; i < tableModel.getColumnCount(); i++) {
             tcm.getColumn(i).setCellRenderer(remarcarCeldas);
         }
@@ -1141,17 +1141,17 @@ public class FrameEntrega extends javax.swing.JFrame {
      */
     public void cargarDatos() {
         SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-
+            
             protected Void doInBackground() throws InterruptedException {
                 listaAlumnos = daoAlumno.buscarTodos();
                 listaCursos = daoCurso.buscarTodos();
                 return null;
             }
-
+            
             protected void done() {
                 sustituirPadresCursos();
                 rellenarCursos();
-
+                
                 framePopup.dispose();
             }
         };
@@ -1170,7 +1170,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         for (int i = 0; i < listaCursos.size(); i++) {
             Curso curso = listaCursos.get(i);
             Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
-
+            
             if (cursoPadre != null) {
                 curso.setNombre_padre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
             }
@@ -1181,7 +1181,7 @@ public class FrameEntrega extends javax.swing.JFrame {
      * Metodo para rellenar los cursos del combobox
      */
     public void rellenarCursos() {
-
+        
         cbCurso.removeAllItems();
 
         //Rellenamos los cursos
@@ -1203,7 +1203,7 @@ public class FrameEntrega extends javax.swing.JFrame {
      */
     private void cargarDatosAlumno() {
         vaciarCampos();
-
+        
         if (alumno == null) {
             modoEdicion(false);
         } else {
@@ -1212,28 +1212,28 @@ public class FrameEntrega extends javax.swing.JFrame {
                     listaMatriculas = daoMatricula.buscarPendientes(alumno, getFecha());
                     return null;
                 }
-
+                
                 protected void done() {
                     listaCursos.size();
-
+                    
                     listaEjemplaresEntregados = new ArrayList<Ejemplar>();
-
+                    
                     if (listaMatriculas.size() > 0) {
                         textNIAAlumno.setText(alumno.getNia());
                         textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
                         textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
-
+                        
                         textCursoEscolar.setText(getFecha() + "-" + (getFecha() + 1));
-
+                        
                         rellenarTablaPendiente(listaMatriculas);
-
+                        
                         modoEdicion(true);
                     } else {
                         new FramePopup(topFrame, "El alumno no está matriculado en este curso escolar",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
                     }
-
+                    
                     framePopup.dispose();
                 }
             };
@@ -1244,19 +1244,19 @@ public class FrameEntrega extends javax.swing.JFrame {
             framePopup.setVisible(true);
         }
     }
-
+    
     private void vaciarCampos() {
         textNIAAlumno.setText("");
         textNombreAlumno.setText("");
         textNombreAlumno.setToolTipText("");
         textCursoEscolar.setText("");
-
+        
         DefaultTableModel model = new DefaultTableModel(null, new Object[]{"Asignatura", "Curso", "Idioma", "Curso Pendiente"});
         tablaPendientes.setModel(model);
-
+        
         DefaultListModel listModel = new DefaultListModel();
         jlistEjemplares.setModel(listModel);
-
+        
         listaEjemplaresEntregados = new ArrayList<Ejemplar>();
     }
 
@@ -1277,7 +1277,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                     FrameEntrega.this.dispose();
                 }
             };
-
+            
             new FramePopup(this, "No se ha podido conseguir el curso escolar",
                     Imagenes.getImagen("/Imagenes/icons/alert-black.png"),
                     "Aceptar", aceptar).setVisible(true);
@@ -1294,24 +1294,24 @@ public class FrameEntrega extends javax.swing.JFrame {
         if (!nia.equals("") || nia.equals(StringsGlobales.placeHolder_nia)) {
             //Se ha insertado un codigo
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-
+                
                 RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCursoTabla);
-
+                
                 protected Void doInBackground() throws InterruptedException {
                     alumno = daoAlumno.buscar(nia.toUpperCase());
                     return null;
                 }
-
+                
                 protected void done() {
                     framePopup.dispose();
-
+                    
                     if (alumno != null) {
                         //cargarDatosAlumno();
 
                         //Seleccionamos el curso del alumno en el ComboBox de cursos
                         for (int i = 0; i < cbCurso.getItemCount(); i++) {
                             Curso c = (Curso) cbCurso.getItemAt(i);
-
+                            
                             if (c.getCodigo().equals(alumno.getCurso().getCodigo())) {
                                 cbCurso.setSelectedIndex(i);
                                 cbCurso.setSelectedItem(c);
@@ -1329,23 +1329,23 @@ public class FrameEntrega extends javax.swing.JFrame {
                         new FramePopup(topFrame, "No existe ningún alumno con el NIA introducido.",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
-
+                        
                         vaciarCampos();
                     }
-
+                    
                 }
             };
             worker.execute();
             framePopup = new FramePopup(this, "Cargando datos...");
             framePopup.setVisible(true);
-
+            
         } else {
             //No se ha insertado ningun valor en el campo de texto
             new FramePopup(this, "El NIA no puede ser un campo vacío.",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
-
+        
     }
 
     /**
@@ -1362,10 +1362,10 @@ public class FrameEntrega extends javax.swing.JFrame {
                     ejemplar = daoEjemplar.buscar(codigo);
                     return null;
                 }
-
+                
                 protected void done() {
                     framePopup.dispose();
-
+                    
                     if (ejemplar != null) {
                         if (ejemplar.isPrestado()) {
                             new FramePopup(topFrame, "El ejemplar con código "
@@ -1380,7 +1380,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                         } else {
                             try {
                                 ejemplar.setPrestado(true);
-
+                                
                                 Historial historial = new Historial(
                                         ejemplar,
                                         alumno,
@@ -1391,34 +1391,38 @@ public class FrameEntrega extends javax.swing.JFrame {
                                         null,
                                         ""
                                 );
-
+                                
+                                framePopup.setFrameText("Guardando datos...");
+                                framePopup.setVisible(true);
+                                
                                 daoHistorial.grabar(historial);
-
-                                //Actualizamos el ejemplar para que esté prestado.
-                                //ejemplar.setPrestado(true);
-                                //daoEjemplar.actualizar(ejemplar);
+                                
                                 listaEjemplaresEntregados.add(historial.getEjemplar());
-
+                                
                                 DefaultListModel model = new DefaultListModel();
-
+                                
                                 for (int i = 0; i < listaEjemplaresEntregados.size(); i++) {
                                     model.add(i, listaEjemplaresEntregados.get(i));
                                 }
-
+                                
                                 jlistEjemplares.setModel(model);
-
+                                
                                 DefaultTableModel modeloTabla = (DefaultTableModel) tablaPendientes.getModel();
-
+                                
                                 for (int i = 0; i < modeloTabla.getRowCount(); i++) {
                                     Matricula m = (Matricula) modeloTabla.getValueAt(i, 0);
-
+                                    
                                     if (m.getContenido().getCodigo().equals(ejemplar.getLibro().getContenido().getCodigo())) {
                                         modeloTabla.removeRow(i);
+                                        listaMatriculas.remove(m);
                                     }
                                 }
+                                
+                                rellenarTablaPendiente(listaMatriculas);
+                                framePopup.dispose();
                             } catch (Exception e) {
                                 e.printStackTrace();
-
+                                
                                 new FramePopup(topFrame, "Error al generar el historial del ejemplar "
                                         + ejemplar.getCodigo() + ".",
                                         Imagenes.getImagen("alert-black.png"),
@@ -1430,20 +1434,22 @@ public class FrameEntrega extends javax.swing.JFrame {
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
                     }
-
+                    
                 }
             };
             worker.execute();
             framePopup = new FramePopup(this, "Cargando datos...");
-            framePopup.setVisible(true);
-
+            
+            framePopup.setVisible(
+                    true);
+            
         } else {
             //No se ha insertado ningun valor en el campo de texto
             new FramePopup(this, "El código no puede ser un campo vacío.",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
-
+        
     }
 
     /**
@@ -1455,13 +1461,13 @@ public class FrameEntrega extends javax.swing.JFrame {
      */
     private void rellenarEjemplarSugerido(Matricula m) {
         Ejemplar ejemplarSugerido = daoEjemplar.buscarLibre(m.getContenido());
-
+        
         if (ejemplarSugerido != null) {
             codigoTemp = ejemplarSugerido.getCodigo();
             textCodigoEjemplar.setText(ejemplarSugerido.getCodigo());
         } else {
             textCodigoEjemplar.setText("");
-
+            
             new FramePopup(this, "No se han encontrado libros disponibles "
                     + "correspondientes a la asignatura seleccionada.",
                     Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
@@ -1482,7 +1488,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         }
         jlistAlumnos.setModel(listModel);
     }
-
+    
     private void modoEdicion(boolean b) {
         textCodigoEjemplar.setEnabled(b);
         jlistEjemplares.setEnabled(b);

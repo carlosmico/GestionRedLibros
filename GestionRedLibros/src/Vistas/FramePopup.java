@@ -377,4 +377,8 @@ public class FramePopup extends javax.swing.JDialog {
             }
         }
     }
+
+    public void setFrameText(String texto) {
+        text.setText(texto);
+    }
 }

@@ -830,7 +830,7 @@
                                     </Container>
                                   </SubComponents>
                                 </Container>
-                                <Container class="javax.swing.JPanel" name="panelEjemplaresEntregados">
+                                <Container class="javax.swing.JPanel" name="panelEjemplaresDevueltos">
                                   <Properties>
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                       <Connection code="Colores.fondo" type="code"/>

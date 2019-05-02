@@ -6,6 +6,7 @@ import Pojos.Ejemplar;
 import Pojos.Historial;
 import Pojos.Matricula;
 import Utilidades.Colores;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JLabel;
@@ -91,8 +92,9 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
                     setText(historial.getCurso_escolar() + "/" + ((historial.getCurso_escolar() + 1) + "").substring(2));
                     break;
             }
+            this.setForeground(Colores.letraNormal);
+            this.setBackground(Colores.fondo);
         }
-        this.setForeground(Colores.letraNormal);
 
         return this;
     }
@@ -113,7 +115,7 @@ public class RemarcarCeldas extends JLabel implements TableCellRenderer {
             label.setForeground(Colores.letraNormal);
             label.setBackground(Colores.fondo);
         } else {
-            label.setForeground(Colores.letraNormal);
+            label.setForeground(Colores.letraBotones);
             label.setBackground(Colores.accento);
         }
     }

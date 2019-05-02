@@ -174,7 +174,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jlistEjemplaresPendientes = new javax.swing.JList();
-        panelEjemplaresEntregados = new javax.swing.JPanel();
+        panelEjemplaresDevueltos = new javax.swing.JPanel();
         panelCodigo = new javax.swing.JPanel();
         textCodigoEjemplar = new javax.swing.JTextField();
         btCodigoEjemplar = new com.mommoo.flat.button.FlatButton();
@@ -556,7 +556,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         jPanel4.add(jPanel6);
 
-        panelEjemplaresEntregados.setBackground(Colores.fondo);
+        panelEjemplaresDevueltos.setBackground(Colores.fondo);
 
         panelCodigo.setBackground(Colores.fondo);
 
@@ -605,22 +605,22 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jlistEjemplaresDevueltos.setForeground(Colores.letraNormal);
         jScrollPane3.setViewportView(jlistEjemplaresDevueltos);
 
-        javax.swing.GroupLayout panelEjemplaresEntregadosLayout = new javax.swing.GroupLayout(panelEjemplaresEntregados);
-        panelEjemplaresEntregados.setLayout(panelEjemplaresEntregadosLayout);
-        panelEjemplaresEntregadosLayout.setHorizontalGroup(
-            panelEjemplaresEntregadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelEjemplaresDevueltosLayout = new javax.swing.GroupLayout(panelEjemplaresDevueltos);
+        panelEjemplaresDevueltos.setLayout(panelEjemplaresDevueltosLayout);
+        panelEjemplaresDevueltosLayout.setHorizontalGroup(
+            panelEjemplaresDevueltosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
         );
-        panelEjemplaresEntregadosLayout.setVerticalGroup(
-            panelEjemplaresEntregadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelEjemplaresEntregadosLayout.createSequentialGroup()
+        panelEjemplaresDevueltosLayout.setVerticalGroup(
+            panelEjemplaresDevueltosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEjemplaresDevueltosLayout.createSequentialGroup()
                 .addComponent(panelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE))
         );
 
-        jPanel4.add(panelEjemplaresEntregados);
+        jPanel4.add(panelEjemplaresDevueltos);
 
         jPanel5.setBackground(Colores.fondo);
         jPanel5.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
@@ -952,7 +952,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     private javax.swing.JPanel panelBusquedaNIA;
     private javax.swing.JPanel panelCodigo;
     private javax.swing.JPanel panelCuerpo;
-    private javax.swing.JPanel panelEjemplaresEntregados;
+    private javax.swing.JPanel panelEjemplaresDevueltos;
     private javax.swing.JPanel panelGestionAsignaturas;
     private javax.swing.JPanel panelInfoGeneral;
     private javax.swing.JPanel panelInformacion;
@@ -1069,7 +1069,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                         modoEdicion(true);
 
                     } else {
-                        new FramePopup(topFrame, "El alumno no tiene pendiente ninguna entrega.",
+                        new FramePopup(topFrame, "El alumno no tiene pendiente ninguna devolución.",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
                     }
@@ -1182,7 +1182,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     }
 
     /**
-     * Metodo que busca el Ejemplar en la BD y realiza la gestión de la entrega
+     * Metodo que busca el Ejemplar en la BD y realiza la gestión de la devolución
      * del mismo.
      *
      * @param codigo
