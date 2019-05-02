@@ -1100,14 +1100,14 @@ public class FrameEntrega extends javax.swing.JFrame {
      * @param listaMatriculas Es la lista de matriculas que debemos recuperar
      * del archivo xml previamente importado
      */
-    private void rellenarTablaPendiente() {
-        Object[][] contenidoTabla = new Object[listaMatriculas.size()][4];
+    private void rellenarTablaPendiente(List<Matricula> lista) {
+        Object[][] contenidoTabla = new Object[lista.size()][4];
 
-        for (int i = 0; i < listaMatriculas.size(); i++) {
-            contenidoTabla[i][0] = listaMatriculas.get(i);
-            contenidoTabla[i][1] = listaMatriculas.get(i);
-            contenidoTabla[i][2] = listaMatriculas.get(i);
-            contenidoTabla[i][3] = listaMatriculas.get(i);
+        for (int i = 0; i < lista.size(); i++) {
+            contenidoTabla[i][0] = lista.get(i);
+            contenidoTabla[i][1] = lista.get(i);
+            contenidoTabla[i][2] = lista.get(i);
+            contenidoTabla[i][3] = lista.get(i);
         }
 
         DefaultTableModel tableModel = new DefaultTableModel(contenidoTabla,
@@ -1226,7 +1226,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
                         textCursoEscolar.setText(getFecha() + "-" + (getFecha() + 1));
 
-                        rellenarTablaPendiente();
+                        rellenarTablaPendiente(listaMatriculas);
 
                         modoEdicion(true);
                     } else {
