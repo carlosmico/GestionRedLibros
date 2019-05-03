@@ -240,7 +240,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         );
 
         tabbedPage.setBackground(Colores.fondoOscuro);
-        tabbedPage.setForeground(Colores.letraNormal);
+        tabbedPage.setForeground(Colores.letraBotones);
         tabbedPage.setToolTipText("");
         tabbedPage.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
 
@@ -1234,7 +1234,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        panelTituloEjemplo.setBackground(Colores.accento);
+        panelTituloEjemplo.setBackground(Colores.fondoOscuro);
 
         textTituloEjemplo.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         textTituloEjemplo.setForeground(Colores.letraTitulo);

@@ -445,7 +445,9 @@ public class Main extends javax.swing.JFrame {
                 }
 
                 protected void done() {
-                    frameCarga.dispose();
+                    if (frameCarga != null) {
+                        frameCarga.dispose();
+                    }
 
                     if (existeConexion) {
                         System.out.println("Conexión con el servidor correcta!");
