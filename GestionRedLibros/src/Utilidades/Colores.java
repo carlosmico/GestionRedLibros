@@ -26,9 +26,9 @@ import java.awt.Color;
 public class Colores {
 
     public static Color fondo = new Color(239, 235, 233);
-    public static Color fondoOscuro = new Color(212, 189, 177);
+    public static Color fondoOscuro = new Color(58, 39, 35);
 
-    public static Color accento = new Color(58, 39, 35);
+    public static Color accento = new Color(212, 189, 177);
     public static Color botones = new Color(66, 47, 44);
     public static Color letraBotones = new Color(239, 235, 233);
     public static Color letraNormal = new Color(58, 39, 35);

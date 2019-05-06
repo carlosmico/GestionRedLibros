@@ -5,6 +5,7 @@
  */
 package Vistas;
 
+import VistasOld.FrameHistorial_alumno;
 import Utilidades.Conexiones.ComprobarConexion;
 import Utilidades.Conexiones.GestorSesiones;
 import Utilidades.*;
@@ -41,7 +42,7 @@ public class Main extends javax.swing.JFrame {
     FrameOpciones frameOpciones;
     FramePopup frameCarga;
     FramePopup framePopup;
-    FrameHistorial frameHistorial;
+    FrameHistorial_alumno frameHistorial;
 
     //Cogemos el FramePadre para trabajar con los dialogos
     private JFrame topFrame;
@@ -358,11 +359,11 @@ public class Main extends javax.swing.JFrame {
         //compruebaConexionBD();
         if (existeConexion) {
             if (frameHistorial == null) {
-                frameHistorial = new FrameHistorial();
+                frameHistorial = new FrameHistorial_alumno();
             } else {
                 if (!frameHistorial.isVisible()) {
                     frameHistorial = null;
-                    frameHistorial = new FrameHistorial();
+                    frameHistorial = new FrameHistorial_alumno();
                 }
             }
             frameHistorial.setVisible(true);
@@ -476,7 +477,7 @@ public class Main extends javax.swing.JFrame {
 
                                 case "FrameHistorial":
                                     if (frameHistorial == null) {
-                                        frame = new FrameHistorial();
+                                        frame = new FrameHistorial_alumno();
                                     }
                                     break;
                             }
