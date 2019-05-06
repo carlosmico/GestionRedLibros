@@ -42,7 +42,7 @@ public class Main extends javax.swing.JFrame {
     FrameOpciones frameOpciones;
     FramePopup frameCarga;
     FramePopup framePopup;
-    FrameHistorial_alumno frameHistorial;
+    FrameHistorial frameHistorial;
 
     //Cogemos el FramePadre para trabajar con los dialogos
     private JFrame topFrame;
@@ -359,11 +359,11 @@ public class Main extends javax.swing.JFrame {
         //compruebaConexionBD();
         if (existeConexion) {
             if (frameHistorial == null) {
-                frameHistorial = new FrameHistorial_alumno();
+                frameHistorial = new FrameHistorial();
             } else {
                 if (!frameHistorial.isVisible()) {
                     frameHistorial = null;
-                    frameHistorial = new FrameHistorial_alumno();
+                    frameHistorial = new FrameHistorial();
                 }
             }
             frameHistorial.setVisible(true);

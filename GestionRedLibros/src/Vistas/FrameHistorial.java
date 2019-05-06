@@ -17,16 +17,18 @@
  */
 package Vistas;
 
-import VistasOld.*;
 import Daos.DaoAlumno;
 import Daos.DaoCurso;
+import Daos.DaoEjemplar;
 import Daos.DaoHistorial;
 import Pojos.Alumno;
 import Pojos.Curso;
+import Pojos.Ejemplar;
 import Pojos.Historial;
 import Renders.RemarcarCeldas;
 import Renders.comboBoxRender;
 import Utilidades.Colores;
+import Utilidades.Estado;
 import Utilidades.Imagenes.Imagenes;
 import Vistas.FrameDetallesEjemplar;
 import Vistas.FramePopup;
@@ -37,6 +39,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -59,24 +62,18 @@ public class FrameHistorial extends javax.swing.JFrame {
     private FramePopup framePopup;
 
     //Creamos el DAO del Alumno y Matricula
-    private DaoAlumno daoAlumno;
-    private DaoHistorial daoHistorial;
-    private DaoCurso daoCurso;
+    private DaoEjemplar daoEjemplar;
 
     //Creamos el Alumno
-    public Alumno alumno;
-
-    //Creamos el historial
-    public static Historial historial;
+    public Ejemplar ejemplar;
 
     //Listas
+    public List<Historial> listaHistoriales;
     public List<Alumno> listaAlumnos;
-    public List<Curso> listaCursos;
-    public List<Historial> listaHistorial;
 
     public static boolean isCellSelected = false;
 
-    private String defaultText = "Escribe NIA...";
+    private String defaultText = "Codigo ejemplar...";
     private String campoBusquedaTemp = "";
 
     //Cogemos el frame padre para trabajar con los dialogos
@@ -90,38 +87,12 @@ public class FrameHistorial extends javax.swing.JFrame {
 
         topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
-        //<editor-fold defaultstate="collapsed" desc="Configuración combobox">
-        cbCurso.setEditable(false);
-        cbCurso.setUI(new comboBoxRender());
-        cbCurso.setRenderer(new DefaultListCellRenderer() {
-            @Override
-            public Component getListCellRendererComponent(
-                    JList list, Object value, int index,
-                    boolean isSelected, boolean hasFocus) {
-                JLabel l = (JLabel) super.getListCellRendererComponent(
-                        list, value, index, isSelected, hasFocus);
-                if (isSelected) {
-                    l.setForeground(Colores.letraBotones);
-                    l.setBackground(Colores.accento);
-                } else {
-                    l.setForeground(Colores.letraNormal);
-                    l.setBackground(Colores.fondo);
-                }
-                return l;
-            }
-        });
-//</editor-fold>
-
-        daoAlumno = new DaoAlumno(session);
-        daoCurso = new DaoCurso(session);
-        daoHistorial = new DaoHistorial(session);
+        daoEjemplar = new DaoEjemplar(session);
 
         this.setLocationRelativeTo(null);
 
         //Maximizamos la pestaña
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-        cargarDatos();
     }
 
     /**
@@ -137,22 +108,11 @@ public class FrameHistorial extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jSplitPane1 = new javax.swing.JSplitPane();
-        panelLista = new javax.swing.JPanel();
-        panelBusquedaNIA = new javax.swing.JPanel();
-        textBusquedaNIA = new javax.swing.JTextField();
-        btnBusquedaNIA = new com.mommoo.flat.button.FlatButton();
-        panelBusquedaLista = new javax.swing.JPanel();
-        cbCurso = new javax.swing.JComboBox();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jlistAlumnos = new javax.swing.JList();
-        jLabel10 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
         jScrollPane4 = new javax.swing.JScrollPane();
         panelInformacion = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaHistoriales = new javax.swing.JTable();
+        tablaAlumnos = new javax.swing.JTable();
         panelDatos = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -170,9 +130,12 @@ public class FrameHistorial extends javax.swing.JFrame {
         panelEstadoInicialParent = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         panelEstadoInicial = new javax.swing.JPanel();
-        btnBadStatusInicial = new javax.swing.JLabel();
-        btnRegularStatusInicial = new javax.swing.JLabel();
-        btnGoodStatusInicial = new javax.swing.JLabel();
+        btnBadStatus = new javax.swing.JLabel();
+        btnRegularStatus = new javax.swing.JLabel();
+        btnGoodStatus = new javax.swing.JLabel();
+        panelBusquedaEjemplar = new javax.swing.JPanel();
+        textBusquedaEjemplar = new javax.swing.JTextField();
+        btnBusquedaEjemplar = new com.mommoo.flat.button.FlatButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opciones");
@@ -203,163 +166,22 @@ public class FrameHistorial extends javax.swing.JFrame {
 
         jPanel3.setBackground(Colores.fondo);
 
-        panelLista.setBackground(Colores.fondo);
-        panelLista.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        panelLista.setMaximumSize(new java.awt.Dimension(450, 32767));
-        panelLista.setMinimumSize(new java.awt.Dimension(400, 0));
-
-        panelBusquedaNIA.setBackground(Colores.fondo);
-
-        textBusquedaNIA.setBackground(Colores.fondo);
-        textBusquedaNIA.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textBusquedaNIA.setForeground(Colores.letraNormal);
-        textBusquedaNIA.setText("Código ejemplar...");
-        textBusquedaNIA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        textBusquedaNIA.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                textBusquedaNIAFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                textBusquedaNIAFocusLost(evt);
-            }
-        });
-        textBusquedaNIA.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textBusquedaNIAKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                textBusquedaNIAKeyReleased(evt);
-            }
-        });
-
-        btnBusquedaNIA.setBackground(Colores.botones);
-        btnBusquedaNIA.setForeground(Colores.letraBotones);
-        btnBusquedaNIA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
-        btnBusquedaNIA.setCornerRound(10);
-        btnBusquedaNIA.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBusquedaNIAMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelBusquedaNIALayout = new javax.swing.GroupLayout(panelBusquedaNIA);
-        panelBusquedaNIA.setLayout(panelBusquedaNIALayout);
-        panelBusquedaNIALayout.setHorizontalGroup(
-            panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBusquedaNIALayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(textBusquedaNIA)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBusquedaNIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        panelBusquedaNIALayout.setVerticalGroup(
-            panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBusquedaNIALayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelBusquedaNIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnBusquedaNIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(textBusquedaNIA))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        panelBusquedaLista.setBackground(Colores.fondo);
-
-        cbCurso.setBackground(Colores.accento);
-        cbCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        cbCurso.setPreferredSize(new java.awt.Dimension(374, 34));
-        cbCurso.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbCursoItemStateChanged(evt);
-            }
-        });
-
-        jlistAlumnos.setBackground(Colores.fondo);
-        jlistAlumnos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jlistAlumnos.setForeground(Colores.letraNormal);
-        jlistAlumnos.setSelectionBackground(Colores.accento);
-        jlistAlumnos.setSelectionForeground(Colores.letraBotones);
-        jlistAlumnos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jlistAlumnosValueChanged(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jlistAlumnos);
-
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setForeground(Colores.letraNormal);
-        jLabel10.setText("Listado de alumnos:");
-
-        javax.swing.GroupLayout panelBusquedaListaLayout = new javax.swing.GroupLayout(panelBusquedaLista);
-        panelBusquedaLista.setLayout(panelBusquedaListaLayout);
-        panelBusquedaListaLayout.setHorizontalGroup(
-            panelBusquedaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBusquedaListaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelBusquedaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addGroup(panelBusquedaListaLayout.createSequentialGroup()
-                        .addGroup(panelBusquedaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(cbCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        panelBusquedaListaLayout.setVerticalGroup(
-            panelBusquedaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBusquedaListaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2)
-                .addContainerGap())
-        );
-
-        jSeparator2.setBackground(Colores.fondo);
-
-        javax.swing.GroupLayout panelListaLayout = new javax.swing.GroupLayout(panelLista);
-        panelLista.setLayout(panelListaLayout);
-        panelListaLayout.setHorizontalGroup(
-            panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelListaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelBusquedaLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelBusquedaNIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addComponent(jSeparator2)
-        );
-        panelListaLayout.setVerticalGroup(
-            panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelListaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelBusquedaNIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelBusquedaLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jSplitPane1.setLeftComponent(panelLista);
-
         jScrollPane4.setBorder(null);
-        jScrollPane4.setMinimumSize(new java.awt.Dimension(250, 18));
+        jScrollPane4.setMinimumSize(new java.awt.Dimension(1024, 18));
+        jScrollPane4.setPreferredSize(new java.awt.Dimension(1024, 500));
 
         panelInformacion.setBackground(Colores.fondo);
         panelInformacion.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        panelInformacion.setMinimumSize(new java.awt.Dimension(720, 0));
-        panelInformacion.setPreferredSize(new java.awt.Dimension(720, 500));
+        panelInformacion.setMinimumSize(new java.awt.Dimension(1024, 0));
+        panelInformacion.setPreferredSize(new java.awt.Dimension(1024, 500));
 
         jPanel4.setBackground(Colores.fondo);
 
-        tablaHistoriales.setAutoCreateRowSorter(true);
-        tablaHistoriales.setBackground(Colores.fondo);
-        tablaHistoriales.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        tablaHistoriales.setForeground(Colores.letraNormal);
-        tablaHistoriales.setModel(new javax.swing.table.DefaultTableModel(
+        tablaAlumnos.setAutoCreateRowSorter(true);
+        tablaAlumnos.setBackground(Colores.fondo);
+        tablaAlumnos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        tablaAlumnos.setForeground(Colores.letraNormal);
+        tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -378,33 +200,27 @@ public class FrameHistorial extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tablaHistoriales.setRowHeight(32);
-        tablaHistoriales.setRowSelectionAllowed(false);
-        tablaHistoriales.setSelectionBackground(Colores.accento);
-        tablaHistoriales.setSelectionForeground(Colores.letraBotones);
-        tablaHistoriales.getTableHeader().setReorderingAllowed(false);
-        tablaHistoriales.addMouseListener(new java.awt.event.MouseAdapter() {
+        tablaAlumnos.setRowHeight(32);
+        tablaAlumnos.setRowSelectionAllowed(false);
+        tablaAlumnos.setSelectionBackground(Colores.accento);
+        tablaAlumnos.setSelectionForeground(Colores.letraBotones);
+        tablaAlumnos.getTableHeader().setReorderingAllowed(false);
+        tablaAlumnos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaHistorialesMouseClicked(evt);
+                tablaAlumnosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tablaHistoriales);
+        jScrollPane1.setViewportView(tablaAlumnos);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+            .addComponent(jScrollPane1)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
         );
 
         panelDatos.setBackground(Colores.fondo);
@@ -422,7 +238,7 @@ public class FrameHistorial extends javax.swing.JFrame {
 
         textCodigoEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         textCodigoEjemplar.setForeground(Colores.letraNormal);
-        textCodigoEjemplar.setText("1000001");
+        textCodigoEjemplar.setMinimumSize(new java.awt.Dimension(125, 32));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -445,7 +261,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textCodigoEjemplar)
+                .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -457,7 +273,7 @@ public class FrameHistorial extends javax.swing.JFrame {
 
         textNombreEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         textNombreEjemplar.setForeground(Colores.letraNormal);
-        textNombreEjemplar.setText("El are no es lo mateix que la de ta' tia");
+        textNombreEjemplar.setMinimumSize(new java.awt.Dimension(125, 32));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -468,9 +284,11 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(textNombreEjemplar))
-                    .addComponent(jLabel7))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(textNombreEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(0, 220, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,7 +296,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textNombreEjemplar)
+                .addComponent(textNombreEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -490,7 +308,7 @@ public class FrameHistorial extends javax.swing.JFrame {
 
         textAsignaturaEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         textAsignaturaEjemplar.setForeground(Colores.letraNormal);
-        textAsignaturaEjemplar.setText("La calle es mi gimnasio");
+        textAsignaturaEjemplar.setMinimumSize(new java.awt.Dimension(125, 32));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -513,7 +331,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textAsignaturaEjemplar)
+                .addComponent(textAsignaturaEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -525,7 +343,7 @@ public class FrameHistorial extends javax.swing.JFrame {
 
         textCursoEjemplar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         textCursoEjemplar.setForeground(Colores.letraNormal);
-        textCursoEjemplar.setText("4 manzanas");
+        textCursoEjemplar.setMinimumSize(new java.awt.Dimension(125, 32));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -536,7 +354,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(textCursoEjemplar))
+                        .addComponent(textCursoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
                     .addComponent(jLabel13))
                 .addGap(0, 35, Short.MAX_VALUE))
         );
@@ -546,7 +364,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textCursoEjemplar)
+                .addComponent(textCursoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -559,17 +377,17 @@ public class FrameHistorial extends javax.swing.JFrame {
         panelEstadoInicial.setBackground(Colores.fondo);
         panelEstadoInicial.setLayout(new java.awt.GridLayout(1, 0, 5, 5));
 
-        btnBadStatusInicial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnBadStatusInicial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
-        panelEstadoInicial.add(btnBadStatusInicial);
+        btnBadStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnBadStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
+        panelEstadoInicial.add(btnBadStatus);
 
-        btnRegularStatusInicial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnRegularStatusInicial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
-        panelEstadoInicial.add(btnRegularStatusInicial);
+        btnRegularStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnRegularStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
+        panelEstadoInicial.add(btnRegularStatus);
 
-        btnGoodStatusInicial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnGoodStatusInicial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
-        panelEstadoInicial.add(btnGoodStatusInicial);
+        btnGoodStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnGoodStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
+        panelEstadoInicial.add(btnGoodStatus);
 
         javax.swing.GroupLayout panelEstadoInicialParentLayout = new javax.swing.GroupLayout(panelEstadoInicialParent);
         panelEstadoInicialParent.setLayout(panelEstadoInicialParentLayout);
@@ -580,7 +398,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addGroup(panelEstadoInicialParentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelEstadoInicialParentLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(panelEstadoInicial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(panelEstadoInicial, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE))
                     .addGroup(panelEstadoInicialParentLayout.createSequentialGroup()
                         .addComponent(jLabel29)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -606,7 +424,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel5)
-                        .addContainerGap(909, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelDatosLayout.createSequentialGroup()
@@ -617,7 +435,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelEstadoInicialParent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(150, Short.MAX_VALUE))))
         );
         panelDatosLayout.setVerticalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -625,7 +443,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addGap(6, 6, 6)
-                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -634,8 +452,63 @@ public class FrameHistorial extends javax.swing.JFrame {
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelEstadoInicialParent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelEstadoInicialParent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        panelBusquedaEjemplar.setBackground(Colores.fondo);
+
+        textBusquedaEjemplar.setBackground(Colores.fondo);
+        textBusquedaEjemplar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textBusquedaEjemplar.setForeground(Colores.letraNormal);
+        textBusquedaEjemplar.setText("Código ejemplar...");
+        textBusquedaEjemplar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        textBusquedaEjemplar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textBusquedaEjemplarFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textBusquedaEjemplarFocusLost(evt);
+            }
+        });
+        textBusquedaEjemplar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textBusquedaEjemplarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textBusquedaEjemplarKeyReleased(evt);
+            }
+        });
+
+        btnBusquedaEjemplar.setBackground(Colores.botones);
+        btnBusquedaEjemplar.setForeground(Colores.letraBotones);
+        btnBusquedaEjemplar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
+        btnBusquedaEjemplar.setCornerRound(10);
+        btnBusquedaEjemplar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBusquedaEjemplarMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelBusquedaEjemplarLayout = new javax.swing.GroupLayout(panelBusquedaEjemplar);
+        panelBusquedaEjemplar.setLayout(panelBusquedaEjemplarLayout);
+        panelBusquedaEjemplarLayout.setHorizontalGroup(
+            panelBusquedaEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBusquedaEjemplarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(textBusquedaEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBusquedaEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelBusquedaEjemplarLayout.setVerticalGroup(
+            panelBusquedaEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBusquedaEjemplarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelBusquedaEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBusquedaEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textBusquedaEjemplar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelInformacionLayout = new javax.swing.GroupLayout(panelInformacion);
@@ -643,44 +516,47 @@ public class FrameHistorial extends javax.swing.JFrame {
         panelInformacionLayout.setHorizontalGroup(
             panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInformacionLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addContainerGap()
                 .addGroup(panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelInformacionLayout.createSequentialGroup()
-                        .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelBusquedaEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInformacionLayout.createSequentialGroup()
+                        .addGroup(panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         panelInformacionLayout.setVerticalGroup(
             panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInformacionLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
+                .addComponent(panelBusquedaEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jScrollPane4.setViewportView(panelInformacion);
-
-        jSplitPane1.setRightComponent(jScrollPane4);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1540, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE))
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1540, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -694,62 +570,42 @@ public class FrameHistorial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textBusquedaNIAFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusGained
+    private void btnBusquedaEjemplarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBusquedaEjemplarMouseClicked
         // TODO add your handling code here:
-        textBusquedaNIA.setText("");
-        textBusquedaNIA.setForeground(Colores.letraNormal);
-    }//GEN-LAST:event_textBusquedaNIAFocusGained
+        buscarEjemplar(textCodigoEjemplar.getText());
+        campoBusquedaTemp = "";
+    }//GEN-LAST:event_btnBusquedaEjemplarMouseClicked
 
-    private void textBusquedaNIAFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaNIAFocusLost
+    private void textBusquedaEjemplarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaEjemplarKeyReleased
         // TODO add your handling code here:
-        textBusquedaNIA.setText(defaultText);
-        textBusquedaNIA.setForeground(Colores.campoTextSinFocus);
-    }//GEN-LAST:event_textBusquedaNIAFocusLost
+        campoBusquedaTemp = textBusquedaEjemplar.getText();
+    }//GEN-LAST:event_textBusquedaEjemplarKeyReleased
 
-    private void textBusquedaNIAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaNIAKeyPressed
+    private void textBusquedaEjemplarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaEjemplarKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            buscarAlumno(textBusquedaNIA.getText());
-            jlistAlumnos.requestFocus();
+            buscarEjemplar(textBusquedaEjemplar.getText());
         }
-    }//GEN-LAST:event_textBusquedaNIAKeyPressed
+    }//GEN-LAST:event_textBusquedaEjemplarKeyPressed
 
-    private void cbCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoItemStateChanged
+    private void textBusquedaEjemplarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaEjemplarFocusLost
         // TODO add your handling code here:
-        alumno = null;
-        rellenarLista((Curso) cbCurso.getSelectedItem());
-    }//GEN-LAST:event_cbCursoItemStateChanged
+        textBusquedaEjemplar.setText(defaultText);
+        textBusquedaEjemplar.setForeground(Colores.campoTextSinFocus);
+    }//GEN-LAST:event_textBusquedaEjemplarFocusLost
 
-    private void jlistAlumnosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jlistAlumnosValueChanged
+    private void textBusquedaEjemplarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBusquedaEjemplarFocusGained
         // TODO add your handling code here:
-        if (jlistAlumnos.getModel().getSize() > 0) {
-            alumno = (Alumno) jlistAlumnos.getSelectedValue();
-            cargarDatosAlumno();
-        } else {
-            //vaciar campos
-        }
-    }//GEN-LAST:event_jlistAlumnosValueChanged
+        textBusquedaEjemplar.setText("");
+        textBusquedaEjemplar.setForeground(Colores.letraNormal);
+    }//GEN-LAST:event_textBusquedaEjemplarFocusGained
 
-    private void btnBusquedaNIAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBusquedaNIAMouseClicked
-        // TODO add your handling code here:
-        buscarAlumno(campoBusquedaTemp);
-        campoBusquedaTemp = "";
-    }//GEN-LAST:event_btnBusquedaNIAMouseClicked
+    private void tablaAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAlumnosMouseClicked
+        int row = tablaAlumnos.rowAtPoint(evt.getPoint());
+        int col = tablaAlumnos.columnAtPoint(evt.getPoint());
 
-    private void tablaHistorialesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaHistorialesMouseClicked
-        int row = tablaHistoriales.rowAtPoint(evt.getPoint());
-        int col = tablaHistoriales.columnAtPoint(evt.getPoint());
-
-        TableModel tableModel = tablaHistoriales.getModel();
-
-        historial = (Historial) tableModel.getValueAt(row, col);
-        showFrameInfo(historial);
-    }//GEN-LAST:event_tablaHistorialesMouseClicked
-
-    private void textBusquedaNIAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaNIAKeyReleased
-        // TODO add your handling code here:
-        campoBusquedaTemp = textBusquedaNIA.getText();
-    }//GEN-LAST:event_textBusquedaNIAKeyReleased
+        TableModel tableModel = tablaAlumnos.getModel();
+    }//GEN-LAST:event_tablaAlumnosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -790,14 +646,12 @@ public class FrameHistorial extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btnBadStatusInicial;
-    private com.mommoo.flat.button.FlatButton btnBusquedaNIA;
-    private javax.swing.JLabel btnGoodStatusInicial;
-    private javax.swing.JLabel btnRegularStatusInicial;
-    private javax.swing.JComboBox cbCurso;
+    private javax.swing.JLabel btnBadStatus;
+    private com.mommoo.flat.button.FlatButton btnBusquedaEjemplar;
+    private javax.swing.JLabel btnGoodStatus;
+    private javax.swing.JLabel btnRegularStatus;
     private org.jdesktop.swingx.painter.GlossPainter glossPainter1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel4;
@@ -812,61 +666,42 @@ public class FrameHistorial extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JList jlistAlumnos;
-    private javax.swing.JPanel panelBusquedaLista;
-    private javax.swing.JPanel panelBusquedaNIA;
+    private javax.swing.JPanel panelBusquedaEjemplar;
     private javax.swing.JPanel panelDatos;
     private javax.swing.JPanel panelEstadoInicial;
     private javax.swing.JPanel panelEstadoInicialParent;
     private javax.swing.JPanel panelInformacion;
-    private javax.swing.JPanel panelLista;
-    private javax.swing.JTable tablaHistoriales;
+    private javax.swing.JTable tablaAlumnos;
     private javax.swing.JLabel textAsignaturaEjemplar;
-    private javax.swing.JTextField textBusquedaNIA;
+    private javax.swing.JTextField textBusquedaEjemplar;
     private javax.swing.JLabel textCodigoEjemplar;
     private javax.swing.JLabel textCursoEjemplar;
     private javax.swing.JLabel textNombreEjemplar;
     // End of variables declaration//GEN-END:variables
 
     /**
-     * Metodo que utilizamos para buscar un alumno en la base de datos
-     *
-     * @param nia Deberemos pasarle el NIA del alumno
+     * Metodo que utilizamos para buscar un ejemplar en la base de datos
      */
-    public void buscarAlumno(String nia) {
-        if (!nia.equals("") || nia.equals(defaultText)) {
+    public void buscarEjemplar(String codigo) {
+        if (!codigo.equals("") || codigo.equals(defaultText)) {
             //Se ha insertado un codigo
 
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
 
-                RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCurso);
-
+                //RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCurso);
                 protected Void doInBackground() throws InterruptedException {
-                    alumno = daoAlumno.buscar(nia.toUpperCase());
+                    ejemplar = daoEjemplar.buscar(codigo);
                     return null;
                 }
 
                 protected void done() {
                     framePopup.dispose();
 
-                    if (alumno != null) {
-                        sustituirPadre(alumno.getCurso());
-                        cargarDatosAlumno();
-
-                        seleccionarAlumno();
-
-                        for (int i = 0; i < jlistAlumnos.getModel().getSize(); i++) {
-                            Alumno alumnot = (Alumno) jlistAlumnos.getModel().getElementAt(i);
-                            if (alumnot.getNia().equals(nia)) {
-                                jlistAlumnos.setSelectedIndex(i);
-                            }
-                        }
+                    if (ejemplar != null) {
+                        rellenarDatosEjemplar(ejemplar);
                     } else {
-                        new FramePopup(topFrame, "No existe ningún alumno con el NIA introducido.",
+                        new FramePopup(topFrame, "No existe ningún ejemplar con el código introducido.",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
                     }
@@ -879,240 +714,247 @@ public class FrameHistorial extends javax.swing.JFrame {
             //alumno = listaAlumnos.stream().filter(a -> a.getNia().equals(nia)).collect(Collectors.toList()).get(0);
         } else {
             //No se ha insertado ningun valor en el campo de texto
-            new FramePopup(this, "El NIA no puede ser un campo vacío.",
-                    Imagenes.getImagen("alert-black.png"),
-                    "Aceptar").setVisible(true);
-        }
-
-    }
-
-    /**
-     * Metodo utilizado para seleccionar el alumno en la lista cuando lo
-     * buscamos por NIA
-     */
-    private void seleccionarAlumno() {
-        Curso c = alumno.getCurso();
-        cbCurso.setSelectedItem(c);
-    }
-
-    /**
-     * Este metodo se utiliza para cargar los datos de el alumno encontrado
-     * anteriormente.
-     */
-    private void cargarDatosAlumno() {
-
-        if (alumno != null) {
-
-            textNIAAlumno.setText(alumno.getNia());
-            textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
-            textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
-            textEmail.setText(alumno.getEmail1());
-            textCursoActual.setText(alumno.getCurso().getAbreviatura() + " - " + sustituirPadre(alumno.getCurso()).getIdPadre());
-
-            textTelefono.setText(alumno.getTelefono1());
-
-            cargarHitoriales(alumno);
-
-        } else {
-            new FramePopup(this, "El alumno no esta matriculado en este curso escolar",
+            new FramePopup(this, "El código del ejemplar no puede ser un campo vacío.",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
         }
     }
 
     /**
-     * Metodo que utilizamos para rellenar la lista de alumnos dependiendo del
-     * curso seleccionado
+     * Metodo para rellenar los datos del ejemplar
+     */
+    public void rellenarDatosEjemplar(Ejemplar ejemplar) {
+        textCodigoEjemplar.setText(ejemplar.getCodigo());
+        textCursoEjemplar.setText(ejemplar.getLibro().getContenido().getCurso().getAbreviatura());
+        textNombreEjemplar.setText(ejemplar.getLibro().getNombre());
+        textAsignaturaEjemplar.setText(ejemplar.getLibro().getContenido().getNombre_cas());
+        setEstado(ejemplar.getEstado());
+    }
+
+    /**
+     * Metodo para pintar la imagen del estado del ejemplar
      *
-     * @param curso Curso seleccionado en el comboBox
+     * @param estado
      */
-    private void rellenarLista(Curso curso) {
-        List<Alumno> listaAlumnosCurso = listaAlumnos.stream().filter(a -> a.getCurso().equals(curso)).collect(Collectors.toList());
-        DefaultListModel listModel = new DefaultListModel();
-        for (int i = 0; i < listaAlumnosCurso.size(); i++) {
-            listModel.addElement(listaAlumnosCurso.get(i));
-        }
-        jlistAlumnos.setModel(listModel);
-    }
+    public void setEstado(int estado) {
 
-    /**
-     * Cargamos los datos iniciales, como los alumnos o los cursos
-     */
-    public void cargarDatos() {
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+        switch (estado) {
+            case Estado.deteriorado:
+                //El libro se encuentra en mal estado
 
-            protected Void doInBackground() throws InterruptedException {
-                listaAlumnos = daoAlumno.buscarTodos();
-                listaCursos = daoCurso.buscarTodos();
-                return null;
-            }
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad.png")));               //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular_disabled.png")));  //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good_disabled.png")));     //Good face
+                break;
 
-            protected void done() {
-                sustituirPadresCursos();
+            case Estado.usado:
+                //El libro se encuentra en mal estado
 
-                rellenarCursos();
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular.png")));          //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good_disabled.png")));    //Good face
+                break;
 
-                framePopup.dispose();
-            }
-        };
-        worker.execute();
-        framePopup = new FramePopup(this);
-    }
+            case Estado.nuevo:
+                //El libro se encuentra en mal estado
 
-    /**
-     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
-     * por el nombre del Padre
-     */
-    private Curso sustituirPadre(Curso curso) {
-        Curso c = curso;
-        Curso cursoPadre = daoCurso.buscar(c.getIdPadre());
-
-        if (cursoPadre != null) {
-            c.setNombre_padre(daoCurso.buscar(c.getIdPadre()).getNombre_cas());
-        }
-        return c;
-    }
-
-    /**
-     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
-     * por el nombre del Padre
-     */
-    private void sustituirPadresCursos() {
-        for (int i = 0; i < listaCursos.size(); i++) {
-            Curso curso = listaCursos.get(i);
-            Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
-
-            if (cursoPadre != null) {
-                curso.setNombre_padre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
-            }
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular_disabled.png"))); //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good.png")));             //Good face
+                break;
+            default:
+                btnBadStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/bad_disabled.png")));     //Bad face
+                btnRegularStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/regular_disabled.png"))); //Regular face
+                btnGoodStatus.setIcon(new ImageIcon(
+                        getClass().getResource("/Imagenes/good_disabled.png")));             //Good face
         }
     }
 
-    /**
-     * Metodo para rellenar los cursos del combobox
+    /*
+
+     private void seleccionarAlumno() {
+     Curso c = alumno.getCurso();
+     cbCurso.setSelectedItem(c);
+     }
+
+     private void cargarDatosAlumno() {
+
+     if (alumno != null) {
+
+     textNIAAlumno.setText(alumno.getNia());
+     textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
+     textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
+     textEmail.setText(alumno.getEmail1());
+     textCursoActual.setText(alumno.getCurso().getAbreviatura() + " - " + sustituirPadre(alumno.getCurso()).getIdPadre());
+
+     textTelefono.setText(alumno.getTelefono1());
+
+     cargarHitoriales(alumno);
+
+     } else {
+     new FramePopup(this, "El alumno no esta matriculado en este curso escolar",
+     Imagenes.getImagen("alert-black.png"),
+     "Aceptar").setVisible(true);
+     }
+     }
+
+     private void rellenarLista(Curso curso) {
+     List<Alumno> listaAlumnosCurso = listaAlumnos.stream().filter(a -> a.getCurso().equals(curso)).collect(Collectors.toList());
+     DefaultListModel listModel = new DefaultListModel();
+     for (int i = 0; i < listaAlumnosCurso.size(); i++) {
+     listModel.addElement(listaAlumnosCurso.get(i));
+     }
+     jlistAlumnos.setModel(listModel);
+     }
+
+     private Curso sustituirPadre(Curso curso) {
+     Curso c = curso;
+     Curso cursoPadre = daoCurso.buscar(c.getIdPadre());
+
+     if (cursoPadre != null) {
+     c.setNombre_padre(daoCurso.buscar(c.getIdPadre()).getNombre_cas());
+     }
+     return c;
+     }
+
+     private void sustituirPadresCursos() {
+     for (int i = 0; i < listaCursos.size(); i++) {
+     Curso curso = listaCursos.get(i);
+     Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
+
+     if (cursoPadre != null) {
+     curso.setNombre_padre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
+     }
+     }
+     }
+
+     public void rellenarCursos() {
+
+     cbCurso.removeAllItems();
+
+     //cbCurso.addItem(new Curso("Seleccione curso", "Seleccione curso", "Seleccione curso", "Seleccione curso", "Seleccione curso", " "));
+     //Rellenamos los cursos
+     if (listaCursos.size() > 0) {
+     for (int i = 0; i < listaCursos.size(); i++) {
+     cbCurso.addItem(listaCursos.get(i));
+     }
+     } else {
+     new FramePopup(this, "No hay cursos en la base de datos.",
+     Imagenes.getImagen("alert-black.png"),
+     "Aceptar").setVisible(true);
+     }
+     rellenarLista((Curso) cbCurso.getSelectedItem());
+     //cbCurso.setSelectedIndex(0);
+     }
+
+     public void cargarHitoriales(Alumno alumno) {
+     SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+
+     protected Void doInBackground() throws InterruptedException {
+     listaHistorial = daoHistorial.buscarPorAlumno(alumno);
+     return null;
+     }
+
+     protected void done() {
+     rellenarTablaHistoriales();
+     framePopup.dispose();
+     }
+     };
+     worker.execute();
+     framePopup = new FramePopup(this);
+     }
+
+     public void rellenarTablaHistoriales() {
+     DefaultTableModel tableModel;
+
+     if (listaHistorial.size() > 0) {
+     Object[][] contenidoTabla = new Object[listaHistorial.size()][4];
+
+     for (int i = 0; i < listaHistorial.size(); i++) {
+     contenidoTabla[i][0] = listaHistorial.get(i);
+     contenidoTabla[i][1] = listaHistorial.get(i);
+     contenidoTabla[i][2] = listaHistorial.get(i);
+     contenidoTabla[i][3] = listaHistorial.get(i);
+     }
+
+     tableModel = new DefaultTableModel(contenidoTabla,
+     new Object[]{"Código Ejemplar", "Nombre del Ejemplar", "Curso", "Curso Escolar"}) {
+     @Override
+     public boolean isCellEditable(int row, int column) {
+     return false;
+     }
+     };
+     } else {
+     tableModel = new DefaultTableModel(null,
+     new Object[]{"Código Ejemplar", "Nombre del Ejemplar", "Curso", "Curso Escolar"}) {
+     @Override
+     public boolean isCellEditable(int row, int column) {
+     return false;
+     }
+     };
+     }
+
+     tablaAlumnos.setModel(tableModel);
+
+     if (tableModel.getRowCount() > 0) {
+
+     //<editor-fold defaultstate="collapsed" desc="Edicion visual de la tabla">
+     TableColumnModel tcm = tablaAlumnos.getColumnModel();
+     tcm.getColumn(0).setMaxWidth(150);
+     tcm.getColumn(0).setMinWidth(100);
+     tcm.getColumn(0).setPreferredWidth(150);
+
+     tcm.getColumn(1).setMinWidth(150);
+     tcm.getColumn(2).setMinWidth(250);
+
+     tcm.getColumn(3).setMaxWidth(125);
+     tcm.getColumn(3).setMinWidth(125);
+     //</editor-fold>
+
+     //<editor-fold defaultstate="collapsed" desc="Mostrar texto en las celdas de las tablas">
+     SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+
+     RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCurso);
+
+     protected Void doInBackground() throws InterruptedException {
+     for (int i = 0; i < tableModel.getColumnCount(); i++) {
+     tcm.getColumn(i).setCellRenderer(remarcarCeldas);
+     }
+     return null;
+     }
+
+     protected void done() {
+     framePopup.dispose();
+     }
+     };
+     worker.execute();
+
+     framePopup = new FramePopup(this, "Cargando datos...");
+     framePopup.setVisible(true);
+     //</editor-fold>
+
+     } else {
+     new FramePopup(this, "Este alumno no tiene historial todavía",
+     Imagenes.getImagen("alert-black.png"),
+     "Aceptar").setVisible(true);
+     }
+     }
+
+     public void showFrameInfo(Historial historial) {
+     //Mostrar la vista del click 
+     new FrameDetallesEjemplar(historial.getEjemplar()).setVisible(true);
+     }
+
      */
-    public void rellenarCursos() {
-
-        cbCurso.removeAllItems();
-
-        //cbCurso.addItem(new Curso("Seleccione curso", "Seleccione curso", "Seleccione curso", "Seleccione curso", "Seleccione curso", " "));
-        //Rellenamos los cursos
-        if (listaCursos.size() > 0) {
-            for (int i = 0; i < listaCursos.size(); i++) {
-                cbCurso.addItem(listaCursos.get(i));
-            }
-        } else {
-            new FramePopup(this, "No hay cursos en la base de datos.",
-                    Imagenes.getImagen("alert-black.png"),
-                    "Aceptar").setVisible(true);
-        }
-        rellenarLista((Curso) cbCurso.getSelectedItem());
-        //cbCurso.setSelectedIndex(0);
-    }
-
-    /**
-     * Metodo para buscar todos los historiales del alumno
-     *
-     * @param alumno Objeto alumno para buscar su nia en los historiales
-     */
-    public void cargarHitoriales(Alumno alumno) {
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-
-            protected Void doInBackground() throws InterruptedException {
-                listaHistorial = daoHistorial.buscarPorAlumno(alumno);
-                return null;
-            }
-
-            protected void done() {
-                rellenarTablaHistoriales();
-                framePopup.dispose();
-            }
-        };
-        worker.execute();
-        framePopup = new FramePopup(this);
-    }
-
-    /**
-     * Metodo para rellenar la tabla de historiales del alumno
-     */
-    public void rellenarTablaHistoriales() {
-        DefaultTableModel tableModel;
-
-        if (listaHistorial.size() > 0) {
-            Object[][] contenidoTabla = new Object[listaHistorial.size()][4];
-
-            for (int i = 0; i < listaHistorial.size(); i++) {
-                contenidoTabla[i][0] = listaHistorial.get(i);
-                contenidoTabla[i][1] = listaHistorial.get(i);
-                contenidoTabla[i][2] = listaHistorial.get(i);
-                contenidoTabla[i][3] = listaHistorial.get(i);
-            }
-
-            tableModel = new DefaultTableModel(contenidoTabla,
-                    new Object[]{"Código Ejemplar", "Nombre del Ejemplar", "Curso", "Curso Escolar"}) {
-                        @Override
-                        public boolean isCellEditable(int row, int column) {
-                            return false;
-                        }
-                    };
-        } else {
-            tableModel = new DefaultTableModel(null,
-                    new Object[]{"Código Ejemplar", "Nombre del Ejemplar", "Curso", "Curso Escolar"}) {
-                        @Override
-                        public boolean isCellEditable(int row, int column) {
-                            return false;
-                        }
-                    };
-        }
-
-        tablaHistoriales.setModel(tableModel);
-
-        if (tableModel.getRowCount() > 0) {
-
-            //<editor-fold defaultstate="collapsed" desc="Edicion visual de la tabla">
-            TableColumnModel tcm = tablaHistoriales.getColumnModel();
-            tcm.getColumn(0).setMaxWidth(150);
-            tcm.getColumn(0).setMinWidth(100);
-            tcm.getColumn(0).setPreferredWidth(150);
-
-            tcm.getColumn(1).setMinWidth(150);
-            tcm.getColumn(2).setMinWidth(250);
-
-            tcm.getColumn(3).setMaxWidth(125);
-            tcm.getColumn(3).setMinWidth(125);
-//</editor-fold>
-
-            //<editor-fold defaultstate="collapsed" desc="Mostrar texto en las celdas de las tablas">
-            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-
-                RemarcarCeldas remarcarCeldas = new RemarcarCeldas(daoCurso);
-
-                protected Void doInBackground() throws InterruptedException {
-                    for (int i = 0; i < tableModel.getColumnCount(); i++) {
-                        tcm.getColumn(i).setCellRenderer(remarcarCeldas);
-                    }
-                    return null;
-                }
-
-                protected void done() {
-                    framePopup.dispose();
-                }
-            };
-            worker.execute();
-
-            framePopup = new FramePopup(this, "Cargando datos...");
-            framePopup.setVisible(true);
-//</editor-fold>
-
-        } else {
-            new FramePopup(this, "Este alumno no tiene historial todavía",
-                    Imagenes.getImagen("alert-black.png"),
-                    "Aceptar").setVisible(true);
-        }
-    }
-
-    public void showFrameInfo(Historial historial) {
-        //Mostrar la vista del click 
-        new FrameDetallesEjemplar(historial.getEjemplar()).setVisible(true);
-    }
 }
