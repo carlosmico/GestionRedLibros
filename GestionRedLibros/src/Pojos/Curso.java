@@ -58,10 +58,10 @@ public class Curso implements Serializable {
     @Transient 
     private String nombre_padre = "404 idPadre not found";
 
-    @OneToMany(mappedBy = "curso_contenido", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "curso_contenido")
     private List<Contenido> contenidos;
 
-    @OneToMany(mappedBy = "curso_alumno", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "curso_alumno")
     private List<Alumno> alumnos;
 
     public Curso() {
