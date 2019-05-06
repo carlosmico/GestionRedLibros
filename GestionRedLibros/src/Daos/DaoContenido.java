@@ -65,16 +65,18 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
                     contenido = new Contenido(c.getCurso(),
                             c.getCodigo(), c.getEnsenanza(), c.getNombre_cas(),
                             c.getNombre_val());
+                    
+                    this.session.save(contenido);
                 } else {
                     contenido.setCurso(c.getCurso());
                     contenido.setEnsenanza(c.getEnsenanza());
                     contenido.setNombre_cas(c.getNombre_cas());
                     contenido.setNombre_val(c.getNombre_val());
-
+                    
+                    this.session.update(contenido);
                 }
-
-                this.session.saveOrUpdate(contenido);
-
+                
+                
                 this.session.getTransaction().commit();
 
             } catch (Exception e) {
