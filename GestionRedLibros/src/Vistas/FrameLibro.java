@@ -1997,6 +1997,19 @@ public class FrameLibro extends javax.swing.JFrame {
         } else if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
             errores += "- Debe seleccionar una asignatura válida.\n";
         }
+        
+        Libro libroDuplicado = null;
+        
+        try{
+            libroDuplicado = daoLibro.buscar(textCodigoLibro.getText().toUpperCase());
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error al comprobar libro duplicado.");
+        }
+        
+        if (libroDuplicado != null) {
+            errores += "- Ya existe un libro con este código en la base de datos.\n";
+        }
 
         if (libro == null) {
             //Creacion de un nuevo libro
@@ -2733,9 +2746,8 @@ public class FrameLibro extends javax.swing.JFrame {
      */
     private void rellenaCursosLibro() {
         if (listaCursos.size() > 0) {
-
             cbCursoLibro.removeAllItems();
-
+            
             for (int i = 0; i < listaCursos.size(); i++) {
                 cbCursoLibro.addItem(listaCursos.get(i));
             }
