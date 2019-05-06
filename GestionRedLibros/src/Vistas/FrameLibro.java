@@ -56,6 +56,7 @@ public class FrameLibro extends javax.swing.JFrame {
             popupConfirmacion = null;
 
     private Boolean accionRealizada = false;
+    public static int nEjemplaresAdd = -1;
 
     private DaoLibro daoLibro;
     private DaoCurso daoCurso;
@@ -64,7 +65,7 @@ public class FrameLibro extends javax.swing.JFrame {
     public Thread animacion = null;
     private boolean boolAnimacion = false;
 
-    private Libro libro;
+    public static Libro libro;
 
     private List<Libro> listaLibros;
     private List<Curso> listaCursos;
@@ -194,6 +195,7 @@ public class FrameLibro extends javax.swing.JFrame {
         menuOpcionesLibro = new javax.swing.JPopupMenu();
         btnImprimirEtiquetas = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        btnAnadirEjemplares = new javax.swing.JMenuItem();
         btnEditar = new javax.swing.JMenuItem();
         btnEliminar = new javax.swing.JMenuItem();
         jSplitPane1 = new javax.swing.JSplitPane();
@@ -313,6 +315,14 @@ public class FrameLibro extends javax.swing.JFrame {
         menuOpcionesLibro.add(btnImprimirEtiquetas);
         menuOpcionesLibro.add(jSeparator1);
 
+        btnAnadirEjemplares.setText("Añadir ejemplares");
+        btnAnadirEjemplares.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnadirEjemplaresActionPerformed(evt);
+            }
+        });
+        menuOpcionesLibro.add(btnAnadirEjemplares);
+
         btnEditar.setBackground(Colores.fondo);
         btnEditar.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
         btnEditar.setForeground(Colores.letraNormal);
@@ -337,6 +347,11 @@ public class FrameLibro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Libros");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jSplitPane1.setBorder(null);
 
@@ -1997,22 +2012,22 @@ public class FrameLibro extends javax.swing.JFrame {
         } else if (cbAsignatura.getSelectedItem().toString().equals("Seleccione curso")) {
             errores += "- Debe seleccionar una asignatura válida.\n";
         }
-        
-        Libro libroDuplicado = null;
-        
-        try{
-            libroDuplicado = daoLibro.buscar(textCodigoLibro.getText().toUpperCase());
-        }catch(Exception e){
-            e.printStackTrace();
-            System.out.println("Error al comprobar libro duplicado.");
-        }
-        
-        if (libroDuplicado != null) {
-            errores += "- Ya existe un libro con este código en la base de datos.\n";
-        }
 
         if (libro == null) {
             //Creacion de un nuevo libro
+
+            Libro libroDuplicado = null;
+
+            try {
+                libroDuplicado = daoLibro.buscar(textCodigoLibro.getText().toUpperCase());
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error al comprobar libro duplicado.");
+            }
+
+            if (libroDuplicado != null) {
+                errores += "- Ya existe un libro con este código en la base de datos.\n";
+            }
 
             if (errores.equals("")) {
                 //Creamos el libro si el string de los errores esta vacío, es decir, si no hay errores
@@ -2086,7 +2101,6 @@ public class FrameLibro extends javax.swing.JFrame {
                 libro.setNombre(textNombreLibro.getText());
                 libro.setObsoleto(chkObsoletoLibro.isSelected());
                 libro.setPrecio(Double.parseDouble(textPrecioLibro.getText()));
-                libro.setUnidades(Integer.parseInt(textUnidadesLibro.getText()));
                 libro.setContenido((Contenido) cbAsignatura.getSelectedItem());
 
                 SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
@@ -2259,6 +2273,14 @@ public class FrameLibro extends javax.swing.JFrame {
         filtroListaLibro(textNombreLibroBusqueda.getText(), cbCursoBuscar.getSelectedIndex());
     }//GEN-LAST:event_textNombreLibroBusquedaKeyReleased
 
+    private void btnAnadirEjemplaresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirEjemplaresActionPerformed
+        new FrameInputPopup(this).setVisible(true);
+    }//GEN-LAST:event_btnAnadirEjemplaresActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        textUnidadesLibro.setText(libro.getUnidades() + "");
+    }//GEN-LAST:event_formWindowActivated
+
     /**
      * @param args the command line arguments
      */
@@ -2304,6 +2326,7 @@ public class FrameLibro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem btnAnadirEjemplares;
     private com.mommoo.flat.button.FlatButton btnAnterior;
     private javax.swing.JLabel btnBadStatus;
     private com.mommoo.flat.button.FlatButton btnBuscar;
@@ -2747,7 +2770,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private void rellenaCursosLibro() {
         if (listaCursos.size() > 0) {
             cbCursoLibro.removeAllItems();
-            
+
             for (int i = 0; i < listaCursos.size(); i++) {
                 cbCursoLibro.addItem(listaCursos.get(i));
             }
@@ -2895,5 +2918,10 @@ public class FrameLibro extends javax.swing.JFrame {
         jSplitPane1.setLeftComponent(panelIzquierdo);
         btnMostrarBuscar.setVisible(!show);
         btnOcultarBuscar.setVisible(show);
+    }
+    
+    public static void actualizarEjemplaresLibro(int nEjemplares){
+        libro.setUnidades(libro.getUnidades() + nEjemplares);
+        System.out.println("Ejemplares libro: " + libro.getUnidades());
     }
 }
