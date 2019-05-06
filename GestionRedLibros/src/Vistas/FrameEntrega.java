@@ -1392,9 +1392,6 @@ public class FrameEntrega extends javax.swing.JFrame {
                                         ""
                                 );
                                 
-                                framePopup.setFrameText("Guardando datos...");
-                                framePopup.setVisible(true);
-                                
                                 daoHistorial.grabar(historial);
                                 
                                 listaEjemplaresEntregados.add(historial.getEjemplar());
