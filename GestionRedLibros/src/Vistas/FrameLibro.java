@@ -2278,7 +2278,9 @@ public class FrameLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAnadirEjemplaresActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        textUnidadesLibro.setText(libro.getUnidades() + "");
+        if (libro != null) {
+            textUnidadesLibro.setText(libro.getUnidades() + "");
+        }
     }//GEN-LAST:event_formWindowActivated
 
     /**
@@ -2919,8 +2921,8 @@ public class FrameLibro extends javax.swing.JFrame {
         btnMostrarBuscar.setVisible(!show);
         btnOcultarBuscar.setVisible(show);
     }
-    
-    public static void actualizarEjemplaresLibro(int nEjemplares){
+
+    public static void actualizarEjemplaresLibro(int nEjemplares) {
         libro.setUnidades(libro.getUnidades() + nEjemplares);
         System.out.println("Ejemplares libro: " + libro.getUnidades());
     }

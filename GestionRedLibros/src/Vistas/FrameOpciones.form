@@ -616,7 +616,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Colores.letraNormal" type="code"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Importaci&#xf3;n Cursos:"/>
+                        <Property name="text" type="java.lang.String" value="1. Importaci&#xf3;n Cursos:"/>
                         <Property name="toolTipText" type="java.lang.String" value=""/>
                       </Properties>
                     </Component>
@@ -734,7 +734,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Colores.letraNormal" type="code"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Importaci&#xf3;n Grupos:"/>
+                        <Property name="text" type="java.lang.String" value="2. Importaci&#xf3;n Grupos:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="textRutaGrupos">
@@ -818,7 +818,7 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="440" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="420" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -851,7 +851,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Colores.letraNormal" type="code"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Importaci&#xf3;n Asignaturas:"/>
+                        <Property name="text" type="java.lang.String" value="3. Importaci&#xf3;n Asignaturas:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="textRutaContenidos">
@@ -968,7 +968,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Colores.letraNormal" type="code"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Importaci&#xf3;n Alumnos:"/>
+                        <Property name="text" type="java.lang.String" value="4. Importaci&#xf3;n Alumnos:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="textRutaAlumnos">
@@ -1048,7 +1048,7 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="455" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="435" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -1085,7 +1085,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="Colores.letraNormal" type="code"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Importaci&#xf3;n Matriculas:"/>
+                        <Property name="text" type="java.lang.String" value="5. Importaci&#xf3;n Matriculas:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="textRutaMatriculas">
