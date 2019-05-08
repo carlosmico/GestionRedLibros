@@ -30,4 +30,7 @@ public class Imagenes {
         return new ImageIcon(new JFrame().getClass().getResource("/Imagenes/icons/" + nombre));
     }
 
+    public static ImageIcon getImageFromImagenes(String nombre) {
+        return new ImageIcon(new JFrame().getClass().getResource("/Imagenes/" + nombre));
+    }
 }

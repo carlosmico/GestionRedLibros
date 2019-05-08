@@ -21,6 +21,8 @@ import Pojos.Contenido;
 import Utilidades.Estado;
 import Pojos.Ejemplar;
 import Pojos.Libro;
+import Utilidades.Imagenes.Imagenes;
+import Vistas.FramePopup;
 import dao.DaoGenerico;
 import dao.InterfaceDaoGenerico;
 import java.util.ArrayList;
@@ -80,18 +82,19 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
      * @param libro
      * @throws PersistenceException
      */
-    public void actualizar(int unidadesOld, Libro libro) throws PersistenceException {
+    public void actualizar(Libro libro) throws PersistenceException {
 
         try {
             this.session.beginTransaction();
 
-            libro.setEjemplares(actualizarEjemplares(libro, unidadesOld));
+            libro.setEjemplares(actualizarEjemplares(libro, libro.getEjemplares().size()));
 
             this.session.saveOrUpdate(libro);
 
             this.session.getTransaction().commit();
         } catch (PersistenceException e) {
             this.session.getTransaction().commit();
+            e.printStackTrace();
             throw e;
         }
     }
@@ -196,32 +199,36 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
         if (Math.signum(cantidad) > 0) {
             //Añadimos la cantidad de ejemplares que se ha incrementado.
 
-            String codigo = ejemplares.get(ejemplares.size() - 1).getCodigo();
+            try {
+                String codigo = ejemplares.get(ejemplares.size() - 1).getCodigo();
 
-            codBase = Integer.parseInt(codigo.substring(codigo.length() - 5));
+                codBase = Integer.parseInt(codigo.substring(codigo.length() - 3));
 
-            for (int i = 0; i < cantidad; i++) {
-                String codigo_ejemplar;
+                for (int i = 0; i < cantidad; i++) {
+                    String codigo_ejemplar;
 
-                codBase++;
+                    codBase++;
 
-                if (codBase < 10) {
-                    codigo_ejemplar = libro.getCodigo() + "00" + codBase;
-                } else if (codBase < 100) {
-                    codigo_ejemplar = libro.getCodigo() + "0" + codBase;
-                } else if (codBase < 1000) {
-                    codigo_ejemplar = libro.getCodigo() + "" + codBase;
-                }else {
-                    codigo_ejemplar = libro.getCodigo() + "YOUFOUNDTHEIMPOSIBLEEASTEREGG";
+                    if (codBase < 10) {
+                        codigo_ejemplar = libro.getCodigo() + "00" + codBase;
+                    } else if (codBase < 100) {
+                        codigo_ejemplar = libro.getCodigo() + "0" + codBase;
+                    } else if (codBase < 1000) {
+                        codigo_ejemplar = libro.getCodigo() + "" + codBase;
+                    } else {
+                        codigo_ejemplar = libro.getCodigo() + "YOUFOUNDTHEIMPOSIBLEEASTEREGG";
+                    }
+
+                    Ejemplar ejemplar = new Ejemplar(codigo_ejemplar, libro, Estado.nuevo, false);
+
+                    ejemplares.add(ejemplar);
                 }
-
-                Ejemplar ejemplar = new Ejemplar(codigo_ejemplar, libro, Estado.nuevo, false);
-
-                ejemplares.add(ejemplar);
+            } catch (Exception e) {
+                new FramePopup(null, "Error al añadir ejemplares al libro: " + e.getMessage(),
+                                    Imagenes.getImagen("alert-black.png"),
+                                    "Aceptar").setVisible(true);
+                e.printStackTrace();
             }
-        } else if (Math.signum(cantidad) < 0) {
-            //Eliminamos la cantidad de ejemplares que se ha reducido.
-            System.out.println("Se eliminan " + Math.abs(cantidad) + " ejemplares");
         }
 
         return ejemplares;
