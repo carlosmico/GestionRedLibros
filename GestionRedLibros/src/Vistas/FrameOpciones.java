@@ -464,7 +464,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setForeground(Colores.letraNormal);
-        jLabel2.setText("Importación Cursos:");
+        jLabel2.setText("1. Importación Cursos:");
         jLabel2.setToolTipText("");
 
         textRutaCursos.setBackground(Colores.fondo);
@@ -534,7 +534,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setForeground(Colores.letraNormal);
-        jLabel3.setText("Importación Grupos:");
+        jLabel3.setText("2. Importación Grupos:");
 
         textRutaGrupos.setBackground(Colores.fondo);
         textRutaGrupos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -603,7 +603,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setForeground(Colores.letraNormal);
-        jLabel4.setText("Importación Asignaturas:");
+        jLabel4.setText("3. Importación Asignaturas:");
 
         textRutaContenidos.setBackground(Colores.fondo);
         textRutaContenidos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -648,7 +648,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                         .addComponent(btnSeleccionAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelImportAsignaturasLayout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(0, 440, Short.MAX_VALUE)))
+                        .addGap(0, 420, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelImportAsignaturasLayout.setVerticalGroup(
@@ -672,7 +672,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setForeground(Colores.letraNormal);
-        jLabel5.setText("Importación Alumnos:");
+        jLabel5.setText("4. Importación Alumnos:");
 
         textRutaAlumnos.setBackground(Colores.fondo);
         textRutaAlumnos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -741,7 +741,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel6.setForeground(Colores.letraNormal);
-        jLabel6.setText("Importación Matriculas:");
+        jLabel6.setText("5. Importación Matriculas:");
 
         textRutaMatriculas.setBackground(Colores.fondo);
         textRutaMatriculas.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -783,7 +783,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                         .addComponent(btnSeleccionMatriculas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelImportMatriculasLayout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addGap(0, 455, Short.MAX_VALUE))
+                        .addGap(0, 435, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImportMatriculasLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnImportarMatriculas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))

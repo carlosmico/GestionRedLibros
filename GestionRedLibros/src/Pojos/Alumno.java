@@ -268,6 +268,6 @@ public class Alumno implements Serializable {
 
     @Override
     public String toString() {
-        return nombre + " " + apellido1 + " " + apellido2;
+        return apellido1 + " " + apellido2 + ", " + nombre;
     }
 }

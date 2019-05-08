@@ -17,32 +17,20 @@
  */
 package Vistas;
 
-import Daos.DaoAlumno;
-import Daos.DaoCurso;
 import Daos.DaoEjemplar;
-import Daos.DaoHistorial;
 import Pojos.Alumno;
-import Pojos.Curso;
 import Pojos.Ejemplar;
 import Pojos.Historial;
 import Renders.RemarcarCeldas;
-import Renders.comboBoxRender;
 import Utilidades.Colores;
 import Utilidades.Estado;
 import Utilidades.Imagenes.Imagenes;
-import Vistas.FrameDetallesEjemplar;
 import Vistas.FramePopup;
 import Vistas.Main;
-import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
@@ -189,7 +177,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Código ejemplar", "Nombre de ejemplar", "Curso", "Curso escolar"
+                "NIA", "Nombre", "Curso", "Email"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -211,6 +199,10 @@ public class FrameHistorial extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tablaAlumnos);
+        if (tablaAlumnos.getColumnModel().getColumnCount() > 0) {
+            tablaAlumnos.getColumnModel().getColumn(0).setResizable(false);
+            tablaAlumnos.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -520,12 +512,10 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addGroup(panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelInformacionLayout.createSequentialGroup()
                         .addComponent(panelBusquedaEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInformacionLayout.createSequentialGroup()
-                        .addGroup(panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelDatos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panelInformacionLayout.setVerticalGroup(
             panelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -729,6 +719,7 @@ public class FrameHistorial extends javax.swing.JFrame {
         textNombreEjemplar.setText(ejemplar.getLibro().getNombre());
         textAsignaturaEjemplar.setText(ejemplar.getLibro().getContenido().getNombre_cas());
         setEstado(ejemplar.getEstado());
+        rellenarTablaAlumnos(ejemplar);
     }
 
     /**
@@ -957,4 +948,59 @@ public class FrameHistorial extends javax.swing.JFrame {
      }
 
      */
+    private void rellenarTablaAlumnos(Ejemplar ejemplar) {
+        listaHistoriales = ejemplar.getHistoriales();
+        DefaultTableModel tableModel;
+
+        if (listaHistoriales.size() > 0) {
+            Object[][] contenidoTabla = new Object[listaHistoriales.size()][4];
+
+            for (int i = 0; i < listaHistoriales.size(); i++) {
+                Alumno al = listaHistoriales.get(i).getAlumno();
+                contenidoTabla[i][0] = al.getNia();
+                contenidoTabla[i][1] = al.getNombre() + " " + al.getApellido1() + " " + al.getApellido2();
+                contenidoTabla[i][2] = al.getCurso().getAbreviatura();
+                contenidoTabla[i][3] = al.getEmail1();
+            }
+
+            tableModel = new DefaultTableModel(contenidoTabla,
+                    new Object[]{"NIA", "Nombre y Apellidos", "Curso", "Email"}) {
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
+        } else {
+            tableModel = new DefaultTableModel(null,
+                    new Object[]{"NIA", "Nombre y Apellidos", "Curso", "Email"}) {
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
+        }
+
+        tablaAlumnos.setModel(tableModel);
+
+        if (tableModel.getRowCount() > 0) {
+
+            //<editor-fold defaultstate="collapsed" desc="Edicion visual de la tabla">
+            TableColumnModel tcm = tablaAlumnos.getColumnModel();
+            tcm.getColumn(0).setMaxWidth(150);
+            tcm.getColumn(0).setMinWidth(100);
+            tcm.getColumn(0).setPreferredWidth(150);
+
+            tcm.getColumn(1).setMinWidth(250);
+            tcm.getColumn(2).setMinWidth(50);
+
+            tcm.getColumn(3).setMaxWidth(125);
+            tcm.getColumn(3).setMinWidth(125);
+//</editor-fold>
+
+        } else {
+            new FramePopup(this, "Este ejemplar no tiene historial todavía",
+                    Imagenes.getImagen("alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
+    }
 }

@@ -18,6 +18,7 @@
 package Daos;
 
 import Pojos.Alumno;
+import Pojos.Curso;
 import Pojos.Historial;
 import Pojos.Matricula;
 import Vistas.Main;
@@ -163,6 +164,22 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         List<Matricula> lista = new ArrayList<Matricula>();
 
         Query query = this.session.createQuery("from Matricula where curso_escolar=" + curso_escolar);
+        lista = query.list();
+
+        return lista;
+    }
+
+    /**
+     * Metodo para obtener una lista de Matriculas filtrando por el Curso
+     * Escolar recibido
+     *
+     * @param curso_escolar
+     * @return
+     */
+    public List<Matricula> buscarPorCursoEscolar(Integer curso_escolar, Curso curso) {
+        List<Matricula> lista = new ArrayList<Matricula>();
+
+        Query query = this.session.createQuery("from Matricula where curso_escolar=" + curso_escolar + " and curso like '" + curso.getCodigo() + "'");
         lista = query.list();
 
         return lista;
