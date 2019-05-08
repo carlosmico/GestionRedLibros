@@ -854,14 +854,15 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             } catch (Exception e) {
                 new FramePopup(this, "Error al realizar la devolución: " + e.getMessage(),
                         new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                        "Aceptar");
+                        "Aceptar").setVisible(true);
             }
 
             isConfirmationReady = ConfirmacionDevolucion.CANCELADA;
         } else {
             new FramePopup(this, "Error al realizar la devolución.",
                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                    "Aceptar");
+                    "Aceptar").setVisible(true);
+;
         }
     }//GEN-LAST:event_formWindowActivated
 

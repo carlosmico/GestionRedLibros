@@ -1635,11 +1635,22 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         if (!textRutaMatriculas.getText().equals("")) {
             try {
-                new ImportarMatriculasXML(textRutaMatriculas.getText());
+                SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                    protected Void doInBackground() throws InterruptedException, Exception {
+                        new ImportarMatriculasXML(textRutaMatriculas.getText());
+                        return null;
+                    }
 
-                new FramePopup(this, "Matrículas importadas correctamente!",
-                        Imagenes.getImagen("check-black.png"), "Aceptar")
-                        .setVisible(true);
+                    protected void done() {
+                        new FramePopup(frameOpc, "Matrículas importadas correctamente!",
+                                Imagenes.getImagen("check-black.png"), "Aceptar")
+                                .setVisible(true);
+                        frameCarga.dispose();
+                    }
+                };
+                worker.execute();
+                frameCarga = new FramePopup(this, "Importando matrículas");
+                frameCarga.setVisible(true);
             } catch (Exception ex) {
                 new FramePopup(this, "No se han podido importar las matriculas."
                         + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
@@ -1683,11 +1694,22 @@ public class FrameOpciones extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!textRutaAlumnos.getText().equals("")) {
             try {
-                new ImportarAlumnosXML(textRutaAlumnos.getText());
+                SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                    protected Void doInBackground() throws InterruptedException, Exception {
+                        new ImportarAlumnosXML(textRutaAlumnos.getText());
+                        return null;
+                    }
 
-                new FramePopup(this, "Alumnos importados correctamente!",
-                        Imagenes.getImagen("check-black.png"), "Aceptar")
-                        .setVisible(true);
+                    protected void done() {
+                        new FramePopup(frameOpc, "Alumnos importados correctamente!",
+                                Imagenes.getImagen("check-black.png"), "Aceptar")
+                                .setVisible(true);
+                        frameCarga.dispose();
+                    }
+                };
+                worker.execute();
+                frameCarga = new FramePopup(this, "Importando alumnos");
+                frameCarga.setVisible(true);
             } catch (Exception ex) {
                 new FramePopup(this, "No se han podido importar los alumnos."
                         + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
@@ -1731,11 +1753,23 @@ public class FrameOpciones extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!textRutaContenidos.getText().equals("")) {
             try {
-                new ImportarContenidoXML(textRutaContenidos.getText());
+                SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                    protected Void doInBackground() throws InterruptedException, Exception {
+                        new ImportarContenidoXML(textRutaContenidos.getText());
+                        return null;
+                    }
 
-                new FramePopup(this, "Asignaturas importadas correctamente!",
-                        Imagenes.getImagen("check-black.png"), "Aceptar")
-                        .setVisible(true);
+                    protected void done() {
+                        new FramePopup(frameOpc, "Asignaturas importadas correctamente!",
+                                Imagenes.getImagen("check-black.png"), "Aceptar")
+                                .setVisible(true);
+                        frameCarga.dispose();
+                    }
+                };
+                worker.execute();
+                frameCarga = new FramePopup(this, "Importando asignaturas");
+                frameCarga.setVisible(true);
+
             } catch (Exception ex) {
                 new FramePopup(this, "No se han podido importar las asignaturas."
                         + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
@@ -1779,11 +1813,23 @@ public class FrameOpciones extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!textRutaGrupos.getText().equals("")) {
             try {
-                new ImportarGruposXML(textRutaGrupos.getText());
+                SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                    protected Void doInBackground() throws InterruptedException, Exception {
+                        new ImportarGruposXML(textRutaGrupos.getText());
+                        return null;
+                    }
 
-                new FramePopup(this, "Grupos importados correctamente!",
-                        Imagenes.getImagen("check-black.png"), "Aceptar")
-                        .setVisible(true);
+                    protected void done() {
+                        new FramePopup(frameOpc, "Grupos importados correctamente!",
+                                Imagenes.getImagen("check-black.png"), "Aceptar")
+                                .setVisible(true);
+                        frameCarga.dispose();
+                    }
+                };
+                worker.execute();
+                frameCarga = new FramePopup(this, "Importando grupos");
+                frameCarga.setVisible(true);
+
             } catch (Exception ex) {
                 new FramePopup(this, "No se han podido importar los grupos."
                         + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
@@ -1827,11 +1873,23 @@ public class FrameOpciones extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!textRutaCursos.getText().equals("")) {
             try {
-                new ImportarCursoXML(textRutaCursos.getText());
+                SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                    protected Void doInBackground() throws InterruptedException, Exception {
+                        new ImportarCursoXML(textRutaCursos.getText());
+                        return null;
+                    }
 
-                new FramePopup(this, "Cursos importados correctamente!",
-                        Imagenes.getImagen("check-black.png"), "Aceptar")
-                        .setVisible(true);
+                    protected void done() {
+                        new FramePopup(frameOpc, "Cursos importados correctamente!",
+                                Imagenes.getImagen("check-black.png"), "Aceptar")
+                                .setVisible(true);
+                        frameCarga.dispose();
+                    }
+                };
+                worker.execute();
+                frameCarga = new FramePopup(this, "Importando cursos");
+                frameCarga.setVisible(true);
+
             } catch (Exception ex) {
                 new FramePopup(this, "No se han podido importar los cursos."
                         + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
