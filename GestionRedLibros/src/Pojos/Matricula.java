@@ -40,7 +40,7 @@ public class Matricula implements Serializable {
     private static final long serialVersionUID = -5514760464301120887L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private int curso_escolar;
 
@@ -50,11 +50,11 @@ public class Matricula implements Serializable {
 
     private String ensenanza;
     private String curso;
-    
+
     @ManyToOne
     @JoinColumn(name = "contenido")
     private Contenido contenido;
-    
+
     private String idioma;
     private String tipo_basico;
     private String tipo_predom;

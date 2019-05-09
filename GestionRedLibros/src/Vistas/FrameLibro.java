@@ -73,6 +73,8 @@ public class FrameLibro extends javax.swing.JFrame {
 
     //Cogemos el frame padre para trabajar con los dialogos
     private JFrame topFrame;
+    
+    private FrameDemanda stock;
 
     /**
      * Inicializamos los componentes y cargamos los datos necesarios.
@@ -193,6 +195,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private void initComponents() {
 
         menuOpcionesLibro = new javax.swing.JPopupMenu();
+        btnVerStock = new javax.swing.JMenuItem();
         btnImprimirEtiquetas = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         btnAnadirEjemplares = new javax.swing.JMenuItem();
@@ -304,6 +307,17 @@ public class FrameLibro extends javax.swing.JFrame {
         menuOpcionesLibro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         menuOpcionesLibro.setForeground(new java.awt.Color(66, 47, 44));
 
+        btnVerStock.setBackground(Colores.fondo);
+        btnVerStock.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnVerStock.setForeground(Colores.letraNormal);
+        btnVerStock.setText("Ver Stock");
+        btnVerStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerStockActionPerformed(evt);
+            }
+        });
+        menuOpcionesLibro.add(btnVerStock);
+
         btnImprimirEtiquetas.setBackground(Colores.fondo);
         btnImprimirEtiquetas.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
         btnImprimirEtiquetas.setForeground(Colores.letraNormal);
@@ -317,7 +331,7 @@ public class FrameLibro extends javax.swing.JFrame {
         menuOpcionesLibro.add(jSeparator1);
 
         btnAnadirEjemplares.setBackground(Colores.fondo);
-        btnAnadirEjemplares.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
+        btnAnadirEjemplares.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnAnadirEjemplares.setForeground(Colores.letraNormal);
         btnAnadirEjemplares.setText("Añadir ejemplares");
         btnAnadirEjemplares.addActionListener(new java.awt.event.ActionListener() {
@@ -2291,6 +2305,14 @@ public class FrameLibro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowActivated
 
+    private void btnVerStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerStockActionPerformed
+        // TODO add your handling code here:
+        if (stock == null){
+            stock = new FrameDemanda();
+        }
+        stock.setVisible(true);
+    }//GEN-LAST:event_btnVerStockActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2353,6 +2375,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private com.mommoo.flat.button.FlatButton btnOpciones;
     private javax.swing.JLabel btnRegularStatus;
     private com.mommoo.flat.button.FlatButton btnSiguiente;
+    private javax.swing.JMenuItem btnVerStock;
     private javax.swing.JComboBox cbAsignatura;
     private javax.swing.JComboBox cbCursoBuscar;
     private javax.swing.JComboBox cbCursoLibro;
