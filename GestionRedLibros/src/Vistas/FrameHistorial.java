@@ -17,8 +17,10 @@
  */
 package Vistas;
 
+import Daos.DaoCurso;
 import Daos.DaoEjemplar;
 import Pojos.Alumno;
+import Pojos.Curso;
 import Pojos.Ejemplar;
 import Pojos.Historial;
 import Renders.RemarcarCeldas;
@@ -49,10 +51,11 @@ public class FrameHistorial extends javax.swing.JFrame {
     //Cremaos el frame de Cargar
     private FramePopup framePopup;
 
-    //Creamos el DAO del Alumno y Matricula
-    private DaoEjemplar daoEjemplar;
+    private FrameDetalleHistorial frameDetalle;
 
-    //Creamos el Alumno
+    private DaoEjemplar daoEjemplar;
+    private DaoCurso daoCurso;
+
     public Ejemplar ejemplar;
 
     //Listas
@@ -76,11 +79,27 @@ public class FrameHistorial extends javax.swing.JFrame {
         topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
         daoEjemplar = new DaoEjemplar(session);
+        daoCurso = new DaoCurso(session);
 
         this.setLocationRelativeTo(null);
 
         //Maximizamos la pestaña
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        //<editor-fold defaultstate="collapsed" desc="Click Tabla">
+        tablaAlumnos.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = tablaAlumnos.rowAtPoint(evt.getPoint());
+
+                frameDetalle = new FrameDetalleHistorial(listaHistoriales.get(row));
+
+                frameDetalle.setVisible(true);
+            }
+        });
+//</editor-fold>
+
+        vaciarDatosEjemplar();
     }
 
     /**
@@ -346,9 +365,11 @@ public class FrameHistorial extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(textCursoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
-                    .addComponent(jLabel13))
-                .addGap(0, 35, Short.MAX_VALUE))
+                        .addComponent(textCursoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addGap(0, 114, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -562,7 +583,7 @@ public class FrameHistorial extends javax.swing.JFrame {
 
     private void btnBusquedaEjemplarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBusquedaEjemplarMouseClicked
         // TODO add your handling code here:
-        buscarEjemplar(textCodigoEjemplar.getText());
+        buscarEjemplar(campoBusquedaTemp);
         campoBusquedaTemp = "";
     }//GEN-LAST:event_btnBusquedaEjemplarMouseClicked
 
@@ -691,6 +712,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                     if (ejemplar != null) {
                         rellenarDatosEjemplar(ejemplar);
                     } else {
+                        vaciarDatosEjemplar();
                         new FramePopup(topFrame, "No existe ningún ejemplar con el código introducido.",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
@@ -704,6 +726,7 @@ public class FrameHistorial extends javax.swing.JFrame {
             //alumno = listaAlumnos.stream().filter(a -> a.getNia().equals(nia)).collect(Collectors.toList()).get(0);
         } else {
             //No se ha insertado ningun valor en el campo de texto
+            vaciarDatosEjemplar();
             new FramePopup(this, "El código del ejemplar no puede ser un campo vacío.",
                     Imagenes.getImagen("alert-black.png"),
                     "Aceptar").setVisible(true);
@@ -711,15 +734,30 @@ public class FrameHistorial extends javax.swing.JFrame {
     }
 
     /**
+     * Metodo para vaciar los datos del ejemplar
+     */
+    public void vaciarDatosEjemplar() {
+        textCodigoEjemplar.setText("");
+        textCursoEjemplar.setText("");
+        textNombreEjemplar.setText("");
+        textAsignaturaEjemplar.setText("");
+        setEstado(-1);
+        vaciarTablaHistoriales();
+    }
+
+    /**
      * Metodo para rellenar los datos del ejemplar
      */
     public void rellenarDatosEjemplar(Ejemplar ejemplar) {
+        //ejemplar = sustituirPadreCurso(ejemplar);
+
         textCodigoEjemplar.setText(ejemplar.getCodigo());
-        textCursoEjemplar.setText(ejemplar.getLibro().getContenido().getCurso().getAbreviatura());
+        textCursoEjemplar.setText(ejemplar.getLibro().getContenido().getCurso().toString());
         textNombreEjemplar.setText(ejemplar.getLibro().getNombre());
         textAsignaturaEjemplar.setText(ejemplar.getLibro().getContenido().getNombre_cas());
         setEstado(ejemplar.getEstado());
-        rellenarTablaAlumnos(ejemplar);
+
+        rellenarTablaHistoriales(ejemplar);
     }
 
     /**
@@ -770,6 +808,113 @@ public class FrameHistorial extends javax.swing.JFrame {
                 btnGoodStatus.setIcon(new ImageIcon(
                         getClass().getResource("/Imagenes/good_disabled.png")));             //Good face
         }
+    }
+
+    /**
+     * Metodo para rellenar la tabla de los historiales de un ejemplar
+     *
+     * @param ejemplar
+     */
+    private void rellenarTablaHistoriales(Ejemplar ejemplar) {
+        //ejemplar = sustituirPadresCursos(ejemplar);
+
+        listaHistoriales = ejemplar.getHistoriales();
+
+        DefaultTableModel tableModel;
+
+        if (listaHistoriales.size() > 0) {
+            Object[][] contenidoTabla = new Object[listaHistoriales.size()][4];
+
+            for (int i = 0; i < listaHistoriales.size(); i++) {
+                Alumno al = listaHistoriales.get(i).getAlumno();
+                contenidoTabla[i][0] = al.getNia();
+                contenidoTabla[i][1] = al.getNombre() + " " + al.getApellido1() + " " + al.getApellido2();
+                contenidoTabla[i][2] = al.getCurso();
+                contenidoTabla[i][3] = al.getEmail1();
+            }
+
+            tableModel = new DefaultTableModel(contenidoTabla,
+                    new Object[]{"NIA", "Nombre y Apellidos", "Curso", "Email"}) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+        } else {
+            tableModel = new DefaultTableModel(null,
+                    new Object[]{"NIA", "Nombre y Apellidos", "Curso", "Email"}) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+        }
+
+        tablaAlumnos.setModel(tableModel);
+
+        if (tableModel.getRowCount() > 0) {
+            /*
+            //<editor-fold defaultstate="collapsed" desc="Edicion visual de la tabla">
+            TableColumnModel tcm = tablaAlumnos.getColumnModel();
+            tcm.getColumn(0).setMaxWidth(150);
+            tcm.getColumn(0).setMinWidth(100);
+            tcm.getColumn(0).setPreferredWidth(150);
+
+            tcm.getColumn(1).setMinWidth(250);
+            tcm.getColumn(2).setMinWidth(50);
+
+            tcm.getColumn(3).setMaxWidth(125);
+            tcm.getColumn(3).setMinWidth(125);
+//</editor-fold>*/
+
+        } else {
+            new FramePopup(this, "Este ejemplar no tiene historial todavía",
+                    Imagenes.getImagen("alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
+    }
+
+    private void vaciarTablaHistoriales() {
+        DefaultTableModel model = new DefaultTableModel(null, new Object[]{"NIA", "Nombre", "Curso", "Email"});
+        tablaAlumnos.setModel(model);
+    }
+
+    /**
+     * Metodo para buscar el Padre del Curso y sustituir el atributo idPadre por
+     * el nombre del Padre
+     */
+    private Ejemplar sustituirPadreCurso(Ejemplar e) {
+        Curso curso = e.getLibro().getContenido().getCurso();
+        Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
+
+        if (cursoPadre != null) {
+            curso.setNombre_padre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
+            e.getLibro().getContenido().setCurso(curso);
+        }
+
+        return e;
+    }
+
+    /**
+     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
+     * por el nombre del Padre
+     */
+    private Ejemplar sustituirPadresCursos(Ejemplar e) {
+        List<Historial> historiales = e.getHistoriales();
+
+        for (int i = 0; i < historiales.size(); i++) {
+            Curso curso = historiales.get(i).getEjemplar().getLibro().getContenido().getCurso();
+            Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
+
+            if (cursoPadre != null) {
+                curso.setNombre_padre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
+                historiales.get(i).getEjemplar().getLibro().getContenido().setCurso(curso);
+            }
+        }
+
+        e.setHistoriales(historiales);
+
+        return e;
     }
 
     /*
@@ -948,59 +1093,4 @@ public class FrameHistorial extends javax.swing.JFrame {
      }
 
      */
-    private void rellenarTablaAlumnos(Ejemplar ejemplar) {
-        listaHistoriales = ejemplar.getHistoriales();
-        DefaultTableModel tableModel;
-
-        if (listaHistoriales.size() > 0) {
-            Object[][] contenidoTabla = new Object[listaHistoriales.size()][4];
-
-            for (int i = 0; i < listaHistoriales.size(); i++) {
-                Alumno al = listaHistoriales.get(i).getAlumno();
-                contenidoTabla[i][0] = al.getNia();
-                contenidoTabla[i][1] = al.getNombre() + " " + al.getApellido1() + " " + al.getApellido2();
-                contenidoTabla[i][2] = al.getCurso().getAbreviatura();
-                contenidoTabla[i][3] = al.getEmail1();
-            }
-
-            tableModel = new DefaultTableModel(contenidoTabla,
-                    new Object[]{"NIA", "Nombre y Apellidos", "Curso", "Email"}) {
-                        @Override
-                        public boolean isCellEditable(int row, int column) {
-                            return false;
-                        }
-                    };
-        } else {
-            tableModel = new DefaultTableModel(null,
-                    new Object[]{"NIA", "Nombre y Apellidos", "Curso", "Email"}) {
-                        @Override
-                        public boolean isCellEditable(int row, int column) {
-                            return false;
-                        }
-                    };
-        }
-
-        tablaAlumnos.setModel(tableModel);
-
-        if (tableModel.getRowCount() > 0) {
-
-            //<editor-fold defaultstate="collapsed" desc="Edicion visual de la tabla">
-            TableColumnModel tcm = tablaAlumnos.getColumnModel();
-            tcm.getColumn(0).setMaxWidth(150);
-            tcm.getColumn(0).setMinWidth(100);
-            tcm.getColumn(0).setPreferredWidth(150);
-
-            tcm.getColumn(1).setMinWidth(250);
-            tcm.getColumn(2).setMinWidth(50);
-
-            tcm.getColumn(3).setMaxWidth(125);
-            tcm.getColumn(3).setMinWidth(125);
-//</editor-fold>
-
-        } else {
-            new FramePopup(this, "Este ejemplar no tiene historial todavía",
-                    Imagenes.getImagen("alert-black.png"),
-                    "Aceptar").setVisible(true);
-        }
-    }
 }

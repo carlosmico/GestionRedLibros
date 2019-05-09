@@ -27,7 +27,6 @@ import Renders.RemarcarCeldas;
 import Renders.comboBoxRender;
 import Utilidades.Colores;
 import Utilidades.Imagenes.Imagenes;
-import Vistas.FrameDetallesEjemplar;
 import Vistas.FramePopup;
 import Vistas.Main;
 import java.awt.Component;
