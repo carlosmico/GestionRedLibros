@@ -18,6 +18,7 @@
 package Vistas;
 
 import Utilidades.Colores;
+import Utilidades.Estado;
 
 /**
  *
@@ -344,7 +345,7 @@ public class FramePrestamo extends javax.swing.JFrame {
         panelInfoEjemplar.setPreferredSize(new java.awt.Dimension(922, 170));
 
         jPanel18.setBackground(Colores.fondo);
-        jPanel18.setLayout(new java.awt.GridLayout());
+        jPanel18.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel19.setBackground(Colores.fondo);
 
@@ -419,7 +420,7 @@ public class FramePrestamo extends javax.swing.JFrame {
         jPanel18.add(jPanel3);
 
         jPanel20.setBackground(Colores.fondo);
-        jPanel20.setLayout(new java.awt.GridLayout());
+        jPanel20.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel21.setBackground(Colores.fondo);
 
@@ -504,19 +505,15 @@ public class FramePrestamo extends javax.swing.JFrame {
         panelInfoEjemplarLayout.setHorizontalGroup(
             panelInfoEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInfoEjemplarLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelInfoEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelInfoEjemplarLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelInfoEjemplarLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelInfoEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(panelInfoEjemplarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel18)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelInfoEjemplarLayout.setVerticalGroup(
             panelInfoEjemplarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -532,7 +529,7 @@ public class FramePrestamo extends javax.swing.JFrame {
 
         panelInfoEstado.setBackground(Colores.fondo);
         panelInfoEstado.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        panelInfoEstado.setLayout(new java.awt.GridLayout());
+        panelInfoEstado.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel9.setBackground(Colores.fondo);
 
@@ -554,33 +551,18 @@ public class FramePrestamo extends javax.swing.JFrame {
         btnBadStatus4.setForeground(Colores.letraNormal);
         btnBadStatus4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnBadStatus4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
-        btnBadStatus4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBadStatus4MouseClicked(evt);
-            }
-        });
         panelEstado19.add(btnBadStatus4);
 
         btnRegularStatus2.setBackground(Colores.fondo);
         btnRegularStatus2.setForeground(Colores.letraNormal);
         btnRegularStatus2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnRegularStatus2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
-        btnRegularStatus2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRegularStatus2MouseClicked(evt);
-            }
-        });
         panelEstado19.add(btnRegularStatus2);
 
         btnGoodStatus2.setBackground(Colores.fondo);
         btnGoodStatus2.setForeground(Colores.letraNormal);
         btnGoodStatus2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnGoodStatus2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
-        btnGoodStatus2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnGoodStatus2MouseClicked(evt);
-            }
-        });
         panelEstado19.add(btnGoodStatus2);
 
         javax.swing.GroupLayout panelEstadoParent21Layout = new javax.swing.GroupLayout(panelEstadoParent21);
@@ -690,33 +672,18 @@ public class FramePrestamo extends javax.swing.JFrame {
         btnBadStatus2.setForeground(Colores.letraNormal);
         btnBadStatus2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnBadStatus2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
-        btnBadStatus2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBadStatus2MouseClicked(evt);
-            }
-        });
         panelEstado17.add(btnBadStatus2);
 
         btnRegularStatus.setBackground(Colores.fondo);
         btnRegularStatus.setForeground(Colores.letraNormal);
         btnRegularStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnRegularStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
-        btnRegularStatus.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRegularStatusMouseClicked(evt);
-            }
-        });
         panelEstado17.add(btnRegularStatus);
 
         btnGoodStatus.setBackground(Colores.fondo);
         btnGoodStatus.setForeground(Colores.letraNormal);
         btnGoodStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnGoodStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
-        btnGoodStatus.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnGoodStatusMouseClicked(evt);
-            }
-        });
         panelEstado17.add(btnGoodStatus);
 
         javax.swing.GroupLayout panelEstadoParent17Layout = new javax.swing.GroupLayout(panelEstadoParent17);
@@ -872,33 +839,6 @@ public class FramePrestamo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBadStatus2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBadStatus2MouseClicked
-        // TODO add your handling code here:
-        setEstado(Estado.deteriorado);
-    }//GEN-LAST:event_btnBadStatus2MouseClicked
-
-    private void btnRegularStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegularStatusMouseClicked
-        // TODO add your handling code here:
-        setEstado(Estado.usado);
-    }//GEN-LAST:event_btnRegularStatusMouseClicked
-
-    private void btnGoodStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGoodStatusMouseClicked
-        // TODO add your handling code here:
-        setEstado(Estado.nuevo);
-    }//GEN-LAST:event_btnGoodStatusMouseClicked
-
-    private void btnBadStatus4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBadStatus4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBadStatus4MouseClicked
-
-    private void btnRegularStatus2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegularStatus2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegularStatus2MouseClicked
-
-    private void btnGoodStatus2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGoodStatus2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGoodStatus2MouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -935,17 +875,13 @@ public class FramePrestamo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btnBadStatus;
-    private javax.swing.JLabel btnBadStatus1;
     private javax.swing.JLabel btnBadStatus2;
     private javax.swing.JLabel btnBadStatus4;
-    private com.mommoo.flat.button.FlatButton btnBusquedaNIA;
     private javax.swing.JLabel btnGoodStatus;
     private javax.swing.JLabel btnGoodStatus2;
     private javax.swing.JLabel btnRegularStatus;
     private javax.swing.JLabel btnRegularStatus2;
     private javax.swing.JLabel imgSexo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
@@ -956,9 +892,7 @@ public class FramePrestamo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel35;
@@ -983,14 +917,9 @@ public class FramePrestamo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel panelBusqueda;
     private javax.swing.JPanel panelContent;
-    private javax.swing.JPanel panelEstado15;
-    private javax.swing.JPanel panelEstado16;
     private javax.swing.JPanel panelEstado17;
     private javax.swing.JPanel panelEstado19;
-    private javax.swing.JPanel panelEstadoParent15;
-    private javax.swing.JPanel panelEstadoParent16;
     private javax.swing.JPanel panelEstadoParent17;
     private javax.swing.JPanel panelEstadoParent18;
     private javax.swing.JPanel panelEstadoParent21;
@@ -998,9 +927,7 @@ public class FramePrestamo extends javax.swing.JFrame {
     private javax.swing.JPanel panelInfoEjemplar;
     private javax.swing.JPanel panelInfoEstado;
     private javax.swing.JPanel panelInfoGeneral;
-    private javax.swing.JPanel panelTitulo;
     private javax.swing.JPanel panelTitulo1;
-    private javax.swing.JTextField textBusquedaNIA;
     private javax.swing.JLabel textCodigoEjempalr;
     private javax.swing.JLabel textCodigoEjempalr1;
     private javax.swing.JLabel textCursoActual;
