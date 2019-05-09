@@ -1765,7 +1765,7 @@ public class FrameLibro extends javax.swing.JFrame {
                         } catch (Exception e) {
                             new FramePopup(topFrame, "El libro no se ha podido eliminar.",
                                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                                    "Aceptar");
+                                    "Aceptar").setVisible(true);
                         }
                         return null;
                     }
@@ -1790,6 +1790,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 };
                 worker.execute();
                 frameCarga = new FramePopup(topFrame, "Eliminando libro, espere...");
+                frameCarga.setVisible(true);
             }
         };
 
@@ -1811,7 +1812,7 @@ public class FrameLibro extends javax.swing.JFrame {
         } else {
             new FramePopup(this, "Selecciona un libro para poder eliminarlo.",
                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                    cancelar);
+                    cancelar).setVisible(true);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -2732,7 +2733,7 @@ public class FrameLibro extends javax.swing.JFrame {
         } catch (Exception e) {
             new FramePopup(this, "Error al generar el codigo de barras de los ejemplares",
                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                    "Aceptar");
+                    "Aceptar").setVisible(true);
         }
 
         //panel del alumno

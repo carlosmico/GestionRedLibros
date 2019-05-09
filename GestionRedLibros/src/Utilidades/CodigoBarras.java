@@ -23,6 +23,7 @@ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.Barcode39;
@@ -157,98 +158,49 @@ public class CodigoBarras {
 
         doc.addTitle("CÓDIGOS EJEMPLARES - " + libro.getNombre());
 
-        int contador = 32, contadorCeldas = 1;
+        int contador = 1;
 
-        PdfPTable table = new PdfPTable(2);
+        
 
-        PdfPCell cell;
+        Image codeImgBase = barcodes.get(0).createImageWithBarcode(pdf.getDirectContent(),
+                BaseColor.BLACK, BaseColor.BLACK);
 
-        int iteracion = (barcodes.size() * 2) + 4;
+        float heightPdf = PageSize.A4.getHeight() - 21, widthPdf = PageSize.A4.getWidth();
+        
+        System.out.println("Altura del pdf: " + heightPdf + " Anchura del pdf:" + widthPdf);
 
-        for (int i = 0; i < iteracion; i++) {
-            int nEjemplar;
+        float heigthEtiqueta = heightPdf / 8, widthEtiqueta = widthPdf / 3;
+        
+        System.out.println("Altura del etiqueta: " + heigthEtiqueta + " Anchura del etiqueta:" + widthEtiqueta);
 
-            if (i % 2 == 0) {
-                nEjemplar = (i / 2) - 1;
-            } else {
-                nEjemplar = (i / 2);
+        float heigthCodigo = codeImgBase.getHeight(), widthCodigo = codeImgBase.getWidth();
+        
+        System.out.println("Altura del codigo img: " + heigthCodigo + " Anchura del codigo img:" + widthCodigo);
+
+        float etiqueta1x = 0, etiqueta1y = heightPdf - heigthEtiqueta;
+        
+        System.out.println("Altura del pos etiqueta: " + etiqueta1y + " Anchura del pos etiqueta:" + etiqueta1x);
+
+        for (int i = 0; i < libro.getEjemplares().size(); i++) {
+            if (contador == 8) {
+                contador = 0;
+                pdf.newPage();
             }
 
-            if (contador == 0) {
-                contador = 32;
-                doc.newPage();
-            }
+            codeImgBase.setAbsolutePosition(etiqueta1x, etiqueta1y - (heigthEtiqueta * i));
 
-            if (contadorCeldas <= 2) {
-                if ((iteracion - 5) == i) {
-                    cell = new PdfPCell(new Phrase(" "));
-                } else {
-                    cell = new PdfPCell(new Phrase(libro.getContenido().getNombre_cas()));
-                }
+            doc.add(codeImgBase);
+            
+            
 
-                cell.setBorder(0);
-
-                table.addCell(cell);
-
-                if (contadorCeldas == 2) {
-                    table.completeRow();
-                }
-
-            } else if (contadorCeldas <= 4) {
-                if (nEjemplar >= barcodes.size()) {
-                    if (nEjemplar % 2 != 0) {
-                        if ((iteracion - 3) == i) {
-                            cell = new PdfPCell(new Phrase(" "));
-                        } else {
-                            Image codeImg = barcodes.get(nEjemplar - 1).createImageWithBarcode(pdf.getDirectContent(), BaseColor.BLACK, BaseColor.BLACK);
-
-                            cell = new PdfPCell(codeImg);
-                        }
-
-                        cell.setBorder(0);
-
-                        table.addCell(cell);
-
-                        if (contadorCeldas == 4) {
-                            table.completeRow();
-
-                            doc.add(table);
-                            table = new PdfPTable(2);
-
-                            contadorCeldas = 0;
-                        }
-                    }
-                    
-                    doc.close();
-
-                    os.close();
-
-                    Desktop.getDesktop().open(new File(rutapdf));
-                    return;
-                }
-
-                Image codeImg = barcodes.get(nEjemplar).createImageWithBarcode(pdf.getDirectContent(), BaseColor.BLACK, BaseColor.BLACK);
-
-                cell = new PdfPCell(codeImg);
-
-                cell.setBorder(0);
-
-                table.addCell(cell);
-
-                if (contadorCeldas == 4) {
-                    table.completeRow();
-
-                    doc.add(table);
-                    table = new PdfPTable(2);
-
-                    contadorCeldas = 0;
-                }
-            }
-
-            contador--;
-            contadorCeldas++;
+            contador++;
         }
 
+        doc.close();
+
+        os.close();
+
+        Desktop.getDesktop().open(new File(rutapdf));
     }
 
     /**
@@ -296,3 +248,125 @@ public class CodigoBarras {
         }
     }
 }
+
+// FORMA ANTIGUA PARA IMPRIMIR
+/**
+ *
+ * public void imprimirIndividual(Ejemplar ejemplar, Barcode39 barcode) throws
+ * FileNotFoundException, DocumentException, IOException {
+ * comprobarDirectorio();
+ *
+ * String rutapdf = "C://Gestion_Libros//Impresiones//Ejemplar-" +
+ * ejemplar.getLibro().getNombre() + "-" + ejemplar.getCodigo() + ".pdf";
+ *
+ * OutputStream os = new FileOutputStream(new File(rutapdf));
+ *
+ * Document doc = new Document();
+ *
+ * PdfWriter pdf = PdfWriter.getInstance(doc, os);
+ *
+ * doc.open();
+ *
+ * doc.add(new Paragraph(ejemplar.getLibro().getContenido().getNombre_cas()));
+ *
+ * Image codeImg = barcode.createImageWithBarcode(pdf.getDirectContent(),
+ * BaseColor.BLACK, BaseColor.BLACK);
+ *
+ * doc.add(codeImg);
+ *
+ * doc.add(new Paragraph(""));
+ *
+ * doc.close();
+ *
+ * os.close();
+ *
+ * Desktop.getDesktop().open(new File(rutapdf)); }
+ *
+ * public void imprimirList(Libro libro, List<Barcode39> barcodes) throws
+ * PrinterException, FileNotFoundException, DocumentException, IOException,
+ * PrintException {
+ *
+ * comprobarDirectorio();
+ *
+ * String rutapdf = "C://Gestion_Libros//Impresiones//" + libro.getNombre() +
+ * "-CodigosEjemplares.pdf";
+ *
+ * OutputStream os = new FileOutputStream(new File(rutapdf));
+ *
+ * Document doc = new Document();
+ *
+ * PdfWriter pdf = PdfWriter.getInstance(doc, os);
+ *
+ * doc.open();
+ *
+ * doc.addTitle("CÓDIGOS EJEMPLARES - " + libro.getNombre());
+ *
+ * int contador = 32, contadorCeldas = 1;
+ *
+ * PdfPTable table = new PdfPTable(2);
+ *
+ * PdfPCell cell;
+ *
+ * int iteracion = (barcodes.size() * 2) + 4;
+ *
+ * for (int i = 0; i < iteracion; i++) { int nEjemplar;
+ *
+ * if (i % 2 == 0) { nEjemplar = (i / 2) - 1; } else { nEjemplar = (i / 2); }
+ *
+ * if (contador == 0) { contador = 32; doc.newPage(); }
+ *
+ * if (contadorCeldas <= 2) { if ((iteracion - 5) == i) { cell = new
+ * PdfPCell(new Phrase(" ")); } else { cell = new PdfPCell(new
+ * Phrase(libro.getContenido().getNombre_cas())); }
+ *
+ * cell.setBorder(0);
+ *
+ * table.addCell(cell);
+ *
+ * if (contadorCeldas == 2) { table.completeRow(); }
+ *
+ * } else if (contadorCeldas <= 4) {
+ * if (nEjemplar >= barcodes.size()) { if (nEjemplar % 2 != 0) { if ((iteracion
+ * - 3) == i) { cell = new PdfPCell(new Phrase(" ")); } else { Image codeImg =
+ * barcodes.get(nEjemplar - 1).createImageWithBarcode(pdf.getDirectContent(),
+ * BaseColor.BLACK, BaseColor.BLACK);
+ *
+ * cell = new PdfPCell(codeImg); }
+ *
+ * cell.setBorder(0);
+ *
+ * table.addCell(cell);
+ *
+ * if (contadorCeldas == 4) { table.completeRow();
+ *
+ * doc.add(table); table = new PdfPTable(2);
+ *
+ * contadorCeldas = 0; } }
+ *
+ * doc.close();
+ *
+ * os.close();
+ *
+ * Desktop.getDesktop().open(new File(rutapdf)); return; }
+ *
+ * Image codeImg =
+ * barcodes.get(nEjemplar).createImageWithBarcode(pdf.getDirectContent(),
+ * BaseColor.BLACK, BaseColor.BLACK);
+ *
+ * cell = new PdfPCell(codeImg);
+ *
+ * cell.setBorder(0);
+ *
+ * table.addCell(cell);
+ *
+ * if (contadorCeldas == 4) { table.completeRow();
+ *
+ * doc.add(table); table = new PdfPTable(2);
+ *
+ * contadorCeldas = 0; } }
+ *
+ * contador--; contadorCeldas++; }
+ *
+ * }
+ *
+ */
