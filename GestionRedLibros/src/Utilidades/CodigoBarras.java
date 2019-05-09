@@ -158,43 +158,58 @@ public class CodigoBarras {
 
         doc.addTitle("CÓDIGOS EJEMPLARES - " + libro.getNombre());
 
-        int contador = 1;
-
-        
+        int contador = 0;
 
         Image codeImgBase = barcodes.get(0).createImageWithBarcode(pdf.getDirectContent(),
                 BaseColor.BLACK, BaseColor.BLACK);
 
-        float heightPdf = PageSize.A4.getHeight() - 21, widthPdf = PageSize.A4.getWidth();
-        
+        int bordes = 2;
+        int alturaBordes = 21;
+        int totalBordes = alturaBordes * bordes;
+
+        int etiquetasVertical = 10; //Etiquetas que caben verticalmente en el papel
+        int etiquetasHorizontal = 3; //Etiquetas que caben horizontalmente en el papel
+
+        float heightPdf = PageSize.A4.getHeight(), widthPdf = PageSize.A4.getWidth();
+
         System.out.println("Altura del pdf: " + heightPdf + " Anchura del pdf:" + widthPdf);
 
-        float heigthEtiqueta = heightPdf / 8, widthEtiqueta = widthPdf / 3;
-        
+        float heigthEtiqueta = (heightPdf - totalBordes) / etiquetasVertical, widthEtiqueta = widthPdf / etiquetasHorizontal;
+
         System.out.println("Altura del etiqueta: " + heigthEtiqueta + " Anchura del etiqueta:" + widthEtiqueta);
 
         float heigthCodigo = codeImgBase.getHeight(), widthCodigo = codeImgBase.getWidth();
-        
+
         System.out.println("Altura del codigo img: " + heigthCodigo + " Anchura del codigo img:" + widthCodigo);
 
-        float etiqueta1x = 0, etiqueta1y = heightPdf - heigthEtiqueta;
-        
+        float etiqueta1x = 0, etiqueta1y = heightPdf - heigthEtiqueta - alturaBordes;
+
         System.out.println("Altura del pos etiqueta: " + etiqueta1y + " Anchura del pos etiqueta:" + etiqueta1x);
 
-        for (int i = 0; i < libro.getEjemplares().size(); i++) {
-            if (contador == 8) {
-                contador = 0;
-                pdf.newPage();
+        int contadorMaxWhile = Math.round(libro.getEjemplares().size() / (etiquetasHorizontal * etiquetasVertical));
+        int contadorWhile = 0;
+
+        do {
+            for (int i = 0; i < etiquetasVertical; i++) {
+                for (int j = 0; j < etiquetasHorizontal; j++) {
+                    //Controlamos si hemos pintado todas las etiquetas
+                    if (contador == libro.getEjemplares().size()) {
+                        break;
+                    }
+
+                    //Pintamos las etiquetas
+                    Image codeImg = barcodes.get(contador).createImageWithBarcode(pdf.getDirectContent(),
+                            BaseColor.BLACK, BaseColor.BLACK);
+                    float x = etiqueta1x + (widthEtiqueta * j), y = etiqueta1y - (heigthEtiqueta * i);
+                    codeImg.setAbsolutePosition(x + ((widthEtiqueta / 2) - (widthCodigo / 2)),
+                            y + ((heigthEtiqueta / 2) - (heigthCodigo / 2)));
+                    doc.add(codeImg);
+                    contador++;
+                }
             }
-
-            codeImgBase.setAbsolutePosition(etiqueta1x, etiqueta1y - (heigthEtiqueta * i));
-
-            doc.add(codeImgBase);
-            
-            
-
-            contador++;
-        }
+            doc.newPage();
+            contadorWhile++;
+        } while (contadorWhile < contadorMaxWhile);
 
         doc.close();
 
