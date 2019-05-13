@@ -214,6 +214,52 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
     }
 
     /**
+     * Metodo para obtener una lista de todas las Matriculas de la BD filtradas
+     * por Curso_Escolar y Curso
+     */
+    public List<Matricula> buscarPendientesPorCurso(int curso_escolar, Curso curso) {
+        List<Matricula> lista = new ArrayList<Matricula>();
+
+        Query query = this.session.createQuery("from Matricula"
+                + " where curso_escolar =" + curso_escolar + " and "
+                + "curso LIKE '" + curso.getCodigo() + "'");
+        lista = query.list();
+
+        /*
+        DaoHistorial daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
+
+        // ELIMINAR LAS YA MATRICULAS ENTREGADAS
+        
+        
+        for (int i = 0; i < lista.size(); i++) {
+            Matricula m = lista.get(i);
+
+            List<Historial> historiales = daoHistorial.buscarPorAlumno(m.getAlumno());
+
+            if (historiales.size() > 0) {
+                for (int j = 0; j < historiales.size(); j++) {
+                    Historial h = historiales.get(j);
+
+                    String codContenidoHistorial = h.getEjemplar().getLibro().getContenido().getCodigo();
+
+                    if (h.getCurso_escolar() == curso_escolar && codContenidoHistorial.equals(m.getContenido().getCodigo())) {
+                        lista.remove(m);
+                    }
+                }
+            }
+        }
+
+        try {
+            daoHistorial.desconectar();
+        } catch (Exception e) {
+            System.out.println("Error al desconectar el daoHistorial en daoMatricula");
+            e.printStackTrace();
+        }*/
+
+        return lista;
+    }
+
+    /**
      * Metodo para obtener una lista de todas las Matriculas de la BD
      */
     public List<Matricula> buscarTodos() {

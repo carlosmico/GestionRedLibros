@@ -17,7 +17,24 @@
  */
 package Vistas;
 
+import Daos.DaoCurso;
+import Daos.DaoMatricula;
+import Pojos.Curso;
+import Pojos.Matricula;
 import Utilidades.Colores;
+import Utilidades.Imagenes.Imagenes;
+import java.awt.event.ActionEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.SwingWorker;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.Session;
 
 /**
  *
@@ -25,11 +42,31 @@ import Utilidades.Colores;
  */
 public class FrameDemanda extends javax.swing.JFrame {
 
+    private Session session = Main.gestorSesiones.getSession();
+
+    FramePopup frameCarga;
+
+    private DaoCurso daoCurso;
+    private DaoMatricula daoMatricula;
+
+    private List<Curso> listaCursos;
+    private List<Matricula> listaMatriculas;
+    
+    private HashMap<String, Integer> contenidos = new HashMap<String, Integer>();
+
+
     /**
      * Creates new form FrameDemanda
      */
     public FrameDemanda() {
         initComponents();
+
+        daoCurso = new DaoCurso(session);
+        daoMatricula = new DaoMatricula(session);
+
+        vaciarTabla();
+
+        cargarDatos();
     }
 
     /**
@@ -46,7 +83,7 @@ public class FrameDemanda extends javax.swing.JFrame {
         panelContainer = new javax.swing.JPanel();
         cbCurso = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -73,13 +110,19 @@ public class FrameDemanda extends javax.swing.JFrame {
         panelContainer.setBackground(Colores.fondo);
 
         cbCurso.setBackground(Colores.fondo);
+        cbCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         cbCurso.setForeground(Colores.letraNormal);
         cbCurso.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbCurso.setPreferredSize(new java.awt.Dimension(65, 32));
+        cbCurso.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbCursoItemStateChanged(evt);
+            }
+        });
 
-        jTable1.setBackground(Colores.fondo);
-        jTable1.setForeground(Colores.letraNormal);
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setBackground(Colores.fondo);
+        tabla.setForeground(Colores.letraNormal);
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -98,7 +141,7 @@ public class FrameDemanda extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabla);
 
         javax.swing.GroupLayout panelContainerLayout = new javax.swing.GroupLayout(panelContainer);
         panelContainer.setLayout(panelContainerLayout);
@@ -141,6 +184,18 @@ public class FrameDemanda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cbCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoItemStateChanged
+        // TODO add your handling code here:
+
+        //Si el indice seleccionado es el 0 significa que el curso seleccionado
+        //es Todos
+        Curso cursoSeleccionado = (Curso) cbCurso.getSelectedItem();
+
+        if (cursoSeleccionado != null && !cursoSeleccionado.getCodigo().equals("Todos")) {
+            rellenarTabla((Curso) cbCurso.getSelectedItem());
+        }
+    }//GEN-LAST:event_cbCursoItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -180,8 +235,131 @@ public class FrameDemanda extends javax.swing.JFrame {
     private javax.swing.JComboBox cbCurso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel panelContainer;
     private javax.swing.JPanel panelTitulo;
+    private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * Metodo para cargar y rellenar los cursos
+     */
+    private void cargarDatos() {
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+            protected Void doInBackground() throws InterruptedException {
+                listaCursos = daoCurso.buscarTodos();
+                return null;
+            }
+
+            protected void done() {
+                sustituirPadresCursos();
+
+                rellenarCursos();
+                frameCarga.dispose();
+            }
+        };
+        worker.execute();
+        if (frameCarga == null) {
+            frameCarga = new FramePopup(this);
+        }
+        frameCarga.setVisible(true);
+    }
+
+    private void rellenarCursos() {
+        System.out.println("Rellenando cursos...");
+
+        cbCurso.removeAllItems();
+
+        cbCurso.addItem(new Curso("Todos", "Todos", "Todos", "Todos", "Todos", " "));
+
+        if (listaCursos.size() > 0) {
+            for (int i = 0; i < listaCursos.size(); i++) {
+                cbCurso.addItem(listaCursos.get(i));
+            }
+        } else {
+            new FramePopup(this, "No hay cursos en la base de datos.",
+                    Imagenes.getImagen("alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
+    }
+
+    private void rellenarTabla(Curso curso) {
+        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+            protected Void doInBackground() throws InterruptedException {
+                listaMatriculas = daoMatricula.buscarPendientesPorCurso(getFechaCursoEscolar(), curso);
+                return null;
+            }
+
+            protected void done() {            
+                for (int i = 0; i < listaMatriculas.size(); i++) {
+                    Matricula m = listaMatriculas.get(i);
+
+                    //Si ya existe incrementamos la cantidad de ejemplares demandados
+                    String key = m.getContenido().getCodigo();
+
+                    if (contenidos.containsKey(key)) {
+                        Integer librosDemandados = contenidos.get(key);
+
+                        contenidos.replace(key, librosDemandados++);
+                    } else {
+                        contenidos.put(key, 1);
+                    }
+                }
+
+                Iterator it = contenidos.entrySet().iterator();
+
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+
+                    System.out.println("Contenidos: " + pair.getKey() + " - Demanda " + pair.getValue());
+                }
+
+                frameCarga.dispose();
+            }
+        };
+        worker.execute();
+        frameCarga = new FramePopup(this, "Recuperando datos de la BD...");
+        frameCarga.setVisible(true);
+    }
+
+    /**
+     * Metodo para buscar el Padre de cada Curso y sustituir el atributo idPadre
+     * por el nombre del Padre
+     */
+    private void sustituirPadresCursos() {
+        for (int i = 0; i < listaCursos.size(); i++) {
+            Curso curso = listaCursos.get(i);
+            Curso cursoPadre = daoCurso.buscar(curso.getIdPadre());
+
+            if (cursoPadre != null) {
+                curso.setNombre_padre(daoCurso.buscar(curso.getIdPadre()).getNombre_cas());
+            }
+        }
+    }
+
+    /**
+     * Metodo para vaciar la tabla de stock/demanda
+     */
+    private void vaciarTabla() {
+        DefaultTableModel model = new DefaultTableModel(null, new Object[]{"Asignatura", "Libros actuales", "Demanda", "Libros a comprar"});
+        tabla.setModel(model);
+    }
+
+    /**
+     * Este metodo se utiliza para conseguir la fecha del curso escolar
+     *
+     * @return Devuelve un 'int' con la año actual
+     */
+    private int getFechaCursoEscolar() {
+        LocalDate localDate = LocalDate.now();
+        String date = DateTimeFormatter.ofPattern("yyyy").format(localDate);
+        int fecha = 0;
+        try {
+            fecha = Integer.parseInt(date);
+        } catch (NumberFormatException e) {
+            new FramePopup(this, "No se ha podido conseguir el curso escolar",
+                    Imagenes.getImagen("/Imagenes/icons/alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
+        return fecha;
+    }
 }
