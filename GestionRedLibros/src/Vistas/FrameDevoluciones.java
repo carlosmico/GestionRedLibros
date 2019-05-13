@@ -857,12 +857,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             }
 
             isConfirmationReady = ConfirmacionDevolucion.CANCELADA;
-        } else {
-            new FramePopup(this, "Error al realizar la devolución.",
-                    new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                    "Aceptar").setVisible(true);
-;
-        }
+        } 
     }//GEN-LAST:event_formWindowActivated
 
     private void textBusquedaNIAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBusquedaNIAKeyReleased

@@ -2900,7 +2900,7 @@ public class FrameLibro extends javax.swing.JFrame {
         if (libro == null) {
             textNoPrestado.setText("Selecciona un libro para ver sus ejemplares.");
             setEstado(-1);
-        } else {
+        } else if(listaEjemplares != null){
             setVisiblePanelAlumno(listaEjemplares.get(contadorEjemplar - 1).isPrestado());
             if (!listaEjemplares.get(contadorEjemplar - 1).isPrestado()) {
                 textNoPrestado.setText("Este ejemplar no se ha prestado a ningún alumno.");
