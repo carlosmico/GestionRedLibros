@@ -17,9 +17,23 @@
  */
 package Vistas;
 
+import Pojos.Libro;
+import Utilidades.CodigoBarras;
 import Utilidades.Colores;
+import Utilidades.Configuracion;
 import Utilidades.Imagenes.Imagenes;
+import com.itextpdf.text.DocumentException;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.print.PrinterException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.print.PrintException;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -28,6 +42,8 @@ import javax.swing.JFrame;
  * @author Jose Sanchis
  */
 public class FrameEtiquetasPopup extends javax.swing.JDialog {
+
+    JFrame parent;
 
     /**
      * Crea el nuevo formulario FramePopup con texto, icono y botón
@@ -42,6 +58,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
     public FrameEtiquetasPopup(JFrame parent) {
         super(parent, true);
         initComponents();
+        this.parent = parent;
 
         setMode(true); //por defecto tenemos seleccionado la opcion 'por defecto'
 
@@ -381,7 +398,49 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        int columnas, filas;
+        columnas = Configuracion.getColumnaLayoutHoja();
+        filas = Configuracion.getFilasLayoutHoja();
 
+        Libro libro = FrameLibro.libro;
+
+        if (rbByDefault.isSelected()) {
+            if (columnas == 0 || filas == 0) {
+                Action action = new AbstractAction() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setMode(false);
+                        rbPersonalizado.setSelected(true);
+                    }
+                };
+                new FramePopup(this.parent, "No se ha podido cargar la configuración por defecto.\n"
+                        + "Por favor, selecciona esta configuracion manualmente.",
+                        Imagenes.getImagen("alert-black.png"),
+                        action).setVisible(true);
+            } else {
+                //Imprimir etiquetas desde la configuración
+            }
+        } else {
+            columnas = Integer.parseInt(cbColumnas.getSelectedItem().toString());
+            filas = Integer.parseInt(cbFilas.getSelectedItem().toString());
+
+            List<String> listaCodigoEjemplares = new ArrayList<>();
+
+            for (int i = 0; i < libro.getEjemplares().size(); i++) {
+                listaCodigoEjemplares.add(libro.getEjemplares().get(i).getCodigo());
+            }
+
+            CodigoBarras cb = new CodigoBarras();
+            try {
+                cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas);
+            } catch (Exception e) {
+                e.printStackTrace();
+                new FramePopup(this.parent, "No se han podido general los códigos de barras",
+                        new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                        "Aceptar").setVisible(true);
+            }
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void rbByDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbByDefaultActionPerformed
@@ -469,6 +528,9 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         if (!byDefault) {
             jLabel1.setForeground(Colores.campoTextSinFocus);
             jLabel2.setForeground(Colores.campoTextSinFocus);
+        } else {
+            jLabel1.setForeground(Colores.letraNormal);
+            jLabel2.setForeground(Colores.letraNormal);
         }
     }
 }

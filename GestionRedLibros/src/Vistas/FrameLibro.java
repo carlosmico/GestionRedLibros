@@ -1892,7 +1892,7 @@ public class FrameLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_cbCursoBuscarItemStateChanged
 
     private void btnImprimirEtiquetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetasActionPerformed
-        
+
         new FrameEtiquetasPopup(this).setVisible(true);
 
         /*CodigoBarras cb = new CodigoBarras();
@@ -1957,7 +1957,15 @@ public class FrameLibro extends javax.swing.JFrame {
         Ejemplar ejemplarActual = listaEjemplares.get(contadorEjemplar - 1);
         CodigoBarras cb = new CodigoBarras();
         try {
-            cb.imprimirIndividual(ejemplarActual, cb.generarCodigoIndividual(ejemplarActual.getCodigo()));
+            int columnas, filas;
+            columnas = Configuracion.getColumnaLayoutHoja();
+            filas = Configuracion.getFilasLayoutHoja();
+
+            if (columnas == 0 || filas == 0) {
+                cb.imprimirIndividual(ejemplarActual, cb.generarCodigoIndividual(ejemplarActual.getCodigo()), 8, 3);
+            } else {
+                cb.imprimirIndividual(ejemplarActual, cb.generarCodigoIndividual(ejemplarActual.getCodigo()), filas, columnas);
+            }
         } catch (Exception e) {
             new FramePopup(this, "No se ha podido imprimir el codigo", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
         }

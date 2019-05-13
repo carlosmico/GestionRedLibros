@@ -121,7 +121,7 @@ public class Configuracion {
             color = new Color(Integer.parseInt(colorGuardado));
         } catch (Exception e) {
             System.out.println("Error - Fallo al cargar los colores.");
-            
+
             switch (nombreColor) {
                 case StringsGlobales.color_fondo:
                     color = Colores.fondo;
@@ -183,4 +183,51 @@ public class Configuracion {
         propiedades.load(new FileInputStream(rutaConfiguracion));
         return propiedades.getProperty("wallpaper");
     }
+
+    /**
+     * Metodo para guardar la configuracion de las etiquetas
+     *
+     * @param fila Indica las filas de etiquetas que tendra la hoja de impresión
+     * @param columna Indica las columnas de etiquetas que tendra la hoja de
+     * impresion
+     */
+    public static void guardarLayoutHoja(int fila, int columna) {
+        propiedades.setProperty("filaHoja", fila + "");
+        propiedades.setProperty("columnaHoja", columna + "");
+    }
+
+    /**
+     * Metodo para conseugir las filas del layout de la hoja
+     */
+    public static int getFilasLayoutHoja() {
+        int filas = 0;
+        try {
+            filas = Integer.parseInt(propiedades.getProperty("filaHoja"));
+        } catch (NumberFormatException e) {
+            System.out.println("No se ha podido parsear la propiedad");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("No se han podido cargar las filas");
+            e.printStackTrace();
+        }
+        return filas;
+    }
+
+    /**
+     * Metodo para conseguir las columnas del layout de la hoja
+     */
+    public static int getColumnaLayoutHoja() {
+        int columnas = 0;
+        try {
+            columnas = Integer.parseInt(propiedades.getProperty("columnaHoja"));
+        } catch (NumberFormatException e) {
+            System.out.println("No se ha podido parsear la propiedad");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("No se han podido cargar las columnas");
+            e.printStackTrace();
+        }
+        return columnas;
+    }
+
 }
