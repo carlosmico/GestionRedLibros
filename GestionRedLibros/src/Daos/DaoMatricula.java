@@ -225,7 +225,7 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
                 + "curso LIKE '" + curso.getCodigo() + "'");
         lista = query.list();
 
-        /*
+        
         DaoHistorial daoHistorial = new DaoHistorial(Main.gestorSesiones.getSession());
 
         // ELIMINAR LAS YA MATRICULAS ENTREGADAS
@@ -254,7 +254,7 @@ public class DaoMatricula extends DaoGenerico<Matricula, Integer> implements Int
         } catch (Exception e) {
             System.out.println("Error al desconectar el daoHistorial en daoMatricula");
             e.printStackTrace();
-        }*/
+        }
 
         return lista;
     }

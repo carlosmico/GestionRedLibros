@@ -35,6 +35,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -197,6 +198,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opciones");
         setMinimumSize(new java.awt.Dimension(765, 50));
+        setPreferredSize(new java.awt.Dimension(1377, 900));
         setResizable(false);
         setSize(new java.awt.Dimension(5000, 0));
 
@@ -2329,8 +2331,7 @@ public class FrameOpciones extends javax.swing.JFrame {
     }//GEN-LAST:event_wallpaper4MouseClicked
 
     private void btnReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReiniciarActionPerformed
-        dispose();
-        new CargaInicial();
+
     }//GEN-LAST:event_btnReiniciarActionPerformed
 
     private void textBuscarLibroEjemploFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBuscarLibroEjemploFocusGained

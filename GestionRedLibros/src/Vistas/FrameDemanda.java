@@ -17,12 +17,17 @@
  */
 package Vistas;
 
+import Daos.DaoContenido;
 import Daos.DaoCurso;
+import Daos.DaoLibro;
 import Daos.DaoMatricula;
+import Pojos.Contenido;
 import Pojos.Curso;
+import Pojos.Libro;
 import Pojos.Matricula;
 import Utilidades.Colores;
 import Utilidades.Imagenes.Imagenes;
+import static Vistas.FrameLibro.libro;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -48,21 +53,24 @@ public class FrameDemanda extends javax.swing.JFrame {
 
     private DaoCurso daoCurso;
     private DaoMatricula daoMatricula;
+    private DaoContenido daoContenido;
+    private DaoLibro daoLibro;
 
     private List<Curso> listaCursos;
     private List<Matricula> listaMatriculas;
-    
-    private HashMap<String, Integer> contenidos = new HashMap<String, Integer>();
-
 
     /**
      * Creates new form FrameDemanda
      */
     public FrameDemanda() {
         initComponents();
+        
+        this.setLocationRelativeTo(null);
 
         daoCurso = new DaoCurso(session);
         daoMatricula = new DaoMatricula(session);
+        daoContenido = new DaoContenido(session);
+        daoLibro = new DaoLibro(session);
 
         vaciarTabla();
 
@@ -121,6 +129,7 @@ public class FrameDemanda extends javax.swing.JFrame {
         });
 
         tabla.setBackground(Colores.fondo);
+        tabla.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         tabla.setForeground(Colores.letraNormal);
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -141,6 +150,7 @@ public class FrameDemanda extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabla.setRowHeight(32);
         jScrollPane1.setViewportView(tabla);
 
         javax.swing.GroupLayout panelContainerLayout = new javax.swing.GroupLayout(panelContainer);
@@ -152,7 +162,7 @@ public class FrameDemanda extends javax.swing.JFrame {
                 .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
                     .addGroup(panelContainerLayout.createSequentialGroup()
-                        .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -161,8 +171,8 @@ public class FrameDemanda extends javax.swing.JFrame {
             .addGroup(panelContainerLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -191,8 +201,10 @@ public class FrameDemanda extends javax.swing.JFrame {
         //es Todos
         Curso cursoSeleccionado = (Curso) cbCurso.getSelectedItem();
 
-        if (cursoSeleccionado != null && !cursoSeleccionado.getCodigo().equals("Todos")) {
-            rellenarTabla((Curso) cbCurso.getSelectedItem());
+        if (evt.getStateChange() == evt.SELECTED) {
+            if (cursoSeleccionado != null && !cursoSeleccionado.getCodigo().equals("Todos")) {
+                rellenarTabla((Curso) cbCurso.getSelectedItem());
+            }
         }
     }//GEN-LAST:event_cbCursoItemStateChanged
 
@@ -289,7 +301,11 @@ public class FrameDemanda extends javax.swing.JFrame {
                 return null;
             }
 
-            protected void done() {            
+            protected void done() {
+                frameCarga.dispose();
+                
+                HashMap<String, Integer> contenidos = new HashMap<String, Integer>();
+
                 for (int i = 0; i < listaMatriculas.size(); i++) {
                     Matricula m = listaMatriculas.get(i);
 
@@ -299,21 +315,59 @@ public class FrameDemanda extends javax.swing.JFrame {
                     if (contenidos.containsKey(key)) {
                         Integer librosDemandados = contenidos.get(key);
 
-                        contenidos.replace(key, librosDemandados++);
+                        librosDemandados++;
+
+                        contenidos.replace(key, librosDemandados);
                     } else {
                         contenidos.put(key, 1);
                     }
                 }
 
-                Iterator it = contenidos.entrySet().iterator();
+                //Rellenamos la tabla con los datos obtenidos
+                DefaultTableModel tableModel;
 
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
+                if (contenidos.size() > 0) {
+                    Object[][] contenidoTabla = new Object[contenidos.size()][4];
 
-                    System.out.println("Contenidos: " + pair.getKey() + " - Demanda " + pair.getValue());
+                    int it = 0;
+
+                    for (Map.Entry<String, Integer> entry : contenidos.entrySet()) {
+                        Contenido contenido = daoContenido.buscarPorCodigo(entry.getKey());
+                        List<Libro> librosContenido = daoLibro.buscarPorContenido(contenido);
+
+                        int stock = 0;
+
+                        for (int i = 0; i < librosContenido.size(); i++) {
+                            Libro libro = librosContenido.get(i);
+
+                            stock += libro.getEjemplaresDisponibles().size();
+                        }
+
+                        contenidoTabla[it][0] = contenido.getNombre_cas();
+                        contenidoTabla[it][1] = stock;
+                        contenidoTabla[it][2] = entry.getValue();
+                        
+                        if((entry.getValue() - stock) < 0 ){
+                            contenidoTabla[it][3] = 0;
+                        }else{
+                            contenidoTabla[it][3] = entry.getValue() - stock;
+                        }
+
+                        it++;
+                    }
+
+                    tableModel = new DefaultTableModel(contenidoTabla,
+                            new Object[]{"Asignatura", "Ejemplares en stock", "Ejemplares necesarios", "Ejemplares a comprar"}) {
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
+
+                    tabla.setModel(tableModel);
+                } else {
+                    vaciarTabla();
                 }
-
-                frameCarga.dispose();
             }
         };
         worker.execute();
@@ -340,7 +394,7 @@ public class FrameDemanda extends javax.swing.JFrame {
      * Metodo para vaciar la tabla de stock/demanda
      */
     private void vaciarTabla() {
-        DefaultTableModel model = new DefaultTableModel(null, new Object[]{"Asignatura", "Libros actuales", "Demanda", "Libros a comprar"});
+        DefaultTableModel model = new DefaultTableModel(null, new Object[]{"Asignatura", "Ejemplares en stock", "Ejemplares necesarios", "Ejemplares a comprar"});
         tabla.setModel(model);
     }
 

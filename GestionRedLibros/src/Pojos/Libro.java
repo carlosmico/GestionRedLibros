@@ -17,7 +17,9 @@
  */
 package Pojos;
 
+import Utilidades.Estado;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -134,6 +136,18 @@ public class Libro implements Serializable{
 
     public List<Ejemplar> getEjemplares() {
         return ejemplares;
+    }
+    
+    public List<Ejemplar> getEjemplaresDisponibles() {
+        List<Ejemplar> ejemplaresDisponibles = new ArrayList<Ejemplar>();
+        
+        for (int i = 0; i < ejemplares.size(); i++) {
+            if (ejemplares.get(i).getEstado() != Estado.deteriorado) {
+                ejemplaresDisponibles.add(ejemplares.get(i));
+            }
+        }
+        
+        return ejemplaresDisponibles;
     }
 
     public void setEjemplares(List<Ejemplar> ejemplares) {

@@ -824,6 +824,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel10.setBackground(Colores.fondo);
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel33.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -831,8 +832,10 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
         jLabel33.setText("Observaciones:");
 
         textObservaciones.setEditable(false);
+        textObservaciones.setBackground(Colores.fondo);
         textObservaciones.setColumns(20);
         textObservaciones.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textObservaciones.setForeground(Colores.letraNormal);
         textObservaciones.setRows(5);
         jScrollPane2.setViewportView(textObservaciones);
 
@@ -929,7 +932,8 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -1050,7 +1054,6 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
     private javax.swing.JPanel panelInfoEstado;
     private javax.swing.JPanel panelInfoGeneral;
     private javax.swing.JPanel panelTitulo1;
-    private javax.swing.JTextField textBusquedaNIA;
     private javax.swing.JLabel textCodigoEjemplar;
     private javax.swing.JLabel textContenidoEjemplar;
     private javax.swing.JLabel textCursoActualAlumno;
