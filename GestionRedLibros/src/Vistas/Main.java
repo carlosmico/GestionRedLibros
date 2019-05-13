@@ -43,6 +43,7 @@ public class Main extends javax.swing.JFrame {
     FramePopup frameCarga;
     FramePopup framePopup;
     FrameHistorial frameHistorial;
+    FrameDemanda frameDemanda;
 
     //Cogemos el FramePadre para trabajar con los dialogos
     private JFrame topFrame;
@@ -115,13 +116,13 @@ public class Main extends javax.swing.JFrame {
         banner = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        flatButton1 = new com.mommoo.flat.button.FlatButton();
+        btnOpciones = new com.mommoo.flat.button.FlatButton();
         jPanel1 = new javax.swing.JPanel();
         btnLibros = new com.mommoo.flat.button.FlatButton();
         btnEntrega = new com.mommoo.flat.button.FlatButton();
         btnDevoluciones = new com.mommoo.flat.button.FlatButton();
         btnAydua = new com.mommoo.flat.button.FlatButton();
-        btnOpciones = new com.mommoo.flat.button.FlatButton();
+        btnStockDemanda = new com.mommoo.flat.button.FlatButton();
         wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -140,10 +141,15 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Gestión Red Libros");
 
-        flatButton1.setBackground(Colores.botones);
-        flatButton1.setForeground(Colores.letraBotones);
-        flatButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/help.png"))); // NOI18N
-        flatButton1.setCornerRound(10);
+        btnOpciones.setBackground(Colores.botones);
+        btnOpciones.setForeground(Colores.letraBotones);
+        btnOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/settings-36.png"))); // NOI18N
+        btnOpciones.setCornerRound(10);
+        btnOpciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpcionesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -151,9 +157,9 @@ public class Main extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(150, 150, 150)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
                 .addGap(91, 91, 91)
-                .addComponent(flatButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -162,7 +168,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(flatButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                    .addComponent(btnOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -221,17 +227,17 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel1.add(btnAydua);
 
-        btnOpciones.setBackground(Colores.botones);
-        btnOpciones.setForeground(Colores.letraBotones);
-        btnOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/ballot.png"))); // NOI18N
-        btnOpciones.setText("Opciones");
-        btnOpciones.setCornerRound(10);
-        btnOpciones.addActionListener(new java.awt.event.ActionListener() {
+        btnStockDemanda.setBackground(Colores.botones);
+        btnStockDemanda.setForeground(Colores.letraBotones);
+        btnStockDemanda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/ballot.png"))); // NOI18N
+        btnStockDemanda.setText("Stock");
+        btnStockDemanda.setCornerRound(10);
+        btnStockDemanda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpcionesActionPerformed(evt);
+                btnStockDemandaActionPerformed(evt);
             }
         });
-        jPanel1.add(btnOpciones);
+        jPanel1.add(btnStockDemanda);
 
         banner.add(jPanel1);
 
@@ -318,18 +324,21 @@ public class Main extends javax.swing.JFrame {
      *
      * Este botón lo utilizamos para mostrar la pestaña de Opciones
      */
-    private void btnOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionesActionPerformed
-        if (frameOpciones == null) {
-            frameOpciones = new FrameOpciones(this);
-        } else {
-            if (!frameOpciones.isVisible()) {
-                frameOpciones = null;
-                frameOpciones = new FrameOpciones(this);
+    private void btnStockDemandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockDemandaActionPerformed
+        if (existeConexion) {
+            if (frameDemanda == null) {
+                frameDemanda = new FrameDemanda();
+            } else {
+                if (!frameDemanda.isVisible()) {
+                    frameDemanda = null;
+                    frameDemanda = new FrameDemanda();
+                }
             }
+            frameDemanda.setVisible(true);
+        } else {
+            compruebaConexionBD(false, "FrameDemanda");
         }
-        frameOpciones.setVisible(true);
-
-    }//GEN-LAST:event_btnOpcionesActionPerformed
+    }//GEN-LAST:event_btnStockDemandaActionPerformed
 
     /**
      *
@@ -372,6 +381,20 @@ public class Main extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnAyduaActionPerformed
+
+    private void btnOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionesActionPerformed
+        // TODO add your handling code here:
+        if (frameOpciones == null) {
+            frameOpciones = new FrameOpciones(this);
+        } else {
+            if (!frameOpciones.isVisible()) {
+                frameOpciones = null;
+                frameOpciones = new FrameOpciones(this);
+            }
+        }
+        frameOpciones.setVisible(true);
+
+    }//GEN-LAST:event_btnOpcionesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -480,6 +503,12 @@ public class Main extends javax.swing.JFrame {
                                         frame = new FrameHistorial_alumno();
                                     }
                                     break;
+                                    
+                                case "FrameDemanda":
+                                    if(frameDemanda == null){
+                                        frame = new FrameDemanda();
+                                    }
+                                    break;
                             }
 
                             frame.setVisible(true);
@@ -531,7 +560,7 @@ public class Main extends javax.swing.JFrame {
     private static com.mommoo.flat.button.FlatButton btnEntrega;
     private static com.mommoo.flat.button.FlatButton btnLibros;
     private static com.mommoo.flat.button.FlatButton btnOpciones;
-    private static com.mommoo.flat.button.FlatButton flatButton1;
+    private static com.mommoo.flat.button.FlatButton btnStockDemanda;
     private static javax.swing.JPanel generalaPanel;
     private static javax.swing.JLabel jLabel1;
     private static javax.swing.JPanel jPanel1;

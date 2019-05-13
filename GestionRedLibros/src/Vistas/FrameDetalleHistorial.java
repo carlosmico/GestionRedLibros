@@ -113,6 +113,10 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
         panelEstadoParent18 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
         textFechaDevolucion = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel33 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textObservaciones = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -820,6 +824,41 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel33.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel33.setForeground(Colores.letraNormal);
+        jLabel33.setText("Observaciones:");
+
+        textObservaciones.setEditable(false);
+        textObservaciones.setColumns(20);
+        textObservaciones.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textObservaciones.setRows(5);
+        jScrollPane2.setViewportView(textObservaciones);
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(jLabel33)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -832,7 +871,8 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelEstadoParent18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelEstadoParent17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panelEstadoParent17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -844,7 +884,9 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addComponent(panelEstadoParent18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelEstadoParent17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(358, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(180, Short.MAX_VALUE))
         );
 
         panelInfoEstado.add(jPanel1);
@@ -972,6 +1014,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
@@ -981,6 +1024,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
@@ -994,6 +1038,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel panelContent;
     private javax.swing.JPanel panelEstado17;
     private javax.swing.JPanel panelEstado19;
@@ -1005,6 +1050,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
     private javax.swing.JPanel panelInfoEstado;
     private javax.swing.JPanel panelInfoGeneral;
     private javax.swing.JPanel panelTitulo1;
+    private javax.swing.JTextField textBusquedaNIA;
     private javax.swing.JLabel textCodigoEjemplar;
     private javax.swing.JLabel textContenidoEjemplar;
     private javax.swing.JLabel textCursoActualAlumno;
@@ -1016,6 +1062,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
     private javax.swing.JLabel textNIAAlumno;
     private javax.swing.JLabel textNombreAlumno;
     private javax.swing.JLabel textNombreEjemplar;
+    private javax.swing.JTextArea textObservaciones;
     private javax.swing.JLabel textTelefonoAlumno;
     // End of variables declaration//GEN-END:variables
 
@@ -1048,9 +1095,11 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
         if (historial.getEstado_final() != -1) {
             textFechaDevolucion.setText(historial.getFecha_final().toString());
             setEstadoDevolucion(historial.getEstado_final());
-        }else{
+            textObservaciones.setText(historial.getObservaciones());
+        } else {
             textFechaDevolucion.setText("El ejemplar todavía no se ha devuelto.");
             setEstadoDevolucion(-1);
+            textObservaciones.setText("");
         }
     }
 
