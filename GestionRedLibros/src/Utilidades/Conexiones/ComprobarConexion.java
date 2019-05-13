@@ -48,7 +48,7 @@ public class ComprobarConexion {
         Connection con = null;
         con = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + puerto + "/" + nombreBD, usuario, password);
         
-        if(con.isValid(10000)){
+        if(con.isValid(100000)){
             final PreparedStatement statement = con.prepareStatement("SELECT 1");
             
             return true;
