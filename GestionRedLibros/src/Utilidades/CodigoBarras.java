@@ -99,7 +99,7 @@ public class CodigoBarras {
      * @throws DocumentException
      * @throws IOException
      */
-    public void imprimirIndividual(Ejemplar ejemplar, Barcode39 barcode) throws FileNotFoundException, DocumentException, IOException {
+    public void imprimirIndividual(Ejemplar ejemplar, Barcode39 barcode, int filas, int columnas) throws FileNotFoundException, DocumentException, IOException {
         comprobarDirectorio();
 
         int numEjemplar = 0;
@@ -128,14 +128,14 @@ public class CodigoBarras {
                 BaseColor.BLACK, BaseColor.BLACK);
 
         //Etiquetas que queremos que se impriman en modo individual 
-        int maxEtiquetas = 2;
+        int maxEtiquetas = 1;
 
         int bordes = 2;
         int alturaBordes = 21;
         int totalBordes = alturaBordes * bordes;
 
-        int etiquetasVertical = 10; //Etiquetas que caben verticalmente en el papel
-        int etiquetasHorizontal = 3; //Etiquetas que caben horizontalmente en el papel
+        int etiquetasVertical = filas; //Etiquetas que caben verticalmente en el papel
+        int etiquetasHorizontal = columnas; //Etiquetas que caben horizontalmente en el papel
 
         //Altura y anchura real de la pagina A4
         float heightPdf = PageSize.A4.getHeight(), widthPdf = PageSize.A4.getWidth();
@@ -187,7 +187,7 @@ public class CodigoBarras {
      * @throws IOException
      * @throws PrintException
      */
-    public void imprimirList(Libro libro, List<Barcode39> barcodes) throws PrinterException, FileNotFoundException, DocumentException, IOException, PrintException {
+    public void imprimirList(Libro libro, List<Barcode39> barcodes, int filas, int columnas) throws PrinterException, FileNotFoundException, DocumentException, IOException, PrintException {
 
         comprobarDirectorio();
 
@@ -212,8 +212,8 @@ public class CodigoBarras {
         int alturaBordes = 21;
         int totalBordes = alturaBordes * bordes;
 
-        int etiquetasVertical = 10; //Etiquetas que caben verticalmente en el papel
-        int etiquetasHorizontal = 3; //Etiquetas que caben horizontalmente en el papel
+        int etiquetasVertical = filas; //Etiquetas que caben verticalmente en el papel
+        int etiquetasHorizontal = columnas; //Etiquetas que caben horizontalmente en el papel
 
         //Altura y anchura real de la pagina A4
         float heightPdf = PageSize.A4.getHeight(), widthPdf = PageSize.A4.getWidth();

@@ -21,6 +21,7 @@ import Pojos.Ejemplar;
 import Pojos.Historial;
 import Utilidades.CodigoBarras;
 import Utilidades.Colores;
+import Utilidades.Configuracion;
 import Utilidades.ConfirmacionDevolucion;
 import Utilidades.Estado;
 import Utilidades.Imagenes.Imagenes;
@@ -470,7 +471,16 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
             protected Void doInBackground() throws InterruptedException {
                 CodigoBarras cb = new CodigoBarras();
                 try {
-                    cb.imprimirIndividual(historial.getEjemplar(), cb.generarCodigoIndividual(historial.getEjemplar().getCodigo()));
+                    Ejemplar ejemplarActual = historial.getEjemplar();
+                    int columnas, filas;
+                    columnas = Configuracion.getColumnaLayoutHoja();
+                    filas = Configuracion.getFilasLayoutHoja();
+
+                    if (columnas == 0 || filas == 0) {
+                        cb.imprimirIndividual(ejemplarActual, cb.generarCodigoIndividual(ejemplarActual.getCodigo()), 8, 3);
+                    } else {
+                        cb.imprimirIndividual(ejemplarActual, cb.generarCodigoIndividual(ejemplarActual.getCodigo()), filas, columnas);
+                    }
                 } catch (Exception e) {
                     new FramePopup(topFrame, "No se ha podido imprimir el codigo", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
                 }
