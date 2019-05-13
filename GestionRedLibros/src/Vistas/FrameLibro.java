@@ -73,7 +73,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
     //Cogemos el frame padre para trabajar con los dialogos
     private JFrame topFrame;
-    
+
     private FrameDemanda stock;
 
     /**
@@ -106,7 +106,6 @@ public class FrameLibro extends javax.swing.JFrame {
         daoHistorial = new DaoHistorial(session);
 
         //Configuramos la parte visual de los ComboBox
-        UIManager.put("ComboBox.background", Colores.fondoOscuro);
         UIManager.put("ComboBox.disabledBackground", Colores.fondo);
         UIManager.put("ComboBox.disabledForeground", Colores.campoTextSinFocus);
 
@@ -153,7 +152,6 @@ public class FrameLibro extends javax.swing.JFrame {
 
         cbCursoBuscar.setEditable(false);
         cbCursoBuscar.setUI(new comboBoxRender());
-        cbCursoBuscar.setBackground(Color.red);
         cbCursoBuscar.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(
@@ -503,6 +501,7 @@ public class FrameLibro extends javax.swing.JFrame {
             }
         });
 
+        cbCursoBuscar.setBackground(Colores.fondo);
         cbCursoBuscar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         cbCursoBuscar.setForeground(Colores.letraNormal);
         cbCursoBuscar.setMinimumSize(new java.awt.Dimension(0, 0));
@@ -1931,7 +1930,7 @@ public class FrameLibro extends javax.swing.JFrame {
         try {
             cb.imprimirIndividual(ejemplarActual, cb.generarCodigoIndividual(ejemplarActual.getCodigo()));
         } catch (Exception e) {
-            new FramePopup(this, "No se ha podido imprimir el codigo").setVisible(true);
+            new FramePopup(this, "No se ha podido imprimir el codigo", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
         }
     }//GEN-LAST:event_btnImprimirEtiquetaEjemplarActionPerformed
 
@@ -2308,7 +2307,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private void btnVerStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerStockActionPerformed
         // TODO add your handling code here:
-        if (stock == null){
+        if (stock == null) {
             stock = new FrameDemanda();
         }
         stock.setVisible(true);
@@ -2900,7 +2899,7 @@ public class FrameLibro extends javax.swing.JFrame {
         if (libro == null) {
             textNoPrestado.setText("Selecciona un libro para ver sus ejemplares.");
             setEstado(-1);
-        } else if(listaEjemplares != null){
+        } else if (listaEjemplares != null) {
             setVisiblePanelAlumno(listaEjemplares.get(contadorEjemplar - 1).isPrestado());
             if (!listaEjemplares.get(contadorEjemplar - 1).isPrestado()) {
                 textNoPrestado.setText("Este ejemplar no se ha prestado a ningún alumno.");
