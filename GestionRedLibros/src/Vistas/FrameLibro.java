@@ -1930,7 +1930,7 @@ public class FrameLibro extends javax.swing.JFrame {
         try {
             cb.imprimirIndividual(ejemplarActual, cb.generarCodigoIndividual(ejemplarActual.getCodigo()));
         } catch (Exception e) {
-            new FramePopup(this, "No se ha podido imprimir el codigo").setVisible(true);
+            new FramePopup(this, "No se ha podido imprimir el codigo", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
         }
     }//GEN-LAST:event_btnImprimirEtiquetaEjemplarActionPerformed
 
