@@ -123,7 +123,13 @@ public class CodigoBarras {
 
         doc.addTitle("CÓDIGO EJEMPLAR - " + ejemplar.getLibro().getNombre() + "(\"" + numEjemplar + "\")");
 
-        int contador = 0, pos = 0;
+        int contador = 0, pos = 0, posicionReal = 0;
+
+        if (posicion == 0) {
+            posicionReal = 1;
+        } else {
+            posicionReal = posicion;
+        }
 
         Image codeImgBase = barcode.createImageWithBarcode(pdf.getDirectContent(),
                 BaseColor.BLACK, BaseColor.BLACK);
@@ -152,7 +158,7 @@ public class CodigoBarras {
 
         for (int i = 0; i < etiquetasVertical; i++) {
             for (int j = 0; j < etiquetasHorizontal; j++) {
-                if (pos >= posicion) {
+                if (pos >= posicionReal) {
                     //Controlamos si hemos pintado todas las etiquetas
                     if (contador == maxEtiquetas) {
                         break;
@@ -211,7 +217,13 @@ public class CodigoBarras {
 
         doc.addTitle("CÓDIGOS EJEMPLARES - " + libro.getNombre());
 
-        int contador = 0, pos = 0;
+        int contador = 0, pos = 0, posicionReal = 0;
+
+        if (posicion == 0) {
+            posicionReal = 1;
+        } else {
+            posicionReal = posicion;
+        };
 
         Image codeImgBase = barcodes.get(0).createImageWithBarcode(pdf.getDirectContent(),
                 BaseColor.BLACK, BaseColor.BLACK);
@@ -242,7 +254,7 @@ public class CodigoBarras {
         do {
             for (int i = 0; i < etiquetasVertical; i++) {
                 for (int j = 0; j < etiquetasHorizontal; j++) {
-                    if (pos >= posicion) {
+                    if (pos >= posicionReal) {
                         //Controlamos si hemos pintado todas las etiquetas
                         if (contador == libro.getEjemplaresDisponibles().size()) {
                             break;

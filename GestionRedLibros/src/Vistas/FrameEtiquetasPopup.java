@@ -26,8 +26,11 @@ import Utilidades.Configuracion;
 import Utilidades.Imagenes.Imagenes;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultListCellRenderer;
@@ -41,10 +44,10 @@ import javax.swing.JList;
  * @author Jose Sanchis
  */
 public class FrameEtiquetasPopup extends javax.swing.JDialog {
-
+    
     JFrame parent;
     Ejemplar ejemplar;
-
+    
     FramePopup frameInfo;
 
     /**
@@ -63,9 +66,9 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         this.ejemplar = null;
         this.parent = parent;
         jPanel10.setVisible(false);
-
+        
         configuracionComboBox();
-
+        
         setMode(true); //por defecto tenemos seleccionado la opcion 'por defecto'
 
         btnAceptar.setVisible(true);
@@ -73,15 +76,15 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }
-
+    
     public FrameEtiquetasPopup(JFrame parent, Ejemplar ejemplar) {
         super(parent, true);
         initComponents();
         this.ejemplar = ejemplar;
         this.parent = parent;
-
+        
         configuracionComboBox();
-
+        
         setMode(true); //por defecto tenemos seleccionado la opcion 'por defecto'
 
         btnAceptar.setVisible(true);
@@ -483,14 +486,14 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         int columnas = 0, filas = 0, posicion = 0, cantidad = 0;
-
+        
         try {
             columnas = Configuracion.getColumnaLayoutHoja();
             filas = Configuracion.getFilasLayoutHoja();
         } catch (Exception e) {
             System.out.println("Error al cargar las filas y columnas.");
         }
-
+        
         String error = "";
         try {
             posicion = Integer.parseInt(tfEjemplares1.getText());
@@ -498,33 +501,36 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
             error += "- El valor de la posición debe ser un valor numérico.\n";
             e.printStackTrace();
         }
-
+        
         try {
             cantidad = Integer.parseInt(tfCantidad.getText());
+            if (cantidad == 0) {
+                error += "- Debes imprimir como mínimo una etiquéta.\n";
+            }
         } catch (Exception e) {
             error += "- El valor de la cantidad debe ser un valor numérico.";
             e.printStackTrace();
         }
-
+        
         Libro libro = FrameLibro.libro;
-
+        
         CodigoBarras cb = new CodigoBarras();
-
+        
         List<String> listaCodigoEjemplares = new ArrayList<>();
-
+        
         for (int i = 0; i < libro.getEjemplaresDisponibles().size(); i++) {
             listaCodigoEjemplares.add(libro.getEjemplaresDisponibles().get(i).getCodigo());
         }
-
+        
         if (error.equals("")) {
             if (ejemplar == null) {
                 //Todos los ejemplares
                 if (rbByDefault.isSelected()) {
-
+                    
                     if (columnas == 0 || filas == 0) {
-
+                        
                         Action personalizar = new AbstractAction() {
-
+                            
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 setMode(false);
@@ -540,7 +546,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                                 "Personalizar",
                                 personalizar);
                         frameInfo.setVisible(true);
-
+                        
                     } else {
                         try {
                             cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas, posicion);
@@ -555,7 +561,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                     try {
                         filas = Integer.parseInt(cbFilas.getSelectedItem().toString());
                         columnas = Integer.parseInt(cbColumnas.getSelectedItem().toString());
-
+                        
                         cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas, posicion);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -567,11 +573,11 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
             } else {
                 //Un solo ejemplar
                 if (rbByDefault.isSelected()) {
-
+                    
                     if (columnas == 0 || filas == 0) {
-
+                        
                         Action personalizar = new AbstractAction() {
-
+                            
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 setMode(false);
@@ -587,7 +593,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                                 "Personalizar",
                                 personalizar);
                         frameInfo.setVisible(true);
-
+                        
                     } else {
                         try {
                             cb.imprimirIndividual(ejemplar, cb.generarCodigoIndividual(ejemplar.getCodigo()), filas, columnas, posicion, cantidad);
@@ -602,7 +608,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                     try {
                         filas = Integer.parseInt(cbFilas.getSelectedItem().toString());
                         columnas = Integer.parseInt(cbColumnas.getSelectedItem().toString());
-
+                        
                         cb.imprimirIndividual(ejemplar, cb.generarCodigoIndividual(ejemplar.getCodigo()), filas, columnas, posicion, cantidad);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -621,11 +627,13 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
 
     private void rbByDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbByDefaultActionPerformed
         // TODO add your handling code here:
+        controlarComboBox();
         setMode(true);
     }//GEN-LAST:event_rbByDefaultActionPerformed
 
     private void rbPersonalizadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbPersonalizadoActionPerformed
         // TODO add your handling code here:
+        controlarComboBox();
         setMode(false);
     }//GEN-LAST:event_rbPersonalizadoActionPerformed
 
@@ -722,12 +730,18 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
             jLabel2.setForeground(Colores.letraNormal);
         }
     }
-
+    
     public void controlarComboBox() {
         int item = Integer.parseInt(cbFilas.getSelectedItem().toString());
-
+        
         cbColumnas.removeAllItems();
-
+        
+        if (rbByDefault.isSelected()) {
+            jPanel6.setVisible(false);
+        } else {
+            jPanel6.setVisible(true);
+        }
+        
         switch (item) {
             case 10:
             case 7:
@@ -737,18 +751,18 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
             case 2:
                 cbColumnas.addItem(2);
                 break;
-
+            
             case 8:
                 cbColumnas.addItem(3);
                 cbColumnas.addItem(2);
                 break;
-
+            
             case 1:
                 cbColumnas.addItem(1);
                 break;
         }
     }
-
+    
     private void configuracionComboBox() {
         cbFilas.setEditable(false);
         cbFilas.setUI(new comboBoxRender());
@@ -769,7 +783,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 return l;
             }
         });
-
+        
         cbColumnas.setEditable(false);
         cbColumnas.setUI(new comboBoxRender());
         cbColumnas.setRenderer(new DefaultListCellRenderer() {
@@ -790,5 +804,5 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
             }
         });
     }
-
+    
 }
