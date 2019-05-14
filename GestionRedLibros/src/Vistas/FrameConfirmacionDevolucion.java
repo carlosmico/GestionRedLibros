@@ -469,31 +469,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
 
     private void btnImprimirEtiquetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetaActionPerformed
         // TODO add your handling code here:
-        CodigoBarras cb = new CodigoBarras();
-        try {
-            Ejemplar ejemplarActual = historial.getEjemplar();
-            int columnas, filas;
-            columnas = Configuracion.getColumnaLayoutHoja();
-            filas = Configuracion.getFilasLayoutHoja();
-
-            if (columnas == 0 || filas == 0) {
-                Action action = new AbstractAction() {
-
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        new FrameOpciones(null).setVisible(true);
-                    }
-                };
-                new FramePopup(topFrame, "No se ha podido cargar la configuración por defecto.\n"
-                        + "Por favor, selecciona esta configuracion manualmente.",
-                        Imagenes.getImagen("alert-black.png"),
-                        action).setVisible(true);
-            } else {
-                cb.imprimirIndividual(ejemplarActual, cb.generarCodigoIndividual(ejemplarActual.getCodigo()), filas, columnas);
-            }
-        } catch (Exception e) {
-            new FramePopup(topFrame, "No se ha podido imprimir el codigo", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
-        }
+        new FrameEtiquetasPopup(topFrame, historial.getEjemplar()).setVisible(true);
     }//GEN-LAST:event_btnImprimirEtiquetaActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed

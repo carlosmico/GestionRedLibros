@@ -23,16 +23,9 @@ import Utilidades.CodigoBarras;
 import Utilidades.Colores;
 import Utilidades.Configuracion;
 import Utilidades.Imagenes.Imagenes;
-import com.itextpdf.text.DocumentException;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.print.PrinterException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.print.PrintException;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -45,6 +38,7 @@ import javax.swing.JFrame;
 public class FrameEtiquetasPopup extends javax.swing.JDialog {
 
     JFrame parent;
+    Ejemplar ejemplar;
 
     FramePopup frameInfo;
 
@@ -61,7 +55,10 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
     public FrameEtiquetasPopup(JFrame parent) {
         super(parent, true);
         initComponents();
+        this.ejemplar = null;
         this.parent = parent;
+        jPanel10.setVisible(false);
+        pack();
 
         setMode(true); //por defecto tenemos seleccionado la opcion 'por defecto'
 
@@ -74,6 +71,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
     public FrameEtiquetasPopup(JFrame parent, Ejemplar ejemplar) {
         super(parent, true);
         initComponents();
+        this.ejemplar = ejemplar;
         this.parent = parent;
 
         setMode(true); //por defecto tenemos seleccionado la opcion 'por defecto'
@@ -111,19 +109,28 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         jPanel9 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         tfEjemplares1 = new javax.swing.JTextField();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        tfCantidad = new javax.swing.JTextField();
         panelButton = new javax.swing.JPanel();
         btnCancelar = new com.mommoo.flat.button.FlatButton();
         btnAceptar = new com.mommoo.flat.button.FlatButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(400, 460));
+        setMaximumSize(new java.awt.Dimension(400, 20000));
         setMinimumSize(new java.awt.Dimension(400, 460));
-        setPreferredSize(new java.awt.Dimension(400, 460));
+        setPreferredSize(new java.awt.Dimension(400, 520));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBackground(Colores.fondoOscuro);
         jPanel1.setPreferredSize(new java.awt.Dimension(521, 330));
 
         jPanel2.setBackground(Colores.fondo);
+        jPanel2.setPreferredSize(new java.awt.Dimension(400, 389));
 
         text.setBackground(Colores.fondo);
         text.setForeground(Colores.letraNormal);
@@ -140,7 +147,13 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         jLabel1.setText("Filas:");
 
         cbFilas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        cbFilas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "8", "7", "6", "5", "4", "3", "2", "1" }));
+        cbFilas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10", "8", "7", "6", "5", "4", "2", "1" }));
+        cbFilas.setSelectedIndex(1);
+        cbFilas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbFilasItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -150,7 +163,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbFilas, 0, 367, Short.MAX_VALUE)
+                .addComponent(cbFilas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -176,7 +189,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbColumnas, 0, 246, Short.MAX_VALUE)
+                .addComponent(cbColumnas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -268,7 +281,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfEjemplares1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .addComponent(tfEjemplares1)
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -281,28 +294,60 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setText("Cantidad de etiquetas:");
+
+        tfCantidad.setBackground(Colores.fondo);
+        tfCantidad.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        tfCantidad.setForeground(Colores.letraNormal);
+        tfCantidad.setText("0");
+        tfCantidad.setToolTipText("");
+        tfCantidad.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfCantidad)
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(tfCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)))
+        );
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         panelButton.setBackground(Colores.fondo);
@@ -337,19 +382,20 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         panelButton.setLayout(panelButtonLayout);
         panelButtonLayout.setHorizontalGroup(
             panelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelButtonLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(panelButtonLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         panelButtonLayout.setVerticalGroup(
             panelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelButtonLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(panelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -357,15 +403,12 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(text, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(text, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -376,7 +419,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -389,9 +432,9 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 354, Short.MAX_VALUE)
+            .addGap(0, 520, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -402,7 +445,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
         );
 
         pack();
@@ -413,12 +456,25 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        int columnas, filas, posicion;
+        int columnas, filas, posicion = 0, cantidad = 0;
 
         columnas = Configuracion.getColumnaLayoutHoja();
         filas = Configuracion.getFilasLayoutHoja();
 
-        posicion = Integer.parseInt(tfEjemplares1.getText());
+        String error = "";
+        try {
+            posicion = Integer.parseInt(tfEjemplares1.getText());
+        } catch (Exception e) {
+            error += "- El valor de la posición debe ser un valor numérico.\n";
+            e.printStackTrace();
+        }
+
+        try {
+            cantidad = Integer.parseInt(tfCantidad.getText());
+        } catch (Exception e) {
+            error += "- El valor de la cantidad debe ser un valor numérico.";
+            e.printStackTrace();
+        }
 
         Libro libro = FrameLibro.libro;
 
@@ -430,58 +486,106 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
             listaCodigoEjemplares.add(libro.getEjemplaresDisponibles().get(i).getCodigo());
         }
 
-        if (rbByDefault.isSelected()) {
+        if (error.equals("")) {
+            if (ejemplar == null) {
+                //Todos los ejemplares
+                if (rbByDefault.isSelected()) {
 
-            if (columnas == 0 || filas == 0) {
+                    if (columnas == 0 || filas == 0) {
 
-                Action personalizar = new AbstractAction() {
+                        Action personalizar = new AbstractAction() {
 
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        setMode(false);
-                        rbPersonalizado.setSelected(true);
-                        if (frameInfo != null) {
-                            frameInfo.dispose();
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                setMode(false);
+                                rbPersonalizado.setSelected(true);
+                                if (frameInfo != null) {
+                                    frameInfo.dispose();
+                                }
+                            }
+                        };
+                        frameInfo = new FramePopup(null, "No se ha podido cargar la configuración por defecto.\n"
+                                + "Por favor, selecciona esta configuracion manualmente.",
+                                Imagenes.getImagen("alert-black.png"),
+                                "Personalizar",
+                                personalizar);
+                        frameInfo.setVisible(true);
+
+                    } else {
+                        try {
+                            cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas, posicion);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            new FramePopup(this.parent, "No se han podido general los códigos de barras",
+                                    new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                                    "Aceptar").setVisible(true);
                         }
                     }
-                };
-                frameInfo = new FramePopup(null, "No se ha podido cargar la configuración por defecto.\n"
-                        + "Por favor, selecciona esta configuracion manualmente.",
-                        Imagenes.getImagen("alert-black.png"),
-                        "Personalizar",
-                        personalizar);
-                frameInfo.setVisible(true);
+                } else {
+                    try {
+                        filas = Integer.parseInt(cbFilas.getSelectedItem().toString());
+                        columnas = Integer.parseInt(cbColumnas.getSelectedItem().toString());
 
-            } else {
-                try {
-                    if (posicion != 0) {
                         cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas, posicion);
-                    } else {
-                        cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        new FramePopup(this.parent, "No se han podido general los códigos de barras",
+                                new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                                "Aceptar").setVisible(true);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    new FramePopup(this.parent, "No se han podido general los códigos de barras",
-                            new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                            "Aceptar").setVisible(true);
+                }
+            } else {
+                //Un solo ejemplar
+                if (rbByDefault.isSelected()) {
+
+                    if (columnas == 0 || filas == 0) {
+
+                        Action personalizar = new AbstractAction() {
+
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                setMode(false);
+                                rbPersonalizado.setSelected(true);
+                                if (frameInfo != null) {
+                                    frameInfo.dispose();
+                                }
+                            }
+                        };
+                        frameInfo = new FramePopup(null, "No se ha podido cargar la configuración por defecto.\n"
+                                + "Por favor, selecciona esta configuracion manualmente.",
+                                Imagenes.getImagen("alert-black.png"),
+                                "Personalizar",
+                                personalizar);
+                        frameInfo.setVisible(true);
+
+                    } else {
+                        try {
+                            cb.imprimirIndividual(ejemplar, cb.generarCodigoIndividual(ejemplar.getCodigo()), filas, columnas, posicion, cantidad);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            new FramePopup(this.parent, "No se han podido general los códigos de barras",
+                                    new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                                    "Aceptar").setVisible(true);
+                        }
+                    }
+                } else {
+                    try {
+                        filas = Integer.parseInt(cbFilas.getSelectedItem().toString());
+                        columnas = Integer.parseInt(cbColumnas.getSelectedItem().toString());
+
+                        cb.imprimirIndividual(ejemplar, cb.generarCodigoIndividual(ejemplar.getCodigo()), filas, columnas, posicion, cantidad);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        new FramePopup(this.parent, "No se han podido general los códigos de barras",
+                                new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                                "Aceptar").setVisible(true);
+                    }
                 }
             }
         } else {
-            try {
-                filas = Integer.parseInt(cbFilas.getSelectedItem().toString());
-                columnas = Integer.parseInt(cbColumnas.getSelectedItem().toString());
-
-                if (posicion != 0) {
-                    cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas, posicion);
-                } else {
-                    cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                new FramePopup(this.parent, "No se han podido general los códigos de barras",
-                        new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                        "Aceptar").setVisible(true);
-            }
+            new FramePopup(null, "Revisa los siguientes errores: \n" + error,
+                    Imagenes.getImagen("alert-black.png"),
+                    "Aceptar").setVisible(true);
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -494,6 +598,16 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         // TODO add your handling code here:
         setMode(false);
     }//GEN-LAST:event_rbPersonalizadoActionPerformed
+
+    private void cbFilasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbFilasItemStateChanged
+        // TODO add your handling code here:
+        controlarComboBox();
+    }//GEN-LAST:event_cbFilasItemStateChanged
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        controlarComboBox();
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -549,7 +663,9 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -561,6 +677,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
     private javax.swing.JRadioButton rbByDefault;
     private javax.swing.JRadioButton rbPersonalizado;
     private org.jdesktop.swingx.JXLabel text;
+    private javax.swing.JTextField tfCantidad;
     private javax.swing.JTextField tfEjemplares1;
     // End of variables declaration//GEN-END:variables
 
@@ -573,6 +690,32 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         } else {
             jLabel1.setForeground(Colores.letraNormal);
             jLabel2.setForeground(Colores.letraNormal);
+        }
+    }
+
+    public void controlarComboBox() {
+        int item = Integer.parseInt(cbFilas.getSelectedItem().toString());
+
+        cbColumnas.removeAllItems();
+
+        switch (item) {
+            case 10:
+            case 7:
+            case 6:
+            case 5:
+            case 4:
+            case 2:
+                cbColumnas.addItem(2);
+                break;
+
+            case 8:
+                cbColumnas.addItem(3);
+                cbColumnas.addItem(2);
+                break;
+
+            case 1:
+                cbColumnas.addItem(1);
+                break;
         }
     }
 }
