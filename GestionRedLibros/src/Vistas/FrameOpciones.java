@@ -2957,14 +2957,14 @@ public class FrameOpciones extends javax.swing.JFrame {
         textEtiquetasTotales.setText((filas * columnas) + "");
 
         for (int i = 0; i < cbFilas.getItemCount(); i++) {
-            if ((int) cbFilas.getItemAt(i) == filas) {
+            if (Integer.parseInt(cbFilas.getItemAt(i).toString()) == filas) {
                 cbFilas.setSelectedIndex(i);
                 break;
             }
         }
 
         for (int i = 0; i < cbColumnas.getItemCount(); i++) {
-            if ((int) cbColumnas.getItemAt(i) == columnas) {
+            if (Integer.parseInt(cbColumnas.getItemAt(i).toString()) == columnas) {
                 cbColumnas.setSelectedIndex(i);
                 break;
             }

@@ -37,8 +37,7 @@ import javax.swing.JOptionPane;
  */
 public class Configuracion {
 
-    private static final String rutaConfiguracion = Thread.currentThread().getContextClassLoader().getResource("").getPath()
-            + "config.properties";
+    private static final String rutaConfiguracion = "config.properties";
     private static final Properties propiedades = new Properties();
 
     /**
@@ -229,10 +228,8 @@ public class Configuracion {
             filas = Integer.parseInt(propiedades.getProperty("filaHoja"));
         } catch (NumberFormatException e) {
             System.out.println("No se ha podido parsear la propiedad de filas");
-            e.printStackTrace();
         } catch (Exception e) {
             System.out.println("No se han podido cargar las filas");
-            e.printStackTrace();
         }
         return filas;
     }
@@ -247,10 +244,8 @@ public class Configuracion {
             columnas = Integer.parseInt(propiedades.getProperty("columnaHoja"));
         } catch (NumberFormatException e) {
             System.out.println("No se ha podido parsear la propiedad de columnas");
-            e.printStackTrace();
         } catch (Exception e) {
             System.out.println("No se han podido cargar las columnas");
-            e.printStackTrace();
         }
         return columnas;
     }

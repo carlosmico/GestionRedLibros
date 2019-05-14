@@ -534,7 +534,6 @@ public class Main extends javax.swing.JFrame {
 
                                 frameOpciones.setVisible(true);
                                 frameOpciones.setFocusable(true);
-                                frameOpciones.setAlwaysOnTop(true);
 
                                 framePopup = null;
                             }
