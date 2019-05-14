@@ -202,9 +202,10 @@ public class Configuracion {
     public static int getFilasLayoutHoja() {
         int filas = 0;
         try {
+            //System.out.println(propiedades.getProperty("filaHoja"));
             filas = Integer.parseInt(propiedades.getProperty("filaHoja"));
         } catch (NumberFormatException e) {
-            System.out.println("No se ha podido parsear la propiedad");
+            System.out.println("No se ha podido parsear la propiedad de filas");
             e.printStackTrace();
         } catch (Exception e) {
             System.out.println("No se han podido cargar las filas");
@@ -219,9 +220,10 @@ public class Configuracion {
     public static int getColumnaLayoutHoja() {
         int columnas = 0;
         try {
+            //System.out.println(propiedades.getProperty("columnaHoja"));
             columnas = Integer.parseInt(propiedades.getProperty("columnaHoja"));
         } catch (NumberFormatException e) {
-            System.out.println("No se ha podido parsear la propiedad");
+            System.out.println("No se ha podido parsear la propiedad de columnas");
             e.printStackTrace();
         } catch (Exception e) {
             System.out.println("No se han podido cargar las columnas");

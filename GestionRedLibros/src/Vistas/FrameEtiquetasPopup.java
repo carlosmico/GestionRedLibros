@@ -119,7 +119,6 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(400, 20000));
         setMinimumSize(new java.awt.Dimension(400, 460));
-        setPreferredSize(new java.awt.Dimension(400, 520));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -718,4 +717,5 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 break;
         }
     }
+
 }

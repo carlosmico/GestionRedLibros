@@ -35,23 +35,15 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListCellRenderer;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import jdk.nashorn.internal.runtime.ParserException;
 
 /**
  *
@@ -76,6 +68,10 @@ public class FrameOpciones extends javax.swing.JFrame {
         //</editor-fold>
 
         this.main = main;
+
+        seleccionarComboBox();
+
+        textError.setVisible(false);
 
         this.setLocationRelativeTo(null);
 
@@ -115,6 +111,19 @@ public class FrameOpciones extends javax.swing.JFrame {
         textContrasena = new javax.swing.JPasswordField();
         btnMostrarContrasena = new com.mommoo.flat.button.FlatButton();
         btnComprobar = new com.mommoo.flat.button.FlatButton();
+        panelImpresion1 = new javax.swing.JPanel();
+        labelConfiguracion1 = new javax.swing.JLabel();
+        panelIP1 = new javax.swing.JPanel();
+        labelIP1 = new javax.swing.JLabel();
+        textEtiquetasTotales = new javax.swing.JTextField();
+        textError = new javax.swing.JLabel();
+        panelPuerto1 = new javax.swing.JPanel();
+        labelPuerto1 = new javax.swing.JLabel();
+        cbFilas = new javax.swing.JComboBox();
+        panelUsuario1 = new javax.swing.JPanel();
+        labelUsuario2 = new javax.swing.JLabel();
+        cbColumnas = new javax.swing.JComboBox();
+        btnAplicar = new com.mommoo.flat.button.FlatButton();
         panelImportaciones = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
         panelImportCursos = new javax.swing.JPanel();
@@ -253,14 +262,20 @@ public class FrameOpciones extends javax.swing.JFrame {
         panelConfiguracionBBDD.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         labelConfiguracion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        labelConfiguracion.setForeground(Colores.letraNormal);
         labelConfiguracion.setText("Conexión a Base de Datos");
 
         panelIP.setBackground(Colores.fondo);
         panelIP.setPreferredSize(new java.awt.Dimension(515, 40));
 
         labelIP.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        labelIP.setForeground(Colores.letraNormal);
         labelIP.setText("IP");
 
+        textIP.setBackground(Colores.fondo);
+        textIP.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textIP.setForeground(Colores.letraNormal);
+        textIP.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textIP.setPreferredSize(new java.awt.Dimension(250, 32));
         textIP.setSelectedTextColor(Colores.letraBotones);
         textIP.setSelectionColor(Colores.accento);
@@ -290,8 +305,13 @@ public class FrameOpciones extends javax.swing.JFrame {
         panelPuerto.setPreferredSize(new java.awt.Dimension(515, 40));
 
         labelPuerto.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        labelPuerto.setForeground(Colores.letraNormal);
         labelPuerto.setText("Puerto");
 
+        textPuerto.setBackground(Colores.fondo);
+        textPuerto.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textPuerto.setForeground(Colores.letraNormal);
+        textPuerto.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textPuerto.setPreferredSize(new java.awt.Dimension(250, 32));
         textPuerto.setSelectedTextColor(Colores.letraBotones);
         textPuerto.setSelectionColor(Colores.accento);
@@ -320,8 +340,13 @@ public class FrameOpciones extends javax.swing.JFrame {
         panelUsuario.setBackground(Colores.fondo);
 
         labelUsuario1.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        labelUsuario1.setForeground(Colores.letraNormal);
         labelUsuario1.setText("Usuario");
 
+        textUsuario.setBackground(Colores.fondo);
+        textUsuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textUsuario.setForeground(Colores.letraNormal);
+        textUsuario.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textUsuario.setPreferredSize(new java.awt.Dimension(250, 32));
         textUsuario.setSelectedTextColor(Colores.letraBotones);
         textUsuario.setSelectionColor(Colores.accento);
@@ -351,8 +376,13 @@ public class FrameOpciones extends javax.swing.JFrame {
         panelPassword.setPreferredSize(new java.awt.Dimension(263, 40));
 
         labelUsuario.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        labelUsuario.setForeground(Colores.letraNormal);
         labelUsuario.setText("Contraseña");
 
+        textContrasena.setBackground(Colores.fondo);
+        textContrasena.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textContrasena.setForeground(Colores.letraNormal);
+        textContrasena.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         textContrasena.setPreferredSize(new java.awt.Dimension(250, 32));
         textContrasena.setSelectedTextColor(Colores.letraBotones);
         textContrasena.setSelectionColor(Colores.accento);
@@ -392,7 +422,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         );
 
         btnComprobar.setBackground(Colores.botones);
-        btnComprobar.setForeground(Colores.fondo);
+        btnComprobar.setForeground(Colores.letraBotones);
         btnComprobar.setText("Comprobar");
         btnComprobar.setCornerRound(10);
         btnComprobar.addActionListener(new java.awt.event.ActionListener() {
@@ -433,8 +463,181 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addComponent(panelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 384, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnComprobar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        panelImpresion1.setBackground(Colores.fondo);
+        panelImpresion1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        labelConfiguracion1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        labelConfiguracion1.setForeground(Colores.letraNormal);
+        labelConfiguracion1.setText("Configuración de impresión");
+
+        panelIP1.setBackground(Colores.fondo);
+        panelIP1.setPreferredSize(new java.awt.Dimension(515, 40));
+
+        labelIP1.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        labelIP1.setForeground(Colores.letraNormal);
+        labelIP1.setText("Etiquetas por hoja:");
+
+        textEtiquetasTotales.setBackground(Colores.fondo);
+        textEtiquetasTotales.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        textEtiquetasTotales.setForeground(Colores.letraNormal);
+        textEtiquetasTotales.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        textEtiquetasTotales.setPreferredSize(new java.awt.Dimension(250, 32));
+        textEtiquetasTotales.setSelectedTextColor(Colores.letraBotones);
+        textEtiquetasTotales.setSelectionColor(Colores.accento);
+        textEtiquetasTotales.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textEtiquetasTotalesKeyReleased(evt);
+            }
+        });
+
+        textError.setForeground(new java.awt.Color(255, 0, 0));
+        textError.setText("Este valor debe ser numérico");
+
+        javax.swing.GroupLayout panelIP1Layout = new javax.swing.GroupLayout(panelIP1);
+        panelIP1.setLayout(panelIP1Layout);
+        panelIP1Layout.setHorizontalGroup(
+            panelIP1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelIP1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelIP1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textEtiquetasTotales, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textError)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelIP1Layout.setVerticalGroup(
+            panelIP1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelIP1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelIP1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelIP1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textEtiquetasTotales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        panelPuerto1.setBackground(Colores.fondo);
+        panelPuerto1.setPreferredSize(new java.awt.Dimension(515, 40));
+
+        labelPuerto1.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        labelPuerto1.setForeground(Colores.letraNormal);
+        labelPuerto1.setText("Filas:");
+
+        cbFilas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbFilas.setForeground(Colores.letraNormal);
+        cbFilas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10", "8", "7", "6", "5", "4", "2", "1" }));
+        cbFilas.setSelectedIndex(1);
+        cbFilas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbFilasItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelPuerto1Layout = new javax.swing.GroupLayout(panelPuerto1);
+        panelPuerto1.setLayout(panelPuerto1Layout);
+        panelPuerto1Layout.setHorizontalGroup(
+            panelPuerto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPuerto1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelPuerto1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbFilas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelPuerto1Layout.setVerticalGroup(
+            panelPuerto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPuerto1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelPuerto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelPuerto1Layout.createSequentialGroup()
+                        .addComponent(cbFilas)
+                        .addGap(1, 1, 1))
+                    .addComponent(labelPuerto1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        panelUsuario1.setBackground(Colores.fondo);
+
+        labelUsuario2.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        labelUsuario2.setForeground(Colores.letraNormal);
+        labelUsuario2.setText("Columnas:");
+        labelUsuario2.setPreferredSize(new java.awt.Dimension(84, 32));
+        labelUsuario2.setRequestFocusEnabled(false);
+
+        cbColumnas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbColumnas.setForeground(Colores.letraNormal);
+        cbColumnas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "3", "2", "1" }));
+
+        javax.swing.GroupLayout panelUsuario1Layout = new javax.swing.GroupLayout(panelUsuario1);
+        panelUsuario1.setLayout(panelUsuario1Layout);
+        panelUsuario1Layout.setHorizontalGroup(
+            panelUsuario1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelUsuario1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelUsuario2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelUsuario1Layout.setVerticalGroup(
+            panelUsuario1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelUsuario1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelUsuario1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelUsuario1Layout.createSequentialGroup()
+                        .addComponent(cbColumnas)
+                        .addGap(1, 1, 1))
+                    .addComponent(labelUsuario2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        btnAplicar.setBackground(Colores.botones);
+        btnAplicar.setForeground(Colores.letraBotones);
+        btnAplicar.setText("Aplicar");
+        btnAplicar.setCornerRound(10);
+        btnAplicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAplicarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelImpresion1Layout = new javax.swing.GroupLayout(panelImpresion1);
+        panelImpresion1.setLayout(panelImpresion1Layout);
+        panelImpresion1Layout.setHorizontalGroup(
+            panelImpresion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelImpresion1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelImpresion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelIP1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1349, Short.MAX_VALUE)
+                    .addGroup(panelImpresion1Layout.createSequentialGroup()
+                        .addComponent(labelConfiguracion1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(panelUsuario1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelPuerto1, javax.swing.GroupLayout.DEFAULT_SIZE, 1349, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImpresion1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAplicar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        panelImpresion1Layout.setVerticalGroup(
+            panelImpresion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImpresion1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelConfiguracion1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelIP1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelPuerto1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAplicar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -442,20 +645,24 @@ public class FrameOpciones extends javax.swing.JFrame {
         panelGeneral.setLayout(panelGeneralLayout);
         panelGeneralLayout.setHorizontalGroup(
             panelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelGeneralLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelConfiguracionBBDD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeneralLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(panelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelImpresion1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelConfiguracionBBDD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelGeneralLayout.setVerticalGroup(
             panelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGeneralLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelConfiguracionBBDD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(6, 6, 6)
+                .addComponent(panelConfiguracionBBDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelImpresion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        tabbedPage.addTab("Red", panelGeneral);
+        tabbedPage.addTab("General", panelGeneral);
 
         panelImportaciones.setBackground(Colores.fondo);
 
@@ -527,7 +734,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                     .addComponent(btnSeleccionCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnImportarCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         jPanel19.add(panelImportCursos);
@@ -665,7 +872,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                     .addComponent(btnSeleccionAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnImportarAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         jPanel19.add(panelImportAsignaturas);
@@ -1581,7 +1788,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         );
         panelPersonalizacionLayout.setVerticalGroup(
             panelPersonalizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
         );
 
         tabbedPage.addTab("Personalización", panelPersonalizacion);
@@ -1598,7 +1805,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(tabbedPage, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE))
+                .addComponent(tabbedPage))
         );
 
         pack();
@@ -2358,6 +2565,35 @@ public class FrameOpciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_textBuscarLibroEjemploFocusLost
 
+    private void btnAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarActionPerformed
+        // TODO add your handling code here:
+        int filas, columnas;
+
+        filas = Integer.parseInt(cbFilas.getSelectedItem().toString());
+        columnas = Integer.parseInt(cbColumnas.getSelectedItem().toString());
+
+        Configuracion.guardarLayoutHoja(filas, columnas);
+    }//GEN-LAST:event_btnAplicarActionPerformed
+
+    private void textEtiquetasTotalesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textEtiquetasTotalesKeyReleased
+        // TODO add your handling code here:
+        try {
+            Integer.parseInt(textEtiquetasTotales.getText());
+            controlarComboBox();
+            textError.setVisible(false);
+        } catch (Exception e) {
+            textError.setVisible(true);
+        }
+
+    }//GEN-LAST:event_textEtiquetasTotalesKeyReleased
+
+    private void cbFilasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbFilasItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == evt.SELECTED) {
+            controlarColumnas();
+        }
+    }//GEN-LAST:event_cbFilasItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -2395,6 +2631,7 @@ public class FrameOpciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private static com.mommoo.flat.button.FlatButton btnAplicar;
     private static com.mommoo.flat.button.FlatButton btnAyudaEjemplo;
     private static com.mommoo.flat.button.FlatButton btnButonEjemplo;
     private static com.mommoo.flat.button.FlatButton btnComprobar;
@@ -2419,7 +2656,9 @@ public class FrameOpciones extends javax.swing.JFrame {
     private static com.mommoo.flat.button.FlatButton btnSeleccionCursos;
     private static com.mommoo.flat.button.FlatButton btnSeleccionGrupos;
     private static com.mommoo.flat.button.FlatButton btnSeleccionMatriculas;
+    private static javax.swing.JComboBox cbColumnas;
     private static javax.swing.JComboBox cbEjemplo;
+    private static javax.swing.JComboBox cbFilas;
     private static org.jdesktop.swingx.painter.GlossPainter glossPainter1;
     private static javax.swing.JLabel jLabel1;
     private static javax.swing.JLabel jLabel16;
@@ -2446,10 +2685,14 @@ public class FrameOpciones extends javax.swing.JFrame {
     private static javax.swing.JScrollPane jScrollPane1;
     private static javax.swing.JScrollPane jScrollPane2;
     private static javax.swing.JLabel labelConfiguracion;
+    private static javax.swing.JLabel labelConfiguracion1;
     private static javax.swing.JLabel labelIP;
+    private static javax.swing.JLabel labelIP1;
     private static javax.swing.JLabel labelPuerto;
+    private static javax.swing.JLabel labelPuerto1;
     private static javax.swing.JLabel labelUsuario;
     private static javax.swing.JLabel labelUsuario1;
+    private static javax.swing.JLabel labelUsuario2;
     private static javax.swing.JList listEjemplo;
     private static javax.swing.JPanel panelAcento;
     private static javax.swing.JPanel panelBotoneraEjemplo;
@@ -2463,26 +2706,32 @@ public class FrameOpciones extends javax.swing.JFrame {
     private static javax.swing.JPanel panelFondos;
     private static javax.swing.JPanel panelGeneral;
     private static javax.swing.JPanel panelIP;
+    private static javax.swing.JPanel panelIP1;
     private static javax.swing.JPanel panelImportAlumnos;
     private static javax.swing.JPanel panelImportAsignaturas;
     private static javax.swing.JPanel panelImportCursos;
     private static javax.swing.JPanel panelImportGrupos;
     private static javax.swing.JPanel panelImportMatriculas;
     private static javax.swing.JPanel panelImportaciones;
+    private static javax.swing.JPanel panelImpresion1;
     private static javax.swing.JPanel panelLetraBotones;
     private static javax.swing.JPanel panelLetraNormal;
     private static javax.swing.JPanel panelLetraTitulo;
     private static javax.swing.JPanel panelPassword;
     private static javax.swing.JPanel panelPersonalizacion;
     private static javax.swing.JPanel panelPuerto;
+    private static javax.swing.JPanel panelPuerto1;
     private static javax.swing.JPanel panelReiniciar;
     private static javax.swing.JPanel panelSuperior;
     private static javax.swing.JPanel panelTituloEjemplo;
     private static javax.swing.JPanel panelUsuario;
+    private static javax.swing.JPanel panelUsuario1;
     private static javax.swing.JTabbedPane tabbedPage;
     private static javax.swing.JTextField textBuscarLibroEjemplo;
     private static javax.swing.JPasswordField textContrasena;
     private static javax.swing.JLabel textEnunciadoEjemplo;
+    private static javax.swing.JLabel textError;
+    private static javax.swing.JTextField textEtiquetasTotales;
     private static javax.swing.JTextField textIP;
     private static javax.swing.JTextField textPuerto;
     private static javax.swing.JTextField textRutaAlumnos;
@@ -2612,5 +2861,113 @@ public class FrameOpciones extends javax.swing.JFrame {
             System.out.println("Error general al rellenar ComboBox Ejemplo");
         }
 
+    }
+
+    public void controlarComboBox() {
+        int item = Integer.parseInt(textEtiquetasTotales.getText());
+
+        cbFilas.removeAllItems();
+        cbColumnas.removeAllItems();
+
+        switch (item) {
+            case 24:
+                cbFilas.addItem(8);
+                cbColumnas.addItem(3);
+                cbColumnas.addItem(2);
+                break;
+            case 20:
+                cbFilas.addItem(10);
+                cbColumnas.addItem(2);
+                break;
+            case 14:
+                cbFilas.addItem(7);
+                cbColumnas.addItem(2);
+                break;
+            case 12:
+                cbFilas.addItem(6);
+                cbColumnas.addItem(2);
+                break;
+            case 10:
+                cbFilas.addItem(5);
+                cbColumnas.addItem(2);
+                break;
+            case 8:
+                cbFilas.addItem(4);
+                cbColumnas.addItem(2);
+                break;
+            case 4:
+                cbFilas.addItem(2);
+                cbColumnas.addItem(2);
+                break;
+            case 2:
+                cbFilas.addItem(2);
+                cbColumnas.addItem(1);
+                break;
+            case 1:
+                cbFilas.addItem(1);
+                cbColumnas.addItem(1);
+                break;
+            default:
+                cbFilas.addItem(10);
+                cbFilas.addItem(8);
+                cbFilas.addItem(7);
+                cbFilas.addItem(6);
+                cbFilas.addItem(5);
+                cbFilas.addItem(4);
+                cbFilas.addItem(2);
+                cbFilas.addItem(1);
+                cbColumnas.addItem(3);
+                cbColumnas.addItem(2);
+                cbColumnas.addItem(1);
+        }
+    }
+
+    public void controlarColumnas() {
+        int item = Integer.parseInt(cbFilas.getSelectedItem().toString());
+
+        switch (item) {
+            case 10:
+            case 7:
+            case 6:
+            case 5:
+            case 4:
+            case 2:
+                cbColumnas.removeAllItems();
+                cbColumnas.addItem(2);
+                break;
+
+            case 8:
+                cbColumnas.removeAllItems();
+                cbColumnas.addItem(3);
+                cbColumnas.addItem(2);
+                break;
+
+            case 1:
+                cbColumnas.removeAllItems();
+                cbColumnas.addItem(1);
+                break;
+        }
+    }
+
+    private void seleccionarComboBox() {
+        int filas = 0, columnas = 0;
+        filas = Configuracion.getFilasLayoutHoja();
+        columnas = Configuracion.getColumnaLayoutHoja();
+
+        textEtiquetasTotales.setText((filas * columnas) + "");
+
+        for (int i = 0; i < cbFilas.getItemCount(); i++) {
+            if ((int) cbFilas.getItemAt(i) == filas) {
+                cbFilas.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < cbColumnas.getItemCount(); i++) {
+            if ((int) cbColumnas.getItemAt(i) == columnas) {
+                cbColumnas.setSelectedIndex(i);
+                break;
+            }
+        }
     }
 }
