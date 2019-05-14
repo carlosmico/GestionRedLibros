@@ -2177,13 +2177,15 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         if (error.equals("")) {
             try {
-                ComprobarConexion.comprobarConexion(ip, puerto, "institut", usuario, contrasena);
-
-                new FramePopup(this, "Conexión a la base de datos correcta.",
+                if(ComprobarConexion.comprobarConexion(ip, puerto, "institut", usuario, contrasena)){
+                    new FramePopup(this, "Conexión a la base de datos correcta.",
                         new ImageIcon(getClass().getResource("/Imagenes/icons/check-black.png")),
                         "Aceptar").setVisible(true);
-
-                Configuracion.guardarRed(ip, puerto, usuario, contrasena);
+                }else{
+                    new FramePopup(this, "Error en la conexión, revise los parámetros introducidos.",
+                        new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                        "Aceptar").setVisible(true);
+                }
             } catch (Exception e) {
                 new FramePopup(this, "Error en la conexión, revise los parámetros introducidos.",
                         new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
@@ -2194,6 +2196,8 @@ public class FrameOpciones extends javax.swing.JFrame {
                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                     "Aceptar").setVisible(true);
         }
+        
+        Configuracion.guardarRed(ip, puerto, usuario, contrasena);
     }//GEN-LAST:event_btnComprobarActionPerformed
 
     /**
