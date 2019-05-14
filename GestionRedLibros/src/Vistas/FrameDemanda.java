@@ -27,16 +27,13 @@ import Pojos.Libro;
 import Pojos.Matricula;
 import Utilidades.Colores;
 import Utilidades.Imagenes.Imagenes;
-import static Vistas.FrameLibro.libro;
-import java.awt.event.ActionEvent;
+import java.awt.Frame;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
+import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Session;
@@ -64,8 +61,10 @@ public class FrameDemanda extends javax.swing.JFrame {
      */
     public FrameDemanda() {
         initComponents();
-        
+
         this.setLocationRelativeTo(null);
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         daoCurso = new DaoCurso(session);
         daoMatricula = new DaoMatricula(session);
@@ -303,7 +302,7 @@ public class FrameDemanda extends javax.swing.JFrame {
 
             protected void done() {
                 frameCarga.dispose();
-                
+
                 HashMap<String, Integer> contenidos = new HashMap<String, Integer>();
 
                 for (int i = 0; i < listaMatriculas.size(); i++) {
@@ -346,10 +345,10 @@ public class FrameDemanda extends javax.swing.JFrame {
                         contenidoTabla[it][0] = contenido.getNombre_cas();
                         contenidoTabla[it][1] = stock;
                         contenidoTabla[it][2] = entry.getValue();
-                        
-                        if((entry.getValue() - stock) < 0 ){
+
+                        if ((entry.getValue() - stock) < 0) {
                             contenidoTabla[it][3] = 0;
-                        }else{
+                        } else {
                             contenidoTabla[it][3] = entry.getValue() - stock;
                         }
 
@@ -358,11 +357,11 @@ public class FrameDemanda extends javax.swing.JFrame {
 
                     tableModel = new DefaultTableModel(contenidoTabla,
                             new Object[]{"Asignatura", "Ejemplares en stock", "Ejemplares necesarios", "Ejemplares a comprar"}) {
-                        @Override
-                        public boolean isCellEditable(int row, int column) {
-                            return false;
-                        }
-                    };
+                                @Override
+                                public boolean isCellEditable(int row, int column) {
+                                    return false;
+                                }
+                            };
 
                     tabla.setModel(tableModel);
                 } else {

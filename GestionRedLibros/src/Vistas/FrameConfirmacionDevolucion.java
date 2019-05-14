@@ -21,16 +21,10 @@ import Pojos.Ejemplar;
 import Pojos.Historial;
 import Utilidades.CodigoBarras;
 import Utilidades.Colores;
-import Utilidades.Configuracion;
 import Utilidades.ConfirmacionDevolucion;
 import Utilidades.Estado;
-import Utilidades.Imagenes.Imagenes;
 import Vistas.FramePopup;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
 import java.util.Date;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -106,6 +100,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Confirmación");
+        setMinimumSize(new java.awt.Dimension(994, 747));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
