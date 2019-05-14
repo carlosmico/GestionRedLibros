@@ -228,14 +228,14 @@ public class CodigoBarras {
         float etiqueta1x = 0, etiqueta1y = heightPdf - heigthEtiqueta - alturaBordes;
 
         //Contadores de las etiquetas para controlar las páginas necesarias y la iteracion por la que vamos en el do-while
-        int contadorMaxWhile = Math.round(libro.getEjemplares().size() / (etiquetasHorizontal * etiquetasVertical));
+        int contadorMaxWhile = Math.round(libro.getEjemplaresDisponibles().size() / (etiquetasHorizontal * etiquetasVertical));
         int contadorWhile = 0;
 
         do {
             for (int i = 0; i < etiquetasVertical; i++) {
                 for (int j = 0; j < etiquetasHorizontal; j++) {
                     //Controlamos si hemos pintado todas las etiquetas
-                    if (contador == libro.getEjemplares().size()) {
+                    if (contador == libro.getEjemplaresDisponibles().size()) {
                         break;
                     }
 
@@ -305,125 +305,3 @@ public class CodigoBarras {
         }
     }
 }
-
-// FORMA ANTIGUA PARA IMPRIMIR
-/**
- *
- * public void imprimirIndividual(Ejemplar ejemplar, Barcode39 barcode) throws
- * FileNotFoundException, DocumentException, IOException {
- * comprobarDirectorio();
- *
- * String rutapdf = "C://Gestion_Libros//Impresiones//Ejemplar-" +
- * ejemplar.getLibro().getNombre() + "-" + ejemplar.getCodigo() + ".pdf";
- *
- * OutputStream os = new FileOutputStream(new File(rutapdf));
- *
- * Document doc = new Document();
- *
- * PdfWriter pdf = PdfWriter.getInstance(doc, os);
- *
- * doc.open();
- *
- * doc.add(new Paragraph(ejemplar.getLibro().getContenido().getNombre_cas()));
- *
- * Image codeImg = barcode.createImageWithBarcode(pdf.getDirectContent(),
- * BaseColor.BLACK, BaseColor.BLACK);
- *
- * doc.add(codeImg);
- *
- * doc.add(new Paragraph(""));
- *
- * doc.close();
- *
- * os.close();
- *
- * Desktop.getDesktop().open(new File(rutapdf)); }
- *
- * public void imprimirList(Libro libro, List<Barcode39> barcodes) throws
- * PrinterException, FileNotFoundException, DocumentException, IOException,
- * PrintException {
- *
- * comprobarDirectorio();
- *
- * String rutapdf = "C://Gestion_Libros//Impresiones//" + libro.getNombre() +
- * "-CodigosEjemplares.pdf";
- *
- * OutputStream os = new FileOutputStream(new File(rutapdf));
- *
- * Document doc = new Document();
- *
- * PdfWriter pdf = PdfWriter.getInstance(doc, os);
- *
- * doc.open();
- *
- * doc.addTitle("CÓDIGOS EJEMPLARES - " + libro.getNombre());
- *
- * int contador = 32, contadorCeldas = 1;
- *
- * PdfPTable table = new PdfPTable(2);
- *
- * PdfPCell cell;
- *
- * int iteracion = (barcodes.size() * 2) + 4;
- *
- * for (int i = 0; i < iteracion; i++) { int nEjemplar;
- *
- * if (i % 2 == 0) { nEjemplar = (i / 2) - 1; } else { nEjemplar = (i / 2); }
- *
- * if (contador == 0) { contador = 32; doc.newPage(); }
- *
- * if (contadorCeldas <= 2) { if ((iteracion - 5) == i) { cell = new
- * PdfPCell(new Phrase(" ")); } else { cell = new PdfPCell(new
- * Phrase(libro.getContenido().getNombre_cas())); }
- *
- * cell.setBorder(0);
- *
- * table.addCell(cell);
- *
- * if (contadorCeldas == 2) { table.completeRow(); }
- *
- * } else if (contadorCeldas <= 4) {
- * if (nEjemplar >= barcodes.size()) { if (nEjemplar % 2 != 0) { if ((iteracion
- * - 3) == i) { cell = new PdfPCell(new Phrase(" ")); } else { Image codeImg =
- * barcodes.get(nEjemplar - 1).createImageWithBarcode(pdf.getDirectContent(),
- * BaseColor.BLACK, BaseColor.BLACK);
- *
- * cell = new PdfPCell(codeImg); }
- *
- * cell.setBorder(0);
- *
- * table.addCell(cell);
- *
- * if (contadorCeldas == 4) { table.completeRow();
- *
- * doc.add(table); table = new PdfPTable(2);
- *
- * contadorCeldas = 0; } }
- *
- * doc.close();
- *
- * os.close();
- *
- * Desktop.getDesktop().open(new File(rutapdf)); return; }
- *
- * Image codeImg =
- * barcodes.get(nEjemplar).createImageWithBarcode(pdf.getDirectContent(),
- * BaseColor.BLACK, BaseColor.BLACK);
- *
- * cell = new PdfPCell(codeImg);
- *
- * cell.setBorder(0);
- *
- * table.addCell(cell);
- *
- * if (contadorCeldas == 4) { table.completeRow();
- *
- * doc.add(table); table = new PdfPTable(2);
- *
- * contadorCeldas = 0; } }
- *
- * contador--; contadorCeldas++; }
- *
- * }
- *
- */

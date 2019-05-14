@@ -424,8 +424,8 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
 
         List<String> listaCodigoEjemplares = new ArrayList<>();
 
-        for (int i = 0; i < libro.getEjemplares().size(); i++) {
-            listaCodigoEjemplares.add(libro.getEjemplares().get(i).getCodigo());
+        for (int i = 0; i < libro.getEjemplaresDisponibles().size(); i++) {
+            listaCodigoEjemplares.add(libro.getEjemplaresDisponibles().get(i).getCodigo());
         }
 
         if (rbByDefault.isSelected()) {
