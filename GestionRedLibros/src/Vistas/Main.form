@@ -61,7 +61,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="banner" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="wallpaper" min="-2" pref="563" max="-2" attributes="0"/>
+                  <Component id="wallpaper" min="-2" pref="0" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
