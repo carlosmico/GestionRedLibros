@@ -207,25 +207,29 @@ public class Configuracion {
      * @param columna Indica las columnas de etiquetas que tendra la hoja de
      * impresion
      */
-    public static void guardarLayoutHoja(int fila, int columna) {
+    public static void guardarLayoutHoja(int fila, int columna) throws IOException {
+        propiedades.setProperty("filaHoja", fila + "");
+        propiedades.setProperty("columnaHoja", columna + "");
         try {
-            propiedades.setProperty("filaHoja", fila + "");
-            propiedades.setProperty("columnaHoja", columna + "");
-        } catch (Exception e) {
-            new FramePopup(null, "Error al guardar la configuración del layout.",
-                    new ImageIcon("/Imagenes/icons/alert-black.png"),
-                    "Aceptar").setVisible(true);
+            OutputStream output = new FileOutputStream(rutaConfiguracion);
+
+            propiedades.store(output, null);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
     /**
      * Metodo para conseugir las filas del layout de la hoja
      */
-    public static int getFilasLayoutHoja() {
+    public static int getFilasLayoutHoja() throws IOException {
+        propiedades.load(new FileInputStream(rutaConfiguracion));
         int filas = 0;
         try {
-            //System.out.println(propiedades.getProperty("filaHoja"));
-            filas = Integer.parseInt(propiedades.getProperty("filaHoja"));
+            String f = propiedades.getProperty("filaHoja");
+            if (f != null) {
+                filas = Integer.parseInt(f);
+            }
         } catch (NumberFormatException e) {
             System.out.println("No se ha podido parsear la propiedad de filas");
         } catch (Exception e) {
@@ -237,11 +241,15 @@ public class Configuracion {
     /**
      * Metodo para conseguir las columnas del layout de la hoja
      */
-    public static int getColumnaLayoutHoja() {
+    public static int getColumnaLayoutHoja() throws IOException {
+        propiedades.load(new FileInputStream(rutaConfiguracion));
         int columnas = 0;
         try {
-            //System.out.println(propiedades.getProperty("columnaHoja"));
-            columnas = Integer.parseInt(propiedades.getProperty("columnaHoja"));
+            String c = propiedades.getProperty("columnaHoja");
+
+            if (c != null) {
+                columnas = Integer.parseInt(c);
+            }
         } catch (NumberFormatException e) {
             System.out.println("No se ha podido parsear la propiedad de columnas");
         } catch (Exception e) {
