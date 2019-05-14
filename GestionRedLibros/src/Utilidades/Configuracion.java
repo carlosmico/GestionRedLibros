@@ -121,6 +121,7 @@ public class Configuracion {
                     "Aceptar").setVisible(true);
         }
     }
+//
 
     public static Color getColor(String nombreColor) throws FileNotFoundException, IOException {
         propiedades.load(new FileInputStream(rutaConfiguracion));
