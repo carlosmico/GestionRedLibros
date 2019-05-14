@@ -97,7 +97,6 @@ public class FrameOpciones extends javax.swing.JFrame {
         glossPainter1 = new org.jdesktop.swingx.painter.GlossPainter();
         panelSuperior = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnHelp = new com.mommoo.flat.button.FlatButton();
         tabbedPage = new javax.swing.JTabbedPane();
         panelGeneral = new javax.swing.JPanel();
         panelConfiguracionBBDD = new javax.swing.JPanel();
@@ -206,8 +205,6 @@ public class FrameOpciones extends javax.swing.JFrame {
         wallpaper2 = new javax.swing.JLabel();
         wallpaper3 = new javax.swing.JLabel();
         wallpaper4 = new javax.swing.JLabel();
-        panelReiniciar = new javax.swing.JPanel();
-        btnReiniciar = new com.mommoo.flat.button.FlatButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opciones");
@@ -225,34 +222,15 @@ public class FrameOpciones extends javax.swing.JFrame {
         jLabel1.setText("Opciones");
         jLabel1.setPreferredSize(new java.awt.Dimension(122, 75));
 
-        btnHelp.setBackground(Colores.botones);
-        btnHelp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/help.png"))); // NOI18N
-        btnHelp.setCornerRound(10);
-        btnHelp.setPreferredSize(new java.awt.Dimension(63, 63));
-        btnHelp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHelpActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelSuperiorLayout = new javax.swing.GroupLayout(panelSuperior);
         panelSuperior.setLayout(panelSuperiorLayout);
         panelSuperiorLayout.setHorizontalGroup(
             panelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelSuperiorLayout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnHelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelSuperiorLayout.setVerticalGroup(
             panelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelSuperiorLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnHelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
 
         tabbedPage.setBackground(Colores.fondoOscuro);
@@ -955,7 +933,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel6.setForeground(Colores.letraNormal);
-        jLabel6.setText("5. Importación Matriculas:");
+        jLabel6.setText("5. Importación Matrículas:");
 
         textRutaMatriculas.setBackground(Colores.fondo);
         textRutaMatriculas.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -1046,7 +1024,7 @@ public class FrameOpciones extends javax.swing.JFrame {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jPanel20.setBackground(Colores.fondo);
-        jPanel20.setPreferredSize(new java.awt.Dimension(1185, 768));
+        jPanel20.setPreferredSize(new java.awt.Dimension(1185, 500));
 
         jPanel27.setBackground(Colores.fondo);
         jPanel27.setMinimumSize(new java.awt.Dimension(0, 598));
@@ -1618,7 +1596,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                     .addComponent(jLabel17)
                     .addGroup(panelColoresLayout.createSequentialGroup()
                         .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(43, 43, 43))
         );
@@ -1712,37 +1690,6 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panelReiniciar.setBackground(Colores.fondo);
-
-        btnReiniciar.setBackground(Colores.botones);
-        btnReiniciar.setForeground(Colores.letraBotones);
-        btnReiniciar.setText("Aplicar Cambios");
-        btnReiniciar.setToolTipText("");
-        btnReiniciar.setCornerRound(10);
-        btnReiniciar.setPreferredSize(new java.awt.Dimension(111, 32));
-        btnReiniciar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReiniciarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelReiniciarLayout = new javax.swing.GroupLayout(panelReiniciar);
-        panelReiniciar.setLayout(panelReiniciarLayout);
-        panelReiniciarLayout.setHorizontalGroup(
-            panelReiniciarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelReiniciarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnReiniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        panelReiniciarLayout.setVerticalGroup(
-            panelReiniciarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelReiniciarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnReiniciar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
         jPanel27.setLayout(jPanel27Layout);
         jPanel27Layout.setHorizontalGroup(
@@ -1751,7 +1698,6 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelFondos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelReiniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelColores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1762,9 +1708,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 .addComponent(panelFondos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelColores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelReiniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(177, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
@@ -1788,11 +1732,17 @@ public class FrameOpciones extends javax.swing.JFrame {
         panelPersonalizacion.setLayout(panelPersonalizacionLayout);
         panelPersonalizacionLayout.setHorizontalGroup(
             panelPersonalizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1375, Short.MAX_VALUE)
+            .addGroup(panelPersonalizacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1363, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelPersonalizacionLayout.setVerticalGroup(
             panelPersonalizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+            .addGroup(panelPersonalizacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tabbedPage.addTab("Personalización", panelPersonalizacion);
@@ -1814,31 +1764,6 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     *
-     * Controlador del botón de Ayuda
-     */
-    private void btnHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelpActionPerformed
-        // TODO add your handling code here:
-        switch (tabbedPage.getSelectedIndex()) {
-            case 0:
-                //Ayuda de la pestaña general (opciones)
-                break;
-            case 1:
-                //Ayuda de la pestaña Devoluciones (opciones)
-                break;
-            case 2:
-                //Ayuda de la pestaña Entregas (opciones)
-                break;
-            case 3:
-                //Ayuda de la pestaña Gestiones (opciones)
-                break;
-            case 4:
-                //Ayuda de la pestaña Importaciones (opciones)
-                break;
-        }
-    }//GEN-LAST:event_btnHelpActionPerformed
 
     /**
      *
@@ -2177,14 +2102,14 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         if (error.equals("")) {
             try {
-                if(ComprobarConexion.comprobarConexion(ip, puerto, "institut", usuario, contrasena)){
+                if (ComprobarConexion.comprobarConexion(ip, puerto, "institut", usuario, contrasena)) {
                     new FramePopup(this, "Conexión a la base de datos correcta.",
-                        new ImageIcon(getClass().getResource("/Imagenes/icons/check-black.png")),
-                        "Aceptar").setVisible(true);
-                }else{
+                            new ImageIcon(getClass().getResource("/Imagenes/icons/check-black.png")),
+                            "Aceptar").setVisible(true);
+                } else {
                     new FramePopup(this, "Error en la conexión, revise los parámetros introducidos.",
-                        new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-                        "Aceptar").setVisible(true);
+                            new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
+                            "Aceptar").setVisible(true);
                 }
             } catch (Exception e) {
                 new FramePopup(this, "Error en la conexión, revise los parámetros introducidos.",
@@ -2196,7 +2121,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                     "Aceptar").setVisible(true);
         }
-        
+
         Configuracion.guardarRed(ip, puerto, usuario, contrasena);
     }//GEN-LAST:event_btnComprobarActionPerformed
 
@@ -2546,10 +2471,6 @@ public class FrameOpciones extends javax.swing.JFrame {
         frameCarga.setVisible(true);
     }//GEN-LAST:event_wallpaper4MouseClicked
 
-    private void btnReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReiniciarActionPerformed
-
-    }//GEN-LAST:event_btnReiniciarActionPerformed
-
     private void textBuscarLibroEjemploFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textBuscarLibroEjemploFocusGained
         try {
             textBuscarLibroEjemplo.setText("");
@@ -2652,14 +2573,12 @@ public class FrameOpciones extends javax.swing.JFrame {
     private static com.mommoo.flat.button.FlatButton btnAyudaEjemplo;
     private static com.mommoo.flat.button.FlatButton btnButonEjemplo;
     private static com.mommoo.flat.button.FlatButton btnComprobar;
-    private static com.mommoo.flat.button.FlatButton btnHelp;
     private static com.mommoo.flat.button.FlatButton btnImportarAlumnos;
     private static com.mommoo.flat.button.FlatButton btnImportarAsignaturas;
     private static com.mommoo.flat.button.FlatButton btnImportarCursos;
     private static com.mommoo.flat.button.FlatButton btnImportarGrupos;
     private static com.mommoo.flat.button.FlatButton btnImportarMatriculas;
     private static com.mommoo.flat.button.FlatButton btnMostrarContrasena;
-    private static com.mommoo.flat.button.FlatButton btnReiniciar;
     private static javax.swing.JPanel btnSelAcento;
     private static javax.swing.JPanel btnSelFondo;
     private static javax.swing.JPanel btnSelFondoBotones;
@@ -2738,7 +2657,6 @@ public class FrameOpciones extends javax.swing.JFrame {
     private static javax.swing.JPanel panelPersonalizacion;
     private static javax.swing.JPanel panelPuerto;
     private static javax.swing.JPanel panelPuerto1;
-    private static javax.swing.JPanel panelReiniciar;
     private static javax.swing.JPanel panelSuperior;
     private static javax.swing.JPanel panelTituloEjemplo;
     private static javax.swing.JPanel panelUsuario;
@@ -2972,9 +2890,7 @@ public class FrameOpciones extends javax.swing.JFrame {
             filas = Configuracion.getFilasLayoutHoja();
             columnas = Configuracion.getColumnaLayoutHoja();
         } catch (IOException e) {
-            new FramePopup(this, "Error al cargar la configuración de impresión.",
-                    new ImageIcon("alert-black.png"),
-                    "Aceptar").setVisible(true);
+            System.out.println("Error al cargar la configuración de impresión.");
         }
 
         textEtiquetasTotales.setText((filas * columnas) + "");

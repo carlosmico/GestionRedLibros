@@ -20,8 +20,9 @@ package Vistas;
 import Pojos.Historial;
 import Utilidades.Colores;
 import Utilidades.Estado;
-import java.awt.Frame;
+import Utilidades.Imagenes.Imagenes;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -38,7 +39,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
         initComponents();
 
         setLocationRelativeTo(null);
-        //setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         historial = h;
 
@@ -123,7 +124,8 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
         textObservaciones = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1137, 943));
+        setMinimumSize(new java.awt.Dimension(1200, 943));
+        setPreferredSize(new java.awt.Dimension(1200, 943));
 
         panelTitulo1.setBackground(Colores.fondoOscuro);
 
@@ -144,8 +146,11 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
         );
 
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(1137, 350));
+
         panelContent.setBackground(Colores.fondo);
-        panelContent.setPreferredSize(new java.awt.Dimension(1134, 830));
+        panelContent.setPreferredSize(new java.awt.Dimension(1000, 850));
 
         panelInfoGeneral.setBackground(Colores.fondo);
         panelInfoGeneral.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -209,7 +214,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textNombreAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(Colores.fondo);
@@ -302,8 +307,8 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -354,8 +359,8 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         panelInfoEjemplar.setBackground(Colores.fondo);
@@ -497,7 +502,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel21Layout.createSequentialGroup()
                         .addComponent(jLabel21)
-                        .addGap(0, 486, Short.MAX_VALUE))
+                        .addGap(0, 516, Short.MAX_VALUE))
                     .addComponent(textNombreEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -507,8 +512,8 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel21)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textNombreEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(textNombreEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel20.add(jPanel21);
@@ -535,7 +540,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                         .addComponent(textContenidoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addGap(0, 468, Short.MAX_VALUE)))
+                        .addGap(0, 498, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -585,6 +590,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
 
         panelInfoEstado.setBackground(Colores.fondo);
         panelInfoEstado.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        panelInfoEstado.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel9.setBackground(Colores.fondo);
 
@@ -644,7 +650,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addGroup(panelEstadoParent21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelEstadoParent21Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(panelEstado19, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
+                        .addComponent(panelEstado19, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE))
                     .addGroup(panelEstadoParent21Layout.createSequentialGroup()
                         .addComponent(jLabel35)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -711,14 +717,16 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addContainerGap()
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelEstadoParent22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelEstadoParent21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(241, Short.MAX_VALUE))
         );
+
+        panelInfoEstado.add(jPanel9);
 
         jPanel1.setBackground(Colores.fondo);
 
@@ -778,7 +786,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addGroup(panelEstadoParent17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelEstadoParent17Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(panelEstado17, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
+                        .addComponent(panelEstado17, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE))
                     .addGroup(panelEstadoParent17Layout.createSequentialGroup()
                         .addComponent(jLabel31)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -840,6 +848,9 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
         textObservaciones.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         textObservaciones.setForeground(Colores.letraNormal);
         textObservaciones.setRows(5);
+        textObservaciones.setBorder(null);
+        textObservaciones.setSelectedTextColor(Colores.letraBotones);
+        textObservaciones.setSelectionColor(Colores.accento);
         jScrollPane2.setViewportView(textObservaciones);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -895,36 +906,19 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout panelInfoEstadoLayout = new javax.swing.GroupLayout(panelInfoEstado);
-        panelInfoEstado.setLayout(panelInfoEstadoLayout);
-        panelInfoEstadoLayout.setHorizontalGroup(
-            panelInfoEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInfoEstadoLayout.createSequentialGroup()
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        panelInfoEstadoLayout.setVerticalGroup(
-            panelInfoEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInfoEstadoLayout.createSequentialGroup()
-                .addGroup(panelInfoEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelInfoEstadoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        panelInfoEstado.add(jPanel1);
 
         javax.swing.GroupLayout panelContentLayout = new javax.swing.GroupLayout(panelContent);
         panelContent.setLayout(panelContentLayout);
         panelContentLayout.setHorizontalGroup(
             panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelContentLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContentLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 1128, Short.MAX_VALUE)
-                    .addComponent(panelInfoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 1128, Short.MAX_VALUE)
-                    .addComponent(panelInfoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelInfoEjemplar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1125, Short.MAX_VALUE)
+                    .addComponent(panelInfoGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 1125, Short.MAX_VALUE)
+                    .addComponent(panelInfoEstado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panelContentLayout.setVerticalGroup(
             panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -934,8 +928,8 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelInfoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelInfoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addComponent(panelInfoEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jScrollPane1.setViewportView(panelContent);
@@ -945,14 +939,14 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelTitulo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 839, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 868, Short.MAX_VALUE))
         );
 
         pack();
@@ -1090,6 +1084,13 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
 
     public void rellenarDatosHistorial() {
         //Datos info alumno
+        String sexo = historial.getAlumno().getSexo();
+        if (sexo.equals("H")) {
+            imgSexo.setIcon(Imagenes.getImageFromImagenes("person-flat.png"));
+        } else {
+            imgSexo.setIcon(Imagenes.getImageFromImagenes("person-girl-flat.png"));
+        }
+
         textNIAAlumno.setText(historial.getAlumno().getNia());
         textNombreAlumno.setText(
                 historial.getAlumno().getNombre()

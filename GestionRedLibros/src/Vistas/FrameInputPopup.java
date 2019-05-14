@@ -68,8 +68,9 @@ public class FrameInputPopup extends javax.swing.JDialog {
         btnAceptar = new com.mommoo.flat.button.FlatButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Añadir Ejemplares");
         setModal(true);
-        setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(Colores.fondoOscuro);
 

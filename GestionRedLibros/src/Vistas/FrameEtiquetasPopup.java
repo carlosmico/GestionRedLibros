@@ -125,7 +125,6 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         btnAceptar = new com.mommoo.flat.button.FlatButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(400, 20000));
         setMinimumSize(new java.awt.Dimension(400, 460));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -145,7 +144,6 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         text.setText("Ajustes de impresión");
         text.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         text.setMinimumSize(new java.awt.Dimension(375, 36));
-        text.setOpaque(true);
 
         jPanel7.setBackground(Colores.fondo);
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
