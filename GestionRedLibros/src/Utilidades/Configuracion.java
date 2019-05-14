@@ -38,7 +38,7 @@ import javax.swing.JOptionPane;
 public class Configuracion {
 
     private static final String rutaConfiguracion = Thread.currentThread().getContextClassLoader().getResource("").getPath()
-            + "configuracion.properties";
+            + "config.properties";
     private static final Properties propiedades = new Properties();
 
     /**
@@ -63,8 +63,6 @@ public class Configuracion {
 
             propiedades.store(output, null);
         } catch (Exception ex) {
-            ex.printStackTrace();
-
             new FramePopup(new JFrame(), "Error al guardar la configuración de red.",
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
                     "Aceptar").setVisible(true);
@@ -72,23 +70,40 @@ public class Configuracion {
     }
 
     public static String getIp() throws FileNotFoundException, IOException {
-        propiedades.load(new FileInputStream(rutaConfiguracion));
-        return propiedades.getProperty("ip");
+        try {
+            propiedades.load(new FileInputStream(rutaConfiguracion));
+            return propiedades.getProperty("ip");
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     public static String getPuerto() throws FileNotFoundException, IOException {
-        propiedades.load(new FileInputStream(rutaConfiguracion));
-        return propiedades.getProperty("puerto");
+        try {
+            propiedades.load(new FileInputStream(rutaConfiguracion));
+            return propiedades.getProperty("puerto");
+        } catch (Exception e) {
+            return "-1";
+        }
     }
 
     public static String getUsuario() throws FileNotFoundException, IOException {
-        propiedades.load(new FileInputStream(rutaConfiguracion));
-        return propiedades.getProperty("usuario");
+        try {
+            propiedades.load(new FileInputStream(rutaConfiguracion));
+            return propiedades.getProperty("usuario");
+        } catch (Exception e) {
+            return "";
+        }
+
     }
 
     public static String getPassword() throws FileNotFoundException, IOException {
-        propiedades.load(new FileInputStream(rutaConfiguracion));
-        return propiedades.getProperty("password");
+        try {
+            propiedades.load(new FileInputStream(rutaConfiguracion));
+            return propiedades.getProperty("password");
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     /**
@@ -102,8 +117,6 @@ public class Configuracion {
 
             propiedades.store(output, null);
         } catch (Exception ex) {
-            ex.printStackTrace();
-
             new FramePopup(new JFrame(), "Error al guardar la configuración de colores.",
                     new ImageIcon("/Imagenes/icons/alert-black.png"),
                     "Aceptar").setVisible(true);
@@ -180,8 +193,12 @@ public class Configuracion {
     }
 
     public static String getWallpaper() throws FileNotFoundException, IOException {
-        propiedades.load(new FileInputStream(rutaConfiguracion));
-        return propiedades.getProperty("wallpaper");
+        try {
+            propiedades.load(new FileInputStream(rutaConfiguracion));
+            return propiedades.getProperty("wallpaper");
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
@@ -192,8 +209,14 @@ public class Configuracion {
      * impresion
      */
     public static void guardarLayoutHoja(int fila, int columna) {
-        propiedades.setProperty("filaHoja", fila + "");
-        propiedades.setProperty("columnaHoja", columna + "");
+        try {
+            propiedades.setProperty("filaHoja", fila + "");
+            propiedades.setProperty("columnaHoja", columna + "");
+        } catch (Exception e) {
+            new FramePopup(null, "Error al guardar la configuración del layout.",
+                    new ImageIcon("/Imagenes/icons/alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
     }
 
     /**
