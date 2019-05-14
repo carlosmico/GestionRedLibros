@@ -19,17 +19,22 @@ package Vistas;
 
 import Pojos.Ejemplar;
 import Pojos.Libro;
+import Renders.comboBoxRender;
 import Utilidades.CodigoBarras;
 import Utilidades.Colores;
 import Utilidades.Configuracion;
 import Utilidades.Imagenes.Imagenes;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 
 /**
  *
@@ -58,7 +63,8 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         this.ejemplar = null;
         this.parent = parent;
         jPanel10.setVisible(false);
-        pack();
+
+        configuracionComboBox();
 
         setMode(true); //por defecto tenemos seleccionado la opcion 'por defecto'
 
@@ -73,6 +79,8 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         initComponents();
         this.ejemplar = ejemplar;
         this.parent = parent;
+
+        configuracionComboBox();
 
         setMode(true); //por defecto tenemos seleccionado la opcion 'por defecto'
 
@@ -131,21 +139,28 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         jPanel2.setBackground(Colores.fondo);
         jPanel2.setPreferredSize(new java.awt.Dimension(400, 389));
 
-        text.setBackground(Colores.fondo);
-        text.setForeground(Colores.letraNormal);
+        text.setBackground(Colores.fondoOscuro);
+        text.setForeground(Colores.letraTitulo);
         text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         text.setText("Ajustes de impresión");
         text.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         text.setMinimumSize(new java.awt.Dimension(375, 36));
+        text.setOpaque(true);
 
+        jPanel7.setBackground(Colores.fondo);
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        jPanel6.setBackground(Colores.fondo);
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        jPanel4.setBackground(Colores.fondo);
+
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setForeground(Colores.letraNormal);
         jLabel1.setText("Filas:");
 
         cbFilas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbFilas.setForeground(Colores.letraNormal);
         cbFilas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10", "8", "7", "6", "5", "4", "2", "1" }));
         cbFilas.setSelectedIndex(1);
         cbFilas.addItemListener(new java.awt.event.ItemListener() {
@@ -174,10 +189,14 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                     .addComponent(cbFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
+        jPanel5.setBackground(Colores.fondo);
+
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel2.setForeground(Colores.letraNormal);
         jLabel2.setText("Columnas:");
 
         cbColumnas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbColumnas.setForeground(Colores.letraNormal);
         cbColumnas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "3", "2", "1" }));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -222,8 +241,11 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel8.setBackground(Colores.fondo);
+
         eleccion.add(rbByDefault);
         rbByDefault.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        rbByDefault.setForeground(Colores.letraNormal);
         rbByDefault.setSelected(true);
         rbByDefault.setText("Por defecto");
         rbByDefault.addActionListener(new java.awt.event.ActionListener() {
@@ -234,6 +256,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
 
         eleccion.add(rbPersonalizado);
         rbPersonalizado.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        rbPersonalizado.setForeground(Colores.letraNormal);
         rbPersonalizado.setText("Personalizado");
         rbPersonalizado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -262,7 +285,10 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel9.setBackground(Colores.fondo);
+
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setForeground(Colores.letraNormal);
         jLabel3.setText("Posición primera etiqueta:");
 
         tfEjemplares1.setBackground(Colores.fondo);
@@ -293,7 +319,10 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel10.setBackground(Colores.fondo);
+
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setForeground(Colores.letraNormal);
         jLabel4.setText("Cantidad de etiquetas:");
 
         tfCantidad.setBackground(Colores.fondo);
@@ -407,7 +436,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panelButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -416,9 +445,9 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -431,9 +460,9 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 520, Short.MAX_VALUE)
+            .addGap(0, 460, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -444,7 +473,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
         );
 
         pack();
@@ -720,6 +749,48 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 cbColumnas.addItem(1);
                 break;
         }
+    }
+
+    private void configuracionComboBox() {
+        cbFilas.setEditable(false);
+        cbFilas.setUI(new comboBoxRender());
+        cbFilas.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList list, Object value, int index,
+                    boolean isSelected, boolean hasFocus) {
+                JLabel l = (JLabel) super.getListCellRendererComponent(
+                        list, value, index, isSelected, hasFocus);
+                if (isSelected) {
+                    l.setForeground(Colores.letraBotones);
+                    l.setBackground(Colores.accento);
+                } else {
+                    l.setForeground(Colores.letraNormal);
+                    l.setBackground(Colores.fondo);
+                }
+                return l;
+            }
+        });
+
+        cbColumnas.setEditable(false);
+        cbColumnas.setUI(new comboBoxRender());
+        cbColumnas.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList list, Object value, int index,
+                    boolean isSelected, boolean hasFocus) {
+                JLabel l = (JLabel) super.getListCellRendererComponent(
+                        list, value, index, isSelected, hasFocus);
+                if (isSelected) {
+                    l.setForeground(Colores.letraBotones);
+                    l.setBackground(Colores.accento);
+                } else {
+                    l.setForeground(Colores.letraNormal);
+                    l.setBackground(Colores.fondo);
+                }
+                return l;
+            }
+        });
     }
 
 }
