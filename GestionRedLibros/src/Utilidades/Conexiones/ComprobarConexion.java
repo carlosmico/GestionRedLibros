@@ -43,23 +43,25 @@ public class ComprobarConexion {
      *
      * @return
      */
-    public static boolean comprobarConexion(String ip, int puerto, String nombreBD, String usuario, String password) throws Exception  {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection con = null;
-        con = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + puerto + "/" + nombreBD, usuario, password);
-        
-        if(con.isValid(10000)){
-            final PreparedStatement statement = con.prepareStatement("SELECT 1");
-            
-            if(statement != null){
-                return true;
-            }else{
-                return false;
+    public static boolean comprobarConexion(String ip, int puerto, String nombreBD, String usuario, String password) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = null;
+            con = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + puerto + "/" + nombreBD, usuario, password);
+
+            if (con.isValid(10000)) {
+                final PreparedStatement statement = con.prepareStatement("SELECT 1");
+
+                if (statement != null) {
+                    return true;
+                } 
+            } else {
+                con.close();
             }
-            
-        }else{
-            con.close();
-            return false;
+        } catch (Exception e) {
+            System.out.println("Error al comprobar la conexión.");
         }
+        
+        return false;
     }
 }

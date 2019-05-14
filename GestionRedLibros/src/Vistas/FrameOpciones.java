@@ -2979,6 +2979,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 cbFilas.setSelectedIndex(i);
                 break;
             }
+        }
 
         for (int i = 0; i < cbColumnas.getItemCount(); i++) {
             if (Integer.parseInt(cbColumnas.getItemAt(i).toString()) == columnas) {
@@ -2986,5 +2987,7 @@ public class FrameOpciones extends javax.swing.JFrame {
                 break;
             }
         }
+
     }
+
 }

@@ -455,10 +455,14 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        int columnas, filas, posicion = 0, cantidad = 0;
+        int columnas = 0, filas = 0, posicion = 0, cantidad = 0;
 
-        columnas = Configuracion.getColumnaLayoutHoja();
-        filas = Configuracion.getFilasLayoutHoja();
+        try {
+            columnas = Configuracion.getColumnaLayoutHoja();
+            filas = Configuracion.getFilasLayoutHoja();
+        } catch (Exception e) {
+            System.out.println("Error al cargar las filas y columnas.");
+        }
 
         String error = "";
         try {

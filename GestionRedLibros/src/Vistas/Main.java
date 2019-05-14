@@ -89,18 +89,12 @@ public class Main extends javax.swing.JFrame {
             ImageIcon imageIcon = new ImageIcon(image);
 
             wallpaper.setIcon(imageIcon);
-            banner.setVisible(true);
         } catch (Exception e) {
-            BufferedImage img = null;
-
-            img = ImageIO.read(new File("src/Imagenes/wallpapers/1.jpg"));
-
-            Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
-            ImageIcon imageIcon = new ImageIcon(image);
-
-            wallpaper.setIcon(imageIcon);
-            banner.setVisible(true);
+            System.out.println("Error al cargar el wallpaper desde el main.");
         }
+        
+        banner.setVisible(true);
+        
 
         //Carga de configuración inicial
         compruebaConexionBD(true, "Main");
@@ -462,7 +456,6 @@ public class Main extends javax.swing.JFrame {
                                     password);
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
                         existeConexion = false;
                     }
 
