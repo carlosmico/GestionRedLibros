@@ -90,11 +90,18 @@ public class Main extends javax.swing.JFrame {
 
             wallpaper.setIcon(imageIcon);
         } catch (Exception e) {
+            BufferedImage img = null;
+
+            String wallpaperGuardado = Configuracion.getWallpaper();
+
+            img = ImageIO.read(new File("src/Imagenes/wallpapers/1.jpg"));
+
+            Image image = img.getScaledInstance(DimensionesFrame.width, DimensionesFrame.height, Image.SCALE_SMOOTH);
+            ImageIcon imageIcon = new ImageIcon(image);
+
+            wallpaper.setIcon(imageIcon);
             System.out.println("Error al cargar el wallpaper desde el main.");
         }
-        
-        banner.setVisible(true);
-        
 
         //Carga de configuración inicial
         compruebaConexionBD(true, "Main");
@@ -238,7 +245,9 @@ public class Main extends javax.swing.JFrame {
 
         banner.add(jPanel1);
 
+        wallpaper.setBackground(Colores.fondo);
         wallpaper.setForeground(Colores.letraBotones);
+        wallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/wallpapers/1.jpg"))); // NOI18N
         wallpaper.setMinimumSize(new java.awt.Dimension(1, 1));
 
         javax.swing.GroupLayout generalaPanelLayout = new javax.swing.GroupLayout(generalaPanel);
@@ -249,7 +258,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(banner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(wallpaper, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(wallpaper, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         generalaPanelLayout.setVerticalGroup(
             generalaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,7 +266,8 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(banner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(wallpaper, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE))
+                .addComponent(wallpaper, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
