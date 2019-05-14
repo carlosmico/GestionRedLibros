@@ -57,6 +57,12 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     public Main() throws IOException {
+        try {
+            cargaColores();
+        } catch (Exception ex) {
+            System.out.println("Error - Fallo al cargar los colores del programa.");
+        }
+
         initComponents();
 
         topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -72,7 +78,6 @@ public class Main extends javax.swing.JFrame {
 
         //Comprobamos la conexión al servidor
         //Configuramos la imagen de fondo de la pantalla principal
-        //<editor-fold defaultstate="collapsed" desc="Set the wallpaper image">
         try {
             BufferedImage img = null;
 
@@ -95,9 +100,7 @@ public class Main extends javax.swing.JFrame {
 
             wallpaper.setIcon(imageIcon);
             banner.setVisible(true);
-            e.printStackTrace();
         }
-//</editor-fold>
 
         //Carga de configuración inicial
         compruebaConexionBD(true, "Main");
@@ -439,7 +442,7 @@ public class Main extends javax.swing.JFrame {
         if (framePopup == null) {
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
                 protected Void doInBackground() throws InterruptedException {
-                    String ip = "localhost", usuario = "", password = "";
+                    String ip = "localhost", usuario = "root", password = "";
                     Integer puerto = 0;
 
                     try {
@@ -448,14 +451,16 @@ public class Main extends javax.swing.JFrame {
                         usuario = Configuracion.getUsuario();
                         password = Configuracion.getPassword();
 
-                        ComprobarConexion.comprobarConexion(
-                                ip,
-                                puerto,
-                                "institut",
-                                usuario,
-                                password);
-
-                        existeConexion = true;
+                        if (ip.equals("") || puerto.equals("-1")) {
+                            existeConexion = false;
+                        } else {
+                            existeConexion = ComprobarConexion.comprobarConexion(
+                                    ip,
+                                    puerto,
+                                    "institut",
+                                    usuario,
+                                    password);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                         existeConexion = false;
@@ -463,7 +468,9 @@ public class Main extends javax.swing.JFrame {
 
                     gestorSesiones = new GestorSesiones();
 
-                    gestorSesiones.configurarPropiedades(ip, puerto, usuario, password);
+                    if (existeConexion == true) {
+                        gestorSesiones.configurarPropiedades(ip, puerto, usuario, password);
+                    }
 
                     return null;
                 }
@@ -503,9 +510,9 @@ public class Main extends javax.swing.JFrame {
                                         frame = new FrameHistorial_alumno();
                                     }
                                     break;
-                                    
+
                                 case "FrameDemanda":
-                                    if(frameDemanda == null){
+                                    if (frameDemanda == null) {
                                         frame = new FrameDemanda();
                                     }
                                     break;
@@ -514,7 +521,6 @@ public class Main extends javax.swing.JFrame {
                             frame.setVisible(true);
                         }
                     } else {
-
                         Action abrirOpciones = new AbstractAction() {
                             public void actionPerformed(ActionEvent e) {
                                 if (frameOpciones == null) {
@@ -528,7 +534,7 @@ public class Main extends javax.swing.JFrame {
 
                                 frameOpciones.setVisible(true);
                                 frameOpciones.setFocusable(true);
-                                //frameOpciones.setAlwaysOnTop(true);
+                                frameOpciones.setAlwaysOnTop(true);
 
                                 framePopup = null;
                             }
@@ -551,6 +557,17 @@ public class Main extends javax.swing.JFrame {
             }
             frameCarga.setVisible(true);
         }
+    }
+
+    private static void cargaColores() throws Exception {
+        Colores.fondo = Configuracion.getColor(StringsGlobales.color_fondo);
+        Colores.fondoOscuro = Configuracion.getColor(StringsGlobales.color_fondo_oscuro);
+        Colores.botones = Configuracion.getColor(StringsGlobales.color_fondo_botones);
+        Colores.accento = Configuracion.getColor(StringsGlobales.color_acentos);
+        Colores.letraNormal = Configuracion.getColor(StringsGlobales.color_letra_general);
+        Colores.letraBotones = Configuracion.getColor(StringsGlobales.color_letra_botones);
+        Colores.letraTitulo = Configuracion.getColor(StringsGlobales.color_letra_titulos);
+        Colores.campoTextSinFocus = Configuracion.getColor(StringsGlobales.color_letra_noseleccionada);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

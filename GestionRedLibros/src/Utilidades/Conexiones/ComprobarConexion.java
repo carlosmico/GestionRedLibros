@@ -51,7 +51,12 @@ public class ComprobarConexion {
         if(con.isValid(10000)){
             final PreparedStatement statement = con.prepareStatement("SELECT 1");
             
-            return true;
+            if(statement != null){
+                return true;
+            }else{
+                return false;
+            }
+            
         }else{
             con.close();
             return false;
