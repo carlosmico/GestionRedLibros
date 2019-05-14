@@ -1879,22 +1879,6 @@ public class FrameLibro extends javax.swing.JFrame {
     private void btnImprimirEtiquetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetasActionPerformed
 
         new FrameEtiquetasPopup(this).setVisible(true);
-
-        /*CodigoBarras cb = new CodigoBarras();
-         List<String> listaCodigoEjemplares = new ArrayList<>();
-
-         for (int i = 0; i < libro.getEjemplares().size(); i++) {
-         listaCodigoEjemplares.add(libro.getEjemplares().get(i).getCodigo());
-         }
-
-         try {
-         cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares));
-         } catch (Exception e) {
-         e.printStackTrace();
-         new FramePopup(this, "No se han podido general los códigos de barras",
-         new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
-         "Aceptar").setVisible(true);
-         }*/
     }//GEN-LAST:event_btnImprimirEtiquetasActionPerformed
 
     /**
@@ -1940,6 +1924,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private void btnImprimirEtiquetaEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetaEjemplarActionPerformed
         // TODO add your handling code here:
         Ejemplar ejemplarActual = listaEjemplares.get(contadorEjemplar - 1);
+
         CodigoBarras cb = new CodigoBarras();
         try {
             int columnas, filas;
@@ -1947,13 +1932,24 @@ public class FrameLibro extends javax.swing.JFrame {
             filas = Configuracion.getFilasLayoutHoja();
 
             if (columnas == 0 || filas == 0) {
-                cb.imprimirIndividual(ejemplarActual, cb.generarCodigoIndividual(ejemplarActual.getCodigo()), 8, 3);
+                Action action = new AbstractAction() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        new FrameOpciones(null).setVisible(true);
+                    }
+                };
+                new FramePopup(topFrame, "No se ha podido cargar la configuración por defecto.\n"
+                        + "Por favor, selecciona esta configuracion manualmente.",
+                        Imagenes.getImagen("alert-black.png"),
+                        action).setVisible(true);
             } else {
                 cb.imprimirIndividual(ejemplarActual, cb.generarCodigoIndividual(ejemplarActual.getCodigo()), filas, columnas);
             }
         } catch (Exception e) {
             new FramePopup(this, "No se ha podido imprimir el codigo", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
         }
+
     }//GEN-LAST:event_btnImprimirEtiquetaEjemplarActionPerformed
 
     private void btnAnteriorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnteriorMouseClicked
