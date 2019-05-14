@@ -74,6 +74,8 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         seleccionarComboBox();
 
+        configuracionComboBox();
+
         textError.setVisible(false);
 
         this.setLocationRelativeTo(null);
@@ -2987,6 +2989,48 @@ public class FrameOpciones extends javax.swing.JFrame {
             }
         }
 
+    }
+
+    private void configuracionComboBox() {
+        cbFilas.setEditable(false);
+        cbFilas.setUI(new comboBoxRender());
+        cbFilas.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList list, Object value, int index,
+                    boolean isSelected, boolean hasFocus) {
+                JLabel l = (JLabel) super.getListCellRendererComponent(
+                        list, value, index, isSelected, hasFocus);
+                if (isSelected) {
+                    l.setForeground(Colores.letraBotones);
+                    l.setBackground(Colores.accento);
+                } else {
+                    l.setForeground(Colores.letraNormal);
+                    l.setBackground(Colores.fondo);
+                }
+                return l;
+            }
+        });
+
+        cbColumnas.setEditable(false);
+        cbColumnas.setUI(new comboBoxRender());
+        cbColumnas.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList list, Object value, int index,
+                    boolean isSelected, boolean hasFocus) {
+                JLabel l = (JLabel) super.getListCellRendererComponent(
+                        list, value, index, isSelected, hasFocus);
+                if (isSelected) {
+                    l.setForeground(Colores.letraBotones);
+                    l.setBackground(Colores.accento);
+                } else {
+                    l.setForeground(Colores.letraNormal);
+                    l.setBackground(Colores.fondo);
+                }
+                return l;
+            }
+        });
     }
 
 }
