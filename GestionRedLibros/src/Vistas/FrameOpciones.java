@@ -209,7 +209,6 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opciones");
-        setAlwaysOnTop(true);
         setMinimumSize(new java.awt.Dimension(765, 50));
         setPreferredSize(new java.awt.Dimension(1377, 900));
         setResizable(false);
