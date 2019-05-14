@@ -35,11 +35,14 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.SwingWorker;
@@ -2572,7 +2575,16 @@ public class FrameOpciones extends javax.swing.JFrame {
         filas = Integer.parseInt(cbFilas.getSelectedItem().toString());
         columnas = Integer.parseInt(cbColumnas.getSelectedItem().toString());
 
-        Configuracion.guardarLayoutHoja(filas, columnas);
+        try {
+            Configuracion.guardarLayoutHoja(filas, columnas);
+            new FramePopup(this, "Configuración de impresión guardada correctamente.",
+                    new ImageIcon("check-black.png"),
+                    "Aceptar").setVisible(true);
+        } catch (IOException ex) {
+            new FramePopup(this, "Error al guardar la configuración de impresión.",
+                    new ImageIcon("alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
     }//GEN-LAST:event_btnAplicarActionPerformed
 
     private void textEtiquetasTotalesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textEtiquetasTotalesKeyReleased
@@ -2951,22 +2963,30 @@ public class FrameOpciones extends javax.swing.JFrame {
 
     private void seleccionarComboBox() {
         int filas = 0, columnas = 0;
-        filas = Configuracion.getFilasLayoutHoja();
-        columnas = Configuracion.getColumnaLayoutHoja();
+        try {
+            filas = Configuracion.getFilasLayoutHoja();
+            columnas = Configuracion.getColumnaLayoutHoja();
+        } catch (IOException e) {
+            new FramePopup(this, "Error al cargar la configuración de impresión.",
+                    new ImageIcon("alert-black.png"),
+                    "Aceptar").setVisible(true);
+        }
 
         textEtiquetasTotales.setText((filas * columnas) + "");
 
-        for (int i = 0; i < cbFilas.getItemCount(); i++) {
-            if ((int) cbFilas.getItemAt(i) == filas) {
-                cbFilas.setSelectedIndex(i);
-                break;
+        if (filas != 0 && columnas != 0) {
+            for (int i = 0; i < cbFilas.getItemCount(); i++) {
+                if (Integer.parseInt(cbFilas.getItemAt(i).toString()) == filas) {
+                    cbFilas.setSelectedIndex(i);
+                    break;
+                }
             }
-        }
 
-        for (int i = 0; i < cbColumnas.getItemCount(); i++) {
-            if ((int) cbColumnas.getItemAt(i) == columnas) {
-                cbColumnas.setSelectedIndex(i);
-                break;
+            for (int i = 0; i < cbColumnas.getItemCount(); i++) {
+                if (Integer.parseInt(cbColumnas.getItemAt(i).toString()) == columnas) {
+                    cbColumnas.setSelectedIndex(i);
+                    break;
+                }
             }
         }
     }
