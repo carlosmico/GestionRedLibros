@@ -27,7 +27,10 @@ import Utilidades.Estado;
 import Utilidades.Imagenes.Imagenes;
 import Vistas.FramePopup;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.util.Date;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -466,35 +469,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
 
     private void btnImprimirEtiquetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirEtiquetaActionPerformed
         // TODO add your handling code here:
-        SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-
-            protected Void doInBackground() throws InterruptedException {
-                CodigoBarras cb = new CodigoBarras();
-                try {
-                    Ejemplar ejemplarActual = historial.getEjemplar();
-                    int columnas, filas;
-                    columnas = Configuracion.getColumnaLayoutHoja();
-                    filas = Configuracion.getFilasLayoutHoja();
-
-                    if (columnas == 0 || filas == 0) {
-                        cb.imprimirIndividual(ejemplarActual, cb.generarCodigoIndividual(ejemplarActual.getCodigo()), 8, 3);
-                    } else {
-                        cb.imprimirIndividual(ejemplarActual, cb.generarCodigoIndividual(ejemplarActual.getCodigo()), filas, columnas);
-                    }
-                } catch (Exception e) {
-                    new FramePopup(topFrame, "No se ha podido imprimir el codigo", Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
-                }
-                return null;
-            }
-
-            protected void done() {
-
-                framePopup.dispose();
-            }
-        };
-        worker.execute();
-        framePopup = new FramePopup(this, "Generando etiqueta de impresión...");
-        framePopup.setVisible(true);
+        new FrameEtiquetasPopup(topFrame, historial.getEjemplar()).setVisible(true);
     }//GEN-LAST:event_btnImprimirEtiquetaActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed

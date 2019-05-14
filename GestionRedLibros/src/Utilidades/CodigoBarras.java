@@ -99,10 +99,11 @@ public class CodigoBarras {
      * @throws DocumentException
      * @throws IOException
      */
-    public void imprimirIndividual(Ejemplar ejemplar, Barcode39 barcode, int filas, int columnas) throws FileNotFoundException, DocumentException, IOException {
+    public void imprimirIndividual(Ejemplar ejemplar, Barcode39 barcode, int filas, int columnas, int posicion, int cantidad) throws FileNotFoundException, DocumentException, IOException {
         comprobarDirectorio();
 
         int numEjemplar = 0;
+
         for (int i = 0; i < ejemplar.getLibro().getEjemplares().size(); i++) {
             if (ejemplar.getLibro().getEjemplares().get(i).equals(ejemplar)) {
                 numEjemplar = i;
@@ -122,23 +123,23 @@ public class CodigoBarras {
 
         doc.addTitle("CÓDIGO EJEMPLAR - " + ejemplar.getLibro().getNombre() + "(\"" + numEjemplar + "\")");
 
-        int contador = 0;
+        int contador = 0, pos = 0;
 
         Image codeImgBase = barcode.createImageWithBarcode(pdf.getDirectContent(),
                 BaseColor.BLACK, BaseColor.BLACK);
 
         //Etiquetas que queremos que se impriman en modo individual 
-        int maxEtiquetas = 1;
-
-        int bordes = 2;
-        int alturaBordes = 21;
-        int totalBordes = alturaBordes * bordes;
+        int maxEtiquetas = cantidad;
 
         int etiquetasVertical = filas; //Etiquetas que caben verticalmente en el papel
         int etiquetasHorizontal = columnas; //Etiquetas que caben horizontalmente en el papel
 
         //Altura y anchura real de la pagina A4
         float heightPdf = PageSize.A4.getHeight(), widthPdf = PageSize.A4.getWidth();
+
+        //Altura de los bordes
+        int bordes = 2, alturaBordes = 21;
+        int totalBordes = bordes * alturaBordes;
 
         //Altura y anchura real de las etiquetas
         float heigthEtiqueta = (heightPdf - totalBordes) / etiquetasVertical, widthEtiqueta = widthPdf / etiquetasHorizontal;
@@ -151,19 +152,22 @@ public class CodigoBarras {
 
         for (int i = 0; i < etiquetasVertical; i++) {
             for (int j = 0; j < etiquetasHorizontal; j++) {
-                //Controlamos si hemos pintado todas las etiquetas
-                if (contador == maxEtiquetas) {
-                    break;
-                }
+                if (pos >= posicion) {
+                    //Controlamos si hemos pintado todas las etiquetas
+                    if (contador == maxEtiquetas) {
+                        break;
+                    }
 
-                //Pintamos las etiquetas
-                Image codeImg = barcode.createImageWithBarcode(pdf.getDirectContent(),
-                        BaseColor.BLACK, BaseColor.BLACK);
-                float x = etiqueta1x + (widthEtiqueta * j), y = etiqueta1y - (heigthEtiqueta * i);
-                codeImg.setAbsolutePosition(x + ((widthEtiqueta / 2) - (widthCodigo / 2)),
-                        y + ((heigthEtiqueta / 2) - (heigthCodigo / 2)));
-                doc.add(codeImg);
-                contador++;
+                    //Pintamos las etiquetas
+                    Image codeImg = barcode.createImageWithBarcode(pdf.getDirectContent(),
+                            BaseColor.BLACK, BaseColor.BLACK);
+                    float x = etiqueta1x + (widthEtiqueta * j), y = etiqueta1y - (heigthEtiqueta * i);
+                    codeImg.setAbsolutePosition(x + ((widthEtiqueta / 2) - (widthCodigo / 2)),
+                            y + ((heigthEtiqueta / 2) - (heigthCodigo / 2)));
+                    doc.add(codeImg);
+                    contador++;
+                }
+                pos++;
             }
         }
         doc.newPage();
@@ -181,13 +185,17 @@ public class CodigoBarras {
      *
      * @param libro
      * @param barcodes
+     * @param filas
+     * @param columnas
+     * @param filaStart
+     * @param columnaStart
      * @throws PrinterException
      * @throws FileNotFoundException
      * @throws DocumentException
      * @throws IOException
      * @throws PrintException
      */
-    public void imprimirList(Libro libro, List<Barcode39> barcodes, int filas, int columnas) throws PrinterException, FileNotFoundException, DocumentException, IOException, PrintException {
+    public void imprimirList(Libro libro, List<Barcode39> barcodes, int filas, int columnas, int posicion) throws PrinterException, FileNotFoundException, DocumentException, IOException, PrintException {
 
         comprobarDirectorio();
 
@@ -203,20 +211,20 @@ public class CodigoBarras {
 
         doc.addTitle("CÓDIGOS EJEMPLARES - " + libro.getNombre());
 
-        int contador = 0;
+        int contador = 0, pos = 0;
 
         Image codeImgBase = barcodes.get(0).createImageWithBarcode(pdf.getDirectContent(),
                 BaseColor.BLACK, BaseColor.BLACK);
-
-        int bordes = 2;
-        int alturaBordes = 21;
-        int totalBordes = alturaBordes * bordes;
 
         int etiquetasVertical = filas; //Etiquetas que caben verticalmente en el papel
         int etiquetasHorizontal = columnas; //Etiquetas que caben horizontalmente en el papel
 
         //Altura y anchura real de la pagina A4
         float heightPdf = PageSize.A4.getHeight(), widthPdf = PageSize.A4.getWidth();
+
+        //Altura de los bordes
+        int bordes = 2, alturaBordes = 21;
+        int totalBordes = bordes * alturaBordes;
 
         //Altura y anchura real de las etiquetas
         float heigthEtiqueta = (heightPdf - totalBordes) / etiquetasVertical, widthEtiqueta = widthPdf / etiquetasHorizontal;
@@ -228,25 +236,28 @@ public class CodigoBarras {
         float etiqueta1x = 0, etiqueta1y = heightPdf - heigthEtiqueta - alturaBordes;
 
         //Contadores de las etiquetas para controlar las páginas necesarias y la iteracion por la que vamos en el do-while
-        int contadorMaxWhile = Math.round(libro.getEjemplares().size() / (etiquetasHorizontal * etiquetasVertical));
+        int contadorMaxWhile = Math.round(libro.getEjemplaresDisponibles().size() / (etiquetasHorizontal * etiquetasVertical)) + posicion;
         int contadorWhile = 0;
 
         do {
             for (int i = 0; i < etiquetasVertical; i++) {
                 for (int j = 0; j < etiquetasHorizontal; j++) {
-                    //Controlamos si hemos pintado todas las etiquetas
-                    if (contador == libro.getEjemplares().size()) {
-                        break;
-                    }
+                    if (pos >= posicion) {
+                        //Controlamos si hemos pintado todas las etiquetas
+                        if (contador == libro.getEjemplaresDisponibles().size()) {
+                            break;
+                        }
 
-                    //Pintamos las etiquetas
-                    Image codeImg = barcodes.get(contador).createImageWithBarcode(pdf.getDirectContent(),
-                            BaseColor.BLACK, BaseColor.BLACK);
-                    float x = etiqueta1x + (widthEtiqueta * j), y = etiqueta1y - (heigthEtiqueta * i);
-                    codeImg.setAbsolutePosition(x + ((widthEtiqueta / 2) - (widthCodigo / 2)),
-                            y + ((heigthEtiqueta / 2) - (heigthCodigo / 2)));
-                    doc.add(codeImg);
-                    contador++;
+                        //Pintamos las etiquetas
+                        Image codeImg = barcodes.get(contador).createImageWithBarcode(pdf.getDirectContent(),
+                                BaseColor.BLACK, BaseColor.BLACK);
+                        float x = etiqueta1x + (widthEtiqueta * j), y = etiqueta1y - (heigthEtiqueta * i);
+                        codeImg.setAbsolutePosition(x + ((widthEtiqueta / 2) - (widthCodigo / 2)),
+                                y + ((heigthEtiqueta / 2) - (heigthCodigo / 2)));
+                        doc.add(codeImg);
+                        contador++;
+                    }
+                    pos++;
                 }
             }
             doc.newPage();
@@ -305,125 +316,3 @@ public class CodigoBarras {
         }
     }
 }
-
-// FORMA ANTIGUA PARA IMPRIMIR
-/**
- *
- * public void imprimirIndividual(Ejemplar ejemplar, Barcode39 barcode) throws
- * FileNotFoundException, DocumentException, IOException {
- * comprobarDirectorio();
- *
- * String rutapdf = "C://Gestion_Libros//Impresiones//Ejemplar-" +
- * ejemplar.getLibro().getNombre() + "-" + ejemplar.getCodigo() + ".pdf";
- *
- * OutputStream os = new FileOutputStream(new File(rutapdf));
- *
- * Document doc = new Document();
- *
- * PdfWriter pdf = PdfWriter.getInstance(doc, os);
- *
- * doc.open();
- *
- * doc.add(new Paragraph(ejemplar.getLibro().getContenido().getNombre_cas()));
- *
- * Image codeImg = barcode.createImageWithBarcode(pdf.getDirectContent(),
- * BaseColor.BLACK, BaseColor.BLACK);
- *
- * doc.add(codeImg);
- *
- * doc.add(new Paragraph(""));
- *
- * doc.close();
- *
- * os.close();
- *
- * Desktop.getDesktop().open(new File(rutapdf)); }
- *
- * public void imprimirList(Libro libro, List<Barcode39> barcodes) throws
- * PrinterException, FileNotFoundException, DocumentException, IOException,
- * PrintException {
- *
- * comprobarDirectorio();
- *
- * String rutapdf = "C://Gestion_Libros//Impresiones//" + libro.getNombre() +
- * "-CodigosEjemplares.pdf";
- *
- * OutputStream os = new FileOutputStream(new File(rutapdf));
- *
- * Document doc = new Document();
- *
- * PdfWriter pdf = PdfWriter.getInstance(doc, os);
- *
- * doc.open();
- *
- * doc.addTitle("CÓDIGOS EJEMPLARES - " + libro.getNombre());
- *
- * int contador = 32, contadorCeldas = 1;
- *
- * PdfPTable table = new PdfPTable(2);
- *
- * PdfPCell cell;
- *
- * int iteracion = (barcodes.size() * 2) + 4;
- *
- * for (int i = 0; i < iteracion; i++) { int nEjemplar;
- *
- * if (i % 2 == 0) { nEjemplar = (i / 2) - 1; } else { nEjemplar = (i / 2); }
- *
- * if (contador == 0) { contador = 32; doc.newPage(); }
- *
- * if (contadorCeldas <= 2) { if ((iteracion - 5) == i) { cell = new
- * PdfPCell(new Phrase(" ")); } else { cell = new PdfPCell(new
- * Phrase(libro.getContenido().getNombre_cas())); }
- *
- * cell.setBorder(0);
- *
- * table.addCell(cell);
- *
- * if (contadorCeldas == 2) { table.completeRow(); }
- *
- * } else if (contadorCeldas <= 4) {
- * if (nEjemplar >= barcodes.size()) { if (nEjemplar % 2 != 0) { if ((iteracion
- * - 3) == i) { cell = new PdfPCell(new Phrase(" ")); } else { Image codeImg =
- * barcodes.get(nEjemplar - 1).createImageWithBarcode(pdf.getDirectContent(),
- * BaseColor.BLACK, BaseColor.BLACK);
- *
- * cell = new PdfPCell(codeImg); }
- *
- * cell.setBorder(0);
- *
- * table.addCell(cell);
- *
- * if (contadorCeldas == 4) { table.completeRow();
- *
- * doc.add(table); table = new PdfPTable(2);
- *
- * contadorCeldas = 0; } }
- *
- * doc.close();
- *
- * os.close();
- *
- * Desktop.getDesktop().open(new File(rutapdf)); return; }
- *
- * Image codeImg =
- * barcodes.get(nEjemplar).createImageWithBarcode(pdf.getDirectContent(),
- * BaseColor.BLACK, BaseColor.BLACK);
- *
- * cell = new PdfPCell(codeImg);
- *
- * cell.setBorder(0);
- *
- * table.addCell(cell);
- *
- * if (contadorCeldas == 4) { table.completeRow();
- *
- * doc.add(table); table = new PdfPTable(2);
- *
- * contadorCeldas = 0; } }
- *
- * contador--; contadorCeldas++; }
- *
- * }
- *
- */
