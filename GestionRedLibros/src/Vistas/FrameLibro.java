@@ -1270,18 +1270,33 @@ public class FrameLibro extends javax.swing.JFrame {
         btnBadStatus.setForeground(Colores.letraNormal);
         btnBadStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnBadStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bad_disabled.png"))); // NOI18N
+        btnBadStatus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBadStatusMouseClicked(evt);
+            }
+        });
         panelEstado15.add(btnBadStatus);
 
         btnRegularStatus.setBackground(Colores.letraNormal);
         btnRegularStatus.setForeground(Colores.letraNormal);
         btnRegularStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnRegularStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regular_disabled.png"))); // NOI18N
+        btnRegularStatus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegularStatusMouseClicked(evt);
+            }
+        });
         panelEstado15.add(btnRegularStatus);
 
         btnGoodStatus.setBackground(Colores.letraNormal);
         btnGoodStatus.setForeground(Colores.letraNormal);
         btnGoodStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnGoodStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good.png"))); // NOI18N
+        btnGoodStatus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGoodStatusMouseClicked(evt);
+            }
+        });
         panelEstado15.add(btnGoodStatus);
 
         javax.swing.GroupLayout panelEstadoParent15Layout = new javax.swing.GroupLayout(panelEstadoParent15);
@@ -2331,6 +2346,27 @@ public class FrameLibro extends javax.swing.JFrame {
         stock.setVisible(true);
     }//GEN-LAST:event_btnVerStockActionPerformed
 
+    private void btnBadStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBadStatusMouseClicked
+        // TODO add your handling code here:
+        modificarEjemplar(Estado.deteriorado, contadorEjemplar-1);
+        
+        setEstado(Estado.deteriorado);
+    }//GEN-LAST:event_btnBadStatusMouseClicked
+
+    private void btnRegularStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegularStatusMouseClicked
+        // TODO add your handling code here:
+        modificarEjemplar(Estado.usado, contadorEjemplar-1);
+        
+        setEstado(Estado.usado);
+    }//GEN-LAST:event_btnRegularStatusMouseClicked
+
+    private void btnGoodStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGoodStatusMouseClicked
+        // TODO add your handling code here:
+        modificarEjemplar(Estado.nuevo, contadorEjemplar-1);
+        
+        setEstado(Estado.nuevo);
+    }//GEN-LAST:event_btnGoodStatusMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2730,15 +2766,7 @@ public class FrameLibro extends javax.swing.JFrame {
         textTotalEjemplares.setText(contadorEjemplar + " de " + listaEjemplares.size()
         );
 
-        int ejemplaresDisponibles = 0;
-
-        for (int i = 0; i < listaEjemplares.size(); i++) {
-            if (listaEjemplares.get(i).getEstado() != Estado.deteriorado) {
-                ejemplaresDisponibles++;
-            }
-        }
-
-        textEjemplaresDisponibles.setText("(Disponibles: " + ejemplaresDisponibles + ")");
+        textEjemplaresDisponibles.setText("(Disponibles: " + libro.getEjemplaresDisponibles().size() + ")");
 
         //Panel del codigo
         Ejemplar ejemplarActual = listaEjemplares.get(contadorEjemplar - 1);
@@ -2922,7 +2950,7 @@ public class FrameLibro extends javax.swing.JFrame {
         } else if (listaEjemplares != null) {
             setVisiblePanelAlumno(listaEjemplares.get(contadorEjemplar - 1).isPrestado());
             if (!listaEjemplares.get(contadorEjemplar - 1).isPrestado()) {
-                textNoPrestado.setText("Este ejemplar no se ha prestado a ningún alumno.");
+                textNoPrestado.setText("Este libro no se encuentra prestado por el momento.");
             }
         }
     }
@@ -2998,5 +3026,19 @@ public class FrameLibro extends javax.swing.JFrame {
 
     public static void actualizarEjemplaresLibro(int nEjemplares) {
         libro.setUnidades(libro.getUnidades() + nEjemplares);
+    }
+    
+    private void modificarEjemplar(int estado, int nEjemplar){
+        if(libro != null){
+            List<Ejemplar> ejemplares = libro.getEjemplares();
+            
+            Ejemplar e = ejemplares.get(nEjemplar);
+            
+            e.setEstado(estado);
+
+            libro.setEjemplares(ejemplares);
+            
+            daoLibro.actualizar(libro);
+        }
     }
 }
