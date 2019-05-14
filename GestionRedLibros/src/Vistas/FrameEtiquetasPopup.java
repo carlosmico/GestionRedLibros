@@ -413,10 +413,12 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        int columnas, filas;
+        int columnas, filas, posicion;
 
         columnas = Configuracion.getColumnaLayoutHoja();
         filas = Configuracion.getFilasLayoutHoja();
+
+        posicion = Integer.parseInt(tfEjemplares1.getText());
 
         Libro libro = FrameLibro.libro;
 
@@ -431,13 +433,6 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         if (rbByDefault.isSelected()) {
 
             if (columnas == 0 || filas == 0) {
-                Action opciones = new AbstractAction() {
-
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        new FrameOpciones(null).setVisible(true);
-                    }
-                };
 
                 Action personalizar = new AbstractAction() {
 
@@ -446,20 +441,24 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                         setMode(false);
                         rbPersonalizado.setSelected(true);
                         if (frameInfo != null) {
-                            frameInfo.setVisible(false);
+                            frameInfo.dispose();
                         }
                     }
                 };
                 frameInfo = new FramePopup(null, "No se ha podido cargar la configuración por defecto.\n"
                         + "Por favor, selecciona esta configuracion manualmente.",
                         Imagenes.getImagen("alert-black.png"),
-                        "Personalizar", "Opciones",
-                        personalizar, opciones);
+                        "Personalizar",
+                        personalizar);
                 frameInfo.setVisible(true);
 
             } else {
                 try {
-                    cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas);
+                    if (posicion != 0) {
+                        cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas, posicion);
+                    } else {
+                        cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     new FramePopup(this.parent, "No se han podido general los códigos de barras",
@@ -472,7 +471,11 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
                 filas = Integer.parseInt(cbFilas.getSelectedItem().toString());
                 columnas = Integer.parseInt(cbColumnas.getSelectedItem().toString());
 
-                cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas);
+                if (posicion != 0) {
+                    cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas, posicion);
+                } else {
+                    cb.imprimirList(libro, cb.generarCodigoList(listaCodigoEjemplares), filas, columnas);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 new FramePopup(this.parent, "No se han podido general los códigos de barras",
