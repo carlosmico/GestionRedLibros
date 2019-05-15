@@ -222,12 +222,22 @@ public class FrameInputPopup extends javax.swing.JDialog {
                     Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
         } else {
             try {
-                FrameLibro.actualizarEjemplaresLibro(Integer.parseInt(tfEjemplares.getText()));
-                dispose();
+                int nEjemplares = Integer.parseInt(tfEjemplares.getText());
+
+                if (nEjemplares <= 0) {
+                    new FramePopup(null, "El número de ejemplares debe ser superior a 0.",
+                            Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
+                } else if ((nEjemplares + FrameLibro.libro.getUnidades()) < 999) {
+                    FrameLibro.actualizarEjemplaresLibro(nEjemplares);
+                    dispose();
+                } else {
+                    new FramePopup(null, "El número total ejemplares debe ser inferior a 1000.",
+                            Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 new FramePopup(null, "El número de ejemplares debe ser númerico.",
-                    Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
+                        Imagenes.getImagen("alert-black.png"), "Aceptar").setVisible(true);
             }
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
