@@ -125,11 +125,9 @@ public class CodigoBarras {
 
         int contador = 0, pos = 0, posicionReal = 0;
 
-        if (posicion == 0) {
-            posicionReal = 1;
-        } else {
-            posicionReal = posicion;
-        }
+        if (posicion != 0) {
+            posicionReal = posicion - 1;
+        };
 
         Image codeImgBase = barcode.createImageWithBarcode(pdf.getDirectContent(),
                 BaseColor.BLACK, BaseColor.BLACK);
@@ -219,10 +217,8 @@ public class CodigoBarras {
 
         int contador = 0, pos = 0, posicionReal = 0;
 
-        if (posicion == 0) {
-            posicionReal = 1;
-        } else {
-            posicionReal = posicion;
+        if (posicion != 0) {
+            posicionReal = posicion - 1;
         };
 
         Image codeImgBase = barcodes.get(0).createImageWithBarcode(pdf.getDirectContent(),

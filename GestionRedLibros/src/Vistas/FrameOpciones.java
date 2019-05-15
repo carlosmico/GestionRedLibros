@@ -209,7 +209,6 @@ public class FrameOpciones extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opciones");
         setMinimumSize(new java.awt.Dimension(1366, 768));
-        setPreferredSize(new java.awt.Dimension(1024, 768));
         setResizable(false);
         setSize(new java.awt.Dimension(5000, 0));
 
@@ -406,7 +405,7 @@ public class FrameOpciones extends javax.swing.JFrame {
 
         btnComprobar.setBackground(Colores.botones);
         btnComprobar.setForeground(Colores.letraBotones);
-        btnComprobar.setText("Comprobar");
+        btnComprobar.setText("Aplicar");
         btnComprobar.setCornerRound(10);
         btnComprobar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
