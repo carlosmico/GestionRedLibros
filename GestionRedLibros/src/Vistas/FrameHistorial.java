@@ -157,7 +157,7 @@ public class FrameHistorial extends javax.swing.JFrame {
         btnBusquedaEjemplar = new com.mommoo.flat.button.FlatButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Opciones");
+        setTitle("Historial");
         setMinimumSize(new java.awt.Dimension(1024, 768));
 
         jPanel1.setBackground(Colores.fondoOscuro);
