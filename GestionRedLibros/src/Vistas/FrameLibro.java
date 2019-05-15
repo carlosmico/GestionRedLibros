@@ -1253,7 +1253,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
         jScrollPane3.setBackground(Colores.fondo);
         jScrollPane3.setBorder(null);
-        jScrollPane3.setMinimumSize(new java.awt.Dimension(400, 403));
+        jScrollPane3.setMinimumSize(new java.awt.Dimension(400, 0));
         jScrollPane3.setPreferredSize(new java.awt.Dimension(100, 403));
 
         panelEjemplarPrestado.setBackground(Colores.fondo);
@@ -1733,7 +1733,7 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(panelGeneralDerechoInferiorLayout.createSequentialGroup()
                 .addComponent(panelTituloEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelEjemplarNoSeleccionado, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1747,7 +1747,7 @@ public class FrameLibro extends javax.swing.JFrame {
         );
         panelInferiorDerechoLayout.setVerticalGroup(
             panelInferiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelGeneralDerechoInferior, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+            .addComponent(panelGeneralDerechoInferior, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         jSplitPane2.setRightComponent(panelInferiorDerecho);
