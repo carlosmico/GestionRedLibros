@@ -1606,12 +1606,12 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="panelGeneralDerechoInferior" alignment="1" pref="1407" max="32767" attributes="0"/>
+                              <Component id="panelGeneralDerechoInferior" alignment="1" pref="905" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="panelGeneralDerechoInferior" alignment="0" pref="300" max="32767" attributes="0"/>
+                              <Component id="panelGeneralDerechoInferior" alignment="0" pref="525" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                       </Layout>
@@ -1629,13 +1629,13 @@
                           <Layout>
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="panelTituloEjemplar" alignment="1" pref="1407" max="32767" attributes="0"/>
-                                  <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="panelTituloEjemplar" alignment="1" pref="905" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="panelEjemplarNoSeleccionado" pref="1395" max="32767" attributes="0"/>
+                                      <Component id="panelEjemplarNoSeleccionado" pref="893" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                             <DimensionLayout dim="1">
@@ -1643,7 +1643,7 @@
                                   <Group type="102" attributes="0">
                                       <Component id="panelTituloEjemplar" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                                      <Component id="jScrollPane3" pref="178" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane3" max="32767" attributes="0"/>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Component id="panelEjemplarNoSeleccionado" pref="44" max="32767" attributes="0"/>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -1678,7 +1678,7 @@
                                           <Component id="textTotalEjemplares" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="textEjemplaresDisponibles" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace pref="926" max="32767" attributes="0"/>
+                                          <EmptySpace pref="424" max="32767" attributes="0"/>
                                           <Component id="btnAnterior" min="-2" pref="48" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="btnSiguiente" min="-2" pref="48" max="-2" attributes="0"/>
@@ -1850,10 +1850,10 @@
                                       <Connection code="Colores.fondo" type="code"/>
                                     </Property>
                                     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                      <Dimension value="[750, 403]"/>
+                                      <Dimension value="[750, 456]"/>
                                     </Property>
                                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                      <Dimension value="[750, 403]"/>
+                                      <Dimension value="[750, 456]"/>
                                     </Property>
                                   </Properties>
 
