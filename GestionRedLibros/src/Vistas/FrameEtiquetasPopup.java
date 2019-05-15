@@ -128,6 +128,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         btnAceptar = new com.mommoo.flat.button.FlatButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Ajustes de impresión");
         setMinimumSize(new java.awt.Dimension(400, 460));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -329,7 +330,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         tfCantidad.setBackground(Colores.fondo);
         tfCantidad.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         tfCantidad.setForeground(Colores.letraNormal);
-        tfCantidad.setText("0");
+        tfCantidad.setText("1");
         tfCantidad.setToolTipText("");
         tfCantidad.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
@@ -504,8 +505,8 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
 
         try {
             cantidad = Integer.parseInt(tfCantidad.getText());
-            if (cantidad == 0) {
-                error += "- Debes imprimir como mínimo una etiquéta.\n";
+            if (cantidad == 0 && jPanel10.isVisible()) {
+                error += "- Debes imprimir como mínimo una etiqueta.\n";
             }
         } catch (Exception e) {
             error += "- El valor de la cantidad debe ser un valor numérico.";
