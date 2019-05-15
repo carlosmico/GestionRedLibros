@@ -124,7 +124,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
         textObservaciones = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1200, 943));
+        setMinimumSize(new java.awt.Dimension(1200, 768));
         setPreferredSize(new java.awt.Dimension(1200, 943));
 
         panelTitulo1.setBackground(Colores.fondoOscuro);
@@ -723,7 +723,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addComponent(panelEstadoParent22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelEstadoParent21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(241, Short.MAX_VALUE))
+                .addContainerGap(231, Short.MAX_VALUE))
         );
 
         panelInfoEstado.add(jPanel9);
@@ -946,7 +946,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 868, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 858, Short.MAX_VALUE))
         );
 
         pack();

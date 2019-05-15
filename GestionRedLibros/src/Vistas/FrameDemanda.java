@@ -130,6 +130,7 @@ public class FrameDemanda extends javax.swing.JFrame {
         tabla = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1024, 768));
 
         panelTitulo.setBackground(Colores.fondoOscuro);
         panelTitulo.setPreferredSize(new java.awt.Dimension(119, 75));

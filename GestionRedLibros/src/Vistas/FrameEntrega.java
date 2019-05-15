@@ -220,7 +220,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Entregas");
-        setMinimumSize(new java.awt.Dimension(1300, 735));
+        setMinimumSize(new java.awt.Dimension(1024, 768));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -414,7 +414,8 @@ public class FrameEntrega extends javax.swing.JFrame {
         jSplitPane1.setLeftComponent(panelLista);
 
         jScrollPane4.setBorder(null);
-        jScrollPane4.setMinimumSize(new java.awt.Dimension(720, 18));
+        jScrollPane4.setMinimumSize(new java.awt.Dimension(512, 18));
+        jScrollPane4.setPreferredSize(new java.awt.Dimension(512, 642));
 
         panelInformacion2.setBackground(Colores.fondo);
         panelInformacion2.setMinimumSize(new java.awt.Dimension(720, 642));

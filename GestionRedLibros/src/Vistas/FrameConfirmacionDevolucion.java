@@ -102,6 +102,7 @@ public class FrameConfirmacionDevolucion extends javax.swing.JFrame {
         setTitle("Confirmación");
         setMinimumSize(new java.awt.Dimension(994, 900));
         setPreferredSize(new java.awt.Dimension(995, 900));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
