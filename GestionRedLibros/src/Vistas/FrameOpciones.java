@@ -1773,30 +1773,31 @@ public class FrameOpciones extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         if (!textRutaMatriculas.getText().equals("")) {
-            try {
-                SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-                    protected Void doInBackground() throws InterruptedException, Exception {
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                protected Void doInBackground() throws InterruptedException, Exception {
+                    try {
                         new ImportarMatriculasXML(textRutaMatriculas.getText());
-                        return null;
-                    }
 
-                    protected void done() {
-                        new FramePopup(frameOpc, "Matrículas importadas correctamente!",
+                        new FramePopup(null, "Matrículas importadas correctamente!",
                                 Imagenes.getImagen("check-black.png"), "Aceptar")
                                 .setVisible(true);
-                        frameCarga.dispose();
+                    } catch (Exception ex) {
+
+                        new FramePopup(null, "No se han podido importar las matriculas."
+                                + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
+                                Imagenes.getImagen("alert-black.png"), "Aceptar")
+                                .setVisible(true);
                     }
-                };
-                worker.execute();
-                frameCarga = new FramePopup(this, "Importando matrículas");
-                frameCarga.setVisible(true);
-            } catch (Exception ex) {
-                new FramePopup(this, "No se han podido importar las matriculas."
-                        + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
-                        Imagenes.getImagen("alert-black.png"), "Aceptar")
-                        .setVisible(true);
-                ex.printStackTrace();
-            }
+                    return null;
+                }
+
+                protected void done() {
+                    frameCarga.dispose();
+                }
+            };
+            worker.execute();
+            frameCarga = new FramePopup(this, "Importando matrículas");
+            frameCarga.setVisible(true);
         } else {
             new FramePopup(this, "Debes seleccionar un archivo para poder importar "
                     + "las matrículas.", Imagenes.getImagen("alert-black.png"),
@@ -1832,30 +1833,34 @@ public class FrameOpciones extends javax.swing.JFrame {
     private void btnImportarAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarAlumnosActionPerformed
         // TODO add your handling code here:
         if (!textRutaAlumnos.getText().equals("")) {
-            try {
-                SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-                    protected Void doInBackground() throws InterruptedException, Exception {
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                protected Void doInBackground() throws InterruptedException, Exception {
+                    try {
                         new ImportarAlumnosXML(textRutaAlumnos.getText());
-                        return null;
-                    }
 
-                    protected void done() {
-                        new FramePopup(frameOpc, "Alumnos importados correctamente!",
+
+                        new FramePopup(null, "Alumnos importados correctamente!",
                                 Imagenes.getImagen("check-black.png"), "Aceptar")
                                 .setVisible(true);
-                        frameCarga.dispose();
+                    } catch (Exception ex) {
+                        new FramePopup(null, "No se han podido importar los alumnos."
+                                + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
+                                Imagenes.getImagen("alert-black.png"), "Aceptar")
+                                .setVisible(true);
+                        
                     }
-                };
-                worker.execute();
-                frameCarga = new FramePopup(this, "Importando alumnos");
-                frameCarga.setVisible(true);
-            } catch (Exception ex) {
-                new FramePopup(this, "No se han podido importar los alumnos."
-                        + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
-                        Imagenes.getImagen("alert-black.png"), "Aceptar")
-                        .setVisible(true);
-                ex.printStackTrace();
-            }
+
+                    return null;
+                }
+
+                protected void done() {
+                    frameCarga.dispose();
+                }
+            };
+            worker.execute();
+            frameCarga = new FramePopup(this, "Importando alumnos");
+            frameCarga.setVisible(true);
+
         } else {
             new FramePopup(this, "Debes seleccionar un archivo para poder importar los alumnos.",
                     Imagenes.getImagen("alert-black.png"), "Aceptar")
@@ -1891,31 +1896,31 @@ public class FrameOpciones extends javax.swing.JFrame {
     private void btnImportarAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarAsignaturasActionPerformed
         // TODO add your handling code here:
         if (!textRutaContenidos.getText().equals("")) {
-            try {
-                SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-                    protected Void doInBackground() throws InterruptedException, Exception {
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                protected Void doInBackground() throws InterruptedException, Exception {
+                    try {
                         new ImportarContenidoXML(textRutaContenidos.getText());
-                        return null;
-                    }
 
-                    protected void done() {
-                        new FramePopup(frameOpc, "Asignaturas importadas correctamente!",
+                        new FramePopup(null, "Asignaturas importadas correctamente!",
                                 Imagenes.getImagen("check-black.png"), "Aceptar")
                                 .setVisible(true);
-                        frameCarga.dispose();
+                    } catch (Exception ex) {
+                        new FramePopup(null, "No se han podido importar las asignaturas."
+                                + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
+                                Imagenes.getImagen("alert-black.png"), "Aceptar")
+                                .setVisible(true);
                     }
-                };
-                worker.execute();
-                frameCarga = new FramePopup(this, "Importando asignaturas");
-                frameCarga.setVisible(true);
+                    return null;
+                }
 
-            } catch (Exception ex) {
-                new FramePopup(this, "No se han podido importar las asignaturas."
-                        + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
-                        Imagenes.getImagen("alert-black.png"), "Aceptar")
-                        .setVisible(true);
-                ex.printStackTrace();
-            }
+                protected void done() {
+                    frameCarga.dispose();
+                }
+            };
+            worker.execute();
+            frameCarga = new FramePopup(this, "Importando asignaturas");
+            frameCarga.setVisible(true);
+
         } else {
             new FramePopup(this, "Debes seleccionar un archivo para poder importar las asignaturas.",
                     Imagenes.getImagen("alert-black.png"), "Aceptar")
@@ -1951,31 +1956,32 @@ public class FrameOpciones extends javax.swing.JFrame {
     private void btnImportarGruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarGruposActionPerformed
         // TODO add your handling code here:
         if (!textRutaGrupos.getText().equals("")) {
-            try {
-                SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-                    protected Void doInBackground() throws InterruptedException, Exception {
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                protected Void doInBackground() throws InterruptedException, Exception {
+                    try {
                         new ImportarGruposXML(textRutaGrupos.getText());
-                        return null;
-                    }
 
-                    protected void done() {
-                        new FramePopup(frameOpc, "Grupos importados correctamente!",
+                        new FramePopup(null, "Grupos importados correctamente!",
                                 Imagenes.getImagen("check-black.png"), "Aceptar")
                                 .setVisible(true);
-                        frameCarga.dispose();
+                    } catch (Exception ex) {
+                        new FramePopup(null, "No se han podido importar los grupos."
+                                + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
+                                Imagenes.getImagen("alert-black.png"), "Aceptar")
+                                .setVisible(true);
                     }
-                };
-                worker.execute();
-                frameCarga = new FramePopup(this, "Importando grupos");
-                frameCarga.setVisible(true);
+                    return null;
+                }
 
-            } catch (Exception ex) {
-                new FramePopup(this, "No se han podido importar los grupos."
-                        + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
-                        Imagenes.getImagen("alert-black.png"), "Aceptar")
-                        .setVisible(true);
-                ex.printStackTrace();
-            }
+                protected void done() {
+
+                    frameCarga.dispose();
+                }
+            };
+            worker.execute();
+            frameCarga = new FramePopup(this, "Importando grupos");
+            frameCarga.setVisible(true);
+
         } else {
             new FramePopup(this, "Debes seleccionar un archivo para poder importar los grupos",
                     Imagenes.getImagen("alert-black.png"), "Aceptar")
@@ -2011,32 +2017,35 @@ public class FrameOpciones extends javax.swing.JFrame {
     private void btnImportarCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarCursosActionPerformed
         // TODO add your handling code here:
         if (!textRutaCursos.getText().equals("")) {
-            try {
-                SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
-                    protected Void doInBackground() throws InterruptedException, Exception {
-                        new ImportarCursoXML(textRutaCursos.getText());
-                        return null;
-                    }
 
-                    protected void done() {
-                        new FramePopup(frameOpc, "Cursos importados correctamente!",
+            SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
+                protected Void doInBackground() throws InterruptedException, Exception {
+                    try {
+                        new ImportarCursoXML(textRutaCursos.getText());
+
+
+                        new FramePopup(null, "Cursos importados correctamente!",
                                 Imagenes.getImagen("check-black.png"), "Aceptar")
                                 .setVisible(true);
-                        frameCarga.dispose();
+
+                    } catch (Exception ex) {
+
+                        new FramePopup(null, "No se han podido importar los cursos."
+                                + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
+                                Imagenes.getImagen("alert-black.png"), "Aceptar")
+                                .setVisible(true);
                     }
-                };
-                worker.execute();
-                frameCarga = new FramePopup(this, "Importando cursos");
-                frameCarga.setVisible(true);
+                    return null;
+                }
 
-            } catch (Exception ex) {
-                new FramePopup(this, "No se han podido importar los cursos."
-                        + "\n-Revise el archivo XML.\nError: " + ex.getMessage(),
-                        Imagenes.getImagen("alert-black.png"), "Aceptar")
-                        .setVisible(true);
+                protected void done() {
+                    frameCarga.dispose();
+                }
+            };
+            worker.execute();
+            frameCarga = new FramePopup(this, "Importando cursos");
+            frameCarga.setVisible(true);
 
-                ex.printStackTrace();
-            }
         } else {
             new FramePopup(this, "Debes seleccionar un archivo para poder importar los cursos.",
                     Imagenes.getImagen("alert-black.png"), "Aceptar")
