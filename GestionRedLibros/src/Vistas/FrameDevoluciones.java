@@ -187,7 +187,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Devoluciones");
-        setMinimumSize(new java.awt.Dimension(1155, 735));
+        setMinimumSize(new java.awt.Dimension(1300, 735));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -387,7 +387,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         jSplitPane1.setLeftComponent(panelLista);
 
         jScrollPane4.setBorder(null);
-        jScrollPane4.setMinimumSize(new java.awt.Dimension(250, 18));
+        jScrollPane4.setMinimumSize(new java.awt.Dimension(720, 18));
 
         panelInformacion.setBackground(Colores.fondo);
         panelInformacion.setMinimumSize(new java.awt.Dimension(720, 0));

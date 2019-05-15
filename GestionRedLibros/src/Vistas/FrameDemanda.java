@@ -25,16 +25,22 @@ import Pojos.Contenido;
 import Pojos.Curso;
 import Pojos.Libro;
 import Pojos.Matricula;
+import Renders.comboBoxRender;
 import Utilidades.Colores;
 import Utilidades.Imagenes.Imagenes;
+import java.awt.Component;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import org.hibernate.Session;
 
 /**
@@ -60,6 +66,38 @@ public class FrameDemanda extends javax.swing.JFrame {
      */
     public FrameDemanda() {
         initComponents();
+
+        //<editor-fold defaultstate="collapsed" desc="Configuracion colores tabla">
+        jScrollPane1.getViewport().setBackground(Colores.fondo);
+        JTableHeader anHeader = tabla.getTableHeader();
+        anHeader.setForeground(Colores.letraNormal);
+        anHeader.setBackground(Colores.fondo);
+
+        //Deshabilitamos la edicion de las celdas en las tablas
+        tabla.setDefaultEditor(Object.class, null);
+        tabla.getTableHeader().setReorderingAllowed(false);
+//</editor-fold>
+
+        cbCurso.setEditable(false);
+        cbCurso.setUI(new comboBoxRender());
+        cbCurso.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList list, Object value, int index,
+                    boolean isSelected, boolean hasFocus) {
+                JLabel l = (JLabel) super.getListCellRendererComponent(
+                        list, value, index, isSelected, hasFocus);
+                if (isSelected) {
+                    l.setForeground(Colores.letraBotones);
+                    l.setBackground(Colores.accento);
+                } else {
+                    l.setForeground(Colores.letraNormal);
+                    l.setBackground(Colores.fondo);
+                }
+                return l;
+            }
+        });
+//</editor-fold>
 
         this.setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -153,7 +191,7 @@ public class FrameDemanda extends javax.swing.JFrame {
         });
         tabla.setRowHeight(32);
         tabla.setSelectionBackground(Colores.accento);
-        tabla.setSelectionForeground(Colores.letraTitulo);
+        tabla.setSelectionForeground(Colores.letraBotones);
         jScrollPane1.setViewportView(tabla);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

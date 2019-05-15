@@ -220,7 +220,7 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Entregas");
-        setMinimumSize(new java.awt.Dimension(1155, 735));
+        setMinimumSize(new java.awt.Dimension(1300, 735));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -581,7 +581,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         tablaPendientes.setRowHeight(32);
         tablaPendientes.setRowSelectionAllowed(false);
         tablaPendientes.setSelectionBackground(Colores.accento);
-        tablaPendientes.setSelectionForeground(Colores.fondo);
+        tablaPendientes.setSelectionForeground(Colores.letraBotones);
         jScrollPane2.setViewportView(tablaPendientes);
 
         jPanel7.setBackground(Colores.fondo);

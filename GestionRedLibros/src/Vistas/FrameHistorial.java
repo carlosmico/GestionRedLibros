@@ -36,6 +36,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import org.hibernate.Session;
@@ -75,6 +76,17 @@ public class FrameHistorial extends javax.swing.JFrame {
      */
     public FrameHistorial() {
         initComponents();
+
+        //<editor-fold defaultstate="collapsed" desc="Configuracion colores tabla">
+        jScrollPane1.getViewport().setBackground(Colores.fondo);
+        JTableHeader anHeader = tablaAlumnos.getTableHeader();
+        anHeader.setForeground(Colores.letraNormal);
+        anHeader.setBackground(Colores.fondo);
+
+        //Deshabilitamos la edicion de las celdas en las tablas
+        tablaAlumnos.setDefaultEditor(Object.class, null);
+        tablaAlumnos.getTableHeader().setReorderingAllowed(false);
+//</editor-fold>
 
         topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
@@ -184,6 +196,8 @@ public class FrameHistorial extends javax.swing.JFrame {
 
         jPanel4.setBackground(Colores.fondo);
 
+        jScrollPane1.setBackground(Colores.fondo);
+
         tablaAlumnos.setAutoCreateRowSorter(true);
         tablaAlumnos.setBackground(Colores.fondo);
         tablaAlumnos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -207,6 +221,7 @@ public class FrameHistorial extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaAlumnos.setOpaque(false);
         tablaAlumnos.setRowHeight(32);
         tablaAlumnos.setRowSelectionAllowed(false);
         tablaAlumnos.setSelectionBackground(Colores.accento);
@@ -841,37 +856,37 @@ public class FrameHistorial extends javax.swing.JFrame {
 
             tableModel = new DefaultTableModel(contenidoTabla,
                     new Object[]{"NIA", "Nombre y Apellidos", "Curso", "Email"}) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
         } else {
             tableModel = new DefaultTableModel(null,
                     new Object[]{"NIA", "Nombre y Apellidos", "Curso", "Email"}) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
         }
 
         tablaAlumnos.setModel(tableModel);
 
         if (tableModel.getRowCount() > 0) {
             /*
-            //<editor-fold defaultstate="collapsed" desc="Edicion visual de la tabla">
-            TableColumnModel tcm = tablaAlumnos.getColumnModel();
-            tcm.getColumn(0).setMaxWidth(150);
-            tcm.getColumn(0).setMinWidth(100);
-            tcm.getColumn(0).setPreferredWidth(150);
+             //<editor-fold defaultstate="collapsed" desc="Edicion visual de la tabla">
+             TableColumnModel tcm = tablaAlumnos.getColumnModel();
+             tcm.getColumn(0).setMaxWidth(150);
+             tcm.getColumn(0).setMinWidth(100);
+             tcm.getColumn(0).setPreferredWidth(150);
 
-            tcm.getColumn(1).setMinWidth(250);
-            tcm.getColumn(2).setMinWidth(50);
+             tcm.getColumn(1).setMinWidth(250);
+             tcm.getColumn(2).setMinWidth(50);
 
-            tcm.getColumn(3).setMaxWidth(125);
-            tcm.getColumn(3).setMinWidth(125);
-//</editor-fold>*/
+             tcm.getColumn(3).setMaxWidth(125);
+             tcm.getColumn(3).setMinWidth(125);
+             //</editor-fold>*/
 
         } else {
             new FramePopup(this, "Este ejemplar no tiene historial todavía",

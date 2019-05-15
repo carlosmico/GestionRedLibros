@@ -229,7 +229,7 @@
                       <Connection code="Colores.accento" type="code"/>
                     </Property>
                     <Property name="selectionForeground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="Colores.letraTitulo" type="code"/>
+                      <Connection code="Colores.letraBotones" type="code"/>
                     </Property>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>

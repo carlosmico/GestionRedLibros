@@ -131,7 +131,7 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión Red Libros");
-        setMinimumSize(new java.awt.Dimension(960, 0));
+        setMinimumSize(new java.awt.Dimension(1024, 768));
 
         generalaPanel.setBackground(Colores.fondoOscuro);
 

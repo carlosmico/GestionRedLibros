@@ -215,6 +215,7 @@ public class FrameLibro extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jlistLibros = new javax.swing.JList();
         jSeparator2 = new javax.swing.JSeparator();
+        jScrollPane4 = new javax.swing.JScrollPane();
         panelDerecho = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         panelSuperiorDerecho = new javax.swing.JPanel();
@@ -354,7 +355,8 @@ public class FrameLibro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Libros");
-        setMinimumSize(new java.awt.Dimension(1400, 930));
+        setMinimumSize(new java.awt.Dimension(1024, 768));
+        setPreferredSize(new java.awt.Dimension(1024, 768));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -363,8 +365,8 @@ public class FrameLibro extends javax.swing.JFrame {
 
         jSplitPane1.setBorder(null);
 
-        panelIzquierdo.setMinimumSize(new java.awt.Dimension(450, 0));
-        panelIzquierdo.setPreferredSize(new java.awt.Dimension(500, 930));
+        panelIzquierdo.setMinimumSize(new java.awt.Dimension(400, 0));
+        panelIzquierdo.setPreferredSize(new java.awt.Dimension(400, 930));
 
         panelGeneralIzquierdo.setBackground(Colores.fondo);
         panelGeneralIzquierdo.setPreferredSize(new java.awt.Dimension(450, 600));
@@ -394,7 +396,7 @@ public class FrameLibro extends javax.swing.JFrame {
             panelTitulo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTitulo1Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addComponent(textTitulo1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                .addComponent(textTitulo1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                 .addGap(196, 196, 196)
                 .addComponent(btnOcultarBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -419,7 +421,6 @@ public class FrameLibro extends javax.swing.JFrame {
         btnBuscar.setForeground(Colores.letraBotones);
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/magnify.png"))); // NOI18N
         btnBuscar.setCornerRound(10);
-        btnBuscar.setOpaque(true);
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -460,12 +461,12 @@ public class FrameLibro extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(textBusquedaCodigoLibro))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(Colores.fondo);
@@ -526,7 +527,7 @@ public class FrameLibro extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addComponent(cbCursoBuscar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(textNombreLibroBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -541,7 +542,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbCursoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -562,7 +563,7 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(panelBusquedaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -576,7 +577,7 @@ public class FrameLibro extends javax.swing.JFrame {
             .addComponent(panelTitulo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeneralIzquierdoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addComponent(panelBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelGeneralIzquierdoLayout.setVerticalGroup(
@@ -592,7 +593,7 @@ public class FrameLibro extends javax.swing.JFrame {
         panelIzquierdo.setLayout(panelIzquierdoLayout);
         panelIzquierdoLayout.setHorizontalGroup(
             panelIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelGeneralIzquierdo, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(panelGeneralIzquierdo, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         panelIzquierdoLayout.setVerticalGroup(
             panelIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -601,14 +602,16 @@ public class FrameLibro extends javax.swing.JFrame {
 
         jSplitPane1.setLeftComponent(panelIzquierdo);
 
+        jScrollPane4.setMinimumSize(new java.awt.Dimension(400, 20));
+
         panelDerecho.setMinimumSize(new java.awt.Dimension(905, 0));
         panelDerecho.setPreferredSize(new java.awt.Dimension(905, 608));
 
         jSplitPane2.setBorder(null);
         jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        panelSuperiorDerecho.setMinimumSize(new java.awt.Dimension(800, 350));
-        panelSuperiorDerecho.setPreferredSize(new java.awt.Dimension(800, 350));
+        panelSuperiorDerecho.setMinimumSize(new java.awt.Dimension(800, 420));
+        panelSuperiorDerecho.setPreferredSize(new java.awt.Dimension(800, 420));
 
         panelGeneralDerechoSuperior.setBackground(Colores.fondo);
         panelGeneralDerechoSuperior.setPreferredSize(new java.awt.Dimension(750, 400));
@@ -669,7 +672,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addComponent(textTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelInfoEdicion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1042, Short.MAX_VALUE)
                 .addComponent(btnNewLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -680,11 +683,11 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(panelTituloLibroLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelTituloLibroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnMostrarBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNewLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelInfoEdicion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(textTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(textTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMostrarBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -695,7 +698,7 @@ public class FrameLibro extends javax.swing.JFrame {
         panelCuerpo.setBackground(Colores.fondo);
         panelCuerpo.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         panelCuerpo.setMinimumSize(new java.awt.Dimension(860, 340));
-        panelCuerpo.setPreferredSize(new java.awt.Dimension(860, 400));
+        panelCuerpo.setPreferredSize(new java.awt.Dimension(860, 320));
 
         panelCodigoLibro.setBackground(Colores.fondo);
         panelCodigoLibro.setForeground(Colores.letraNormal);
@@ -1086,9 +1089,9 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(panelCuerpoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, 1277, Short.MAX_VALUE)
-                    .addComponent(panelMedio, javax.swing.GroupLayout.DEFAULT_SIZE, 1277, Short.MAX_VALUE)
-                    .addComponent(panelInferior, javax.swing.GroupLayout.DEFAULT_SIZE, 1277, Short.MAX_VALUE)
+                    .addComponent(panelSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, 1387, Short.MAX_VALUE)
+                    .addComponent(panelMedio, javax.swing.GroupLayout.DEFAULT_SIZE, 1387, Short.MAX_VALUE)
+                    .addComponent(panelInferior, javax.swing.GroupLayout.DEFAULT_SIZE, 1387, Short.MAX_VALUE)
                     .addGroup(panelCuerpoLayout.createSequentialGroup()
                         .addComponent(panelCodigoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -1122,7 +1125,7 @@ public class FrameLibro extends javax.swing.JFrame {
             .addComponent(panelTituloLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelGeneralDerechoSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1298, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1395, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelGeneralDerechoSuperiorLayout.setVerticalGroup(
@@ -1130,23 +1133,24 @@ public class FrameLibro extends javax.swing.JFrame {
             .addGroup(panelGeneralDerechoSuperiorLayout.createSequentialGroup()
                 .addComponent(panelTituloLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panelSuperiorDerechoLayout = new javax.swing.GroupLayout(panelSuperiorDerecho);
         panelSuperiorDerecho.setLayout(panelSuperiorDerechoLayout);
         panelSuperiorDerechoLayout.setHorizontalGroup(
             panelSuperiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelGeneralDerechoSuperior, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1310, Short.MAX_VALUE)
+            .addComponent(panelGeneralDerechoSuperior, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1407, Short.MAX_VALUE)
         );
         panelSuperiorDerechoLayout.setVerticalGroup(
             panelSuperiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelGeneralDerechoSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+            .addComponent(panelGeneralDerechoSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
         );
 
         jSplitPane2.setLeftComponent(panelSuperiorDerecho);
 
-        panelInferiorDerecho.setMinimumSize(new java.awt.Dimension(905, 0));
+        panelInferiorDerecho.setMinimumSize(new java.awt.Dimension(905, 300));
         panelInferiorDerecho.setPreferredSize(new java.awt.Dimension(750, 450));
 
         panelGeneralDerechoInferior.setBackground(Colores.fondo);
@@ -1201,7 +1205,7 @@ public class FrameLibro extends javax.swing.JFrame {
                 .addComponent(textTotalEjemplares)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textEjemplaresDisponibles)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 926, Short.MAX_VALUE)
                 .addComponent(btnAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1236,7 +1240,7 @@ public class FrameLibro extends javax.swing.JFrame {
             panelEjemplarNoSeleccionadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEjemplarNoSeleccionadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(textEjemplarNotificacion, javax.swing.GroupLayout.DEFAULT_SIZE, 1290, Short.MAX_VALUE)
+                .addComponent(textEjemplarNotificacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelEjemplarNoSeleccionadoLayout.setVerticalGroup(
@@ -1249,11 +1253,12 @@ public class FrameLibro extends javax.swing.JFrame {
 
         jScrollPane3.setBackground(Colores.fondo);
         jScrollPane3.setBorder(null);
+        jScrollPane3.setMinimumSize(new java.awt.Dimension(400, 403));
         jScrollPane3.setPreferredSize(new java.awt.Dimension(100, 403));
 
         panelEjemplarPrestado.setBackground(Colores.fondo);
-        panelEjemplarPrestado.setMinimumSize(new java.awt.Dimension(750, 340));
-        panelEjemplarPrestado.setPreferredSize(new java.awt.Dimension(750, 400));
+        panelEjemplarPrestado.setMinimumSize(new java.awt.Dimension(750, 403));
+        panelEjemplarPrestado.setPreferredSize(new java.awt.Dimension(750, 403));
 
         panelEstadoParent15.setBackground(Colores.fondo);
         panelEstadoParent15.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -1716,31 +1721,33 @@ public class FrameLibro extends javax.swing.JFrame {
         panelGeneralDerechoInferior.setLayout(panelGeneralDerechoInferiorLayout);
         panelGeneralDerechoInferiorLayout.setHorizontalGroup(
             panelGeneralDerechoInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelTituloEjemplar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1310, Short.MAX_VALUE)
-            .addGroup(panelGeneralDerechoInferiorLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(panelEjemplarNoSeleccionado, javax.swing.GroupLayout.DEFAULT_SIZE, 1304, Short.MAX_VALUE))
+            .addComponent(panelTituloEjemplar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1407, Short.MAX_VALUE)
             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelGeneralDerechoInferiorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelEjemplarNoSeleccionado, javax.swing.GroupLayout.DEFAULT_SIZE, 1395, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelGeneralDerechoInferiorLayout.setVerticalGroup(
             panelGeneralDerechoInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGeneralDerechoInferiorLayout.createSequentialGroup()
                 .addComponent(panelTituloEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelEjemplarNoSeleccionado, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
+                .addComponent(panelEjemplarNoSeleccionado, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panelInferiorDerechoLayout = new javax.swing.GroupLayout(panelInferiorDerecho);
         panelInferiorDerecho.setLayout(panelInferiorDerechoLayout);
         panelInferiorDerechoLayout.setHorizontalGroup(
             panelInferiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelGeneralDerechoInferior, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1310, Short.MAX_VALUE)
+            .addComponent(panelGeneralDerechoInferior, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1407, Short.MAX_VALUE)
         );
         panelInferiorDerechoLayout.setVerticalGroup(
             panelInferiorDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelGeneralDerechoInferior, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+            .addComponent(panelGeneralDerechoInferior, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
         );
 
         jSplitPane2.setRightComponent(panelInferiorDerecho);
@@ -1749,14 +1756,16 @@ public class FrameLibro extends javax.swing.JFrame {
         panelDerecho.setLayout(panelDerechoLayout);
         panelDerechoLayout.setHorizontalGroup(
             panelDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1693, Short.MAX_VALUE)
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1407, Short.MAX_VALUE)
         );
         panelDerechoLayout.setVerticalGroup(
             panelDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE)
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 927, Short.MAX_VALUE)
         );
 
-        jSplitPane1.setRightComponent(panelDerecho);
+        jScrollPane4.setViewportView(panelDerecho);
+
+        jSplitPane1.setRightComponent(jScrollPane4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -2429,6 +2438,7 @@ public class FrameLibro extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSplitPane jSplitPane1;
