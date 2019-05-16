@@ -167,6 +167,8 @@ public class FrameEntrega extends javax.swing.JFrame {
 
         cargarDatos();
 
+        rellenarComboBoxFecha();
+
         //<editor-fold defaultstate="collapsed" desc="Click Tabla">
         tablaPendientes.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -208,13 +210,17 @@ public class FrameEntrega extends javax.swing.JFrame {
         panelInformacion2 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
         panelInfoGeneral2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         textNIAAlumno = new javax.swing.JLabel();
         textNombreAlumno = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        imgSexo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         cbFecha = new javax.swing.JComboBox();
@@ -450,11 +456,21 @@ public class FrameEntrega extends javax.swing.JFrame {
         panelInfoGeneral2.setMaximumSize(new java.awt.Dimension(300, 32767));
         panelInfoGeneral2.setPreferredSize(new java.awt.Dimension(922, 170));
 
+        jPanel3.setLayout(new java.awt.GridLayout());
+
         jLabel15.setBackground(Colores.fondo);
         jLabel15.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel15.setForeground(Colores.letraNormal);
-        jLabel15.setText("Información");
+        jLabel15.setText("Información del Alumno:");
         jLabel15.setOpaque(true);
+        jPanel3.add(jLabel15);
+
+        jLabel18.setBackground(Colores.fondo);
+        jLabel18.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel18.setForeground(Colores.letraNormal);
+        jLabel18.setText("Información curso:");
+        jLabel18.setOpaque(true);
+        jPanel3.add(jLabel18);
 
         jPanel17.setBackground(Colores.fondo);
         jPanel17.setLayout(new java.awt.GridLayout(1, 2));
@@ -477,37 +493,66 @@ public class FrameEntrega extends javax.swing.JFrame {
         jLabel17.setForeground(Colores.letraNormal);
         jLabel17.setText("Nombre:");
 
+        jPanel10.setBackground(Colores.fondo);
+        jPanel10.setForeground(Colores.fondo);
+        jPanel10.setPreferredSize(new java.awt.Dimension(128, 128));
+
+        imgSexo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imgSexo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/person-flat.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(imgSexo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(imgSexo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
-                    .addComponent(jLabel17))
-                .addContainerGap(397, Short.MAX_VALUE))
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(textNombreAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(textNIAAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel17)
+                            .addGroup(jPanel16Layout.createSequentialGroup()
+                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textNIAAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(textNombreAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(27, 27, 27)))))
+                .addGap(701, 701, 701))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textNIAAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel17)
-                .addGap(4, 4, 4)
-                .addComponent(textNombreAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textNIAAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textNombreAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(26, Short.MAX_VALUE))
+                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
         );
 
         jPanel17.add(jPanel16);
@@ -523,6 +568,11 @@ public class FrameEntrega extends javax.swing.JFrame {
         cbFecha.setForeground(Colores.letraNormal);
         cbFecha.setMinimumSize(new java.awt.Dimension(65, 32));
         cbFecha.setPreferredSize(new java.awt.Dimension(65, 32));
+        cbFecha.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbFechaItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -531,13 +581,11 @@ public class FrameEntrega extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addContainerGap(354, Short.MAX_VALUE))
+                    .addComponent(jLabel2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(cbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(cbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -545,7 +593,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         jPanel17.add(jPanel2);
@@ -556,14 +604,18 @@ public class FrameEntrega extends javax.swing.JFrame {
             panelInfoGeneral2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInfoGeneral2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(panelInfoGeneral2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInfoGeneral2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelInfoGeneral2Layout.setVerticalGroup(
             panelInfoGeneral2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoGeneral2Layout.createSequentialGroup()
-                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(panelInfoGeneral2Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -754,7 +806,7 @@ public class FrameEntrega extends javax.swing.JFrame {
             .addGroup(panelEjemplaresEntregadosLayout.createSequentialGroup()
                 .addComponent(panelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -823,20 +875,20 @@ public class FrameEntrega extends javax.swing.JFrame {
         jPanel18.setLayout(jPanel18Layout);
         jPanel18Layout.setHorizontalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
+            .addGroup(jPanel18Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelInfoGeneral2, javax.swing.GroupLayout.DEFAULT_SIZE, 937, Short.MAX_VALUE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 937, Short.MAX_VALUE)
-                    .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelInfoGeneral2, javax.swing.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
+                    .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelInfoGeneral2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
+                .addComponent(panelInfoGeneral2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelGestionAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -848,7 +900,7 @@ public class FrameEntrega extends javax.swing.JFrame {
             panelInformacion2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInformacion2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE)
+                .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, 1045, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelInformacion2Layout.setVerticalGroup(
@@ -865,9 +917,9 @@ public class FrameEntrega extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 963, Short.MAX_VALUE)
+            .addGap(0, 1057, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 963, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1057, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1002,6 +1054,13 @@ public class FrameEntrega extends javax.swing.JFrame {
         textCodigoEjemplar.setText("");
     }//GEN-LAST:event_btnCodigoEjemplarActionPerformed
 
+    private void cbFechaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbFechaItemStateChanged
+        if (evt.getStateChange() == evt.SELECTED) {
+            cargarDatosAlumno();
+            System.out.println("mec");
+        }
+    }//GEN-LAST:event_cbFechaItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -1048,21 +1107,25 @@ public class FrameEntrega extends javax.swing.JFrame {
     private com.mommoo.flat.button.FlatButton btnCodigoEjemplar;
     private javax.swing.JComboBox cbCurso;
     private javax.swing.JComboBox cbFecha;
+    private javax.swing.JLabel imgSexo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -1206,14 +1269,13 @@ public class FrameEntrega extends javax.swing.JFrame {
      */
     private void cargarDatosAlumno() {
         vaciarCampos();
-        rellenarComboBoxFecha();
 
         if (alumno == null) {
             modoEdicion(false);
         } else {
             SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
                 protected Void doInBackground() throws InterruptedException {
-                    listaMatriculas = daoMatricula.buscarPendientes(alumno, getFecha());
+                    listaMatriculas = daoMatricula.buscarPendientes(alumno, Integer.parseInt(cbFecha.getSelectedItem().toString()));
                     return null;
                 }
 
@@ -1222,11 +1284,11 @@ public class FrameEntrega extends javax.swing.JFrame {
 
                     listaEjemplaresEntregados = new ArrayList<Ejemplar>();
 
-                    if (listaMatriculas.size() > 0) {
-                        textNIAAlumno.setText(alumno.getNia());
-                        textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
-                        textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
+                    textNIAAlumno.setText(alumno.getNia());
+                    textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
+                    textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
 
+                    if (listaMatriculas != null && listaMatriculas.size() > 0) {
                         rellenarTablaPendiente(listaMatriculas);
                     } else {
                         new FramePopup(topFrame, "El alumno no está matriculado en este curso escolar",
@@ -1249,7 +1311,6 @@ public class FrameEntrega extends javax.swing.JFrame {
         textNIAAlumno.setText("");
         textNombreAlumno.setText("");
         textNombreAlumno.setToolTipText("");
-        cbFecha.removeAllItems();
 
         DefaultTableModel model = new DefaultTableModel(null, new Object[]{"Asignatura", "Curso", "Idioma", "Curso Pendiente"});
         tablaPendientes.setModel(model);
@@ -1340,6 +1401,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                                 "Aceptar").setVisible(true);
 
                         vaciarCampos();
+                        cbFecha.removeAllItems();
                     }
 
                 }
