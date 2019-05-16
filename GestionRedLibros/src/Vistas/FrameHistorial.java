@@ -770,7 +770,7 @@ public class FrameHistorial extends javax.swing.JFrame {
      * Metodo para rellenar los datos del ejemplar
      */
     public void rellenarDatosEjemplar(Ejemplar ejemplar) {
-        //ejemplar = sustituirPadreCurso(ejemplar);
+        ejemplar = sustituirPadreCurso(ejemplar);
 
         textCodigoEjemplar.setText(ejemplar.getCodigo());
         textCursoEjemplar.setText(ejemplar.getLibro().getContenido().getCurso().toString());
@@ -837,8 +837,7 @@ public class FrameHistorial extends javax.swing.JFrame {
      * @param ejemplar
      */
     private void rellenarTablaHistoriales(Ejemplar ejemplar) {
-        //ejemplar = sustituirPadresCursos(ejemplar);
-
+        
         listaHistoriales = ejemplar.getHistoriales();
 
         DefaultTableModel tableModel;
@@ -847,56 +846,36 @@ public class FrameHistorial extends javax.swing.JFrame {
             Object[][] contenidoTabla = new Object[listaHistoriales.size()][4];
 
             for (int i = 0; i < listaHistoriales.size(); i++) {
+                Historial h = listaHistoriales.get(i);
                 Alumno al = listaHistoriales.get(i).getAlumno();
-                contenidoTabla[i][0] = al.getNia();
-                contenidoTabla[i][1] = al.getNombre() + " " + al.getApellido1() + " " + al.getApellido2();
-                contenidoTabla[i][2] = al.getCurso();
+
+                contenidoTabla[i][0] = h.getCurso_escolar() + " - " + (h.getCurso_escolar() + 1);
+                contenidoTabla[i][1] = al.getNia();
+                contenidoTabla[i][2] = al.getNombre() + " " + al.getApellido1() + " " + al.getApellido2();
                 contenidoTabla[i][3] = al.getEmail1();
             }
 
             tableModel = new DefaultTableModel(contenidoTabla,
-                    new Object[]{"NIA", "Nombre y Apellidos", "Curso", "Email"}) {
-                        @Override
-                        public boolean isCellEditable(int row, int column) {
-                            return false;
-                        }
-                    };
+                    new Object[]{"Curso Escolar", "NIA", "Nombre y Apellidos", "Email"}) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+
+            tablaAlumnos.setModel(tableModel);
         } else {
-            tableModel = new DefaultTableModel(null,
-                    new Object[]{"NIA", "Nombre y Apellidos", "Curso", "Email"}) {
-                        @Override
-                        public boolean isCellEditable(int row, int column) {
-                            return false;
-                        }
-                    };
-        }
-
-        tablaAlumnos.setModel(tableModel);
-
-        if (tableModel.getRowCount() > 0) {
-            /*
-             //<editor-fold defaultstate="collapsed" desc="Edicion visual de la tabla">
-             TableColumnModel tcm = tablaAlumnos.getColumnModel();
-             tcm.getColumn(0).setMaxWidth(150);
-             tcm.getColumn(0).setMinWidth(100);
-             tcm.getColumn(0).setPreferredWidth(150);
-
-             tcm.getColumn(1).setMinWidth(250);
-             tcm.getColumn(2).setMinWidth(50);
-
-             tcm.getColumn(3).setMaxWidth(125);
-             tcm.getColumn(3).setMinWidth(125);
-             //</editor-fold>*/
-
-        } else {
+            vaciarTablaHistoriales();
+            
             new FramePopup(this, "Este ejemplar no tiene historial todavía",
-                    Imagenes.getImagen("alert-black.png"),
-                    "Aceptar").setVisible(true);
+                        Imagenes.getImagen("alert-black.png"),
+                        "Aceptar").setVisible(true);
         }
+
     }
 
     private void vaciarTablaHistoriales() {
-        DefaultTableModel model = new DefaultTableModel(null, new Object[]{"NIA", "Nombre", "Curso", "Email"});
+        DefaultTableModel model = new DefaultTableModel(null, new Object[]{"Curso Escolar", "NIA", "Nombre y Apellidos", "Email"});
         tablaAlumnos.setModel(model);
     }
 
