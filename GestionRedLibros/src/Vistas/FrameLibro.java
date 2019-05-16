@@ -1797,7 +1797,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
                         for (Ejemplar ejemplar : libro.getEjemplares()) {
                             List<Historial> historiales = ejemplar.getHistoriales();
-                            
+
                             if (historiales != null && historiales.size() > 0) {
                                 existeHistoriales = true;
                             }
@@ -2038,10 +2038,14 @@ public class FrameLibro extends javax.swing.JFrame {
 
         if (textNombreLibro.getText().equals("")) {
             errores += "- El nombre no puede estar vacío.\n";
+        } else if (textNombreLibro.getText().length() >= 100) {
+            errores += "- El nombre del libro no puede tener más de 100 carácteres.\n";
         }
 
         if (textISBNLibro.getText().equals("")) {
             errores += "- El ISBN no puede estar vacío.\n";
+        } else if (textISBNLibro.getText().length() >= 100) {
+            errores += "- El ISBN no puede tener más de 100 carácteres.\n";
         }
 
         if (textUnidadesTotalesLibro.getText().equals("")) {
@@ -2060,9 +2064,11 @@ public class FrameLibro extends javax.swing.JFrame {
         }
 
         try {
-            double pre = Double.parseDouble(textPrecioLibro.getText());
-            if (pre <= 0) {
+            double precio = Double.parseDouble(textPrecioLibro.getText());
+            if (precio <= 0) {
                 errores += "- El precio debe ser un valor positivo.\n";
+            } else if (precio > 1000000000) {
+                errores += "- EL ISCA NO SE PUEDE PERMITIR ESTE LIBRO! :). \n";
             }
         } catch (Exception e) {
             errores += "- El precio debe ser un valor numérico.\n";
@@ -2342,7 +2348,7 @@ public class FrameLibro extends javax.swing.JFrame {
         modificarEjemplar(Estado.deteriorado, contadorEjemplar - 1);
 
         setEstado(Estado.deteriorado);
-        
+
         rellenarCamposEjemplares();
     }//GEN-LAST:event_btnBadStatusMouseClicked
 
@@ -2351,7 +2357,7 @@ public class FrameLibro extends javax.swing.JFrame {
         modificarEjemplar(Estado.usado, contadorEjemplar - 1);
 
         setEstado(Estado.usado);
-        
+
         rellenarCamposEjemplares();
     }//GEN-LAST:event_btnRegularStatusMouseClicked
 
@@ -2360,7 +2366,7 @@ public class FrameLibro extends javax.swing.JFrame {
         modificarEjemplar(Estado.nuevo, contadorEjemplar - 1);
 
         setEstado(Estado.nuevo);
-        
+
         rellenarCamposEjemplares();
     }//GEN-LAST:event_btnGoodStatusMouseClicked
 

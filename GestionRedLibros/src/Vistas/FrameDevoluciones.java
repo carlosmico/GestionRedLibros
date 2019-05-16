@@ -400,6 +400,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         panelInfoGeneral2.setMaximumSize(new java.awt.Dimension(300, 32767));
         panelInfoGeneral2.setPreferredSize(new java.awt.Dimension(1202, 516));
 
+        jPanel7.setBackground(Colores.fondo);
         jPanel7.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel15.setBackground(Colores.fondo);
@@ -669,7 +670,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1075,6 +1076,12 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
                 protected void done() {
                     listaEjemplaresDevueltos = new ArrayList<Ejemplar>();
+
+                    if (alumno.getSexo().equals("H")) {
+                        imgSexo.setIcon(Imagenes.getImageFromImagenes("person-flat.png"));
+                    } else {
+                        imgSexo.setIcon(Imagenes.getImageFromImagenes("person-girl-flat.png"));
+                    }
 
                     textNIAAlumno.setText(alumno.getNia());
                     textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());

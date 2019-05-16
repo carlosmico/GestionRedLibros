@@ -296,7 +296,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         tfEjemplares1.setBackground(Colores.fondo);
         tfEjemplares1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         tfEjemplares1.setForeground(Colores.letraNormal);
-        tfEjemplares1.setText("0");
+        tfEjemplares1.setText("1");
         tfEjemplares1.setToolTipText("");
         tfEjemplares1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 

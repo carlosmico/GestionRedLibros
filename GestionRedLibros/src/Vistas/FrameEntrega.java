@@ -456,7 +456,9 @@ public class FrameEntrega extends javax.swing.JFrame {
         panelInfoGeneral2.setMaximumSize(new java.awt.Dimension(300, 32767));
         panelInfoGeneral2.setPreferredSize(new java.awt.Dimension(922, 170));
 
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setBackground(Colores.fondo);
+        jPanel3.setForeground(Colores.letraNormal);
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel15.setBackground(Colores.fondo);
         jLabel15.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -513,8 +515,8 @@ public class FrameEntrega extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(imgSexo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(imgSexo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
@@ -526,17 +528,17 @@ public class FrameEntrega extends javax.swing.JFrame {
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16)
                     .addGroup(jPanel16Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel17)
-                            .addGroup(jPanel16Layout.createSequentialGroup()
-                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textNIAAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(textNombreAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(27, 27, 27)))))
-                .addGap(701, 701, 701))
+                            .addComponent(textNIAAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(textNombreAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(728, 728, 728))
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel17))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1283,6 +1285,12 @@ public class FrameEntrega extends javax.swing.JFrame {
                     listaCursos.size();
 
                     listaEjemplaresEntregados = new ArrayList<Ejemplar>();
+
+                    if (alumno.getSexo().equals("H")) {
+                        imgSexo.setIcon(Imagenes.getImageFromImagenes("person-flat.png"));
+                    } else {
+                        imgSexo.setIcon(Imagenes.getImageFromImagenes("person-girl-flat.png"));
+                    }
 
                     textNIAAlumno.setText(alumno.getNia());
                     textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
