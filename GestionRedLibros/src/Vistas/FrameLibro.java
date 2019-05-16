@@ -1797,7 +1797,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
                         for (Ejemplar ejemplar : libro.getEjemplares()) {
                             List<Historial> historiales = ejemplar.getHistoriales();
-                            
+
                             if (historiales != null && historiales.size() > 0) {
                                 existeHistoriales = true;
                             }
@@ -2342,7 +2342,7 @@ public class FrameLibro extends javax.swing.JFrame {
         modificarEjemplar(Estado.deteriorado, contadorEjemplar - 1);
 
         setEstado(Estado.deteriorado);
-        
+
         rellenarCamposEjemplares();
     }//GEN-LAST:event_btnBadStatusMouseClicked
 
@@ -2351,7 +2351,7 @@ public class FrameLibro extends javax.swing.JFrame {
         modificarEjemplar(Estado.usado, contadorEjemplar - 1);
 
         setEstado(Estado.usado);
-        
+
         rellenarCamposEjemplares();
     }//GEN-LAST:event_btnRegularStatusMouseClicked
 
@@ -2360,7 +2360,7 @@ public class FrameLibro extends javax.swing.JFrame {
         modificarEjemplar(Estado.nuevo, contadorEjemplar - 1);
 
         setEstado(Estado.nuevo);
-        
+
         rellenarCamposEjemplares();
     }//GEN-LAST:event_btnGoodStatusMouseClicked
 
@@ -2668,9 +2668,6 @@ public class FrameLibro extends javax.swing.JFrame {
                     return null;
                 }
 
-                protected void process(List<Integer> chunks) {
-                }
-
                 protected void done() {
                     frameCarga.dispose();
 
@@ -2679,10 +2676,10 @@ public class FrameLibro extends javax.swing.JFrame {
                                 new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                                 "Aceptar").setVisible(true);
                     } else {
+                        seleccionaCursoEnComboBox(libro);
                         seleccionaLibroEnLista(libro);
                         rellenarCamposLibro();
                     }
-
                 }
             };
             worker.execute();
@@ -2697,12 +2694,27 @@ public class FrameLibro extends javax.swing.JFrame {
         }
     }
 
+    private void seleccionaCursoEnComboBox(Libro libro) {
+        for (int i = 0; i < cbCursoBuscar.getItemCount(); i++) {
+            Curso c = (Curso) cbCursoBuscar.getItemAt(i);
+  
+            if (c.getCodigo().equals(libro.getContenido().getCurso().getCodigo())) {
+                cbCursoBuscar.setSelectedIndex(i);
+
+            }
+        }
+    }
+
     private void seleccionaLibroEnLista(Libro libro) {
         for (int i = 0; i < jlistLibros.getModel().getSize(); i++) {
-            Libro l = (Libro) jlistLibros.getModel().getElementAt(i);
+            try {
+                Libro l = (Libro) jlistLibros.getModel().getElementAt(i);
 
-            if (l.getCodigo().equals(libro.getCodigo())) {
-                jlistLibros.setSelectedIndex(i);
+                if (l.getCodigo().equals(libro.getCodigo())) {
+                    jlistLibros.setSelectedIndex(i);
+                }
+            } catch (Exception e) {
+
             }
         }
     }

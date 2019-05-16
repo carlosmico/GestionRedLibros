@@ -1376,8 +1376,6 @@ public class FrameEntrega extends javax.swing.JFrame {
                     framePopup.dispose();
 
                     if (alumno != null) {
-                        //cargarDatosAlumno();
-
                         //Seleccionamos el curso del alumno en el ComboBox de cursos
                         for (int i = 0; i < cbCurso.getItemCount(); i++) {
                             Curso c = (Curso) cbCurso.getItemAt(i);
@@ -1401,7 +1399,7 @@ public class FrameEntrega extends javax.swing.JFrame {
                                 "Aceptar").setVisible(true);
 
                         vaciarCampos();
-                        cbFecha.removeAllItems();
+                        modoEdicion(false);
                     }
 
                 }
