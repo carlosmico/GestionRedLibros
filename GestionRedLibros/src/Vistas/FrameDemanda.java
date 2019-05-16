@@ -131,6 +131,8 @@ public class FrameDemanda extends javax.swing.JFrame {
         vaciarTabla();
 
         cargarDatos();
+        
+        rellenarComboBoxFecha();
     }
 
     /**
@@ -146,10 +148,12 @@ public class FrameDemanda extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         panelContainer = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         cbCurso = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         cbCursoEscolar = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Stock demanda");
@@ -168,7 +172,7 @@ public class FrameDemanda extends javax.swing.JFrame {
         panelTitulo.setLayout(panelTituloLayout);
         panelTituloLayout.setHorizontalGroup(
             panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 974, Short.MAX_VALUE)
         );
         panelTituloLayout.setVerticalGroup(
             panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,10 +184,14 @@ public class FrameDemanda extends javax.swing.JFrame {
         jPanel1.setBackground(Colores.fondo);
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        jLabel2.setBackground(Colores.fondo);
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel2.setForeground(Colores.letraNormal);
+        jLabel2.setText("Curso Escolar");
+
         cbCurso.setBackground(Colores.fondo);
         cbCurso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         cbCurso.setForeground(Colores.letraNormal);
-        cbCurso.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbCurso.setPreferredSize(new java.awt.Dimension(65, 32));
         cbCurso.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -221,7 +229,7 @@ public class FrameDemanda extends javax.swing.JFrame {
         cbCursoEscolar.setBackground(Colores.fondo);
         cbCursoEscolar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         cbCursoEscolar.setForeground(Colores.letraNormal);
-        cbCursoEscolar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCursoEscolar.setToolTipText("");
         cbCursoEscolar.setPreferredSize(new java.awt.Dimension(65, 32));
         cbCursoEscolar.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -229,19 +237,26 @@ public class FrameDemanda extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setBackground(Colores.fondo);
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setForeground(Colores.letraNormal);
+        jLabel4.setText("Curso");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cbCursoEscolar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE))
-                .addGap(6, 6, 6))
+                .addGap(11, 11, 11)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbCursoEscolar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,9 +264,11 @@ public class FrameDemanda extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbCursoEscolar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4))
                 .addGap(6, 6, 6)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelContainerLayout = new javax.swing.GroupLayout(panelContainer);
@@ -307,6 +324,15 @@ public class FrameDemanda extends javax.swing.JFrame {
 
     private void cbCursoEscolarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoEscolarItemStateChanged
         // TODO add your handling code here:
+        Curso cursoSeleccionado = (Curso) cbCurso.getSelectedItem();
+
+        if (evt.getStateChange() == evt.SELECTED) {
+            if (cursoSeleccionado != null && !cursoSeleccionado.getCodigo().equals("Selecciona curso")) {
+                rellenarTabla((Curso) cbCurso.getSelectedItem());
+            } else {
+                vaciarTabla();
+            }
+        }
     }//GEN-LAST:event_cbCursoEscolarItemStateChanged
 
     /**
@@ -348,6 +374,8 @@ public class FrameDemanda extends javax.swing.JFrame {
     private javax.swing.JComboBox cbCurso;
     private javax.swing.JComboBox cbCursoEscolar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panelContainer;
@@ -400,7 +428,7 @@ public class FrameDemanda extends javax.swing.JFrame {
     private void rellenarTabla(Curso curso) {
         SwingWorker<?, ?> worker = new SwingWorker<Void, Void>() {
             protected Void doInBackground() throws InterruptedException {
-                listaMatriculas = daoMatricula.buscarPendientesPorCurso(getFechaCursoEscolar(), curso);
+                listaMatriculas = daoMatricula.buscarPendientesPorCurso(Integer.parseInt(cbCursoEscolar.getSelectedItem().toString()), curso);
                 return null;
             }
 
@@ -506,7 +534,7 @@ public class FrameDemanda extends javax.swing.JFrame {
      *
      * @return Devuelve un 'int' con la año actual
      */
-    private int getFechaCursoEscolar() {
+    private int getFecha() {
         LocalDate localDate = LocalDate.now();
         String date = DateTimeFormatter.ofPattern("yyyy").format(localDate);
         int fecha = 0;
@@ -518,5 +546,17 @@ public class FrameDemanda extends javax.swing.JFrame {
                     "Aceptar").setVisible(true);
         }
         return fecha;
+    }
+    
+    /**
+     * Metodo que rellena el combo box para seleccionar el curso escolar
+     */
+    private void rellenarComboBoxFecha() {
+        int fecha = getFecha();
+        int diferencia = 5;
+        for (int i = (fecha - diferencia); i < (fecha + diferencia); i++) {
+            cbCursoEscolar.addItem(i);
+        }
+        cbCursoEscolar.setSelectedIndex(diferencia);
     }
 }
