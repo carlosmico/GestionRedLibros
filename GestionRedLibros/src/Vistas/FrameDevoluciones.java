@@ -1188,6 +1188,8 @@ public class FrameDevoluciones extends javax.swing.JFrame {
                                 "Aceptar").setVisible(true);
 
                         vaciarCampos();
+                        modoEdicion(false);
+
                     }
 
                 }
