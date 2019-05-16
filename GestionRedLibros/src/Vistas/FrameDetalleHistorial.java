@@ -107,6 +107,8 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
         panelEstadoParent22 = new javax.swing.JPanel();
         jLabel36 = new javax.swing.JLabel();
         textFechaEntrega = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        textCursoEscolar = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         panelEstadoParent17 = new javax.swing.JPanel();
@@ -650,7 +652,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addGroup(panelEstadoParent21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelEstadoParent21Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(panelEstado19, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE))
+                        .addComponent(panelEstado19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelEstadoParent21Layout.createSequentialGroup()
                         .addComponent(jLabel35)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -678,16 +680,33 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
         textFechaEntrega.setText("jLabel14");
         textFechaEntrega.setPreferredSize(new java.awt.Dimension(73, 32));
 
+        jLabel37.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel37.setForeground(Colores.letraNormal);
+        jLabel37.setText("Curso Escolar: ");
+
+        textCursoEscolar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        textCursoEscolar.setForeground(Colores.letraNormal);
+        textCursoEscolar.setText("jLabel14");
+        textCursoEscolar.setPreferredSize(new java.awt.Dimension(73, 32));
+
         javax.swing.GroupLayout panelEstadoParent22Layout = new javax.swing.GroupLayout(panelEstadoParent22);
         panelEstadoParent22.setLayout(panelEstadoParent22Layout);
         panelEstadoParent22Layout.setHorizontalGroup(
             panelEstadoParent22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEstadoParent22Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel36)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textFechaEntrega, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(panelEstadoParent22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelEstadoParent22Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel36)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textFechaEntrega, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelEstadoParent22Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel37)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textCursoEscolar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(22, 22, 22)))
+                .addGap(334, 334, 334))
         );
         panelEstadoParent22Layout.setVerticalGroup(
             panelEstadoParent22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -696,6 +715,10 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addGroup(panelEstadoParent22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelEstadoParent22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textCursoEscolar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -723,7 +746,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
                 .addComponent(panelEstadoParent22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelEstadoParent21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addContainerGap(192, Short.MAX_VALUE))
         );
 
         panelInfoEstado.add(jPanel9);
@@ -1034,6 +1057,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1070,6 +1094,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
     private javax.swing.JLabel textCodigoEjemplar;
     private javax.swing.JLabel textContenidoEjemplar;
     private javax.swing.JLabel textCursoActualAlumno;
+    private javax.swing.JLabel textCursoEscolar;
     private javax.swing.JLabel textCursojemplar1;
     private javax.swing.JLabel textEmailAlumno;
     private javax.swing.JLabel textFechaDevolucion;
@@ -1111,6 +1136,7 @@ public class FrameDetalleHistorial extends javax.swing.JFrame {
 
         //Datos info entrega
         textFechaEntrega.setText(historial.getFecha_inicial().toString());
+        textCursoEscolar.setText(historial.getCurso_escolar() + " - " + (historial.getCurso_escolar() + 1));
         setEstadoEntrega(historial.getEstado_inicial());
 
         //Datos info devolucion

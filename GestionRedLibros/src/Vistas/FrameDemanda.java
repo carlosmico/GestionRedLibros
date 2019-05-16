@@ -78,9 +78,30 @@ public class FrameDemanda extends javax.swing.JFrame {
         tabla.getTableHeader().setReorderingAllowed(false);
 //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Configuracion combobox">
         cbCurso.setEditable(false);
         cbCurso.setUI(new comboBoxRender());
         cbCurso.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList list, Object value, int index,
+                    boolean isSelected, boolean hasFocus) {
+                JLabel l = (JLabel) super.getListCellRendererComponent(
+                        list, value, index, isSelected, hasFocus);
+                if (isSelected) {
+                    l.setForeground(Colores.letraBotones);
+                    l.setBackground(Colores.accento);
+                } else {
+                    l.setForeground(Colores.letraNormal);
+                    l.setBackground(Colores.fondo);
+                }
+                return l;
+            }
+        });
+
+        cbCursoEscolar.setEditable(false);
+        cbCursoEscolar.setUI(new comboBoxRender());
+        cbCursoEscolar.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(
                     JList list, Object value, int index,
