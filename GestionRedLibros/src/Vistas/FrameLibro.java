@@ -2342,6 +2342,8 @@ public class FrameLibro extends javax.swing.JFrame {
         modificarEjemplar(Estado.deteriorado, contadorEjemplar - 1);
 
         setEstado(Estado.deteriorado);
+        
+        rellenarCamposEjemplares();
     }//GEN-LAST:event_btnBadStatusMouseClicked
 
     private void btnRegularStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegularStatusMouseClicked
@@ -2349,6 +2351,8 @@ public class FrameLibro extends javax.swing.JFrame {
         modificarEjemplar(Estado.usado, contadorEjemplar - 1);
 
         setEstado(Estado.usado);
+        
+        rellenarCamposEjemplares();
     }//GEN-LAST:event_btnRegularStatusMouseClicked
 
     private void btnGoodStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGoodStatusMouseClicked
@@ -2356,6 +2360,8 @@ public class FrameLibro extends javax.swing.JFrame {
         modificarEjemplar(Estado.nuevo, contadorEjemplar - 1);
 
         setEstado(Estado.nuevo);
+        
+        rellenarCamposEjemplares();
     }//GEN-LAST:event_btnGoodStatusMouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -3007,6 +3013,7 @@ public class FrameLibro extends javax.swing.JFrame {
 
     private void showEjemplarPanel(boolean b) {
         textTotalEjemplares.setVisible(b);
+        textEjemplaresDisponibles.setVisible(b);
         btnSiguiente.setVisible(b);
         btnAnterior.setVisible(b);
         panelEjemplarNoSeleccionado.setVisible(!b);
