@@ -154,28 +154,34 @@ public class CodigoBarras {
         //Posicionamiento de la etiqueta
         float etiqueta1x = 0, etiqueta1y = heightPdf - heigthEtiqueta - alturaBordes;
 
-        for (int i = 0; i < etiquetasVertical; i++) {
-            for (int j = 0; j < etiquetasHorizontal; j++) {
-                if (pos >= posicionReal) {
-                    //Controlamos si hemos pintado todas las etiquetas
-                    if (contador == maxEtiquetas) {
-                        break;
+        //Contadores de las etiquetas para controlar las páginas necesarias y la iteracion por la que vamos en el do-while
+        int contadorMaxWhile = Math.round(maxEtiquetas / (etiquetasHorizontal * etiquetasVertical)) + posicion;
+        int contadorWhile = 0;
+
+        do {
+            for (int i = 0; i < etiquetasVertical; i++) {
+                for (int j = 0; j < etiquetasHorizontal; j++) {
+                    if (pos >= posicionReal) {
+                        //Controlamos si hemos pintado todas las etiquetas
+                        if (contador == maxEtiquetas) {
+                            break;
+                        }
+
+                        //Pintamos las etiquetas
+                        Image codeImg = barcode.createImageWithBarcode(pdf.getDirectContent(),
+                                BaseColor.BLACK, BaseColor.BLACK);
+                        float x = etiqueta1x + (widthEtiqueta * j), y = etiqueta1y - (heigthEtiqueta * i);
+                        codeImg.setAbsolutePosition(x + ((widthEtiqueta / 2) - (widthCodigo / 2)),
+                                y + ((heigthEtiqueta / 2) - (heigthCodigo / 2)));
+                        doc.add(codeImg);
+                        contador++;
                     }
-
-                    //Pintamos las etiquetas
-                    Image codeImg = barcode.createImageWithBarcode(pdf.getDirectContent(),
-                            BaseColor.BLACK, BaseColor.BLACK);
-                    float x = etiqueta1x + (widthEtiqueta * j), y = etiqueta1y - (heigthEtiqueta * i);
-                    codeImg.setAbsolutePosition(x + ((widthEtiqueta / 2) - (widthCodigo / 2)),
-                            y + ((heigthEtiqueta / 2) - (heigthCodigo / 2)));
-                    doc.add(codeImg);
-                    contador++;
+                    pos++;
                 }
-                pos++;
             }
-        }
-        doc.newPage();
-
+            doc.newPage();
+            contadorWhile++;
+        } while (contadorWhile < contadorMaxWhile);
         doc.close();
 
         os.close();

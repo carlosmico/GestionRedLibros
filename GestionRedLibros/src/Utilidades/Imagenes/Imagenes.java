@@ -27,10 +27,18 @@ import javax.swing.JFrame;
 public class Imagenes {
 
     public static ImageIcon getImagen(String nombre) {
-        return new ImageIcon(new JFrame().getClass().getResource("/Imagenes/icons/" + nombre));
+        try {
+            return new ImageIcon(new JFrame().getClass().getResource("/Imagenes/icons/" + nombre));
+        } catch (Exception e) {
+            return new ImageIcon(new JFrame().getClass().getResource(nombre));
+        }
     }
 
     public static ImageIcon getImageFromImagenes(String nombre) {
-        return new ImageIcon(new JFrame().getClass().getResource("/Imagenes/" + nombre));
+        try {
+            return new ImageIcon(new JFrame().getClass().getResource("/Imagenes/" + nombre));
+        } catch (Exception e) {
+            return new ImageIcon(new JFrame().getClass().getResource(nombre));
+        }
     }
 }
