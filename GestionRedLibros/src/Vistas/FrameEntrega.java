@@ -120,6 +120,26 @@ public class FrameEntrega extends javax.swing.JFrame {
                 return l;
             }
         });
+
+        cbFecha.setEditable(false);
+        cbFecha.setUI(new comboBoxRender());
+        cbFecha.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList list, Object value, int index,
+                    boolean isSelected, boolean hasFocus) {
+                JLabel l = (JLabel) super.getListCellRendererComponent(
+                        list, value, index, isSelected, hasFocus);
+                if (isSelected) {
+                    l.setForeground(Colores.letraBotones);
+                    l.setBackground(Colores.accento);
+                } else {
+                    l.setForeground(Colores.letraNormal);
+                    l.setBackground(Colores.fondo);
+                }
+                return l;
+            }
+        });
 //</editor-fold>
 
         //Inicializamos los DAO
@@ -197,7 +217,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        textCursoEscolar = new javax.swing.JLabel();
+        cbFecha = new javax.swing.JComboBox();
         panelGestionAsignaturas = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -498,9 +518,11 @@ public class FrameEntrega extends javax.swing.JFrame {
         jLabel2.setForeground(Colores.letraNormal);
         jLabel2.setText("Curso escolar:");
 
-        textCursoEscolar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textCursoEscolar.setForeground(Colores.letraNormal);
-        textCursoEscolar.setPreferredSize(new java.awt.Dimension(32, 32));
+        cbFecha.setBackground(Colores.fondo);
+        cbFecha.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbFecha.setForeground(Colores.letraNormal);
+        cbFecha.setMinimumSize(new java.awt.Dimension(65, 32));
+        cbFecha.setPreferredSize(new java.awt.Dimension(65, 32));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -510,19 +532,19 @@ public class FrameEntrega extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(textCursoEscolar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(0, 348, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(354, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(cbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textCursoEscolar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(67, Short.MAX_VALUE))
         );
 
@@ -1025,6 +1047,7 @@ public class FrameEntrega extends javax.swing.JFrame {
     private com.mommoo.flat.button.FlatButton btnBusquedaNIA;
     private com.mommoo.flat.button.FlatButton btnCodigoEjemplar;
     private javax.swing.JComboBox cbCurso;
+    private javax.swing.JComboBox cbFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel15;
@@ -1068,7 +1091,6 @@ public class FrameEntrega extends javax.swing.JFrame {
     public static javax.swing.JTable tablaPendientes;
     private javax.swing.JTextField textBusquedaNIA;
     private javax.swing.JTextField textCodigoEjemplar;
-    private javax.swing.JLabel textCursoEscolar;
     private javax.swing.JLabel textNIAAlumno;
     private javax.swing.JLabel textNombreAlumno;
     // End of variables declaration//GEN-END:variables
@@ -1184,6 +1206,7 @@ public class FrameEntrega extends javax.swing.JFrame {
      */
     private void cargarDatosAlumno() {
         vaciarCampos();
+        rellenarComboBoxFecha();
 
         if (alumno == null) {
             modoEdicion(false);
@@ -1204,17 +1227,13 @@ public class FrameEntrega extends javax.swing.JFrame {
                         textNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellido1());
                         textNombreAlumno.setToolTipText(alumno.getNombre() + " " + alumno.getApellido1());
 
-                        textCursoEscolar.setText(getFecha() + "-" + (getFecha() + 1));
-
                         rellenarTablaPendiente(listaMatriculas);
-
-                        modoEdicion(true);
                     } else {
                         new FramePopup(topFrame, "El alumno no está matriculado en este curso escolar",
                                 Imagenes.getImagen("alert-black.png"),
                                 "Aceptar").setVisible(true);
                     }
-
+                    modoEdicion(true);
                     framePopup.dispose();
                 }
             };
@@ -1230,7 +1249,7 @@ public class FrameEntrega extends javax.swing.JFrame {
         textNIAAlumno.setText("");
         textNombreAlumno.setText("");
         textNombreAlumno.setToolTipText("");
-        textCursoEscolar.setText("");
+        cbFecha.removeAllItems();
 
         DefaultTableModel model = new DefaultTableModel(null, new Object[]{"Asignatura", "Curso", "Idioma", "Curso Pendiente"});
         tablaPendientes.setModel(model);
@@ -1248,10 +1267,19 @@ public class FrameEntrega extends javax.swing.JFrame {
      */
     private int getFecha() {
         LocalDate localDate = LocalDate.now();
-        String date = DateTimeFormatter.ofPattern("yyyy").format(localDate);
+        String dateActual = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(localDate);
+        String year = DateTimeFormatter.ofPattern("yyyy").format(localDate);
+        String dateLimit = year + "-08-31";
+        System.out.print("Fecha limite: " + dateLimit + "\nFecha actual: " + dateActual + "\nEs Mayor: ");
+
         int fecha = 0;
         try {
-            fecha = Integer.parseInt(date);
+            if (dateActual.compareTo(dateLimit) <= 0) {
+                fecha = Integer.parseInt(year) - 1;
+            } else {
+                fecha = Integer.parseInt(year);
+            }
+
         } catch (NumberFormatException e) {
             Action aceptar = new AbstractAction() {
                 public void actionPerformed(ActionEvent e) {
@@ -1260,7 +1288,7 @@ public class FrameEntrega extends javax.swing.JFrame {
             };
 
             new FramePopup(this, "No se ha podido conseguir el curso escolar",
-                    Imagenes.getImagen("/Imagenes/icons/alert-black.png"),
+                    Imagenes.getImagen("alert-black.png"),
                     "Aceptar", aceptar).setVisible(true);
         }
         return fecha;
@@ -1370,8 +1398,9 @@ public class FrameEntrega extends javax.swing.JFrame {
                                 Historial historial = new Historial(
                                         ejemplar,
                                         alumno,
-                                        getFecha(),
-                                        ejemplar.getEstado(),
+                                        Integer.parseInt(cbFecha.getSelectedItem().toString()),
+                                        ejemplar
+                                        .getEstado(),
                                         -1,
                                         new Date(),
                                         null,
@@ -1475,5 +1504,18 @@ public class FrameEntrega extends javax.swing.JFrame {
     private void modoEdicion(boolean b) {
         textCodigoEjemplar.setEnabled(b);
         jlistEjemplares.setEnabled(b);
+        cbFecha.setEnabled(b);
+    }
+
+    /**
+     * Metodo que rellena el combo box para seleccionar el curso escolar
+     */
+    private void rellenarComboBoxFecha() {
+        int fecha = getFecha();
+        int diferencia = 5;
+        for (int i = (fecha - diferencia); i < (fecha + diferencia); i++) {
+            cbFecha.addItem(i);
+        }
+        cbFecha.setSelectedIndex(diferencia);
     }
 }
