@@ -1793,14 +1793,17 @@ public class FrameLibro extends javax.swing.JFrame {
                     protected Void doInBackground() throws InterruptedException {
                         //Cargamos los datos de los libros y ejemplares
                         boolean existeHistoriales = false;
+                        accionRealizada = false;
 
                         for (Ejemplar ejemplar : libro.getEjemplares()) {
-                            if (ejemplar.getHistoriales() == null || ejemplar.getHistoriales().size() > 0) {
+                            List<Historial> historiales = ejemplar.getHistoriales();
+                            
+                            if (historiales != null && historiales.size() > 0) {
                                 existeHistoriales = true;
                             }
                         }
 
-                        if (existeHistoriales == false) {
+                        if (!existeHistoriales) {
                             try {
                                 daoLibro.borrar(libro);
                                 accionRealizada = true;
@@ -1833,12 +1836,9 @@ public class FrameLibro extends javax.swing.JFrame {
                                     new ImageIcon(getClass().getResource("/Imagenes/icons/alert-black.png")),
                                     "Aceptar").setVisible(true);
                         }
-                        frameCarga.dispose();
                     }
                 };
                 worker.execute();
-                frameCarga = new FramePopup(topFrame, "Eliminando libro, espere...");
-                frameCarga.setVisible(true);
             }
         };
 

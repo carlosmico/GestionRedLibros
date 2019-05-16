@@ -75,6 +75,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     public List<Curso> listaCursos;
 
     private String campoBusquedaTemp = "";
+    private String codigoBusquedaTemp = "";
 
     private JFrame topFrame;
 
@@ -177,7 +178,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         panelEjemplaresDevueltos = new javax.swing.JPanel();
         panelCodigo = new javax.swing.JPanel();
         textCodigoEjemplar = new javax.swing.JTextField();
-        btCodigoEjemplar = new com.mommoo.flat.button.FlatButton();
+        btnDevolver = new com.mommoo.flat.button.FlatButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jlistEjemplaresDevueltos = new javax.swing.JList();
         jPanel5 = new javax.swing.JPanel();
@@ -579,12 +580,20 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 textCodigoEjemplarKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textCodigoEjemplarKeyReleased(evt);
+            }
         });
 
-        btCodigoEjemplar.setBackground(Colores.botones);
-        btCodigoEjemplar.setForeground(Colores.letraBotones);
-        btCodigoEjemplar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up.png"))); // NOI18N
-        btCodigoEjemplar.setCornerRound(10);
+        btnDevolver.setBackground(Colores.botones);
+        btnDevolver.setForeground(Colores.letraBotones);
+        btnDevolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons/clipboard-arrow-up.png"))); // NOI18N
+        btnDevolver.setCornerRound(10);
+        btnDevolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDevolverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelCodigoLayout = new javax.swing.GroupLayout(panelCodigo);
         panelCodigo.setLayout(panelCodigoLayout);
@@ -593,13 +602,13 @@ public class FrameDevoluciones extends javax.swing.JFrame {
             .addGroup(panelCodigoLayout.createSequentialGroup()
                 .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panelCodigoLayout.setVerticalGroup(
             panelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(textCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btCodigoEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jlistEjemplaresDevueltos.setBackground(Colores.fondo);
@@ -800,6 +809,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
     private void textCodigoEjemplarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCodigoEjemplarKeyPressed
         // TODO add your handling code here:
+        
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             buscarEjemplar(textCodigoEjemplar.getText());
         }
@@ -807,6 +817,7 @@ public class FrameDevoluciones extends javax.swing.JFrame {
 
     private void textCodigoEjemplarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCodigoEjemplarFocusGained
         // TODO add your handling code here:
+        codigoBusquedaTemp = "";
         textCodigoEjemplar.setText("");
         textCodigoEjemplar.setForeground(Colores.letraNormal);
     }//GEN-LAST:event_textCodigoEjemplarFocusGained
@@ -874,6 +885,15 @@ public class FrameDevoluciones extends javax.swing.JFrame {
         buscarEjemplar(historial.getEjemplar().getCodigo().toUpperCase());
     }//GEN-LAST:event_jlistEjemplaresPendientesMouseClicked
 
+    private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
+        // TODO add your handling code here:
+        buscarEjemplar(codigoBusquedaTemp);
+    }//GEN-LAST:event_btnDevolverActionPerformed
+
+    private void textCodigoEjemplarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCodigoEjemplarKeyReleased
+        codigoBusquedaTemp = textCodigoEjemplar.getText();
+    }//GEN-LAST:event_textCodigoEjemplarKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -918,8 +938,8 @@ public class FrameDevoluciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.mommoo.flat.button.FlatButton btCodigoEjemplar;
     private com.mommoo.flat.button.FlatButton btnBusquedaNIA;
+    private com.mommoo.flat.button.FlatButton btnDevolver;
     private javax.swing.JComboBox cbCurso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

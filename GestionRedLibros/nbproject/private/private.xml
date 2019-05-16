@@ -5,12 +5,15 @@
         <group>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameLibro.java</file>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameHistorial.java</file>
+<<<<<<< HEAD
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Utilidades/CodigoBarras.java</file>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameDemanda.java</file>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameEtiquetasPopup.java</file>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameDetalleHistorial.java</file>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Daos/DaoAlumno.java</file>
             <file>file:/C:/Repositorios/GestionRedLibros/GestionRedLibros/src/Vistas/FrameConfirmacionDevolucion.java</file>
+=======
+>>>>>>> master
         </group>
     </open-files>
 </project-private>
