@@ -128,6 +128,7 @@ public class FrameDemanda extends javax.swing.JFrame {
         cbCurso = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        cbCursoEscolar = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Stock demanda");
@@ -196,27 +197,40 @@ public class FrameDemanda extends javax.swing.JFrame {
         tabla.setSelectionForeground(Colores.letraBotones);
         jScrollPane1.setViewportView(tabla);
 
+        cbCursoEscolar.setBackground(Colores.fondo);
+        cbCursoEscolar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbCursoEscolar.setForeground(Colores.letraNormal);
+        cbCursoEscolar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCursoEscolar.setPreferredSize(new java.awt.Dimension(65, 32));
+        cbCursoEscolar.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbCursoEscolarItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 477, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                        .addComponent(cbCursoEscolar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE))
+                .addGap(6, 6, 6))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbCursoEscolar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout panelContainerLayout = new javax.swing.GroupLayout(panelContainer);
@@ -262,11 +276,17 @@ public class FrameDemanda extends javax.swing.JFrame {
         Curso cursoSeleccionado = (Curso) cbCurso.getSelectedItem();
 
         if (evt.getStateChange() == evt.SELECTED) {
-            if (cursoSeleccionado != null && !cursoSeleccionado.getCodigo().equals("Todos")) {
+            if (cursoSeleccionado != null && !cursoSeleccionado.getCodigo().equals("Selecciona curso")) {
                 rellenarTabla((Curso) cbCurso.getSelectedItem());
+            } else {
+                vaciarTabla();
             }
         }
     }//GEN-LAST:event_cbCursoItemStateChanged
+
+    private void cbCursoEscolarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoEscolarItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCursoEscolarItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -305,6 +325,7 @@ public class FrameDemanda extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cbCurso;
+    private javax.swing.JComboBox cbCursoEscolar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -342,7 +363,7 @@ public class FrameDemanda extends javax.swing.JFrame {
 
         cbCurso.removeAllItems();
 
-        cbCurso.addItem(new Curso("Todos", "Todos", "Todos", "Todos", "Todos", " "));
+        cbCurso.addItem(new Curso("Selecciona curso", "Selecciona curso", "Selecciona curso", "Selecciona curso", "Selecciona curso", " "));
 
         if (listaCursos.size() > 0) {
             for (int i = 0; i < listaCursos.size(); i++) {
