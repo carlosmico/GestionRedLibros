@@ -514,6 +514,9 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         }
 
         Libro libro = FrameLibro.libro;
+        if (libro == null){
+            libro = ejemplar.getLibro();
+        }
 
         CodigoBarras cb = new CodigoBarras();
 
