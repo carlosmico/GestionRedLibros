@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-03-2019 a las 10:16:35
+-- Tiempo de generación: 14-05-2019 a las 20:48:06
 -- Versión del servidor: 10.1.38-MariaDB
--- Versión de PHP: 7.3.2
+-- Versión de PHP: 7.3.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -100,7 +100,7 @@ CREATE TABLE `alumnos` (
 --
 
 CREATE TABLE `contenido` (
-  `id` varchar(10) NOT NULL,
+  `id` int(11) NOT NULL,
   `curso` varchar(10) NOT NULL,
   `codigo` varchar(15) NOT NULL,
   `ensenanza` varchar(2) NOT NULL,
@@ -121,58 +121,8 @@ CREATE TABLE `cursos` (
   `abreviatura` varchar(10) NOT NULL,
   `nombre_cas` varchar(100) NOT NULL,
   `nombre_val` varchar(100) NOT NULL,
-  `idPadre` varchar(10) DEFAULT NULL
+  `idPadre` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `cursos`
---
-
-INSERT INTO `cursos` (`id`, `codigo`, `ensenanza`, `abreviatura`, `nombre_cas`, `nombre_val`, `idPadre`) VALUES
-('1', '1', '', 'DAM', '', '', NULL),
-('1949539185', '1949539185', '3', '3ESO', 'Tercero', 'Tercer', ' '),
-('1949539199', '1949539199', '3', '1ESO', 'Primero', 'Primer', ' '),
-('1949539212', '1949539212', '3', '2ESO', 'Segundo', 'Segon', ' '),
-('1949539224', '1949539224', '3', '4ESO', 'Cuarto', 'Quart', ' '),
-('1949539243', '1949539243', '3', 'PMAR', 'Programa de Mejora del aprendizaje y del rendimiento', 'Programa de millora del aprenentatge i del rendiment', ' '),
-('1949539245', '1949539245', '3', '3ESO', '3º ESO - PMAR Ámbitos', '3r ESO - PMAR Àmbits', '1949539243'),
-('1949539262', '1949539262', '3', 'PR4', 'Programa de Refuerzo Cuarto', 'Programa de Reforç Quart', ' '),
-('1949539264', '1949539264', '3', '4ESO', '4ESO (PR4)', '4ESO (PR4)', '1949539262'),
-('1949540387', '1949540387', '4', 'BAC', 'BACHILLERATO DE CIENCIAS', 'BATXILLERAT DE CIÈNCIES', ' '),
-('1949540389', '1949540389', '4', '1BAC', 'PRIMERO BACH CIENCIAS ', 'PRIMER BATX CIÈNCIES ', '1949540387'),
-('1949540403', '1949540403', '4', '2BAC', 'SEGUNDO BACH CIENCIAS', 'SEGON BATX CIÈNCIES', '1949540387'),
-('1949540511', '1949540511', '4', 'BAH', 'BACHILLERATO DE HUMANIDADES Y CIENCIAS SOCIALES', 'BATXILLERAT D\'HUMANITATS I CIÈNCIES SOCIALS', ' '),
-('1949540513', '1949540513', '4', '2BAH', 'SEGUNDO BACH HUMANIDADES Y CIENCIAS SOCIALES', 'SEGON BATX HUMANITATS I CIÈNCIES SOCIALS', '1949540511'),
-('1949540524', '1949540524', '4', '1BAH', 'PRIMERO BACH HUMANIDADES Y CIENCIAS SOCIALES', 'PRIMER BATX. HUMANITATS I CIÈNCIES SOCIALS', '1949540511'),
-('1949542042', '1949542042', '5', '190', 'INFORMÁTICA Y COMUNICACIONES', 'INFORMÀTICA I COMUNICACIONS', ' '),
-('1949542044', '1949542044', '5', 'FPB', 'FP BÁSICA', 'FP BÀSICA', '1949542042'),
-('1949542067', '1949542067', '5', '97210A', 'INFORMÁTICA DE OFICINA', 'INFORMÀTICA D\'OFICINA', '1949542044'),
-('1949542069', '1949542069', '5', '1CFB', 'Primero', 'Primer', '1949542067'),
-('1949542076', '1949542076', '5', '2CFB', 'Segundo', 'Segon', '1949542067'),
-('1949542114', '1949542114', '5', 'GM', 'GRADO MEDIO', 'GRAU MITJÀ', '1949542042'),
-('1949542138', '1949542138', '5', '707103', 'SISTEMAS MICROINFORMÁTICOS Y REDES', 'SISTEMES MICROINFORMÀTICS I XARXES', '1949542114'),
-('1949542140', '1949542140', '5', '1CFM', 'Primero', 'Primer', '1949542138'),
-('1949542147', '1949542147', '5', '2CFM', 'Segundo', 'Segon', '1949542138'),
-('1949542164', '1949542164', '5', 'GS', 'GRADO SUPERIOR', 'GRAU SUPERIOR', '1949542042'),
-('1949542195', '1949542195', '5', '836104', 'DESARROLLO DE APLICACIONES MULTIPLATAFORMA', 'DESENROTLLAMENT D\'APLICACIONS MULTIPLATAFORMA', '1949542164'),
-('1949542197', '1949542197', '5', '1CFS', 'Primero', 'Primer', '1949542195'),
-('1949542204', '1949542204', '5', '2CFS', 'Segundo', 'Segon', '1949542195'),
-('1949544249', '1949544249', '5', '001', 'ADMINISTRACIÓN Y GESTIÓN', 'ADMINISTRACIÓ I GESTIÓ', ' '),
-('1949544300', '1949544300', '5', 'GM', 'GRADO MEDIO', 'GRAU MITJÀ', '1949544249'),
-('1949544331', '1949544331', '5', '472103', 'GESTIÓN ADMINISTRATIVA (LOE)', 'GESTIÓ ADMINISTRATIVA (LOE)', '1949544300'),
-('1949544333', '1949544333', '5', '1CFM', 'Primero', 'Primer', '1949544331'),
-('1949544340', '1949544340', '5', '2CFM', 'Segundo', 'Segon', '1949544331'),
-('1949544364', '1949544364', '5', 'GS', 'GRADO SUPERIOR', 'GRAU SUPERIOR', '1949544249'),
-('1949544415', '1949544415', '5', '441104', 'ADMINISTRACIÓN Y FINANZAS (LOE)', 'ADMINISTRACIÓ I FINANCES (LOE)', '1949544364'),
-('1949544417', '1949544417', '5', '2CFS', 'Segundo', 'Segon', '1949544415'),
-('1949544424', '1949544424', '5', '1CFS', 'Primero', 'Primer', '1949544415'),
-('1949545365', '1949545365', '5', '031', 'ELECTRICIDAD Y ELECTRÓNICA', 'ELECTRICITAT I ELECTRÒNICA', ' '),
-('1949545367', '1949545367', '5', 'FPB', 'FP BÁSICA', 'FP BÀSICA', '1949545365'),
-('1949545369', '1949545369', '5', '95610A', 'ELECTRICIDAD Y ELECTRÓNICA', 'ELECTRICITAT I ELECTRÒNICA', '1949545367'),
-('1949545371', '1949545371', '5', '1CFB', 'Primero', 'Primer', '1949545369'),
-('1949545378', '1949545378', '5', '2CFB', 'Segundo', 'Segon', '1949545369'),
-('1949545683', '1949545683', '5', 'GM', 'GRADO MEDIO', 'GRAU MITJÀ', '1949545365'),
-('1949571046', '1949571046', '6', '190', 'INFORMÁTICA Y COMUNICACIONES', 'INFORMÀTICA I COMUNICACIONS', ' ');
 
 -- --------------------------------------------------------
 
@@ -194,7 +144,7 @@ CREATE TABLE `cursos-grupos` (
 --
 
 CREATE TABLE `ejemplares` (
-  `id` varchar(10) NOT NULL,
+  `id` varchar(100) NOT NULL,
   `codigo` varchar(100) NOT NULL,
   `id_libro` varchar(100) NOT NULL,
   `estado` int(11) NOT NULL,
@@ -222,52 +172,6 @@ CREATE TABLE `grupos` (
   `oficial` varchar(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `grupos`
---
-
-INSERT INTO `grupos` (`id`, `codigo`, `nombre`, `ensenanza`, `linea`, `turno`, `modalidad`, `aula`, `capacidad`, `tutor_ppal`, `tutor_sec`, `oficial`) VALUES
-('1', '1', '1BA.CN.TC.AN.REL', '0', '', '', '', '', 0, '', '', ''),
-('10', '', '2BA.CN.TC.AN', '0', '', '', '', '', 0, '', '', ''),
-('11', '', '2CFM.GEST.ADMIN', '0', '', '', '', '', 0, '', '', ''),
-('12', '', '2CFS.ADMIN.FIN', '0', '', '', '', '', 0, '', '', ''),
-('13', '', '2SA.AN.REL.AE.VAL', '0', '', '', '', '', 0, '', '', ''),
-('14', '', '2SB.AN.REL.AE.VL', '0', '', '', '', '', 0, '', '', ''),
-('15', '', '2SC.AN.REL.PIP', '0', '', '', '', '', 0, '', '', ''),
-('16', '', '2SD.AN.REL.AE.PIP', '0', '', '', '', '', 0, '', '', ''),
-('17', '', '3SA.AN.REL.AE.VL', '0', '', '', '', '', 0, '', '', ''),
-('18', '', '3SB.AN.REL.AE.VAL', '0', '', '', '', '', 0, '', '', ''),
-('19', '', '3SC.AN.REL.PIP', '0', '', '', '', '', 0, '', '', ''),
-('2', '', '1BB.HUM.AN.REL', '0', '', '', '', '', 0, '', '', ''),
-('20', '', '4SA.AN.REL.VAL', '0', '', '', '', '', 0, '', '', ''),
-('21', '', '4SB.AN.REL.AE.VAL', '0', '', '', '', '', 0, '', '', ''),
-('22', '', 'GUARDIA', '0', '', '', '', '', 0, '', '', ''),
-('23', '', 'Necesidades Educativas Especiales', '0', '', '', '', '', 0, '', '', ''),
-('24', '', 'REU', '0', '', '', '', '', 0, '', '', ''),
-('25', '', 'BIBLIOTECA', '0', '', '', '', '', 0, '', '', ''),
-('26', '', 'HORAS DE LIBRE DISPOSICION', '0', '', '', '', '', 0, '', '', ''),
-('28', '', 'PAC', '0', '', '', '', '', 0, '', '', ''),
-('29', '', '1CFM.SIST.MICRO.XARXES', '0', '', '', '', '', 0, '', '', ''),
-('3', '', '1CFM.GEST.ADMIN', '0', '', '', '', '', 0, '', '', ''),
-('30', '', '2CFB ELECTRÓNICA', '0', '', '', '', '', 0, '', '', ''),
-('31', '', 'FUNCION DIRECTIVA', '0', '', '', '', '', 0, '', '', ''),
-('32', '', '2CFM.SIST.MICRO.XARXES', '0', '', '', '', '', 0, '', '', ''),
-('33', '', 'APAS', '0', '', '', '', '', 0, '', '', ''),
-('34', '', '2CFB INFORMÀTICA D\'OFICINA', '0', '', '', '', '', 0, '', '', ''),
-('35', '', '1CFB ELECTRÓNICA', '0', '', '', '', '', 0, '', '', ''),
-('36', '', '1CFB INFORMATICA D\'OFICINA', '0', '', '', '', '', 0, '', '', ''),
-('37', '', '3ESO PMAR', '0', '', '', '', '', 0, '', '', ''),
-('38', '', '1CFS.DES.MULT', '0', '', '', '', '', 0, '', '', ''),
-('39', '', '4ESO PR4', '0', '', '', '', '', 0, '', '', ''),
-('4', '', '1CFS.ADMIN.FIN', '0', '', '', '', '', 0, '', '', ''),
-('40', '', '2BA.HUM.SCO.AN', '0', '', '', '', '', 0, '', '', ''),
-('41', '', '2CFS.DES.MULT', '0', '', '', '', '', 0, '', '', ''),
-('5', '', '1SA.AN.REL.AE.VAL', '0', '', '', '', '', 0, '', '', ''),
-('6', '', '1SB.AN.REL.AE.VAL', '0', '', '', '', '', 0, '', '', ''),
-('7', '', '1SC.AN.REL.VAL', '0', '', '', '', '', 0, '', '', ''),
-('8', '', '1SD.AN.REL.PIP', '0', '', '', '', '', 0, '', '', ''),
-('9', '', '1SE.AN.REL.AE.PIP', '0', '', '', '', '', 0, '', '', '');
-
 -- --------------------------------------------------------
 
 --
@@ -276,13 +180,13 @@ INSERT INTO `grupos` (`id`, `codigo`, `nombre`, `ensenanza`, `linea`, `turno`, `
 
 CREATE TABLE `historial` (
   `id` int(11) NOT NULL,
-  `id_inventario` varchar(10) NOT NULL,
+  `id_ejemplar` varchar(100) DEFAULT NULL,
   `id_alumno` varchar(10) NOT NULL,
   `curso_escolar` int(11) NOT NULL,
   `estado_inicial` int(11) NOT NULL,
-  `estado_final` int(11) NOT NULL,
-  `fecha_inicial` date NOT NULL,
-  `fecha_final` date NOT NULL,
+  `estado_final` int(11) DEFAULT NULL,
+  `fecha_inicial` datetime NOT NULL,
+  `fecha_final` datetime DEFAULT NULL,
   `observaciones` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -293,9 +197,9 @@ CREATE TABLE `historial` (
 --
 
 CREATE TABLE `libros` (
-  `id` varchar(10) NOT NULL,
+  `id` varchar(50) NOT NULL,
   `codigo` varchar(50) NOT NULL,
-  `id_asignatura` varchar(10) NOT NULL,
+  `id_contenido` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `ISBN` varchar(50) NOT NULL,
   `unidades` int(11) NOT NULL,
@@ -315,13 +219,13 @@ CREATE TABLE `matricula` (
   `id_alumno` varchar(10) NOT NULL,
   `ensenanza` varchar(2) NOT NULL,
   `curso` varchar(10) NOT NULL,
-  `contenido` varchar(10) NOT NULL,
+  `contenido` int(11) NOT NULL,
   `idioma` varchar(25) NOT NULL,
   `tipo_basico` varchar(50) NOT NULL,
   `tipo_predom` varchar(50) NOT NULL,
   `acis` varchar(25) NOT NULL,
-  `fec_ini_acis` date NOT NULL,
-  `fec_fin_acis` date NOT NULL,
+  `fec_ini_acis` datetime NOT NULL,
+  `fec_fin_acis` datetime NOT NULL,
   `cur_ref_acis` varchar(25) NOT NULL,
   `curso_pendiente` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -376,7 +280,8 @@ ALTER TABLE `grupos`
 -- Indices de la tabla `historial`
 --
 ALTER TABLE `historial`
-  ADD KEY `id_inventario_rel` (`id_inventario`),
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_inventario_rel` (`id_ejemplar`),
   ADD KEY `id_alumno_rel` (`id_alumno`);
 
 --
@@ -384,24 +289,43 @@ ALTER TABLE `historial`
 --
 ALTER TABLE `libros`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_asignatura_rel` (`id_asignatura`);
+  ADD KEY `id_asignatura_rel` (`id_contenido`);
 
 --
 -- Indices de la tabla `matricula`
 --
 ALTER TABLE `matricula`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_alumno_rel_2` (`id_alumno`);
+  ADD KEY `id_alumno_rel_2` (`id_alumno`),
+  ADD KEY `id_contenido_rel` (`contenido`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
+-- AUTO_INCREMENT de la tabla `contenido`
+--
+ALTER TABLE `contenido`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `cursos-grupos`
 --
 ALTER TABLE `cursos-grupos`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `historial`
+--
+ALTER TABLE `historial`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `matricula`
+--
+ALTER TABLE `matricula`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -438,19 +362,20 @@ ALTER TABLE `ejemplares`
 --
 ALTER TABLE `historial`
   ADD CONSTRAINT `id_alumno_rel` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_inventario_rel` FOREIGN KEY (`id_inventario`) REFERENCES `ejemplares` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `id_ejemplar_rel` FOREIGN KEY (`id_ejemplar`) REFERENCES `ejemplares` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `libros`
 --
 ALTER TABLE `libros`
-  ADD CONSTRAINT `id_asignatura_rel` FOREIGN KEY (`id_asignatura`) REFERENCES `contenido` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `id_contenido_r` FOREIGN KEY (`id_contenido`) REFERENCES `contenido` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `matricula`
 --
 ALTER TABLE `matricula`
-  ADD CONSTRAINT `id_alumno_rel_2` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id`);
+  ADD CONSTRAINT `id_alumno_rel_2` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `id_contenido_rel` FOREIGN KEY (`contenido`) REFERENCES `contenido` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
