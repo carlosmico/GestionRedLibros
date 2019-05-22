@@ -143,7 +143,7 @@ public class FrameEtiquetasPopup extends javax.swing.JDialog {
         jPanel2.setPreferredSize(new java.awt.Dimension(400, 389));
 
         text.setBackground(Colores.fondoOscuro);
-        text.setForeground(Colores.letraTitulo);
+        text.setForeground(Colores.letraNormal);
         text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         text.setText("Ajustes de impresión");
         text.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
