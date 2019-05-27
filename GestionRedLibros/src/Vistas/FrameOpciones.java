@@ -2112,6 +2112,9 @@ public class FrameOpciones extends javax.swing.JFrame {
         if (error.equals("")) {
             try {
                 if (ComprobarConexion.comprobarConexion(ip, puerto, "institut", usuario, contrasena)) {
+                    
+                    Main.gestorSesiones.configurarPropiedades(ip, puerto, usuario, contrasena);
+                    
                     new FramePopup(this, "Conexión a la base de datos correcta.",
                             new ImageIcon(getClass().getResource("/Imagenes/icons/check-black.png")),
                             "Aceptar").setVisible(true);

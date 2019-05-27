@@ -23,8 +23,9 @@ import dao.InterfaceDaoGenerico;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.PersistenceException;
-import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
+
 
 /**
  *
