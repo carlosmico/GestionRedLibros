@@ -1924,6 +1924,7 @@ public class FrameLibro extends javax.swing.JFrame {
         //Deshabilitamos el campo de las unidades ya que solo se pueden añadir 
         //desde la funcionalidad para ello
         textUnidadesTotalesLibro.setEnabled(false);
+        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
@@ -2866,7 +2867,6 @@ public class FrameLibro extends javax.swing.JFrame {
                 }
             }
 
-            cbAsignatura.addItem(libro.getContenido());
             textUnidadesTotalesLibro.setText(libro.getUnidades() + "");
             textPrecioLibro.setText(libro.getPrecio() + "");
             chkObsoletoLibro.setSelected(libro.getObsoleto());

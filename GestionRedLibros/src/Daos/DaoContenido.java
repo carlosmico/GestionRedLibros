@@ -108,10 +108,10 @@ public class DaoContenido extends DaoGenerico<Contenido, Integer> implements Int
      * @param codigo
      * @return
      */
-    public Contenido buscarPorCodigo(String codigo) {
+    public Contenido buscarPorCodigo(String codigo, String curso) {
         List<Contenido> lista = new ArrayList<Contenido>();
 
-        String query = "from Contenido c where c.codigo_contenido = '" + codigo + "'";
+        String query = "from Contenido c where c.codigo_contenido LIKE '" + codigo + "' AND c.curso_contenido LIKE '" + curso + "'";
 
         lista = this.session.createQuery(query).list();
 

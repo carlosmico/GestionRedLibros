@@ -184,7 +184,7 @@ public class ImportarMatriculasXML {
 
                 DaoContenido daoc = new DaoContenido(Main.gestorSesiones.getSession());
 
-                Contenido contenidoObj = daoc.buscarPorCodigo(contenido);
+                Contenido contenidoObj = daoc.buscarPorCodigo(contenido, curso);
 
                 daoc.desconectar();
 

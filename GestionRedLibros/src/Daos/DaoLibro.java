@@ -138,7 +138,7 @@ public class DaoLibro extends DaoGenerico<Libro, String> implements InterfaceDao
     public List<Libro> buscarPorContenido(Contenido contenido) {
         List<Libro> lista = new ArrayList<Libro>();
 
-        org.hibernate.query.Query query = this.session.createQuery("from Libro where contenido_libro=" + contenido.getId());
+        Query query = this.session.createQuery("from Libro where contenido_libro=" + contenido.getId());
         lista = query.list();
 
         return lista;

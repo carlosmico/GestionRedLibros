@@ -463,7 +463,8 @@ public class FrameDemanda extends javax.swing.JFrame {
                     int it = 0;
 
                     for (Map.Entry<String, Integer> entry : contenidos.entrySet()) {
-                        Contenido contenido = daoContenido.buscarPorCodigo(entry.getKey());
+                        Curso cursoSeleccionado = (Curso) cbCurso.getSelectedItem();
+                        Contenido contenido = daoContenido.buscarPorCodigo(entry.getKey(), cursoSeleccionado.getCodigo());
                         List<Libro> librosContenido = daoLibro.buscarPorContenido(contenido);
 
                         int stock = 0;
