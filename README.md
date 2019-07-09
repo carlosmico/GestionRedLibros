@@ -9,10 +9,24 @@ Este programa ha sido desarrollado junto con un compañero del Ciclo Formativo d
 Gestión Red Libros permite realizar al usuario las siguientes acciones:
 
  * CRUD de libros y ejemplares.
+ 
+ ![Libros](libros.PNG)
+ 
  * Gestión entregas de ejemplares.
+ 
+ ![Entregas](entregas.PNG)
+ 
  * Gestión devoluciones de ejemplares.
+ 
+ ![Devoluciones](devoluciones.PNG)
+ 
  * Históricos de entregas y devoluciones.
+ 
+ ![Historial](historial.PNG)
+ 
  * Informes de stock.
+ 
+ ![Stock](stock.PNG)
  
  ### Pre-requisitos 📋
  
