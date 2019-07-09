@@ -2,7 +2,7 @@
 
 Software para el control de la red de libros del instituto. 
 
- ![Screenshot](principal.png) 
+ ![Screenshot](principal.PNG) 
 
 Este programa ha sido desarrollado junto con un compañero del Ciclo Formativo de Grado Superior de Desarrollo de Aplicaciones Multiplataforma como proyecto final del Ciclo.
 
