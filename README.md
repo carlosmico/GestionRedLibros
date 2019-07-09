@@ -1,4 +1,4 @@
-# GestionRedLibros
+# Gestión Red Libros
 
 Software para el control de la red de libros del instituto.
 
